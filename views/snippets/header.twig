@@ -1,12 +1,14 @@
 <header class="header">
-	<div class="header__container">
-		<a href="{{ site.url }}">{{ bloginfo('name') }}</a>
+	<div class="header__container u-container">
+		<a href="{{ site.url }}" class="header__logo">
+			{{ bloginfo('name') }}
+		</a>
 
 		<nav>
-			<ul>
+			<ul class="menu">
 				{% for item in menu.get_items %}
 					<li class="{{ item.classes | join(' ') }}">
-						<a href="{{ item.get_link }}">{{ item.title }}</a>
+						<a href="{{ item.get_link }}" class="menu-link">{{ item.title }}</a>
 					</li>
 				{% endfor %}
 			</ul>
