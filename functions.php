@@ -28,6 +28,8 @@
 
 			add_filter('timber_context', [$this, 'context']);
 			add_filter('get_twig', [$this, 'twig']);
+			
+			add_action('init', [$this, 'acf']);
 
 			parent::__construct();
 		}
@@ -35,12 +37,43 @@
 		function context($context){
 			$context['menu'] = new TimberMenu();
 			$context['site'] = $this;
+
+			$context['footer'] = [
+				'title' => get_field('footer_title', 'option'),
+				'text' => get_field('footer_text', 'option'),
+			];
+
+			$context['contact'] = [
+				'telephone' => get_field('contact_telephone', 'option'),
+				'email' => get_field('contact_email', 'option'),
+			];
+
+			$context['social'] = [
+				'facebook' => get_field('social_facebook', 'option'),
+				'twitter' => get_field('social_twitter', 'option'),
+				'linkedin' => get_field('social_linkedin', 'option'),
+			];
+
 			return $context;
 		}
 
 		function twig($twig){
 			$twig->addExtension(new Twig_Extension_StringLoader());
 			return $twig;
+		}
+
+		function acf(){
+			if( function_exists('acf_add_options_page') ) {
+
+				acf_add_options_page([
+					'page_title' 	=> 'EQAR',
+					'menu_title'	=> 'EQAR',
+					'menu_slug' 	=> 'theme-general-settings',
+					'capability'	=> 'edit_posts',
+					'redirect'		=> false
+				]);
+
+			}
 		}
 
 	}
