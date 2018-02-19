@@ -1,0 +1,15 @@
+<header class="header">
+	<div class="header__container">
+		<a href="{{ site.url }}">{{ bloginfo('name') }}</a>
+
+		<nav>
+			<ul>
+				{% for item in menu.get_items %}
+					<li class="{{ item.classes | join(' ') }}">
+						<a href="{{ item.get_link }}">{{ item.title }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</nav>
+    </div>
+</header>

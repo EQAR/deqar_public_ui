@@ -1,0 +1,15 @@
+{% include 'snippets/head-element.twig' %}
+    <body class="{{ body_class }}">
+
+    {% include 'snippets/header.twig' %}
+
+    <section class="content">
+        {% block content %}
+        {% endblock %}
+    </section>
+
+    {% include 'snippets/footer.twig' %}
+
+    {{ function('wp_footer') }}
+</body>
+</html>

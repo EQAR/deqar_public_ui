@@ -1,0 +1,52 @@
+// This is an example file for some default Gravity Forms styling
+button, input[type="submit"] {
+	display: block;
+	cursor: pointer;
+	border: none;
+	font-family: inherit; font-size: inherit; text-align: center;
+	-webkit-appearance: none;
+}
+
+input, textarea {
+	width: 100%; max-width: 100%; padding: 0.5em;
+	background: white; border: 1px solid #bcbcbc; border-radius: 0;
+	font-family: inherit; font-size: inherit;
+}
+
+label { font-weight: bold; }
+
+.gform_wrapper {
+
+	ul { margin: 0; font-size: 1em; }
+	li { list-style: none; padding: 0; }
+
+	.gfield {
+		padding-bottom: 1em;
+		.gfield_label { display: block; margin-bottom: 0.25em; }
+
+		.gfield_checkbox,
+		.gfield_radio {
+			li { padding: 0.25em 0; }
+			input { width: auto; height: auto; margin-right: 0.5em; }
+			label {	}
+		}
+	}
+
+	.gform_footer input[type="submit"] { width: auto; }
+
+	.validation_error {
+		padding: 0.5em; margin-bottom: 1em;
+		background: #9b2424;
+		color: white;
+	}
+}
+
+.gform_validation_error .gfield_error {
+
+	input { border: 1px solid #9b2424; }
+
+	.validation_message {
+		margin-top: 0.5em;
+		font-size: 0.75em; color: #9b2424;
+	}
+}

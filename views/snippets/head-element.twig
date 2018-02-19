@@ -1,0 +1,14 @@
+<!doctype html>
+<html {{ site.language_attributes }}>
+<head>
+	<title>{{ wp_title }}</title>
+
+	<meta charset="{{ bloginfo('charset') }}" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="{{ bloginfo('pingback_url') }}" rel="pingback">
+	<link href="{{ theme.link }}/public/css/eqar.css" rel="stylesheet">
+
+	{{ function('wp_head') }}
+</head>
