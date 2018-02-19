@@ -1,0 +1,93 @@
+.footer {
+    padding: 32px 25px;
+    background-color: #033163;
+    color: rgba(255, 255, 255, 0.5);
+
+    a:hover {
+        color: white;
+    }
+}
+
+.footer__title {
+    margin-bottom: 6px;
+    font-size: 18px; font-weight: bold;
+    color: white;
+}
+
+.footer__links .menu-item {
+    display: block;
+    padding: 3px 0;
+}
+
+.footer__links .menu-item.menu-item--login .menu-link {
+    padding-left: 20px;
+    background-image: url('../gfx/icon-login.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+
+@media (min-width: 400px) and (max-width: 639px), (min-width: 840px) {
+    
+    .footer__links {
+        column-count: 2;
+        column-gap: 22px;
+    }
+}
+
+@media (max-width: 639px) {
+
+    .footer__column:not(:last-child) {
+        margin-bottom: 22px;
+    }
+}
+
+
+@media (min-width: 640px) {
+
+    .footer {
+        padding: 44px 25px;
+    }
+
+    .footer__container {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+    
+    .footer__column {
+        width: 36.75%;
+    }   
+    
+        .footer__column--large {
+            width: 48.6%;
+        }    
+}
+
+
+@media (min-width: 768px) {
+
+    .footer {
+        font-size: 17px; line-height: 1.75;
+    }
+
+    .footer__title {
+        font-size: 20px;
+    }
+}
+
+
+@media (min-width: 1024px) {
+
+    .footer {
+        padding: 66px 25px;
+    }
+}
+
+
+@media (min-width: 1280px) {
+
+    .footer {
+        padding: 100px 25px;
+    }
+}

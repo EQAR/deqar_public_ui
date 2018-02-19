@@ -1,8 +1,29 @@
  <footer class="footer">
-    <div class="footer__container">
+    <div class="footer__container u-container">
+        <div class="footer__column footer__column--large">
+            {% if footer.title %}
+                <h3 class="footer__title">{{ footer.title }}</h3>
+            {% endif %}
 
+            {% if footer.text %}
+                <div class="footer__text">{{ footer.text }}</div>
+            {% endif %}
+        </div>
+
+        <div class="footer__column">
+            <h3 class="footer__title">Organisation</h3>
+
+            <ul class="footer__links">
+                {% for item in footer_menu.get_items %}
+                    <li class="{{ item.classes | join(' ') }}">
+                        <a href="{{ item.get_link }}" class="menu-link">{{ item.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </footer>
+
 
 <script src="{{ theme.link }}/public/js/vendor.min.js"></script>
 <script src="{{ theme.link }}/public/js/eqar.min.js"></script>

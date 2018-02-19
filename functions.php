@@ -35,7 +35,8 @@
 		}
 
 		function context($context){
-			$context['menu'] = new TimberMenu();
+			$context['menu'] = new TimberMenu('Menu');
+			$context['footer_menu'] = new TimberMenu('Footer');
 			$context['site'] = $this;
 
 			$context['footer'] = [
