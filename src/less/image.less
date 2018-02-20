@@ -1,0 +1,33 @@
+.image {
+    position: relative;
+    margin-bottom: 50px;    
+}
+
+.image__caption {
+    position: relative; z-index: 1;
+    width: ~'calc(100% - 25px)';
+    margin: -25px 0 0 25px; padding: 12px 20px 12px 50px;
+    background-color: #E6F6FF;
+
+
+    &:before {
+        content: '';
+        position: absolute; top: 22px; left: 15px;
+        display: block;
+        width: 20px; height: 1px;
+        background-color: rgba(3, 49, 99, 0.2);
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    .image__caption {
+        padding: 14px 44px 14px 60px;
+
+        &:before {
+            width: 30px;
+            top: 24px;
+        }
+    }
+}

@@ -1,3 +1,9 @@
-<div class="block image">
-	<img src="{{ TimberImage(block.image) }}">
+<div class="image">
+	<img src="{{ TimberImage(block.image) }}" alt="{{ TimberImage(block.image).alt }}">
+
+	{% if block.caption %}
+		<figcaption class="image__caption">
+			{{ block.caption }}
+		</figcaption>
+	{% endif %}
 </div>
