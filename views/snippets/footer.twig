@@ -11,7 +11,9 @@
         </div>
 
         <div class="footer__column">
-            <h3 class="footer__title">Organisation</h3>
+            {% if footer.navigation_title %}
+                <h3 class="footer__title">{{ footer.navigation_title }}</h3>
+            {% endif %}
 
             <ul class="footer__links">
                 {% for item in footer_menu.get_items %}

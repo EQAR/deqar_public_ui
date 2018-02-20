@@ -42,6 +42,7 @@
 			$context['footer'] = [
 				'title' => get_field('footer_title', 'option'),
 				'text' => get_field('footer_text', 'option'),
+				'navigation_title' => get_field('footer_navigation_title', 'option'),
 			];
 
 			$context['contact'] = [
