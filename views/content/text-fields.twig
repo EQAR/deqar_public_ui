@@ -1,0 +1,5 @@
+<div class="text-fields">
+	{% for block in block.text_fields %}
+		{% include 'views/content/text-fields/' ~ block.acf_fc_layout ~ '.twig' %}
+	{% endfor %}
+</div>
