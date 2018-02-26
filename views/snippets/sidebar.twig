@@ -1,0 +1,42 @@
+{% if post.parent.parent.children('page') %}
+    {% set navigation  = post.parent.parent.children('page') %}
+    {% set parent = post.parent.parent.ID %}
+{% elseif post.parent.children %}
+    {% set navigation  = post.parent.children('page') %}
+    {% set parent = post.parent.ID %}
+{% elseif post.children %}
+    {% set navigation  = post.children('page') %}
+    {% set parent = post.ID %}
+{% else %}
+    {% set parent = post.ID %}
+{% endif %}
+
+<nav class="sidebar">
+    <a href="{{ fn('get_the_permalink', parent) }}" class="sidebar__title">
+        {{ fn('get_the_title', parent) }}
+    </a>
+
+    {% if navigation %}
+        <ul class="sidebar__menu">
+            {% for item in navigation %}
+                <li class="sidebar__item">
+                    <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link {{ item.id == post.id ? 'sidebar__link--active' }}">
+                        {{ fn('get_the_title', item) }}
+                    </a>
+                </li>
+
+                {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
+                    <ul>
+                        {% for item in item.children %}
+                            <li class="sidebar__item">
+                                <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
+                                    {{ fn('get_the_title', item) }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</nav>

@@ -3,6 +3,8 @@
 {% block content %}
 	<div style="padding: 25px;">
 		<div class="u-container">
+			{% include 'snippets/sidebar.twig' %}
+
 			{% for block in post.get_field('blocks') %}
 				{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
 			{% endfor %}
