@@ -1,7 +1,7 @@
 .header {
     background-color: white;
     box-shadow: 0 0 40px 0 rgba(3, 49, 99, 0.05);
-    padding: 0 25px;
+    padding: 17px 25px;
 }
 
 .header__container {
@@ -13,10 +13,45 @@
 
 .header__logo {
     display: block; overflow: hidden;
-    width: 128px; height: 36px;
+    width: 96px; height: 27px;
     background-color: transparent;
     background-image: url('../gfx/logo-eqar.png');
     background-repeat: no-repeat;
     background-size: cover;
     text-indent: 100%; white-space: nowrap;
+}
+
+.header__menu {
+    background-color: transparent; border: none;
+    font-family: inherit;
+    font-size: 15px; font-weight: bold;
+    color: #18498F;
+}
+
+.header__icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+@media (max-width: 1023px) {
+
+    .header__navigation {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .header {
+        padding: 0 25px;
+    }
+
+    .header__menu {
+        display: none;
+    }
+
+    .header__logo {
+        width: 128px; height: 36px;
+    }
 }
