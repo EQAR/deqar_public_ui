@@ -82,6 +82,26 @@
 
 	new Site();
 
+	function breadcrumbs() {
+		$breadcrumbs = [];
+
+		// Retrieve current queried object
+		$post = get_queried_object();
+
+		// Get the ancestors based on $post
+		if ($post->post_type == 'page') {
+			$ancestors = array_reverse(get_ancestors($post->ID, $post->post_type));
+			foreach($ancestors as $a) {
+				$breadcrumbs[] = new TimberPost($a);
+			}
+		}
+
+		// At last, add the current post
+		$breadcrumbs[] = new TimberPost($post->ID);
+
+		return $breadcrumbs;
+	}
+
 	// Disable WordPress admin bar for all users.
 	show_admin_bar(false);
 

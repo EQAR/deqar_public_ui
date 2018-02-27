@@ -1,0 +1,22 @@
+<ul class="breadcrumbs u-margin">
+    <li class="breadcrumbs__item {{ loop.last ? 'breadcrumbs__item--active' }}">
+        <a href="{{ site.url }}" class="breadcrumbs__link">eqar.eu</a>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="breadcrumbs__arrow">
+            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+        </svg>
+    </li>
+    {% for item in fn('breadcrumbs') %}
+        <li class="breadcrumbs__item {{ loop.last ? 'breadcrumbs__item--active' }}">
+            {% if not loop.last %}
+                <a href="{{ item.link }}" class="breadcrumbs__link">{{ item.title }}</a>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="breadcrumbs__arrow">
+                    <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                </svg>
+            {% else %}
+                {{ item.title }}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
