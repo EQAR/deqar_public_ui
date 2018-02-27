@@ -387,6 +387,15 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "5a957b181c6d3": {
+                    "key": "5a957b181c6d3",
+                    "name": "divider",
+                    "label": "Divider",
+                    "display": "row",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Block",
@@ -428,5 +437,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1519741238
+    "modified": 1519745822
 }
