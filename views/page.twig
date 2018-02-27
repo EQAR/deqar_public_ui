@@ -1,13 +1,17 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-	<div style="padding: 25px;">
-		<div class="u-container">
-			{% include 'snippets/sidebar.twig' %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' %}
+			</div>
 
-			{% for block in post.get_field('blocks') %}
-				{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
-			{% endfor %}
+			<div class="l-two-column__content">
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
+			</div>
 		</div>
-	</div>
+	</main>
 {% endblock %}
