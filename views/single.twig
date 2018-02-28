@@ -1,4 +1,13 @@
 {% extends 'base.twig' %}
 
 {% block content %}
+    <main class="u-padding">
+		<div class="l-single-column">
+			{% include 'views/snippets/breadcrumbs.twig' %}
+
+            {% for block in post.get_field('blocks') %}
+                {% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+            {% endfor %}
+		</div>
+	</main>
 {% endblock %}
