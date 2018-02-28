@@ -1,0 +1,10 @@
+<div class="newsletter">
+    <h3 class="title newsletter__title">{{ newsletter.title }}</h3>
+    {% if newsletter.description %}
+        <div class="text newsletter__text">{{ newsletter.description }}</div>
+    {% endif %}
+
+    <div class="form newsletter__form">
+        {{ fn('gravity_form', newsletter.form.id, false, false, false, '', true, '0') }}
+    </div>
+</div>

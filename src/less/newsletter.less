@@ -1,0 +1,76 @@
+.newsletter {
+    padding: 25px;
+    background-color: #FFF3D9;
+}
+
+.newsletter__title {
+    margin-bottom: 8px;
+    color: #FF8A00;
+}
+
+.newsletter__text {
+    color: rgba(255, 138, 0, 0.8);
+}
+
+.newsletter__form {
+    margin-top: 20px;
+}
+
+.newsletter__form .gfield {
+    margin-bottom: 10px;
+}
+
+.newsletter__form .validation_error {
+    display: none;
+}
+
+.newsletter__form .gform_confirmation_wrapper {
+    color: rgba(255, 138, 0, 0.8);
+}
+
+
+@media (min-width: 580px) {
+
+    .newsletter {
+        padding: 40px;
+    }
+
+    .newsletter__form .gform_fields {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
+    
+    .newsletter__form .gfield {
+        width: ~'calc(50% - 5px)';
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    .newsletter__form {
+        margin-top: 30px;
+    }
+
+    .newsletter__form form {
+        position: relative;
+    }
+
+    .newsletter__form .gform_fields {
+        width: ~'calc(100% - 114px)';
+    }
+
+    .newsletter__form input[type="submit"] {
+        position: absolute; top: 0; right: 0;
+        width: auto;
+    }
+}
+
+
+@media (min-width: 1024px) {
+
+    .newsletter {
+        padding: 40px 80px;
+    }
+}

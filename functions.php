@@ -56,6 +56,12 @@
 				'linkedin' => get_field('social_linkedin', 'option'),
 			];
 
+			$context['newsletter'] = [
+				'title' => get_field('newsletter_title', 'option'),
+				'description' => get_field('newsletter_description', 'option'),
+				'form' => get_field('newsletter_form', 'option'),
+			];
+
 			return $context;
 		}
 

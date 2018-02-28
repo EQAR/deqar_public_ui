@@ -1,0 +1,46 @@
+.form {
+    font-size: 15px;
+    color: inherit;
+}
+
+.form label {
+    display: none;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="submit"] {
+    padding: 12px 15px;
+    color: #909090;
+
+    &::-webkit-input-placeholder { 
+        color: #C0C0C0; 
+    }
+
+    &::-moz-placeholder { 
+        color: #C0C0C0; 
+    }
+
+    &:-ms-input-placeholder { 
+        color: #C0C0C0; 
+    }
+}
+
+.form input[type="submit"] {
+    padding: 12px 25px;
+    background-color: #FFAB00;
+    font-weight: bold; color: white; 
+}
+
+.form .validation_message {
+    margin-top: 5px;
+    font-size: 14px; color: rgba(255, 138, 0, 0.8);
+}
+
+
+@media (min-width: 768px) {
+
+    .form {
+        font-size: 17px;
+    }
+}

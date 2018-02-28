@@ -2,7 +2,7 @@
 
 {% block content %}
     <main class="u-padding">
-		<div class="l-single-column">
+		<div class="l-single-column u-margin">
 			{% include 'views/snippets/breadcrumbs.twig' %}
 
             <header class="article-header">
@@ -56,5 +56,9 @@
                 </ul>      
             </div>
 		</div>
+
+        <div class="u-container">
+            {% include 'views/snippets/newsletter.twig' %}
+        </div>
 	</main>
 {% endblock %}
