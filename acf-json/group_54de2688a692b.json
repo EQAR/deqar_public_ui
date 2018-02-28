@@ -209,6 +209,32 @@
                     "min": "",
                     "max": ""
                 },
+                "5a96730e4055b": {
+                    "key": "5a96730e4055b",
+                    "name": "video",
+                    "label": "Video",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_5a9673124055c",
+                            "label": "Video",
+                            "name": "video",
+                            "type": "oembed",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "width": "",
+                            "height": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "5a95403167fb8": {
                     "key": "5a95403167fb8",
                     "name": "member",
@@ -437,5 +463,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1519745822
+    "modified": 1519809312
 }
