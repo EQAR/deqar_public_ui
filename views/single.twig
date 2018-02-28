@@ -5,6 +5,24 @@
 		<div class="l-single-column">
 			{% include 'views/snippets/breadcrumbs.twig' %}
 
+            <header class="article-header">
+                {% if post.thumbnail %}
+                    <img src="{{ TimberImage(post.thumbnail) }}" alt="{{ TimberImage(post.thumbnail).alt }}" class="article-header__thumbnail">
+                {% endif %}
+
+                <h1 class="title article-header__title">{{ post.title }}</h1>
+
+                <ul class="post-meta article-header__post-meta">
+                    <li class="post-meta__item">
+                        <span class="post-meta__category">{{ post.category }}</span>
+                    </li>
+                    <li class="post-meta__item">
+                        <span class="post-meta__date">{{ post.date }}</span>
+                    </li>
+                </ul>
+            </header>
+
+
             {% for block in post.get_field('blocks') %}
                 {% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
             {% endfor %}
