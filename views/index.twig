@@ -1,4 +1,25 @@
 {% extends 'base.twig' %}
 
 {% block content %}
+    <main class="u-padding">
+        <div class="u-container">
+            {% include 'views/snippets/breadcrumbs.twig' %}
+
+            <div class="u-margin">
+                <h1 class="title">{{ post.title }}</h1>
+            </div>
+
+            <div class="l-article">
+                {% for post in posts %}
+                    <div class="l-article__item">
+                        <a href="{{ post.link }}" class="article" style="background-image: url('{{ TimberImage(post.thumbnail )}}');">
+                            <span class="article__date">{{ post.date }}</span>
+                            <span class="article__category">{{ post.category }}</span>
+                            <h2 class="article__title">{{ post.title }}</h2>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
 {% endblock %}
