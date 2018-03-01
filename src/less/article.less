@@ -3,7 +3,7 @@
     position: relative;
     width: 100%; min-height: 150px;
     display: block;
-    background-color: #033163;
+    background-color: @primary-dark;
     padding: 25px 20px;
     font-size: 14px; color: white;
     clip-path: polygon(0 0, 100% 0, 100% ~'calc(100% - 36px)', ~'calc(100% - 36px)' 100%, 0 100%);
@@ -14,7 +14,7 @@
         display: block;
         position: absolute; top: 0; left: 0;
         width: 100%; height: 100%;
-        background-color: rgba(3, 49, 99, 0.7);
+        background-color: fade(@primary-dark, 70%);
     }
 
     @supports (clip-path: polygon(0 0, 0 0, 0 0, 0 0, 0 0)) {

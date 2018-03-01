@@ -1,5 +1,5 @@
 .text {
-    color: rgba(24, 73, 143, 0.8);
+    color: fade(@primary, 80%);
     font-size: 15px;
 
     strong { 
@@ -34,7 +34,7 @@
             width: 6px; height: 6px;
             min-width: 6px;
             margin: 7px 14px 0 0;
-            background-color: #FF8A00;            
+            background-color: @accent;
         }
     }
 
@@ -46,8 +46,8 @@
 
     blockquote {
         padding-left: 20px;
-        border-left: 5px solid #E6F6FF;
-        font-size: 1.2em; color: #18498F;
+        border-left: 5px solid @secondary;
+        font-size: 1.2em; color: @primary;
         line-height: 1.4;
     } 
 }

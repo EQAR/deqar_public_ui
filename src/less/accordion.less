@@ -14,18 +14,18 @@
     cursor: pointer;
     position: relative;
     padding: 12px 37px 12px 15px;
-    background-color: #E6F6FF;
+    background-color: @secondary;
     font-weight: bold;
 }
 
 .accordion__arrow {
     position: absolute; top: 20px; right: 15px;
-    fill: rgba(24, 73, 143, 0.4);
+    fill: fade(@primary, 40%);
     transition: all 0.2s ease;
 }
 
     .accordion__definition:hover .accordion__arrow {
-        fill: rgba(24, 73, 143, 1);
+        fill: @primary;
     }
 
     .accordion__definition--is-toggled .accordion__arrow {
