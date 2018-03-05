@@ -1,0 +1,42 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' %}
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+
+				<h1 class="title u-margin">AQ Austria - Agency for Quality Assurance and Accreditation Austria</h1>
+
+                <h3 class="subtitle">Agentur für Qualitätssicherung und Akkreditierung Austria</h3>
+
+                <ul class="info-list u-margin">
+                    <li class="info-list__item">
+                        <div class="info-list__term">Admission valid until</div>
+                        <div class="info-list__definition">2019-05-31 (listed since 2014-11-29)</div>
+                    </li>
+                    <li class="info-list__item">
+                        <div class="info-list__term">Based in*</div>
+                        <div class="info-list__definition">Austria</div>
+                    </li>
+                    <li class="info-list__item">
+                        <div class="info-list__term">HE systems where agency conducted reviews**</div>
+                        <div class="info-list__definition">Austria, Bosnia and Herzegovina, Germany, Italy, Kazakhstan, Liechtenstein, Serbia, Slovenia</div>
+                    </li>
+                    <li class="info-list__item">
+                        <div class="info-list__term">Reports by the agency</div>
+                        <div class="info-list__definition">
+                            <a href="https://www.aq.ac.at/de/akkreditierte-hochschulen-studien/">https://www.aq.ac.at/de/akkreditierte-hochschulen-studien/</a>
+                        </div>
+                    </li>
+                </ul>
+
+                <hr class="divider">
+			</div>
+		</div>
+	</main>
+{% endblock %}

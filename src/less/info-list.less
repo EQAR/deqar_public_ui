@@ -1,0 +1,45 @@
+.info-list {
+    font-size: 15px;
+
+    a {
+        text-decoration: underline;
+    }
+}
+
+.info-list__item:not(:last-child) {
+    padding-bottom: 10px;
+}
+
+.info-list__term {
+    color: fade(@primary, 70%);
+}
+
+@media (min-width: 640px) {
+
+    .info-list__item {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    
+        &:not(:last-child) {
+            padding-bottom: 15px;
+        }
+    }
+    
+    .info-list__term {
+        width: 33%;
+        
+    }
+    
+    .info-list__definition {
+        width: 61%;
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    .info-list {
+        font-size: 17px;
+    }
+}
