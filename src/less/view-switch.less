@@ -1,0 +1,26 @@
+.view-switch {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.view-switch__link {
+    display: block;
+    padding: 8px 15px;
+    border: 1px solid fade(@primary, 30%);
+    font-size: 14px; color: @primary;
+}
+
+    .view-switch__link--active {
+        background-color: @primary;
+        border: 1px solid @primary;
+        color: white;
+    }
+
+
+@media (min-width: 768px) {
+    
+    .view-switch__link {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+}

@@ -62,6 +62,12 @@
 				'form' => get_field('newsletter_form', 'option'),
 			];
 
+			$context['agency'] = [
+				'title' => get_field('agencies_title', 'option'),
+				'list' => get_field('agencies_list', 'option'),
+				'map' => get_field('agencies_map', 'option'),
+			];
+
 			return $context;
 		}
 
@@ -80,7 +86,12 @@
 					'capability'	=> 'edit_posts',
 					'redirect'		=> false
 				]);
-
+				
+				acf_add_options_sub_page([
+					'page_title' 	=> 'Agencies',
+					'menu_title' 	=> 'Agencies',
+					'parent_slug'	=> 'theme-general-settings',
+				]);
 			}
 		}
 
