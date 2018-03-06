@@ -1,0 +1,16 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' %}
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+                {% include 'views/snippets/search.twig' %}
+            </div>
+		</div>
+	</main>
+{% endblock %}

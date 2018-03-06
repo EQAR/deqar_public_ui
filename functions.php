@@ -68,6 +68,12 @@
 				'map' => get_field('agencies_map', 'option'),
 			];
 
+			$context['search'] = [
+				'title' => get_field('search_title', 'option'),
+				'description' => get_field('search_description', 'option'),
+				'button' => get_field('search_button', 'option'),
+			];
+
 			return $context;
 		}
 
@@ -90,6 +96,12 @@
 				acf_add_options_sub_page([
 					'page_title' 	=> 'Agencies',
 					'menu_title' 	=> 'Agencies',
+					'parent_slug'	=> 'theme-general-settings',
+				]);
+
+				acf_add_options_sub_page([
+					'page_title' 	=> 'Search',
+					'menu_title' 	=> 'Search',
 					'parent_slug'	=> 'theme-general-settings',
 				]);
 			}

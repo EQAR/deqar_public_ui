@@ -3,11 +3,17 @@
     color: inherit;
 }
 
+.form__container {
+    display: flex;
+    flex-direction: row;
+}
+
 .form label {
     display: none;
 }
 
 .form input[type="text"],
+.form input[type="search"],
 .form input[type="email"],
 .form input[type="submit"] {
     padding: 12px 15px;
@@ -27,9 +33,17 @@
 }
 
 .form input[type="submit"] {
+    cursor: pointer;
     padding: 12px 25px;
     background-color: #FFAB00;
     font-weight: bold; color: white; 
+}
+
+.form input[type="search"] {
+    padding-left: 42px;
+    background-image: url('../gfx/icon-search.svg');
+    background-repeat: no-repeat;
+    background-position: left 12px center;
 }
 
 .form .validation_message {
