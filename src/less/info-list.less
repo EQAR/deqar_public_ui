@@ -2,6 +2,10 @@
     font-size: 15px;
 }
 
+.info-list__link {
+    text-decoration: underline;
+}
+
 .info-list__item:not(:last-child) {
     padding-bottom: 10px;
 }
@@ -9,6 +13,15 @@
 .info-list__term {
     color: fade(@primary, 70%);
 }
+
+
+@media (max-width: 639px) {
+
+    .info-list__term {
+        margin-bottom: 5px;
+    }
+}
+
 
 @media (min-width: 640px) {
 
