@@ -4,39 +4,23 @@
         background-color: transparent;
         border: 1px solid rgba(255, 255, 255, 0.25);
         width: 30px; height: 30px;
-        margin-right: 25px;
+        margin-right: 10px;
     }
 
-    .menu__arrow {
-        fill: rgba(255, 255, 255, 0.6);
+    .menu__icon {
+        fill: fade(@primary, 60%);
         transition: all 0.2s ease;
     }
 
-        .menu__toggle--is-active {
-            background-color: rgba(0, 0, 0, 0.2);
-
-            .menu__arrow {
-                transform: rotate(180deg);
-            }
+        .menu__toggle--is-active .menu__icon {
+            fill: @primary;
+            transform: rotate(45deg);
         }
 
     .menu__children,
     .menu__grandchildren {
         display: none;
         width: 100%;
-    }
-
-    .menu__grandchildren {
-        padding: 5px 0;
-        position: relative;
-        background-color: rgba(255, 255, 255, 0.15);
-
-        &:before {
-            content: '';
-            position: absolute; top: 13px; left: 25px;
-            width: 1px; height: ~'calc(100% - 26px)';
-            background-color: rgba(255, 255, 255, 0.25);
-        }
     }
 
     .menu .menu-item {
@@ -48,14 +32,13 @@
     }
 
     .menu .menu-item--primary {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid fade(@primary, 10%);
     }
 
     .menu .menu-link--primary {
         display: block;
         padding: 11px 25px;
         font-size: 16px; font-weight: bold;
-        color: white;
     }
 
     .menu .menu-link--secondary {
@@ -64,13 +47,32 @@
         font-size: 15px;
     }
 
-    .menu .menu-item--tertiary {
-        position: relative;
-        padding: 0 25px;
+    .menu .menu-link--tertiary {
+        padding: 6px 25px;
+        color: fade(@primary, 70%);
+
+        &:before {
+            content: '';
+            display: inline-block; vertical-align: middle;
+            width: 18px; height: 1px;
+            margin-right: 18px;
+            background-color: fade(@primary, 30%);
+        }
+    }
+}
+
+
+@media (min-width: 580px) and (max-width: 1023px) {
+
+    .menu__toggle {
+        margin-right: 30px;
     }
 
+    .menu .menu-link--primary,
+    .menu .menu-link--secondary,
     .menu .menu-link--tertiary {
-        padding: 8px 25px;
+        padding-left: 40px;
+        padding-right: 40px;
     }
 }
 
