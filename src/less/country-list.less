@@ -1,0 +1,38 @@
+.country-list {
+    font-size: 15px;
+}
+
+.country-list__link {
+    display: inline-block;
+    width: 100%;
+    padding: 7px 0;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.country-list__count {
+    margin-left: 5px;
+    font-size: 0.85em;
+    color: fade(@primary, 60%);
+}
+
+
+@media (min-width: 480px) {
+
+    .country-list {
+        column-count: 2;
+        column-gap: 20px;
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    .country-list {
+        font-size: 17px;
+        column-count: 3;
+    }
+
+    .country-list__count {
+        margin-left: 10px;
+    }
+}
