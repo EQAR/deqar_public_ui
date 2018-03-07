@@ -1,8 +1,8 @@
-<div class="accordion u-margin">
-    {% if block.title %}
-        <h3 class="subtitle accordion__title">{{ block.title }}</h3>
-    {% endif %}
+{% if block.title %}
+    <h3 class="subtitle u-margin-s">{{ block.title }}</h3>
+{% endif %}
 
+<div class="accordion u-margin">
     {% for item in block.items %}
         <div class="accordion__item">
             <div class="accordion__definition js-accordion__definition">
