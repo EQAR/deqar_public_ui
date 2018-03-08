@@ -18,7 +18,7 @@
                 {% endif %}
             </header>
 
-            <div class="l-article">
+            <div class="l-article {{ pagination.pages ? 'u-margin' }}">
                 {% for post in posts %}
                     <div class="l-article__item">
                         <a href="{{ post.link }}" class="article" style="background-image: url('{{ TimberImage(post.thumbnail )}}');">
@@ -29,6 +29,20 @@
                     </div>
                 {% endfor %}
             </div>
+
+            {% if pagination.pages %}
+                <ul class="pagination">
+                    {% for page in pagination.pages %}
+                        <li class="pagination__item">
+                            {% if page.link %}
+                                <a href="{{ page.link }}" class="pagination__link {{ page.class }}">{{ page.title }}</a>
+                            {% else %}
+                                <span class="pagination__link {{ page.class }}">{{ page.title }}</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </main>
 {% endblock %}
