@@ -5,9 +5,18 @@
         <div class="u-container">
             {% include 'views/snippets/breadcrumbs.twig' %}
 
-            <div class="u-margin">
+            <header class="u-margin u-space-between">
                 <h1 class="title">{{ post.title }}</h1>
-            </div>
+
+                {% if post.get_field('newsletters') %}
+                    <a href="{{ post.get_field('newsletters') }}" class="read-more">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="read-more__arrow">
+                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                        </svg>
+                        Newsletters
+                    </a>
+                {% endif %}
+            </header>
 
             <div class="l-article">
                 {% for post in posts %}

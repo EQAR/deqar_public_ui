@@ -1,0 +1,24 @@
+.read-more {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 17px; font-weight: bold;
+    text-decoration: underline;
+}
+
+.read-more__arrow {
+    margin-right: 8px;
+    fill: fade(@primary, 30%);
+}
+
+
+@media (min-width: 768px) {
+    
+    .read-more {
+        font-size: 19px;
+    }
+
+    .read-more__arrow {
+        margin-right: 12px;
+    }
+}
