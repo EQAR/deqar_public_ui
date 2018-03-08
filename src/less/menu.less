@@ -95,19 +95,29 @@
     }
 
     .menu .menu-link {
-        display: block;
-        padding: 22px 0;
-    }
-
-    .menu .current-menu-item .menu-link {
         position: relative;
-        font-weight: bold;
+        display: block;
+        padding: 22px 0;        
 
         &:before {
             content: '';
             position: absolute; top: 0; left: 0;
             width: 100%; height: 2px;
-            background-color: @accent;
+            background-color: transparent;
+            transition: all 0.2s ease;
         }
+    }
+
+    .menu .menu-link:hover:before,
+    .menu .current-menu-item .menu-link:before,
+    .menu .current-page-ancestor .menu-link:before,
+    .menu .current_page_parent .menu-link:before {
+        background-color: @accent;
+    }
+
+    .menu .current-menu-item .menu-link,
+    .menu .current-page-ancestor .menu-link,
+    .menu .current_page_parent .menu-link {
+        font-weight: bold;
     }
 }
