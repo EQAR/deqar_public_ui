@@ -1,8 +1,19 @@
 @media (max-width: 1023px) {
 
+    .l-two-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .l-two-column__sidebar,
     .l-two-column__content {
+        width: 100%;
         max-width: 690px;
         margin: 0 auto;
+    }
+
+    .l-two-column__sidebar {
+        order: 2;
     }
 }
 
