@@ -442,25 +442,21 @@
                 "param": "page_template",
                 "operator": "==",
                 "value": "default"
-            }
-        ],
-        [
+            },
             {
-                "param": "page_template",
+                "param": "page_type",
                 "operator": "!=",
-                "value": "agency-list.php"
-            }
-        ],
-        [
+                "value": "front_page"
+            },
             {
-                "param": "page_template",
+                "param": "page_type",
                 "operator": "!=",
-                "value": "agency-map.php"
+                "value": "posts_page"
             }
         ]
     ],
     "menu_order": 0,
-    "position": "acf_after_title",
+    "position": "normal",
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
@@ -475,5 +471,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1520511298
+    "modified": 1521034917
 }

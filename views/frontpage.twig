@@ -1,7 +1,47 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-	{% for block in post.get_field('blocks') %}
-		{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
-	{% endfor %}
+	<main class="u-padding">
+        <div class="u-container">
+			<div class="introduction u-margin">
+				{% if post.get_field('introduction_title') %}
+					<h1 class="title title--hero u-margin-xs">{{ post.get_field('introduction_title') }}</h1>
+				{% endif %}
+
+				{% if post.get_field('introduction_opening') %}
+					<div class="text text--introduction u-margin">
+						{{ post.get_field('introduction_opening') }}
+					</div>
+				{% endif %}
+
+				{% if post.get_field('introduction_columns') %}
+					<hr class="divider u-margin">
+
+					<div class="l-text-columns">
+						{% for item in post.get_field('introduction_columns') %}
+							<div class="l-text-columns__column">
+								{% if item.title %}
+									<h2 class="subtitle u-margin-xs">{{ item.title }}</h2>
+								{% endif %}
+
+								{% if item.text %}
+									<div class="text">{{ item.text }}</div>
+								{% endif %}
+
+								{% if item.button %}
+									<a href="{{ item.button['url'] }}" {{ item.button['target'] ? 'target="_blank"' }} class="read-more introduction__read-more">
+										<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="read-more__arrow">
+											<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+										</svg>
+										
+										{{ item.button['title'] }}
+									</a>
+								{% endif %}
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</main>
 {% endblock %}
