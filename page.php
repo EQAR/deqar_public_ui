@@ -25,7 +25,15 @@ $context = Timber::get_context();
 $context['post'] = new TimberPost();
 
 $template = 'page.twig';
+
 if(is_front_page()) {
+
+    $context['page_for_posts'] = get_option('page_for_posts');
+    $context['posts'] = Timber::get_posts([
+        'posts_per_page' => 3,
+    ]);
+
     $template = 'frontpage.twig';
 }
+
 Timber::render($template, $context);

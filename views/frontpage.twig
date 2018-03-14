@@ -3,7 +3,7 @@
 {% block content %}
 	<main class="u-padding">
         <div class="u-container">
-			<div class="introduction u-margin">
+			<div class="introduction u-margin-l">
 				{% if post.get_field('introduction_title') %}
 					<h1 class="title title--hero u-margin-xs">{{ post.get_field('introduction_title') }}</h1>
 				{% endif %}
@@ -42,6 +42,35 @@
 					</div>
 				{% endif %}
 			</div>
+
+			{% include 'views/snippets/search.twig' with { 'class' : 'qa-search--full-width u-margin-l' } %}
+
+			<header class="u-margin u-space-between">
+                <h1 class="title">Latest news</h1>
+
+                <a href="{{ fn('get_the_permalink', page_for_posts) }}" class="read-more">
+					<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="read-more__arrow">
+						<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+					</svg>
+					See all
+				</a>
+			</header>
+			
+			<div class="u-margin-l">
+				<div class="l-article">
+					{% for post in posts %}
+						<div class="l-article__item">
+							<a href="{{ post.link }}" class="article" style="background-image: url('{{ TimberImage(post.thumbnail )}}');">
+								<span class="article__date">{{ post.date }}</span>
+								<span class="article__category">{{ post.category }}</span>
+								<h2 class="article__title">{{ post.title }}</h2>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			{% include 'views/snippets/newsletter.twig' %}
 		</div>
 	</main>
 {% endblock %}
