@@ -55,7 +55,7 @@
             },
             "post_type": [],
             "taxonomy": [],
-            "allow_null": 0,
+            "allow_null": 1,
             "allow_archives": 1,
             "multiple": 0
         }
@@ -77,5 +77,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1520956194
+    "modified": 1521027595
 }
