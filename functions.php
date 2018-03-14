@@ -73,6 +73,19 @@
 				'description' => get_field('search_description', 'option'),
 				'button' => get_field('search_button', 'option'),
 			];
+			
+			$context['cta'] = [
+				'qa' => [
+					'title' => get_field('qa_cta_title', 'option'),
+					'description' => get_field('qa_cta_description', 'option'),
+					'link' => get_field('qa_cta_link', 'option'),
+				],
+				'agency' => [
+					'title' => get_field('agency_cta_title', 'option'),
+					'description' => get_field('agency_cta_description', 'option'),
+					'link' => get_field('agency_cta_link', 'option'),
+				]
+			];
 
 			return $context;
 		}
@@ -102,6 +115,12 @@
 				acf_add_options_sub_page([
 					'page_title' 	=> 'Search',
 					'menu_title' 	=> 'Search',
+					'parent_slug'	=> 'theme-general-settings',
+				]);
+
+				acf_add_options_sub_page([
+					'page_title' 	=> 'Call to Actions',
+					'menu_title' 	=> 'Call to Actions',
 					'parent_slug'	=> 'theme-general-settings',
 				]);
 			}
