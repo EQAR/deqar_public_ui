@@ -3,6 +3,34 @@
 {% block content %}
 	<main class="u-padding">
         <div class="u-container">
+            {% if post.get_field('top_tasks') %}
+                <div class="top-tasks u-margin-l u-margin-top-xl">
+                    {% for item in post.get_field('top_tasks') %}
+                        <div class="top-tasks__column">
+                            <h3 class="subtitle top-tasks__title">{{ item.title }}</h3>
+
+                            <ul class="top-tasks__links">
+                                {% for item in item.links %}
+                                    <li class="top-tasks__item">
+                                        <a href="{{ fn('get_the_permalink', item.link) }}" class="top-tasks__link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="top-tasks__arrow">
+                                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                                            </svg>
+
+                                            {% if item.title %}
+                                                {{ item.title }}
+                                            {% else %}
+                                                {{ fn('get_the_title', item.link) }}
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
 			<div class="introduction u-margin-l">
 				{% if post.get_field('introduction_title') %}
 					<h1 class="title title--hero u-margin-xs">{{ post.get_field('introduction_title') }}</h1>
