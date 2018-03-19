@@ -85,7 +85,11 @@
 					'description' => get_field('agency_cta_description', 'option'),
 					'link' => get_field('agency_cta_link', 'option'),
 				]
-			];
+            ];
+            
+            $context['login'] = [
+                'internal_area' => get_field('internal_area', 'option'),
+            ];
 
 			return $context;
 		}

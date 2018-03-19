@@ -16,6 +16,16 @@
             {% endif %}
 
             <ul class="footer__links">
+                {% if function('is_user_logged_in') %}
+                    <li class="menu-item menu-item--login">
+                        <a href="{{ fn('wp_logout_url', site.url) }}" class="menu-link">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="menu-item menu-item--login">
+                        <a href="{{ fn('wp_login_url', login.internal_area) }}" class="menu-link">Committee login</a>
+                    </li>
+                {% endif %}
+
                 {% for item in footer_menu.get_items %}
                     <li class="{{ item.classes | join(' ') }}">
                         <a href="{{ item.get_link }}" class="menu-link">{{ item.title }}</a>
