@@ -1,0 +1,7 @@
+<a href="{{ block.link['url'] }}" {{ block.link['target'] ? 'target="_blank"' }} class="info-list__link">
+    {% if block.link['title'] %}
+        {{ block.link['title'] }}
+    {% else %}
+        {{ block.link['url'] }}
+    {% endif %}
+</a>
