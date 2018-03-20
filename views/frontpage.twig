@@ -101,4 +101,22 @@
 			{% include 'views/snippets/newsletter.twig' %}
 		</div>
 	</main>
+
+	{% if post.get_field('partner_logos') %}
+		<div class="logos u-padding">
+			<ul class="logos__list u-container">
+				{% for item in post.get_field('partner_logos') %}
+					<li class="logos__item">
+						{% if item.url %}
+							<a href="{{ item.url }}" class="logos__link">
+								<img src="{{ TimberImage(item.logo) }}" alt="{{ TimberImage(item.logo).alt }}" class="logos__image">
+							</a>
+						{% else %}
+							<img src="{{ TimberImage(item.logo) }}" alt="{{ TimberImage(item.logo).alt }}" class="logos__image">
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
 {% endblock %}

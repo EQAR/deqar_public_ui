@@ -1,0 +1,29 @@
+.logos {
+    background-color: @secondary;
+}
+
+.logos__list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.logos__item {
+    width: 33.333333333333333%;
+    padding: 20px;
+    text-align: center;
+}
+
+.logos__link:hover {
+    opacity: 0.8;
+}
+
+
+@media (min-width: 768px) {
+
+    .logos__item {
+        width: 20%;
+        padding: 30px 20px;
+    }
+}
