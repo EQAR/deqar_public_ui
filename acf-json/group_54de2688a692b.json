@@ -645,6 +645,13 @@
                 "operator": "!=",
                 "value": "posts_page"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "internal-area.php"
+            }
         ]
     ],
     "menu_order": 0,
@@ -663,5 +670,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1521557683
+    "modified": 1521557911
 }

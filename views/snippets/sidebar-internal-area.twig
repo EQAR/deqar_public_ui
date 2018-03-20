@@ -1,0 +1,29 @@
+<nav class="sidebar">
+    <a href="{{ fn('get_the_permalink', login.internal_area) }}" class="sidebar__title">
+        {{ fn('get_the_title', login.internal_area) }}
+    </a>
+
+    {% if internal_area %}
+        <ul class="sidebar__menu sidebar__menu--internal-area">
+            {% for item in internal_area.get_items %}
+                <li class="sidebar__item {{ item.classes | join(' ') }}">
+                    <a href="{{ item.get_link }}" class="sidebar__link ">
+                        {{ item.title}}
+                    </a>
+
+                    {% if item.get_children %}
+                        <ul class="sidebar__children">
+                            {% for item in item.get_children %}
+                                <li class="sidebar__item {{ item.classes | join(' ') }}">
+                                    <a href="{{ item.get_link }}" class="sidebar__link sidebar__link--sub">
+                                        {{ item.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>                
+            {% endfor %}
+        </ul>
+    {% endif %}
+</nav>

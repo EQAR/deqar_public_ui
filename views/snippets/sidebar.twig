@@ -23,19 +23,19 @@
                     <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link {{ item.id == post.id ? 'sidebar__link--active' }}">
                         {{ fn('get_the_title', item) }}
                     </a>
-                </li>
 
-                {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
-                    <ul>
-                        {% for item in item.children %}
-                            <li class="sidebar__item">
-                                <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
-                                    {{ fn('get_the_title', item) }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                    {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
+                        <ul class="sidebar__children">
+                            {% for item in item.children %}
+                                <li class="sidebar__item">
+                                    <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
+                                        {{ fn('get_the_title', item) }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>                
             {% endfor %}
         </ul>
     {% endif %}

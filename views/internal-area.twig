@@ -1,0 +1,33 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar-internal-area.twig' %}
+				
+				{% if post.get_field('cta_link') %}
+					<a href="{{ post.get_field('cta_link') }}" class="call-to-action">
+						<h3 class="call-to-action__title">{{ post.get_field('cta_title') }}</h3>
+
+						{% if post.get_field('cta_description') %}
+							<p class="call-to-action__description">{{ post.get_field('cta_description') }}</p>
+						{% endif %}
+						
+						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+							<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+						</svg>
+					</a>
+				{% endif %}
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
+			</div>
+		</div>
+	</main>
+{% endblock %}

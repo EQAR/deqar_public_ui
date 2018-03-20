@@ -37,6 +37,7 @@
 		function context($context){
 			$context['menu'] = new TimberMenu('Menu');
 			$context['footer_menu'] = new TimberMenu('Footer');
+			$context['internal_area'] = new TimberMenu('Internal Area');
 			$context['site'] = $this;
 
 			$context['footer'] = [

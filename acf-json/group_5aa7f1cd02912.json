@@ -77,6 +77,13 @@
                 "operator": "!=",
                 "value": "posts_page"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "internal-area.php"
+            }
         ]
     ],
     "menu_order": 1,
@@ -87,5 +94,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1521032834
+    "modified": 1521557900
 }
