@@ -330,7 +330,7 @@
                     "key": "5a9567edf49bc",
                     "name": "accordion",
                     "label": "Accordion",
-                    "display": "row",
+                    "display": "block",
                     "sub_fields": [
                         {
                             "key": "field_5a9567f4f49bd",
@@ -418,7 +418,7 @@
                     "key": "5aafa38f18745",
                     "name": "info-list",
                     "label": "Info List",
-                    "display": "row",
+                    "display": "block",
                     "sub_fields": [
                         {
                             "key": "field_5aafa39b18746",
@@ -663,5 +663,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1521461002
+    "modified": 1521557683
 }
