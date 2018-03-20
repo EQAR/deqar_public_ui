@@ -109,7 +109,7 @@
 					<li class="logos__item">
 						{% if item.url %}
 							<a href="{{ item.url }}" class="logos__link">
-								<img src="{{ TimberImage(item.logo) }}" alt="{{ TimberImage(item.logo).alt }}" class="logos__image">
+								<img src="{{ TimberImage(item.logo) }}" alt="{{ TimberImage(item.logo).alt }}" class="logos__image" target="_blank">
 							</a>
 						{% else %}
 							<img src="{{ TimberImage(item.logo) }}" alt="{{ TimberImage(item.logo).alt }}" class="logos__image">
