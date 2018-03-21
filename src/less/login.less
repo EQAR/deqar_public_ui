@@ -1,0 +1,32 @@
+@import 'variables.less';
+
+.login {
+    background-color: @secondary-light;
+}
+
+.login h1 a {
+    width: 128px; height: 36px;
+    margin: 0 auto 50px auto;
+    background-image: url('../gfx/logo-eqar.png');
+    background-size: 128px 36px;
+}
+
+.wp-core-ui .button-primary {
+    background-color: @accent;
+    box-shadow: 0 1px 0 @accent-light;
+    text-shadow: 0 -1px 1px darken(@accent, 10%), 1px 0 1px darken(@accent, 10%), 0 1px 1px darken(@accent, 10%), -1px 0 1px darken(@accent, 10%);
+    border-color: @accent;
+    transition: all 0.2s ease;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: lighten(@accent, 5%);
+        border-color: @accent;
+        box-shadow: none;
+    }
+
+    &:focus {
+        box-shadow: 0 1px 0 @accent, 0 0 2px 1px @accent-light;
+    }
+}

@@ -28,8 +28,10 @@
 
 			add_filter('timber_context', [$this, 'context']);
 			add_filter('get_twig', [$this, 'twig']);
+			add_filter('login_headerurl', [$this, 'login_home_url']);
 			
 			add_action('init', [$this, 'acf']);
+			add_action('login_enqueue_scripts', [$this, 'login_stylesheet']);
 
 			parent::__construct();
 		}
@@ -129,6 +131,14 @@
 					'parent_slug'	=> 'theme-general-settings',
 				]);
 			}
+		}
+
+		function login_stylesheet(){
+			wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/public/css/login.css' );
+		}
+
+		function login_home_url () {
+			return home_url();
 		}
 
 	}

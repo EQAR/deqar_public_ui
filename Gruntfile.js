@@ -12,7 +12,8 @@ module.exports = function(grunt) {
 					optimization: 2,
 				},
 				files: {
-					'public/css/<%= pkg.name %>.css': 'src/less/main.less'
+					'public/css/<%= pkg.name %>.css': 'src/less/main.less',
+					'public/css/login.css': 'src/less/login.less'
 				}
 			}
 		},
@@ -25,7 +26,8 @@ module.exports = function(grunt) {
 				]
 			},
 			dist: {
-				src: 'public/css/<%= pkg.name %>.css'
+				src: 'public/css/<%= pkg.name %>.css',
+				src: 'public/css/login.css'
 			}
 		},
 		uglify: {
