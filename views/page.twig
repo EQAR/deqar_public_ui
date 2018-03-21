@@ -1,7 +1,7 @@
 {% extends 'base.twig' %}
 
 {% block content %}
-	<main class="u-padding">
+	<main class="{{ post.get_field('map') == 'off' ? '' : 'background' }} u-padding">
 		<div class="l-two-column u-container">
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
