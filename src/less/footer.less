@@ -92,6 +92,27 @@
     }
 }
 
+@media (min-width: 1180px) {
+
+    .footer__title--trademark {
+        display: flex;
+        width: ~'calc(100% + 50px)';
+        margin-left: -50px;
+        align-items: center;
+
+        &:before {
+            content: '';
+            display: block;
+            width: 30px; height: 20px;
+            min-width: 30px;
+            margin-right: 20px;
+            background-image: url('../gfx/logo-trademark.svg');
+            background-repeat: no-repeat;
+            background-size: 30px 20px;
+        }
+    }
+}
+
 
 @media (min-width: 1280px) {
 
