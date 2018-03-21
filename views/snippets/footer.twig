@@ -21,8 +21,10 @@
                         <a href="{{ fn('wp_logout_url', site.url) }}" class="menu-link">Logout</a>
                     </li>
                 {% else %}
+                    {% set login = fn('get_the_permalink', login.internal_area) %}
+
                     <li class="menu-item menu-item--login">
-                        <a href="{{ fn('wp_login_url', login.internal_area) }}" class="menu-link">Committee login</a>
+                        <a href="{{ fn('wp_login_url', login) }}" class="menu-link">Committee login</a>
                     </li>
                 {% endif %}
 
