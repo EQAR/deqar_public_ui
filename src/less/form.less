@@ -35,8 +35,13 @@
 .form input[type="submit"] {
     cursor: pointer;
     padding: 12px 25px;
-    background-color: #FFAB00;
-    font-weight: bold; color: white; 
+    background-color: @accent;
+    font-weight: bold; color: white;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: @accent-dark;
+    }
 }
 
 .form input[type="search"] {

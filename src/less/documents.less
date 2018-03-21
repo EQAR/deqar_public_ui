@@ -11,12 +11,17 @@
     display: block;
     padding: 8px 10px 8px 30px;
     background-color: @accent-light;
-    color: @accent;
+    color: @accent-dark;
+
+    &:hover {
+        background-color: darken(@accent-light, 2%);
+    }
 }
 
 .documents__icon {
     position: absolute; top: 7px; left: 8px;
     width: 12px;
+    fill: @accent-dark;
 }
 
 
