@@ -45,7 +45,13 @@
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">HE systems where agency conducted reviews**</div>
-                        <div class="info-list__definition">--</div>
+                        <div class="info-list__definition">
+                            {% if agency.countries %}
+                                {% for country in agency.countries %}
+                                    {{ country.country }}, 
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">Reports by the agency</div>
