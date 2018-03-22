@@ -48,7 +48,7 @@
                         <div class="info-list__definition">
                             {% if agency.countries %}
                                 {% for country in agency.countries %}
-                                    {{ country.country }}, 
+                                    {{ country.country }},
                                 {% endfor %}
                             {% endif %}
                         </div>
@@ -56,7 +56,8 @@
                     <li class="info-list__item">
                         <div class="info-list__term">Reports by the agency</div>
                         <div class="info-list__definition">
-                            <a href="#" class="info-list__link">--</a>
+                            --
+                            <!-- <a href="#" class="info-list__link">--</a> -->
                         </div>
                     </li>
                     <li class="info-list__item">
@@ -87,16 +88,7 @@
                 <hr class="divider u-margin">
 
                 <h3 class="subtitle u-margin-s">Details</h3>
-{# {% if agency.phone_numbers %}
-    {{ agency.phone_numbers }}
-{% endif %}
-contact_person
-{{ agency.phone_numbers }}
-{{ agency.address }}
-{{ agency.country }}
-{{ agency.emails }}
-{{ agency.website_link }}
-{{ agency.associations }} #}
+
                 <ul class="info-list u-margin">
                     {% if agency.website_link %}
                         <li class="info-list__item">
