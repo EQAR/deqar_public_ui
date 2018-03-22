@@ -1,0 +1,17 @@
+.label {
+    display: inline-block;
+    padding: 3px 5px;
+    background-color: @secondary-light;
+    color: fade(@primary, 55%);
+    font-size: 12px; text-transform: uppercase;
+    font-weight: bold;
+}
+
+    .label--qa-results {
+        background-color: @accent-light;
+        color: @accent-dark;
+
+        &:hover { 
+            background-color: darken(@accent-light, 2%);
+        }
+    }
