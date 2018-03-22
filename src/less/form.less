@@ -8,16 +8,29 @@
     flex-direction: row;
 }
 
-.form label {
+.form .gfield {
+    margin-bottom: 15px;
+}
+
+.form .gfield_label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form .gform_ajax_spinner {
     display: none;
 }
 
 .form input[type="text"],
 .form input[type="search"],
 .form input[type="email"],
-.form input[type="submit"] {
+.form input[type="submit"],
+.form select,
+.form textarea {
     padding: 12px 15px;
     color: #909090;
+    background-color: white;
+    border: 1px solid #D8D8D8;
 
     &::-webkit-input-placeholder { 
         color: #C0C0C0; 
@@ -34,8 +47,9 @@
 
 .form input[type="submit"] {
     cursor: pointer;
-    padding: 12px 25px;
+    width: auto; padding: 12px 25px;
     background-color: @accent;
+    border: 0;
     font-weight: bold; color: white;
     transition: all 0.2s ease;
 
@@ -51,10 +65,36 @@
     background-position: left 12px center;
 }
 
-.form .validation_message {
-    margin-top: 5px;
-    font-size: 14px; color: rgba(255, 138, 0, 0.8);
+.form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
+
+.form .gfield_radio li,
+.form .gfield_checkbox li {
+	display: flex;
+    padding: 3px 0;
+}   
+
+.form .gfield_radio input,
+.form .gfield_checkbox input {
+    width: auto; margin: 3px 8px 0 0;
+}
+
+.form .validation_error,
+.form .validation_message {
+    color: @accent-dark;
+}
+
+.form .validation_error {
+    margin-bottom: 10px;
+}
+
+.form .validation_message {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
 
 
 @media (min-width: 768px) {

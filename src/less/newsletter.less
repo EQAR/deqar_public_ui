@@ -20,12 +20,26 @@
     margin-bottom: 10px;
 }
 
+.newsletter__form .gfield_label {
+    display: none;
+}
+
+.newsletter__form input[type="text"],
+.newsletter__form input[type="search"],
+.newsletter__form input[type="email"],
+.newsletter__form input[type="submit"],
+.newsletter__form select,
+.newsletter__form textarea { 
+    border: 0;
+}
+
 .newsletter__form .validation_error {
     display: none;
 }
 
-.newsletter__form .gform_confirmation_wrapper {
-    color: rgba(255, 138, 0, 0.8);
+.newsletter__form .gform_confirmation_wrapper,
+.newsletter__form .validation_message  {
+    color: fade(@accent-dark, 80%);
 }
 
 
