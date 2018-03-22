@@ -1,8 +1,13 @@
 <!doctype html>
 <html {{ site.language_attributes }}>
 <head>
-	<title>{{ wp_title }}</title>
-
+	<title>
+        {% if page_title %}
+            {{ page_title }}
+        {% else %}
+            {{ wp_title }}
+        {% endif %}
+    </title>
 	<meta charset="{{ bloginfo('charset') }}" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -1,5 +1,10 @@
 {% extends 'base.twig' %}
 
+{% block title %}
+    Agency: {{ agency.names[0].name_versions|last.name }}
+     - {{ wp_title }}
+{% endblock %}
+
 {% block content %}
 	<main class="u-padding">
 		<div class="l-two-column u-container">
@@ -13,7 +18,7 @@
 						{% if cta.agency.description %}
 							<p class="call-to-action__description">{{ cta.agency.description }}</p>
 						{% endif %}
-						
+
 						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
 							<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
 						</svg>
@@ -23,78 +28,51 @@
 
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
-
-				<h1 class="title u-margin-xs">AQ Austria - Agency for Quality Assurance and Accreditation Austria</h1>
+				<h1 class="title u-margin-xs">{{ agency.names[0].name_versions|last.acronym }} {{ agency.country }} - {{ agency.names[0].name_versions|last.name }}</h1>
 
                 <a href="" class="label label--qa-results u-margin">See QA results by AQ Austria</a>
 
-                <h3 class="subtitle u-margin-s">Agentur für Qualitätssicherung und Akkreditierung Austria</h3>
+                <h3 class="subtitle u-margin-s">{{ agency.names[0].name_versions|first.name }}</h3>
 
                 <ul class="info-list u-margin">
                     <li class="info-list__item">
                         <div class="info-list__term">Admission valid until</div>
-                        <div class="info-list__definition">2019-05-31 (listed since 2014-11-29)</div>
+                        <div class="info-list__definition">{{ agency.registration_valid_to }} (listed since {{ agency.registration_start }})</div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">Based in*</div>
-                        <div class="info-list__definition">Austria</div>
+                        <div class="info-list__definition">{{ agency.country }}</div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">HE systems where agency conducted reviews**</div>
-                        <div class="info-list__definition">Austria, Bosnia and Herzegovina, Germany, Italy, Kazakhstan, Liechtenstein, Serbia, Slovenia</div>
+                        <div class="info-list__definition">--</div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">Reports by the agency</div>
                         <div class="info-list__definition">
-                            <a href="https://www.aq.ac.at/de/akkreditierte-hochschulen-studien/" class="info-list__link">https://www.aq.ac.at/de/akkreditierte-hochschulen-studien/</a>
+                            <a href="#" class="info-list__link">--</a>
                         </div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">External review reports and EQAR decisions</div>
                         <div class="info-list__definition">
                             <ul class="documents">
-                                <li class="documents__item">
-                                    <a href="" class="documents__link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
-                                            <polygon points="5 5 1 5 5 1 5 5" fill="#ff8a00"/>
-                                            <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z" fill="#ff8a00"/>
-                                            <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z" fill="#ff8a00"/>
-                                            <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z" fill="#ff8a00"/>
-                                            <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
-                                            <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
-                                        </svg>
-                                        
-                                        2016-12 A26 Renewal of Registration
-                                    </a>
-                                </li>
-                                <li class="documents__item">
-                                    <a href="" class="documents__link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
-                                            <polygon points="5 5 1 5 5 1 5 5" fill="#ff8a00"/>
-                                            <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z" fill="#ff8a00"/>
-                                            <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z" fill="#ff8a00"/>
-                                            <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z" fill="#ff8a00"/>
-                                            <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
-                                            <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
-                                        </svg>
+                                {% for decision in agency.decisions %}
+                                    <li class="documents__item">
+                                        <a href="{{ decision.decision_file }}" class="documents__link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
+                                                <polygon points="5 5 1 5 5 1 5 5" fill="#ff8a00"/>
+                                                <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z" fill="#ff8a00"/>
+                                                <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z" fill="#ff8a00"/>
+                                                <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z" fill="#ff8a00"/>
+                                                <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
+                                                <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
+                                            </svg>
 
-                                        AAQ_External_Review_Report_2016
-                                    </a>
-                                </li>
-                                <li class="documents__item">
-                                    <a href="" class="documents__link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
-                                            <polygon points="5 5 1 5 5 1 5 5" fill="#ff8a00"/>
-                                            <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z" fill="#ff8a00"/>
-                                            <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z" fill="#ff8a00"/>
-                                            <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z" fill="#ff8a00"/>
-                                            <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
-                                            <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
-                                        </svg>
-
-                                        OAQ_ExternalReviewReport_2011
-                                    </a>
-                                </li>
+                                            {{ decision.decision_date }} {{ decision.decision_type }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </li>
@@ -103,52 +81,83 @@
                 <hr class="divider u-margin">
 
                 <h3 class="subtitle u-margin-s">Details</h3>
-
+{# {% if agency.phone_numbers %}
+    {{ agency.phone_numbers }}
+{% endif %}
+contact_person
+{{ agency.phone_numbers }}
+{{ agency.address }}
+{{ agency.country }}
+{{ agency.emails }}
+{{ agency.website_link }}
+{{ agency.associations }} #}
                 <ul class="info-list u-margin">
-                    <li class="info-list__item">
-                        <div class="info-list__term">Website</div>
-                        <div class="info-list__definition">
-                            <a href="http://www.aq.ac.at" class="info-list__link">
-                                http://www.aq.ac.at
-                            </a>
-                        </div>
-                    </li>
-                    <li class="info-list__item">
-                        <div class="info-list__term">Address</div>
-                        <div class="info-list__definition">Renngasse 5, 1010 Vienna, Austria</div>
-                    </li>
-                    <li class="info-list__item">
-                        <div class="info-list__term">Contact Person</div>
-                        <div class="info-list__definition">Dr. Achim Hopbach</div>
-                    </li>
-                    <li class="info-list__item">
-                        <div class="info-list__term">Phone</div>
-                        <div class="info-list__definition">
-                            <a href="tel:+43 1 532 0220 13" class="info-list__link">
-                                +43 1 532 0220 13
-                            </a>
-                        </div>
-                    </li>
-                    <li class="info-list__item">
-                        <div class="info-list__term">Fax</div>
-                        <div class="info-list__definition">
-                            <a href="tel:+43 1 532 0220 99" class="info-list__link">
-                                +43 1 532 0220 99
-                            </a>
-                        </div>
-                    </li>
-                    <li class="info-list__item">
-                        <div class="info-list__term">Email</div>
-                        <div class="info-list__definition">
-                            <a href="mailto:hachim.hopbach@aq.ac.at" class="info-list__link">
-                                hachim.hopbach@aq.ac.at
-                            </a>
-                        </div>
-                    </li>
-                    <li class="info-list__item">
-                        <div class="info-list__term">ENQA membership</div>
-                        <div class="info-list__definition">Full Member</div>
-                    </li>
+                    {% if agency.website_link %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Website</div>
+                            <div class="info-list__definition">
+                                <a href="{{ agency.website_link }}" class="info-list__link">
+                                    {{ agency.website_link }}
+                                </a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if agency.address %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Address</div>
+                            <div class="info-list__definition">
+                                {{ agency.address }}
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if agency.contact_person %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Contact Person</div>
+                            <div class="info-list__definition">
+                                {{ agency.contact_person }}
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if agency.phone_numbers %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Phone</div>
+                            <div class="info-list__definition">
+                                <a href="tel:{{ agency.phone_numbers|last }}" class="info-list__link">
+                                    {{ agency.phone_numbers|last }}
+                                </a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if agency.fax_numbers %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Fax</div>
+                            <div class="info-list__definition">
+                                <a href="tel:{{ agency.fax_numbers|last }}" class="info-list__link">
+                                    {{ agency.fax_numbers|last }}
+                                </a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if agency.emails %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Email</div>
+                            <div class="info-list__definition">
+                                <a href="mailto:{{ agency.emails|last }}" class="info-list__link">
+                                    {{ agency.emails|last }}
+                                </a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if agency.associations %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">ENQA membership</div>
+                            <div class="info-list__definition">
+                                {% for membership in agency.associations %}
+                                    {{ membership }} <br>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endif %}
                 </ul>
 
                 <hr class="divider u-margin">
@@ -156,16 +165,17 @@
                 <h2 class="subtitle u-margin-s">Information on the agency's work</h2>
 
                 <div class="text">
-                    <p>AQ Austria is the national Quality Assurance Agency of Austria, founded in 2012 as a merger of three predecessor agencies. AQ Austria is independend and provides quality assurance service on a broad range with the aim to support the HEIs to enhance the quality of their provision. The agency as such, its bodies and staff has an international profile.</p>
-                
-                    <ul>
-                        <li>Programme Accreditation,</li>
-                        <li>Institutional Accreditation,</li>
-                        <li>Quality Audit, Programme Evaluation,</li>
-                        <li>System Accreditation (Accreditation of internal Quality Assurance System, only in Germany);</li>
-                        <li>Consultancy for development of internal quality management systems, system-wide analysis.</li>
-                    </ul>
-                </div>                
+                    {{ agency.description_note }}
+
+                    {% if agency.activities %}
+                        <ul>
+                            {% for activity in agency.activities %}
+                                <li>{{ activity.activity }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
 			</div>
 		</div>
 	</main>

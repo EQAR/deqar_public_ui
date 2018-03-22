@@ -1,4 +1,4 @@
-{% include 'snippets/head-element.twig' %}
+{% include 'snippets/head-element.twig' with { page_title: block('title') } %}
     <body class="{{ body_class }}">
 
     {% include 'snippets/header.twig' %}
