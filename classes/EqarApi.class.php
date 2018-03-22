@@ -47,6 +47,32 @@ class EqarApi {
 
 
     /**
+     * Get an Institution
+     * @return  array    Institution
+     * @param   int      Institution Id
+     */
+    public function getInstitution( $institutionId = null )
+    {
+
+        if ( isset($institutionId) && !empty($institutionId) ) {
+
+            $path       = 'institutions/' . $institutionId . '/?history=false';
+            $api        = $this->eqar( $path );
+            $result     = $api->get('');
+
+            if($result->info->http_code == 200) {
+                $output = $result->decode_response();
+                return $output;
+            }
+
+        }
+
+        return false;
+
+    }
+
+
+    /**
      * Get all Institutions
      * @return  array    All Institutions
      */
