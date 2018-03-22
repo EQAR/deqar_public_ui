@@ -13,9 +13,9 @@
             $(this).toggleClass('menu__toggle--is-active');
 			$(this).next('.js-menu__grandchildren').slideToggle();
         })
-        // Member
-        .on('click', '.js-member__read-more', function(){
-            $(this).next('.js-member__expandable').slideToggle();
+        // Image Accordion
+        .on('click', '.js-image-accordion__read-more', function(){
+            $(this).next('.js-image-accordion__expandable').slideToggle();
         })
         // Accordion
         .on('click', '.js-accordion__definition', function(){

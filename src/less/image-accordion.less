@@ -1,28 +1,27 @@
-
-.member__container {
+.image-accordion__container {
     padding: 0 25px 25px 25px;
     background-color: @secondary;
 }
 
-.member__photo {
+.image-accordion__image {
     width: 120px; height: 120px;
     margin: -15px 0 15px 0;
 }
 
-.member__name {
+.image-accordion__title {
     margin-bottom: 6px;
 }
 
-.member__read-more {
+.image-accordion__read-more {
     margin-top: 15px;
     font-size: 13px; text-decoration: underline;
 }
 
-.member__arrow {
+.image-accordion__arrow {
     fill: @primary;
 }
 
-.member__expandable {
+.image-accordion__expandable {
     display: none;
     padding-top: 15px;
 }
@@ -30,32 +29,30 @@
 
 @media (min-width: 480px) {
 
-    .member {
+    .image-accordion {
         padding: 15px 0 0 15px;
         margin-bottom: 15px;
     }
     
-    
-    .member__container {
+    .image-accordion__container {
         position: relative; 
         padding: 25px 25px 25px 135px;
     }
     
-    .member__photo {
+    .image-accordion__image {
         position: absolute; top: -15px; left: -15px;
         margin: 0;
     }
-
 }
 
 
 @media (min-width: 768px) {
 
-    .member__photo {
+    .image-accordion__image {
         width: 160px; height: 160px; 
     }
     
-    .member__container {
+    .image-accordion__container {
         padding-left: 180px;
     }
 }
