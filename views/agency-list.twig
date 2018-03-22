@@ -15,8 +15,7 @@
                 {% include 'views/snippets/view-switch.twig' with { 'class' : 'u-margin' } %}
 
 				<ul class="agency-list">
-
-                    {% for agency in agencies.results %}
+                    {% for agency in agencies %}
                         <li class="agency-list__item">
                             <a href="/register/list/agency/?id={{ agency.id }}" class="agency-list__link">
                                 <span class="agency-list__country">{{ agency.country.iso_3166_alpha2 }}</span>
@@ -28,7 +27,6 @@
                             </a>
                         </li>
                     {% endfor %}
-
 				</ul>
 			</div>
 		</div>

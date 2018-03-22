@@ -67,6 +67,34 @@ class EqarApi {
 
 
     /**
+     * Get an Agency
+     * @return  array    All Agencies
+     * @param   int      Agency Id
+     */
+    public function getAgency( $agencyId = null )
+    {
+
+        if ( isset($agencyId) && !empty($agencyId) ) {
+
+            $path       = 'agencies/' . $agencyId . '/?history=false';
+            $api        = $this->eqar( $path );
+            $result     = $api->get('');
+            $countries  = $this->getAgencyCountries($agencyId);
+
+            if($result->info->http_code == 200) {
+                $output = $result->decode_response();
+                $output->countries = $countries;
+                return $output;
+            }
+
+        }
+
+        return false;
+
+    }
+
+
+    /**
      * Get all Agencies
      * @return  array    All Agencies
      */
@@ -94,6 +122,26 @@ class EqarApi {
     {
 
         $path   = 'countries/?limit=999&offset=0';
+        $api    = $this->eqar( $path );
+        $result = $api->get('');
+
+        if($result->info->http_code == 200) {
+            return $result->decode_response()->results;
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Get all Countries
+     * @return  array    All Countries
+     */
+    public function getAgencyCountries( $agencyId = false )
+    {
+
+        $path   = 'countries/by-agency-focus/' . $agencyId . '/?limit=999&offset=0';
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
