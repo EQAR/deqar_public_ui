@@ -12,7 +12,8 @@
 
 				<h1 class="title u-margin">{{ agency.title }}</h1>
 
-                {% include 'views/snippets/view-switch.twig' %}
+                {% include 'views/snippets/view-switch.twig' with { 'class' : 'u-margin' } %}
+				{% include 'views/snippets/map.twig' %}
 			</div>
 		</div>
 	</main>
