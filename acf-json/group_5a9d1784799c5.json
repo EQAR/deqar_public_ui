@@ -14,13 +14,6 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "agency-map.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
                 "value": "agency-single.php"
             }
         ],
@@ -69,5 +62,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1521478677
+    "modified": 1521715990
 }

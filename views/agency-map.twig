@@ -14,6 +14,10 @@
 
                 {% include 'views/snippets/view-switch.twig' with { 'class' : 'u-margin' } %}
 				{% include 'views/snippets/map.twig' %}
+
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
 			</div>
 		</div>
 	</main>

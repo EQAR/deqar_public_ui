@@ -652,6 +652,13 @@
                 "operator": "==",
                 "value": "internal-area.php"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "agency-map.php"
+            }
         ]
     ],
     "menu_order": 0,
@@ -670,5 +677,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1521557911
+    "modified": 1521715936
 }
