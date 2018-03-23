@@ -13,7 +13,7 @@
 						{% if cta.qa.description %}
 							<p class="call-to-action__description">{{ cta.qa.description }}</p>
 						{% endif %}
-						
+
 						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
 							<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
 						</svg>
@@ -23,33 +23,36 @@
 
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
-                
-                <h1 class="title u-margin-xs">Vienna University</h1>
-                <h2 class="subtitle u-margin-s">Universität Viennale</h2>
+
+                {# {{ dump( institution ) }} #}
+
+                <h1 class="title u-margin-xs">{{ institution.names[0].name_english }}</h1>
+                <h2 class="subtitle u-margin-s">{{ institution.names[0].name_official }}</h2>
 
                 <h3 class="subtitle u-margin-s">Basic information</h3>
-                
+
                 <ul class="info-list u-margin">
                     <li class="info-list__item">
                         <div class="info-list__term">Country</div>
-                        <div class="info-list__definition">Netherlands</div>
+                        <div class="info-list__definition">{{ institution.countries[0].country }}</div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">Website</div>
                         <div class="info-list__definition">
-                            <a href="https://www.slik.eu" class="info-list__link">https://www.slik.eu</a> 
+                            <a href="{{ institution.website_link }}" class="info-list__link">{{ institution.website_link }}</a>
                         </div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">Contact person</div>
-                        <div class="info-list__definition">First, Second and Third Cycle</div>
+                        <div class="info-list__definition">{{ institution.levels }}</div>
                     </li>
                 </ul>
-                
+
+<!--
                 <hr class="divider u-margin">
 
                 <h3 class="subtitle u-margin-s">National External Quality Assurrance system</h3>
-                
+
                 <div class="text u-margin">
                     <ul>
                         <li>System Accreditation (Accreditation of internal Quality Assurance System, only in Germany);</li>
@@ -66,7 +69,7 @@
                     <div class="accordion__item">
                         <div class="accordion__definition js-accordion__definition">
                             Why are there no agencies from country X on the Register?
-                            
+
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                                 <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
                             </svg>
@@ -78,7 +81,7 @@
                     <div class="accordion__item">
                         <div class="accordion__definition js-accordion__definition">
                             Can only European agencies be included on the Register?
-                            
+
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                                 <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
                             </svg>
@@ -90,7 +93,7 @@
                     <div class="accordion__item">
                         <div class="accordion__definition js-accordion__definition">
                             Can our organisation become associate member of EQAR?
-                            
+
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                                 <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
                             </svg>
@@ -104,7 +107,7 @@
                                 <li class="info-list__item">
                                     <div class="info-list__term">Website</div>
                                     <div class="info-list__definition">
-                                        <a href="https://www.slik.eu" class="info-list__link">https://www.slik.eu</a> 
+                                        <a href="https://www.slik.eu" class="info-list__link">https://www.slik.eu</a>
                                     </div>
                                 </li>
                                 <li class="info-list__item">
@@ -125,13 +128,13 @@
                                                         <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z"/>
                                                         <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z"/>
                                                     </svg>
-                                                    
+
                                                     2016-12 A26 Renewal of Registration AAQ
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
-                                </li>                                
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -143,7 +146,7 @@
                     <div class="accordion__item">
                         <div class="accordion__definition js-accordion__definition">
                             Why are there no agencies from country X on the Register?
-                            
+
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                                 <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
                             </svg>
@@ -155,7 +158,7 @@
                     <div class="accordion__item">
                         <div class="accordion__definition js-accordion__definition">
                             Can only European agencies be included on the Register?
-                            
+
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                                 <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
                             </svg>
@@ -163,8 +166,10 @@
                         <div class="text accordion__description js-accordion__description">
                         </div>
                     </div>
+                -->
                 </div>
             </div>
+
         </div>
 	</main>
 {% endblock %}
