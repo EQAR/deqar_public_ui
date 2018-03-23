@@ -167,7 +167,7 @@ class EqarApi {
     public function getAgencyCountries( $agencyId = false )
     {
 
-        $path   = 'countries/by-agency-focus/' . $agencyId . '/?limit=999&offset=0';
+        $path   = 'countries/by-agency-focus/' . $agencyId . '/?history=true';
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
