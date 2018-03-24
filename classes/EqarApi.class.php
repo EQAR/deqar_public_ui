@@ -48,21 +48,36 @@ class EqarApi {
 
     /**
      * Get an Institution
-     * @return  array    Institution
      * @param   int      Institution Id
+     * @param   boolean  Show historical data
+     * @return  object   Institution object
      */
-    public function getInstitution( $institutionId = null )
+    public function getInstitution( $institutionId = null, $history = false )
     {
 
         if ( isset($institutionId) && !empty($institutionId) ) {
 
-            $path       = 'institutions/' . $institutionId . '/?history=false';
+            $reports                = $this->getReportInstitutionalByInstitution( $institutionId );
+            $reportsHistorical      = $this->getReportInstitutionalByInstitution( $institutionId, true );
+
+            $programmes             = $this->getReportProbrammesByInstitution( $institutionId );
+            $programmesHistorical   = $this->getReportProbrammesByInstitution( $institutionId, true );
+
+            $path       = 'institutions/' . $institutionId . '/?history=' . $history;
             $api        = $this->eqar( $path );
             $result     = $api->get('');
 
             if($result->info->http_code == 200) {
+
                 $output = $result->decode_response();
+
+                $output->reports    = $reports;
+                $output->reportsHistorical    = $reportsHistorical;
+                $output->programmes = $programmes;
+                $output->programmesHistorical = $programmesHistorical;
+
                 return $output;
+
             }
 
         }
@@ -80,6 +95,50 @@ class EqarApi {
     {
 
         $path   = 'institutions/?limit=999&offset=0';
+        $api    = $this->eqar( $path );
+        $result = $api->get('');
+
+        if($result->info->http_code == 200) {
+            return $result->decode_response()->results;
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Get institution Reports
+     * @param   int      $institutionId     Institution Id
+     * @param   boolean  $history           Historical data parameter
+     * @return  array    Reports
+     */
+    public function getReportInstitutionalByInstitution( $institutionId = null, $history = false )
+    {
+
+        $path   = 'reports/institutional/by-institution/' . $institutionId . '?history=' . $history;
+        $api    = $this->eqar( $path );
+        $result = $api->get('');
+
+        if($result->info->http_code == 200) {
+            return $result->decode_response()->results;
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Get institution Programmes
+     * @param   int      $institutionId     Institution Id
+     * @param   boolean  $history           Historical data parameter
+     * @return  array    Programmes
+     */
+    public function getReportProbrammesByInstitution( $institutionId = null, $history = false )
+    {
+
+        $path   = 'reports/programme/by-institution/' . $institutionId . '?history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -141,6 +200,87 @@ class EqarApi {
 
 
     /**
+     * Get all Agencies for a Country
+     * @param   int      $countryId     Country Id
+     * @param   boolean  $history       Show historical data
+     * @return  array                   All Agencies of a certain country
+     */
+    public function getAgenciesByCountry( $countryId = null, $history = false )
+    {
+
+        $path   = 'agencies/based-in/' . $countryId . '/?history=' . $history;
+        $api    = $this->eqar( $path );
+        $result = $api->get('');
+
+        if($result->info->http_code == 200) {
+            return $result->decode_response()->results;
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Get all Agencies for a Focus Country
+     * @param   int      $countryId     Country Id
+     * @param   boolean  $history       Show historical data
+     * @return  array                   All Agencies of a certain country
+     */
+    public function getAgenciesByFocusCountry( $countryId = null, $history = false )
+    {
+
+        $path   = 'agencies/focusing-to/' . $countryId . '/?history=' . $history;
+        $api    = $this->eqar( $path );
+        $result = $api->get('');
+
+        if($result->info->http_code == 200) {
+            return $result->decode_response()->results;
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Get a Country by ID
+     * @param   int      Country Id
+     * @param   boolean  Show historical data
+     * @return  object   Country object
+     */
+    public function getCountry( $countryId, $history = true )
+    {
+
+        $byCountry              = $this->getAgenciesByCountry( $countryId );
+        $byCountryHistory       = $this->getAgenciesByCountry( $countryId, true );
+        $byFocusCountry         = $this->getAgenciesByFocusCountry( $countryId );
+        $byFocusCountryHistory  = $this->getAgenciesByFocusCountry( $countryId, true );
+
+        $path   = 'countries/' . $countryId . '/?history=' . $history;
+        $api    = $this->eqar( $path );
+        $result = $api->get('');
+
+        if($result->info->http_code == 200) {
+
+            $output = $result->decode_response();
+            $output->agencies = [
+                'byCountry' => $byCountry,
+                'byCountryHistory' => $byCountryHistory,
+                'byFocusCountry' => $byFocusCountry,
+                'byFocusCountryHistory' => $byFocusCountryHistory,
+            ];
+
+            return $output;
+
+        }
+
+        return false;
+
+    }
+
+
+    /**
      * Get all Countries
      * @return  array    All Countries
      */
@@ -167,7 +307,7 @@ class EqarApi {
     public function getAgencyCountries( $agencyId = false )
     {
 
-        $path   = 'countries/by-agency-focus/' . $agencyId . '/?limit=999&offset=0';
+        $path   = 'countries/by-agency-focus/' . $agencyId . '/?history=true';
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -209,6 +349,15 @@ class EqarApi {
         return $output;
 
     }
+
+
+
+
+// Institution -> List (By Report + Country [Institution + Programme])
+// /browse/institutions/?query={queryString}&country={countryID}
+//
+// Institution -> List (By Report + Country [Institution + Programme] with Historical Data)
+// /browse/institutions/?query={queryString}&country={countryID}&history=true"
 
 
 }

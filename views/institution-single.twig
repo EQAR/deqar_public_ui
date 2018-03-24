@@ -1,0 +1,55 @@
+{% extends 'base.twig' %}
+
+{% block title %}
+    {{ institution.names[0].name_english }} - Institution
+{% endblock %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' %}
+
+                {% if cta.agency.link %}
+					<a href="{{ cta.agency.link }}" class="call-to-action">
+						<h3 class="call-to-action__title">{{ cta.agency.title }}</h3>
+
+						{% if cta.agency.description %}
+							<p class="call-to-action__description">{{ cta.agency.description }}</p>
+						{% endif %}
+
+						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+							<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+						</svg>
+					</a>
+				{% endif %}
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+				<h1 class="title u-margin-xs">{{ institution.names[0].name_english }}</h1>
+
+                <h3 class="subtitle u-margin-s">{{ institution.names[0].name_official }}</h3>
+
+                <h3 class="subtitle u-margin-s">1. Basic information</h3>
+
+                <ul class="info-list u-margin">
+                    <li class="info-list__item">
+                        <div class="info-list__term">Country</div>
+                        <div class="info-list__definition">{{ institution.countries|first.country }}</div>
+                    </li>
+                    <li class="info-list__item">
+                        <div class="info-list__term">Website</div>
+                        <div class="info-list__definition">{{ institution.website_link }}</div>
+                    </li>
+                    <li class="info-list__item">
+                        <div class="info-list__term">QF EHEA Levels</div>
+                        <div class="info-list__definition">{{ institution.levels }}</div>
+                    </li>
+
+                </ul>
+
+			</div>
+		</div>
+	</main>
+{% endblock %}
