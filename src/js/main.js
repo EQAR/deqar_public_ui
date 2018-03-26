@@ -40,6 +40,6 @@
 			"",
 			"menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=" + width + ",height=" + height + ",top=" + top + ",left=" + left
 		);
-	}
+    }
     
 })(jQuery);
