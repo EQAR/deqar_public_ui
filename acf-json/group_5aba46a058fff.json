@@ -1,0 +1,43 @@
+{
+    "key": "group_5aba46a058fff",
+    "title": "Cookies",
+    "fields": [
+        {
+            "key": "field_5aba46afe9189",
+            "label": "Message",
+            "name": "cookie_message",
+            "type": "textarea",
+            "instructions": "This message will be shown for content blocks that contain third party scripts (for example: Infogram, Formsite) and cookies aren't accepted by the user.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1522158150
+}

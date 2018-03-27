@@ -1,0 +1,49 @@
+#cookie-notice {
+    z-index: 5 !important;
+    padding: 20px 25px !important;
+    background-color: @primary !important;
+    font-size: 15px;
+}
+
+.cookie-notice-container {    
+    position: relative;
+    max-width: 1000px;
+    padding: 0 100px 0 0 !important;
+    margin: 0 auto;
+    text-align: left !important;
+}
+
+.cn-more-info.button {
+    margin: 0 !important;
+    color: @accent-dark;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.cn-set-cookie.button {
+    position: absolute; top: ~'calc(50% - 20px)'; right: 0;
+    cursor: pointer;
+    width: auto; padding: 10px 20px;
+    background-color: @accent;
+    border: 0;
+    font-weight: bold; color: white;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: @accent-dark;
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    #cookie-notice {
+        padding: 30px 25px !important;
+    }
+
+    .cookie-notice-container {
+        font-size: 17px;
+    }    
+}

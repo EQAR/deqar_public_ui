@@ -1,5 +1,9 @@
-<div class="u-margin">
-    {% filter shortcodes %}
-        {{ block.shortcode }}
-    {% endfilter %}
-</div>
+{% if fn('cn_cookies_accepted') and fn('cn_cookies_accepted') %}
+    <div class="u-margin">
+        {% filter shortcodes %}
+            {{ block.shortcode }}
+        {% endfilter %}
+    </div>
+{% else %}
+    <div class="text text--cookie-warning u-margin">{{ cookie.message }}</div>
+{% endif %}
