@@ -153,18 +153,19 @@ class EqarApi {
 
     /**
      * Get an Agency
+     * @param   int      $agencyId      Agency Id
+     * @param   boolean  $agencyId      Historical data
      * @return  array    All Agencies
-     * @param   int      Agency Id
      */
-    public function getAgency( $agencyId = null )
+    public function getAgency( $agencyId = null, $history = false )
     {
 
         if ( isset($agencyId) && !empty($agencyId) ) {
 
-            $path       = 'agencies/' . $agencyId . '/?history=false';
+            $path       = 'agencies/' . $agencyId . '/?history=' . $history;
             $api        = $this->eqar( $path );
             $result     = $api->get('');
-            $countries  = $this->getAgencyCountries($agencyId);
+            $countries  = $this->getAgencyCountries( $agencyId, true );
 
             if($result->info->http_code == 200) {
                 $output = $result->decode_response();
@@ -280,14 +281,17 @@ class EqarApi {
     }
 
 
+
+
+
     /**
      * Get all Countries
      * @return  array    All Countries
      */
-    public function getCountries()
+    public function getCountries( $limit = 999, $offset = 0, $external_qaa = false, $european_approach = false, $eqar_governmental_member = false )
     {
 
-        $path   = 'countries/?limit=999&offset=0';
+        $path   = 'countries/?limit=' . $limit . '&offset=' . $offset . '&external_qaa=' . $external_qaa . '&european_approach=' . $european_approach . '&eqar_governmental_member=' . $eqar_governmental_member;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -302,12 +306,14 @@ class EqarApi {
 
     /**
      * Get all Countries
+     * @param   int      Agency Id
+     * @param   boolean  Show historical data
      * @return  array    All Countries
      */
-    public function getAgencyCountries( $agencyId = false )
+    public function getAgencyCountries( $agencyId = null, $history = false )
     {
 
-        $path   = 'countries/by-agency-focus/' . $agencyId . '/?history=true';
+        $path   = 'countries/by-agency-focus/' . $agencyId . '/?history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -322,6 +328,7 @@ class EqarApi {
 
     /**
      * Get all Institutions by Counctry
+     * @param   int      Country Id
      * @return  array    Array of Countries with Intstitutions
      */
     public function getInstitutionsByCountry( $countryId = false )
@@ -349,15 +356,5 @@ class EqarApi {
         return $output;
 
     }
-
-
-
-
-// Institution -> List (By Report + Country [Institution + Programme])
-// /browse/institutions/?query={queryString}&country={countryID}
-//
-// Institution -> List (By Report + Country [Institution + Programme] with Historical Data)
-// /browse/institutions/?query={queryString}&country={countryID}&history=true"
-
 
 }
