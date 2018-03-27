@@ -92,6 +92,10 @@
             
             $context['login'] = [
                 'internal_area' => get_field('internal_area', 'option'),
+			];
+			
+			$context['cookie'] = [
+                'message' => get_field('cookie_message', 'option'),
             ];
 
 			return $context;

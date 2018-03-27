@@ -42,6 +42,15 @@
     color: fade(@accent-dark, 80%);
 }
 
+.newsletter__actions {
+    padding-top: 10px;
+    width: 100%; text-align: center;
+    color: fade(@accent-dark, 80%);
+
+    a:hover {
+        color: @accent-dark;
+    }
+}
 
 @media (min-width: 580px) {
 
@@ -70,14 +79,12 @@
     .newsletter__form form {
         position: relative;
     }
-
-    .newsletter__form .gform_fields {
-        width: ~'calc(100% - 114px)';
-    }
-
-    .newsletter__form input[type="submit"] {
-        position: absolute; top: 0; right: 0;
-        width: auto;
+    
+    .newsletter__actions {
+        padding: 0; margin: 0;
+        align-self: center;
+        width: ~'calc(50% - 5px)';
+        font-size: 15px; text-align: right;
     }
 }
 
