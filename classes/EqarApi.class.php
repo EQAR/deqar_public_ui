@@ -281,14 +281,17 @@ class EqarApi {
     }
 
 
+
+
+
     /**
      * Get all Countries
      * @return  array    All Countries
      */
-    public function getCountries()
+    public function getCountries( $limit = 999, $offset = 0, $external_qaa = false, $european_approach = false, $eqar_governmental_member = false )
     {
 
-        $path   = 'countries/?limit=999&offset=0';
+        $path   = 'countries/?limit=' . $limit . '&offset=' . $offset . '&external_qaa=' . $external_qaa . '&european_approach=' . $european_approach . '&eqar_governmental_member=' . $eqar_governmental_member;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
