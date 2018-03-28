@@ -1,11 +1,11 @@
 <ul class="view-switch {{ class }}">
     <li class="view-switch__item">
-        <a href="{{ fn('get_the_permalink', agency.map) }}" class="view-switch__link {{ agency.map.ID == post.id ? 'view-switch__link--active' }}">
+        <a href="{{ fn('get_the_permalink', post.id ) }}" class="view-switch__link {{ maptype_list == false ? 'view-switch__link--active' }}">
             View as map
         </a>
     </li>
     <li class="view-switch__item">
-        <a href="{{ fn('get_the_permalink', agency.list) }}" class="view-switch__link {{ agency.list.ID == post.id ? 'view-switch__link--active' }}">
+        <a href="{{ fn('get_the_permalink', post.id ) }}/?list=true" class="view-switch__link {{ maptype_list == true ? 'view-switch__link--active' }}">
             View as list
         </a>
     </li>

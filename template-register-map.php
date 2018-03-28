@@ -28,10 +28,16 @@ $context['post'] = new TimberPost();
 
 $allCountries = $eqarApi->getCountries();
 $context['countriesAll'] = $allCountries;
+$showList = false;
+
+if ( isset($_GET['list']) && !empty( $_GET['list'] ) && $_GET['list']  == 'true' ) {
+    $showList = true;
+}
 
 // Countries with agencies map (default map)
 if ( is_page('87') || is_page('420') ) {
     $context['maptype']   = 'agencies';
+    $context['maptype_list'] = $showList;
     Timber::render('register-map-page.twig', $context);
 }
 
@@ -41,6 +47,7 @@ if ( is_page('87') || is_page('420') ) {
 elseif ( is_page('426') ) {
     $context['countries'] = $eqarApi->getCountries( 999, 0, $external_qaa = true );
     $context['maptype']   = 'cross-border';
+    $context['maptype_list'] = $showList;
     Timber::render('register-map-page.twig', $context);
 }
 
@@ -48,6 +55,7 @@ elseif ( is_page('426') ) {
 elseif ( is_page('428') ) {
     $context['countries'] = $eqarApi->getCountries( 999, 0, false, $european_approach = true );
     $context['maptype']   = 'eaqejp';
+    $context['maptype_list'] = $showList;
     Timber::render('register-map-page.twig', $context);
 }
 
@@ -55,5 +63,6 @@ elseif ( is_page('428') ) {
 elseif ( is_page('430') ) {
     $context['countries'] = $eqarApi->getCountries( 999, 0, false, false, $eqar_governmental_member = true );
     $context['maptype']   = 'govermental';
+    $context['maptype_list'] = $showList;
     Timber::render('register-map-page.twig', $context);
 }

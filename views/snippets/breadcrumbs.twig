@@ -15,7 +15,19 @@
                     <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
                 </svg>
             {% else %}
-                {{ item.title }}
+                {% if post.id == 223 %}
+                    <!-- Single Agency -->
+                    Agency: {{ agency.names[0].name_versions|last.acronym }} {{ agency.country }}
+                {% elseif post.id == 434 %}
+                    <!-- Single Country -->
+                    {{ country.name_english }}
+                {% elseif post.id == 418 %}
+                    <!-- Single Institution -->
+                    {{ institution.names[0].name_english }}
+                {% else %}
+                    <!-- Single Page -->
+                    {{ item.title }}
+                {% endif %}
             {% endif %}
         </li>
     {% endfor %}
