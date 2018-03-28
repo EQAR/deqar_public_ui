@@ -26,20 +26,27 @@
         .on('click', '.js-share__link', function(e) {
 			e.preventDefault();
 			windowPopup($(this).attr('href'), 974, 682);
+		})
+        // Social Share
+        .on('change', '.js-select-go', function(e) {
+			e.preventDefault();
+			window.location.href = $(this).val();
 		});
-        
+
+
+
 
     // Responsible Social Share Links enhancement by https://jonsuh.com/blog/social-share-links/
 	function windowPopup(url, width, height) {
-		
+
 		var left = (screen.width / 2) - (width / 2),
 			top = (screen.height / 2) - (height / 2);
-	
+
 		window.open(
 			url,
 			"",
 			"menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=" + width + ",height=" + height + ",top=" + top + ",left=" + left
 		);
     }
-    
+
 })(jQuery);

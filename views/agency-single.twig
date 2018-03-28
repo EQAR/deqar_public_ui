@@ -30,7 +30,7 @@
 				{% include 'views/snippets/breadcrumbs.twig' %}
 				<h1 class="title u-margin-xs">{{ agency.names[0].name_versions|last.acronym }} {{ agency.country }} - {{ agency.names[0].name_versions|last.name }}</h1>
 
-                <!-- <a href="" class="label label--qa-results u-margin">See QA results by AQ Austria</a> -->
+                <a href="" class="label label--qa-results u-margin">See QA results by AQ {{ agency.country }}</a>
 
                 <h3 class="subtitle u-margin-s">{{ agency.names[0].name_versions|first.name }}</h3>
 
@@ -46,9 +46,10 @@
                     <li class="info-list__item">
                         <div class="info-list__term">HE systems where agency conducted reviews**</div>
                         <div class="info-list__definition">
+
                             {% if agency.countries %}
                                 {% for country in agency.countries %}
-                                    {{ country.country }},
+                                    <a href="{{ function('get_permalink', 434) }}?id={{ country.country_url|split('/')[7] }}" class="info-list__link">{{ country.country }}</a>{% if loop.length != loop.index %}, {% endif %}
                                 {% endfor %}
                             {% endif %}
                         </div>
