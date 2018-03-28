@@ -13,7 +13,73 @@
 				<h1 class="title u-margin">{{ post.title }}</h1>
 
                 {% include 'views/snippets/view-switch.twig' with { 'class' : 'u-margin' } %}
-				{% include 'views/snippets/map.twig' with { 'maptype': maptype } %}
+
+                <select class="js-select-go" name="">
+                    <option value="{{ function('get_permalink', 87) }}">Map</option>
+                    <option value="{{ function('get_permalink', 426) }}">Cross Border</option>
+                    <option value="{{ function('get_permalink', 428) }}">EU Approach</option>
+                    <option value="{{ function('get_permalink', 430) }}">Governmental</option>
+                </select>
+
+                {% if maptype_list == true %}
+                    <ul class="agency-list">
+
+                    {% if maptype == 'agencies' %}
+                        {% for country in countriesAll %}
+                            <li class="agency-list__item">
+                                <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
+                                    <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
+                                    {{ country.name_english }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if maptype == 'cross-border' %}
+                        {% for country in countriesAll %}
+                            {% if country.external_QAA_is_permitted == 'yes' %}
+                                <li class="agency-list__item">
+                                    <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
+                                        <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
+                                        {{ country.name_english }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if maptype == 'eaqejp' %}
+                        {% for country in countriesAll %}
+                            {% if country.european_approach_is_permitted == 'yes' %}
+                                <li class="agency-list__item">
+                                    <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
+                                        <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
+                                        {{ country.name_english }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if maptype == 'govermental' %}
+                        {% for country in countriesAll %}
+                            {% if country.eqar_governmental_member_start != null %}
+                                {% set country_class = ' active' %}
+                                <li class="agency-list__item">
+                                    <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
+                                        <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
+                                        {{ country.name_english }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+
+
+                {% else %}
+                    {% include 'views/snippets/map.twig' with { 'maptype': maptype } %}
+                {% endif %}
 
 				{% for block in post.get_field('blocks') %}
 					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
