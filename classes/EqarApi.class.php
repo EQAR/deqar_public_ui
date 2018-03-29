@@ -281,14 +281,21 @@ class EqarApi {
     }
 
 
-
-
-
     /**
-     * Get all Countries
-     * @return  array    All Countries
+     * Get a list of Countries
+     * @param  integer $limit                       Limit the number or returned countries
+     * @param  integer $offset                      Results offset (for pagin purposes)
+     * @param  boolean $external_qaa                Query External QAA
+     * @param  boolean $european_approach           Query External European Approach
+     * @param  boolean $eqar_governmental_member    Query Eqar governmental members
+     * @return array                                All Countries
      */
-    public function getCountries( $limit = 999, $offset = 0, $external_qaa = false, $european_approach = false, $eqar_governmental_member = false )
+    public function getCountries(
+        $limit = 999,
+        $offset = 0,
+        $external_qaa = false,
+        $european_approach = false,
+        $eqar_governmental_member = false )
     {
 
         $path   = 'countries/?limit=' . $limit . '&offset=' . $offset . '&external_qaa=' . $external_qaa . '&european_approach=' . $european_approach . '&eqar_governmental_member=' . $eqar_governmental_member;
