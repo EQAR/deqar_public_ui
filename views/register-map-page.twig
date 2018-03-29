@@ -12,14 +12,16 @@
 
 				<h1 class="title u-margin">{{ post.title }}</h1>
 
-                {% include 'views/snippets/view-switch.twig' with { 'class' : 'u-margin' } %}
+                <div class="map-controls u-margin">
+                    {% include 'views/snippets/view-switch.twig' %}
 
-                <select class="js-select-go" name="">
-                    <option value="{{ function('get_permalink', 87) }}">Map</option>
-                    <option value="{{ function('get_permalink', 426) }}">Cross Border</option>
-                    <option value="{{ function('get_permalink', 428) }}">EU Approach</option>
-                    <option value="{{ function('get_permalink', 430) }}">Governmental</option>
-                </select>
+                    <select class="map-controls__select js-select-go" name="">
+                        <option value="{{ function('get_permalink', 87) }}">Map</option>
+                        <option value="{{ function('get_permalink', 426) }}">Cross Border</option>
+                        <option value="{{ function('get_permalink', 428) }}">EU Approach</option>
+                        <option value="{{ function('get_permalink', 430) }}">Governmental</option>
+                    </select>
+                </div>
 
                 {% if maptype_list == true %}
                     <ul class="agency-list">
