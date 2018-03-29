@@ -303,7 +303,7 @@ class EqarApi {
         $result = $api->get('');
 
         if($result->info->http_code == 200) {
-            return $result->decode_response()->results;
+            return $result->decode_response();
         }
 
         return false;
