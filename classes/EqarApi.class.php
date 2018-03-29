@@ -87,14 +87,27 @@ class EqarApi {
     }
 
 
+
     /**
      * Get all Institutions
-     * @return  array    All Institutions
+     * @param  boolean $limit                           Number of entries to display.
+     * @param  boolean $offset                          Number of entries to skip/offset.
+     * @param  string  $ordering                        Define the field upon which the results should be ordered
+     * @param  string  $query                           Search string to search in institution names, countries and cities.
+     * @param  integer $agency                          ID of an agency. The resultset contains institutions, about which agencies were submitting reports.
+     * @param  integer $country                         ID of a country. The resultset contains institutions located in the selected countries or a programme (from a report) was listed in the submitted country
+     * @param  integer $qf_ehea_level                   ID of a QF EHEA Level record. The resultset contains institutions where the QF EHEA level were set to the submitted value. Values are: 1 - short cycle, 2 - first cycle, 3 - second cycle, 4 - third cycle
+     * @param  integer $status                          ID of the Report Status record. The resultset contains institutions where the connecting reports were submitted with the value. Values are: 1 - part of obligatory EQA system, 2 - voluntary
+     * @param  integer $report_year                     Year of the report. The resultset contains institutions where the connecting reports are valid in the submitted year
+     * @param  boolean $focus_country_is_crossborder    The resultset contains institutions where one of the focus countries are set as cross boarder country
+     * @param  boolean $history                         Indicator if the search should go trhough historical data.
+     * @return array                                    Array of institutions
      */
-    public function getInstitutions()
+    public function getInstitutions( $limit = 999, $offset = 0, $ordering = 'DESC', $query = false, $agency = false, $country = false, $qf_ehea_level = false, $status = false, $report_year = false, $focus_country_is_crossborder = false, $history = false )
     {
 
-        $path   = 'institutions/?limit=999&offset=0';
+        $path   = 'institutions/?limit=' . $limit . '&offset=' . $offset .'&ordering=' . $ordering .'&query=' . $query . '&agency=' . $agency . '&country=' . $country . '&qf_ehea_level=' . $qf_ehea_level . '&status=' . $status . '&report_year=' . $report_year . '&focus_country_is_crossborder=' . $focus_country_is_crossborder . '&history=' . $history;
+
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
