@@ -129,7 +129,7 @@ class EqarApi {
     public function getReportInstitutionalByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/institutional/by-institution/' . $institutionId . '?history=' . $history;
+        $path   = 'reports/institutional/by-institution/' . $institutionId . '?limit=999&offset=0&history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -151,7 +151,7 @@ class EqarApi {
     public function getReportProbrammesByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/programme/by-institution/' . $institutionId . '?history=' . $history;
+        $path   = 'reports/programme/by-institution/' . $institutionId . '?limit=999&offset=0&history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -222,7 +222,7 @@ class EqarApi {
     public function getAgenciesByCountry( $countryId = null, $history = false )
     {
 
-        $path   = 'agencies/based-in/' . $countryId . '/?history=' . $history;
+        $path   = 'agencies/based-in/' . $countryId . '/?limit=999&offset=0&history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -244,7 +244,7 @@ class EqarApi {
     public function getAgenciesByFocusCountry( $countryId = null, $history = false )
     {
 
-        $path   = 'agencies/focusing-to/' . $countryId . '/?history=' . $history;
+        $path   = 'agencies/focusing-to/' . $countryId . '/?limit=999&offset=0&history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -333,7 +333,7 @@ class EqarApi {
     public function getAgencyCountries( $agencyId = null, $history = false )
     {
 
-        $path   = 'countries/by-agency-focus/' . $agencyId . '/?history=' . $history;
+        $path   = 'countries/by-agency-focus/' . $agencyId . '/?limit=999&offset=0&history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 

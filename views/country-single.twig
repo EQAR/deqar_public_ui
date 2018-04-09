@@ -29,7 +29,16 @@
 				{% include 'views/snippets/breadcrumbs.twig' %}
 				<h1 class="title u-margin-xs">{{ country.name_english }}</h1>
 
-                <h3 class="subtitle u-margin-s">{{ country.name_english }} has been a Governmental Member of EQAR since {{ country.eqar_governmental_member_start|date('Y') }}.</h3>
+                {% if country.eqar_governmental_member_start != null %}
+                    <h3 class="subtitle u-margin-s">{{ country.name_english }} has been a Governmental Member of EQAR since {{ country.eqar_governmental_member_start|date('Y') }}.</h3>
+                {% endif %}
+
+                {% if country.general_note %}
+                    <p class="u-margin-s">{{ country.general_note }}</p>
+                {% endif %}
+
+
+
 
                 <hr class="divider u-margin">
 
@@ -153,7 +162,6 @@
 
 
                 <hr class="divider u-margin">
-
                 <h3 class="subtitle u-margin-s">Can higher education institutions use the European Approach for the Quality Assurance of Joint Programmes?</h3>
 
                 {% if country.european_approach_is_permitted is not empty %}
@@ -164,8 +172,33 @@
                 {% endif %}
 
 
+
                 <hr class="divider u-margin">
-                <h3 class="subtitle u-margin-s">Agencies in {{ country.name_english }}</h3>
+                <h3 class="subtitle u-margin-s">QAA Regulations</h3>
+                <div class="text u-margin">
+                    {% if country.qaa_regulations is not empty %}
+                        <ul>
+                            {% for regulation in country.qaa_regulations %}
+                                <li>
+                                    <p>
+                                        {% if regulation.regulation_url %}
+                                            <a href="{{ regulation.regulation_url }}">{{ regulation.regulation }}</a>
+                                        {% else %}
+                                            {{ regulation.regulation }}
+                                        {% endif %}
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No QAA Regulations found</p>
+                    {% endif %}
+                </div>
+
+
+
+                <hr class="divider u-margin">
+                <h3 class="subtitle u-margin-s">Registered agencies based in {{ country.name_english }}</h3>
                 <div class="text u-margin">
                     {% if country.agencies.byCountry is not empty %}
                         <ul>
@@ -185,7 +218,7 @@
 
 
                 <hr class="divider u-margin">
-                <h3 class="subtitle u-margin-s">Registered international agencies operating in {{ country.name_english }}</h3>
+                <h3 class="subtitle u-margin-s">Registered agencies operating in {{ country.name_english }}</h3>
                 <div class="text u-margin">
                     {% if country.agencies.byFocusCountry is not empty %}
                         <ul>
