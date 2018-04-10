@@ -8,11 +8,22 @@
     flex-direction: row;
 }
 
-.form .gfield {
+.form__fieldset--search {
+    display: flex;
+    flex-direction: row;
+}
+
+.form .gfield,
+.form__fieldset {
     margin-bottom: 15px;
 }
 
-.form .gfield_label {
+    .form__fieldset:last-child {
+        margin-bottom: 0;
+    }
+
+.form .gfield_label,
+.form__label {
     display: block;
     margin-bottom: 6px;
 }
@@ -25,6 +36,7 @@
 .form input[type="search"],
 .form input[type="email"],
 .form input[type="submit"],
+.form input[type="date"],
 .form select,
 .form textarea {
     padding: 12px 15px;
@@ -95,6 +107,16 @@
     margin-top: 5px;
 }
 
+
+.form__columns {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+    .form__fieldset--half {
+        width: ~'calc(50% - 10px)';
+    }
 
 
 @media (min-width: 768px) {

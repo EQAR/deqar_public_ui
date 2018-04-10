@@ -30,8 +30,14 @@
 				{% include 'views/snippets/breadcrumbs.twig' %}
 				<h1 class="title u-margin-xs">{{ agency.names[0].name_versions|last.acronym }} - {{ agency.names[0].name_versions|last.name }}</h1>
 
-                <a href="" class="label label--qa-results u-margin">See QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
-
+                <ul class="l-label u-margin">
+                    <li class="l-label__item">
+                        <span class="label">Substantially compliant with European Standards and Guidelines</span>
+                    </li>
+                    <li class="l-label__item">
+                        <a href="" class="label label--qa-results">See QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
+                    </li>
+                </ul>
 
                 {% for name in agency.names[0].name_versions %}
                     {% if loop.index == 1 %}

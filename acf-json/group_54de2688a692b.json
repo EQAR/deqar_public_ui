@@ -758,6 +758,13 @@
                 "operator": "==",
                 "value": "agency-map.php"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-register-map.php"
+            }
         ]
     ],
     "menu_order": 0,
@@ -776,5 +783,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1522064351
+    "modified": 1523372698
 }
