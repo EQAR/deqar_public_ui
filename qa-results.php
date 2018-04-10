@@ -89,7 +89,10 @@ if ( isset( $_POST ) && !empty( $_POST ) ) {
 
     $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, $query, $agency, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
-    var_dump( $results );
+    $context['results'] = $results;
+    $context['formdata'] = $_POST;
+
+    // var_dump( $results );
 
 }
 
