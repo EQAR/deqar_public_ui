@@ -54,9 +54,10 @@
                             <div class="info-list__definition">{{ agency.registration_note }}</div>
                         </li>
                     {% endif %}
+
                     <li class="info-list__item">
                         <div class="info-list__term">Based in*</div>
-                        <div class="info-list__definition">{{ agency.country }}</div>
+                        <div class="info-list__definition"><a href="{{ function('get_permalink', 434) }}?id={{ agency.country.id }}" class="info-list__link">{{ agency.country.name_english }}</a></div>
                     </li>
                     <li class="info-list__item">
                         <div class="info-list__term">HE systems where agency conducted reviews**</div>

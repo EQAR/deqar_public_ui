@@ -3,6 +3,9 @@
     .europe.active {
         fill: #18498F;
     }
+    .europe.active2 {
+        fill: #98ACCA;
+    }
 </style>
 
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -50,6 +53,8 @@
         {% for country in countriesAll %}
             {% if country.external_QAA_is_permitted == 'yes' %}
                 {% set country_class = ' active' %}
+            {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                {% set country_class = ' active2' %}
             {% else %}
                 {% set country_class = '' %}
             {% endif %}
@@ -63,6 +68,8 @@
         {% for country in countriesAll %}
             {% if country.european_approach_is_permitted == 'yes' %}
                 {% set country_class = ' active' %}
+            {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                {% set country_class = ' active2' %}
             {% else %}
                 {% set country_class = '' %}
             {% endif %}

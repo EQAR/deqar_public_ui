@@ -75,19 +75,17 @@
                 <h3 class="subtitle u-margin-s">Can higher education institutions choose a suitable EQAR-registered agency?</h3>
 
                 {% if country.external_QAA_is_permitted is not empty %}
-                    {% if external_QAA_is_permitted == 'no' %}
+                    {% if country.external_QAA_is_permitted == 'no' %}
                         <p class="u-margin-s">No:</p>
-                    {% elseif external_QAA_is_permitted == 'yes' %}
+                    {% elseif country.external_QAA_is_permitted == 'yes' %}
                         <p class="u-margin-s">Yes:</p>
-                    {% elseif external_QAA_is_permitted == 'partially / with conditions' %}
+                    {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
                         <p class="u-margin-s">Yes, under certain conditions:</p>
                     {% endif %}
                 {% endif %}
 
                 {% if country.external_QAA_note is not empty %}
                     <p class="u-margin-s">{{ country.external_QAA_note|split(': ')[0] }}:</p>
-                {% else %}
-                    <p class="u-margin-s">No. Higher education institutions in {{ country.name_english }} can not choose an EQAR-registered agency.</p>
                 {% endif %}
 
                 <div class="text u-margin">
