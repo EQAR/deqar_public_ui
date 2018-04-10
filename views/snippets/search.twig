@@ -2,7 +2,7 @@
     <h1 class="title qa-search__title">{{ search.title }}</h3>
     <div class="text qa-search__text">{{ search.description }}</div>
 
-    <form class="form qa-search__form" method="post">
+    <form class="form qa-search__form" method="post" action="{{ function('get_permalink', 6) }}">
         <div class="form__fieldset form__fieldset--search">
             <input type="search" name="query" value="{{ formdata.query }}">
             <input type="submit" value="{{ search.button }}" class="qa-search__button">
