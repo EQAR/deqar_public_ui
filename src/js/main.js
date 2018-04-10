@@ -22,6 +22,11 @@
             $(this).toggleClass('accordion__definition--is-toggled');
             $(this).next('.js-accordion__description').slideToggle();
         })
+        // QA Search Advanced Search
+        .on('click', '.js-qa-search__toggle', function(e){
+            e.preventDefault();
+            $('.js-qa-search__expand').slideToggle();
+        })
         // Social Share
         .on('click', '.js-share__link', function(e) {
 			e.preventDefault();
