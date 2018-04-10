@@ -2,10 +2,52 @@
     <h1 class="title qa-search__title">{{ search.title }}</h3>
     <div class="text qa-search__text">{{ search.description }}</div>
 
-    <form class="form qa-search__form">
+    <form class="form qa-search__form" method="post" action="">
         <div class="form__container">
-            <input type="search">
+            <input type="search" name="query">
             <input type="submit" value="{{ search.button }}" class="qa-search__button">
         </div>
+
+        <div class="form__container">
+            <label for="history">
+                <input type="checkbox" name="history" name="history" value="1">
+                Historical
+            </label>
+        </div>
+        <div class="form__container">
+            <label for="focus_country_is_crossborder">
+                <input type="checkbox" name="focus_country_is_crossborder" name="focus_country_is_crossborder" value="true">
+                Cross Border
+            </label>
+        </div>
+        <div class="form__container">
+            <label for="history">
+                <input type="checkbox" name="history" name="history" value="1">
+                Historical
+            </label>
+        </div>
+        <div class="form__container">
+            <label for="focus_country_is_crossborder">
+                <input type="checkbox" name="focus_country_is_crossborder" value="true">
+                Cross Border
+            </label>
+        </div>
+
+        <select class="" name="agency">
+            <option value="">Agency:</option>
+            {% for agency in agencies %}
+                <option value="{{ agency.id }}">{{ agency.name_primary }}</option>
+            {% endfor %}
+        </select>
+
+        <select class="" name="country">
+            <option value="">Country:</option>
+            {% for country in countries %}
+                <option value="{{ country.id }}">{{ country.name_english }}</option>
+            {% endfor %}
+        </select>
+
+
+
     </form>
 </div>
