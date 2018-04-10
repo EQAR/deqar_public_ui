@@ -1,0 +1,27 @@
+.checkbox__item,
+.radio__item {
+    display: flex;
+    color: @accent-dark;
+
+    &:not(:last-child) {
+        margin-bottom: 4px;
+    }
+}
+
+.checkbox__input,
+.radio__input {
+    width: auto;
+    margin-right: 6px;
+}
+
+    .checkbox--horizontal,
+    .radio--horizontal {
+        display: flex;
+        flex-flow: row wrap;
+    
+        .checkbox__item:not(:last-child),
+        .radio__item:not(:last-child) {
+            margin-bottom: 0;
+            margin-right: 20px;
+        }
+    }
