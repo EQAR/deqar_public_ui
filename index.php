@@ -19,11 +19,15 @@ if (!class_exists('Timber')){
 	return;
 }
 
+require_once( get_template_directory() . '/classes/EqarApi.class.php');
+
+$eqarApi = new EqarApi();
+
 $context = Timber::get_context();
 $context['post'] = new TimberPost();
-$context['posts'] = Timber::get_posts();
-$context['pagination'] = Timber::get_pagination();
+$context['institutions'] = $eqarApi->getInstitutions();
+$context['countries']    = $eqarApi->getCountries();
+$context['posts']        = Timber::get_posts();
+$context['pagination']   = Timber::get_pagination();
 
 Timber::render('index.twig', $context);
-
-
