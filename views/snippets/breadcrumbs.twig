@@ -17,7 +17,7 @@
             {% else %}
                 {% if post.id == 223 %}
                     <!-- Single Agency -->
-                    Agency: {{ agency.names[0].name_versions|last.acronym }} {{ agency.country }}
+                    Agency: {{ agency.names[0].name_versions|last.acronym }} {{ agency.country.name_english }}
                 {% elseif post.id == 434 %}
                     <!-- Single Country -->
                     {{ country.name_english }}
