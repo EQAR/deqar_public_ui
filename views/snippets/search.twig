@@ -2,50 +2,71 @@
     <h1 class="title qa-search__title">{{ search.title }}</h3>
     <div class="text qa-search__text">{{ search.description }}</div>
 
-    <form class="form qa-search__form" method="post" action="">
-        <div class="form__container">
+    <form class="form qa-search__form" method="post">
+        <div class="form__fieldset form__fieldset--search">
             <input type="search" name="query" value="{{ formdata.query }}">
             <input type="submit" value="{{ search.button }}" class="qa-search__button">
         </div>
 
-        <div class="form__container">
-            <label for="history">
-                <input type="checkbox" name="history" name="history" value="1">
-                Historical
-            </label>
-        </div>
-        <div class="form__container">
-            <label for="focus_country_is_crossborder">
-                <input type="checkbox" name="focus_country_is_crossborder" name="focus_country_is_crossborder" value="true">
-                Cross Border
-            </label>
-        </div>
-        <div class="form__container">
-            <label for="history">
-                <input type="checkbox" name="history" name="history" value="1">
-                Historical
-            </label>
-        </div>
-        <div class="form__container">
-            <label for="focus_country_is_crossborder">
-                <input type="checkbox" name="focus_country_is_crossborder" value="true">
-                Cross Border
-            </label>
+        <div class="form__fieldset">
+            <button class="button qa-search__advanced js-qa-search__toggle">Advanced search</button>
         </div>
 
-        <select class="" name="agency">
-            <option value="">Agency:</option>
-            {% for agency in agencies %}
-                <option value="{{ agency.id }}">{{ agency.name_primary }}</option>
-            {% endfor %}
-        </select>
+        <div class="qa-search__expand js-qa-search__expand">
+            <div class="form__columns">
+                <div class="form__fieldset form__fieldset--half">
+                    <label for="" class="form__label">Historical Data</label>
+                    <input type="date">
+                </div>
 
-        <select class="" name="country">
-            <option value="">Country:</option>
-            {% for country in countries %}
-                <option value="{{ country.id }}">{{ country.name_english }}</option>
-            {% endfor %}
-        </select>
+            </div>
+
+            <div class="form__fieldset">
+                <label for="agency" class="form__label">Agency</label>
+                <select name="agency">
+                    <option value="">Agency:</option>
+                    {% for agency in agencies %}
+                        <option value="{{ agency.id }}">{{ agency.name_primary }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form__fieldset">
+                <label for="country" class="form__label">Country</label>
+                <select name="country">
+                    <option value="">Country:</option>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}">{{ country.name_english }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form__fieldset">
+                <label for="" class="form__label">EHEA Level</label>
+                <div class="checkbox checkbox--horizontal">
+                    <label class="checkbox__item">
+                        <input type="checkbox" class="checkbox__input" value="1" name="qf_ehea_level">
+                        Short cycle
+                    </label>
+
+                    <label class="checkbox__item">
+                        <input type="checkbox" class="checkbox__input" value="2" name="qf_ehea_level">
+                        First cycle
+                    </label>
+
+                    <label class="checkbox__item">
+                        <input type="checkbox" class="checkbox__input" value="3" name="qf_ehea_level">
+                        Second cycle
+                    </label>
+
+                    <label class="checkbox__item">
+                        <input type="checkbox" class="checkbox__input" value="4" name="qf_ehea_level">
+                        Third cycle
+                    </label>
+                </div>
+            </div>
+        </div>
+    </form>
 
 
 

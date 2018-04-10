@@ -41,7 +41,7 @@ $context['institutionsByCountry']   = $eqarApi->getInstitutionsByCountry();
 
 if ( isset( $_POST ) && !empty( $_POST ) ) {
 
-    var_dump( $_POST );
+    // var_dump( $_POST );
 
     $limit          = 999;
     $offset         = 0;
@@ -73,6 +73,9 @@ if ( isset( $_POST ) && !empty( $_POST ) ) {
     }
     if ( !empty($_POST['country']) ) {
         $country = $_POST['country'];
+    }
+    if ( !empty($_POST['qf_ehea_level']) ) {
+        $qf_ehea_level = $_POST['qf_ehea_level'];
     }
     if ( !empty($_POST['status']) ) {
         $status = $_POST['status'];
