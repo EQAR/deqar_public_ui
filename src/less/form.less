@@ -37,12 +37,15 @@
 .form input[type="email"],
 .form input[type="submit"],
 .form input[type="date"],
+.form input[type="search"],
 .form select,
 .form textarea {
     padding: 12px 15px;
     color: #909090;
     background-color: white;
     border: 1px solid #D8D8D8;
+    -webkit-appearance: none;
+    -moz-apperance: none;
 
     &::-webkit-input-placeholder { 
         color: #C0C0C0; 
@@ -64,6 +67,8 @@
     border: 0;
     font-weight: bold; color: white;
     transition: all 0.2s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
     &:hover {
         background-color: @accent-dark;
@@ -71,10 +76,12 @@
 }
 
 .form input[type="search"] {
+    min-width: 0; // Needed for flex-basis in Firefox
     padding-left: 42px;
     background-image: url('../gfx/icon-search.svg');
     background-repeat: no-repeat;
     background-position: left 12px center;
+    -webkit-appearance: none;
 }
 
 .form select {
