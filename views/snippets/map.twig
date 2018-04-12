@@ -35,7 +35,7 @@
         {% for country in countriesAll %}
             {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
                 <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
-                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{% if country.agency_count > 0 %} active{% endif %}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{% if country.agency_count > 0 %} active{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
                 </a>
             {% endif %}
         {% endfor %}
@@ -51,45 +51,94 @@
 
     {% if maptype == 'cross-border' %}
         {% for country in countriesAll %}
-            {% if country.external_QAA_is_permitted == 'yes' %}
-                {% set country_class = ' active' %}
-            {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
-                {% set country_class = ' active2' %}
-            {% else %}
-                {% set country_class = '' %}
+            {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+                {% if country.external_QAA_is_permitted == 'yes' %}
+                    {% set country_class = ' active' %}
+                {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                    {% set country_class = ' active2' %}
+                {% else %}
+                    {% set country_class = '' %}
+                {% endif %}
+                <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                </a>
             {% endif %}
-
-            <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
-                <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
-            </a>
         {% endfor %}
+
+
+        {% for country in countriesAll %}
+            {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+                {% if country.external_QAA_is_permitted == 'yes' %}
+                    {% set country_class = ' active' %}
+                {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                    {% set country_class = ' active2' %}
+                {% else %}
+                    {% set country_class = '' %}
+                {% endif %}
+                <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                </a>
+            {% endif %}
+        {% endfor %}
+
+
     {% endif %}
 
     {% if maptype == 'eaqejp' %}
         {% for country in countriesAll %}
-            {% if country.european_approach_is_permitted == 'yes' %}
-                {% set country_class = ' active' %}
-            {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
-                {% set country_class = ' active2' %}
-            {% else %}
-                {% set country_class = '' %}
+            {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+                {% if country.european_approach_is_permitted == 'yes' %}
+                    {% set country_class = ' active' %}
+                {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                    {% set country_class = ' active2' %}
+                {% else %}
+                    {% set country_class = '' %}
+                {% endif %}
+                <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                </a>
             {% endif %}
-            <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
-                <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
-            </a>
+        {% endfor %}
+        {% for country in countriesAll %}
+            {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+                {% if country.european_approach_is_permitted == 'yes' %}
+                    {% set country_class = ' active' %}
+                {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                    {% set country_class = ' active2' %}
+                {% else %}
+                    {% set country_class = '' %}
+                {% endif %}
+                <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                </a>
+            {% endif %}
         {% endfor %}
     {% endif %}
 
     {% if maptype == 'govermental' %}
         {% for country in countriesAll %}
-            {% if country.eqar_governmental_member_start != null %}
-                {% set country_class = ' active' %}
-            {% else %}
-                {% set country_class = '' %}
+            {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+                {% if country.eqar_governmental_member_start != null %}
+                    {% set country_class = ' active' %}
+                {% else %}
+                    {% set country_class = '' %}
+                {% endif %}
+                <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                </a>
             {% endif %}
-            <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
-                <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
-            </a>
+        {% endfor %}
+        {% for country in countriesAll %}
+            {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+                {% if country.eqar_governmental_member_start != null %}
+                    {% set country_class = ' active' %}
+                {% else %}
+                    {% set country_class = '' %}
+                {% endif %}
+                <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+                    <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                </a>
+            {% endif %}
         {% endfor %}
     {% endif %}
 
