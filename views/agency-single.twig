@@ -52,7 +52,7 @@
                 <ul class="info-list u-margin">
                     <li class="info-list__item">
                         <div class="info-list__term">Admission valid until</div>
-                        <div class="info-list__definition">{{ agency.registration_valid_to }} (listed since {{ agency.registration_start }})</div>
+                        <div class="info-list__definition">{{ agency.registration_valid_to|date("d-m-Y") }} (listed since {{ agency.registration_start|date("d-m-Y") }})</div>
                     </li>
                     {% if agency.registration_note %}
                         <li class="info-list__item">
@@ -124,10 +124,22 @@
                     </li>
                 </ul>
 
+
                 <hr class="divider u-margin">
 
-                <h3 class="subtitle u-margin-s">Details</h3>
+                <h2 class="subtitle u-margin-s">Information on the agency's work</h2>
+                <div class="text u-margin">
+                    {{ agency.description_note }}
 
+                    {% if agency.specialisation_note %}
+                        <p>{{ agency.specialisation_note }}</p>
+                    {% endif %}
+                </div>
+
+
+                <hr class="divider u-margin">
+
+                <h3 class="subtitle u-margin-s">Contact details</h3>
                 <ul class="info-list u-margin">
                     {% if agency.website_link %}
                         <li class="info-list__item">
@@ -203,18 +215,8 @@
 
                 <hr class="divider u-margin">
 
-                <h2 class="subtitle u-margin-s">Information on the agency's work</h2>
-
-
-
+                <h2 class="subtitle u-margin-s">Activities within the scope of the {{ agency.names[0].name_versions|last.acronym }}</h2>
                 <div class="text">
-                    {{ agency.description_note }}
-
-                    {% if agency.specialisation_note %}
-                        <p>{{ agency.specialisation_note }}</p>
-                    {% endif %}
-
-                    <h2 class="subtitle u-margin-s">Activities within the scope of the {{ agency.names[0].name_versions|last.acronym }}</h2>
 
                     {% if agency.activities %}
                         <ul>
@@ -228,6 +230,7 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
+
                 </div>
 
 			</div>
