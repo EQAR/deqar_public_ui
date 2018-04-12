@@ -29,13 +29,17 @@
                             {% for item in item.children('page') %}
                                 <li class="sidebar__item">
                                     <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
-                                        {{ fn('get_the_title', item) }}
+                                        {% if item.id == 434 %}
+                                            {{ country.name_english }}  <!-- Single Country -->
+                                        {% else %}
+                                            {{ fn('get_the_title', item) }}
+                                        {% endif %}
                                     </a>
                                 </li>
                             {% endfor %}
                         </ul>
                     {% endif %}
-                </li>                
+                </li>
             {% endfor %}
         </ul>
     {% endif %}
