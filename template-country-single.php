@@ -16,11 +16,10 @@ $context = Timber::get_context();
 
 $context['post'] = new TimberPost();
 
-// Get the agency ID from the GET variable.
-$countryId = $_GET['id'];
-
 // Check if the agency is set.
-if ( isset($countryId) && !empty($countryId) ) {
+if ( isset($_GET['id']) && !empty($_GET['id']) ) {
+    // Get the agency ID from the GET variable.
+    $countryId = $_GET['id'];
     $context['country'] = $eqarApi->getCountry( $countryId );
 } else {
     $context['country'] = false;
