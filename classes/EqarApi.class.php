@@ -71,9 +71,9 @@ class EqarApi {
 
                 $output = $result->decode_response();
 
-                $output->reports    = $reports;
+                $output->reports              = $reports;
                 $output->reportsHistorical    = $reportsHistorical;
-                $output->programmes = $programmes;
+                $output->programmes           = $programmes;
                 $output->programmesHistorical = $programmesHistorical;
 
                 return $output;
@@ -129,7 +129,7 @@ class EqarApi {
     public function getReportInstitutionalByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/institutional/by-institution/' . $institutionId . '?limit=999&offset=0&history=' . $history;
+        $path   = 'reports/institutional/by-institution/' . $institutionId . '/?history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -151,7 +151,7 @@ class EqarApi {
     public function getReportProbrammesByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/programme/by-institution/' . $institutionId . '?limit=999&offset=0&history=' . $history;
+        $path   = 'reports/programme/by-institution/' . $institutionId . '/?history=' . $history;
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
