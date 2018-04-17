@@ -2,7 +2,7 @@
     <h1 class="title qa-search__title">{{ search.title }}</h3>
     <div class="text qa-search__text">{{ search.description }}</div>
 
-    <form class="form qa-search__form" method="post" action="{{ function('get_permalink', 6) }}">
+    <form class="form qa-search__form" method="get" action="{{ function('get_permalink', 6) }}">
         <div class="form__fieldset form__fieldset--search">
             <input type="search" name="query" value="{{ formdata.query }}">
             <input type="submit" value="{{ search.button }}" class="qa-search__button">
@@ -12,63 +12,109 @@
             <button class="button qa-search__advanced js-qa-search__toggle">Advanced search</button>
         </div>
 
-        <div class="qa-search__expand js-qa-search__expand">
-            <div class="form__columns">
+        {% if formdata %}
+            {% set openSearchform = 'style="display: block"' %}
+        {% endif %}
+
+        <div class="qa-search__expand js-qa-search__expand" {{ openSearchform }}>
+
+            <div class="form__columns u-margin-xs">
                 <div class="form__fieldset form__fieldset--half">
-                    <label for="" class="form__label">Historical Data</label>
-                    <input type="date">
+                    <label for="country" class="form__label">Country</label>
+                    <select name="country" id="country">
+                        <option value="">Select country</option>
+                        {% for country in countries %}
+                            {% if formdata.country == country.id %}
+                                <option value="{{ country.id }}" selected="selected">{{ country.name_english }}</option>
+                            {% else %}
+                                <option value="{{ country.id }}">{{ country.name_english }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
                 </div>
-
+                <div class="form__fieldset form__fieldset--half">
+                    <label for="agency" class="form__label">Agency</label>
+                    <select name="agency" id="agency">
+                        <option value="">Select agency</option>
+                        {% for agency in agencies %}
+                            {% if formdata.agency == agency.id %}
+                                <option value="{{ agency.id }}" checked="selected">{{ agency.name_primary }}</option>
+                            {% else %}
+                                <option value="{{ agency.id }}">{{ agency.name_primary }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
 
-            <div class="form__fieldset">
-                <label for="agency" class="form__label">Agency</label>
-                <select name="agency">
-                    <option value="">Agency:</option>
-                    {% for agency in agencies %}
-                        <option value="{{ agency.id }}">{{ agency.name_primary }}</option>
-                    {% endfor %}
-                </select>
+            <div class="form__columns u-margin-xs">
+                <div class="form__fieldset form__fieldset--half">
+                    <label for="status" class="form__label">Report status</label>
+                    <select name="status">
+                        <option value="">Select report status</option>
+                        <option value="1" {% if formdata.status == '1' %} selected="selected"{% endif %}>Part of obligatory EQA system</option>
+                        <option value="2" {% if formdata.status == '2' %} selected="selected"{% endif %}>Voluntary</option>
+                    </select>
+                </div>
+                <div class="form__fieldset form__fieldset--half">
+                    <label for="report_year" class="form__label">Report Year</label>
+                    {% set year = "now"|date('Y') %}
+                    <select name="report_year">
+                        <option value="">Select report year</option>
+                        {% for i in year..2000 %}
+                            <option value="{{ i }}" {% if formdata.report_year == i %} selected="selected"{% endif %}>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
 
-            <div class="form__fieldset">
-                <label for="country" class="form__label">Country</label>
-                <select name="country">
-                    <option value="">Country:</option>
-                    {% for country in countries %}
-                        <option value="{{ country.id }}">{{ country.name_english }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form__fieldset">
+            <div class="form__fieldset u-margin-s">
                 <label for="" class="form__label">EHEA Level</label>
                 <div class="checkbox checkbox--horizontal">
                     <label class="checkbox__item">
-                        <input type="checkbox" class="checkbox__input" value="1" name="qf_ehea_level">
+                        <input type="radio" class="radio__input" value="" name="qf_ehea_level" {% if formdata.qf_ehea_level == '' %} checked="checked"{% endif %}>
+                        None
+                    </label>
+
+                    <label class="checkbox__item">
+                        <input type="radio" class="radio__input" value="1" name="qf_ehea_level" {% if formdata.qf_ehea_level == '1' %} checked="checked"{% endif %}>
                         Short cycle
                     </label>
 
-                    <label class="checkbox__item">
-                        <input type="checkbox" class="checkbox__input" value="2" name="qf_ehea_level">
+                    <label class="radio__item">
+                        <input type="radio" class="radio__input" value="2" name="qf_ehea_level" {% if formdata.qf_ehea_level == '2' %} checked="checked"{% endif %}>
                         First cycle
                     </label>
 
-                    <label class="checkbox__item">
-                        <input type="checkbox" class="checkbox__input" value="3" name="qf_ehea_level">
+                    <label class="radio__item">
+                        <input type="radio" class="radio__input" value="3" name="qf_ehea_level" {% if formdata.qf_ehea_level == '3' %} checked="checked"{% endif %}>
                         Second cycle
                     </label>
 
-                    <label class="checkbox__item">
-                        <input type="checkbox" class="checkbox__input" value="4" name="qf_ehea_level">
+                    <label class="radio__item">
+                        <input type="radio" class="radio__input" value="4" name="qf_ehea_level" {% if formdata.qf_ehea_level == '4' %} checked="checked"{% endif %}>
                         Third cycle
                     </label>
                 </div>
             </div>
+
+            <div class="form__columns u-margin">
+                <div class="form__fieldset form__fieldset--half">
+                    <label for="history" class="form__label">
+                        <input type="checkbox" class="checkbox__input" value="true" name="history" id="history" {% if formdata.history == 'true' %} checked="checked"{% endif %}>
+                        Include Historical data
+                    </label>
+                </div>
+                <div class="form__fieldset form__fieldset--half">
+                    <label for="focus_country_is_crossborder" class="form__label">
+                        <input type="checkbox" class="checkbox__input" value="true" name="focus_country_is_crossborder" id="focus_country_is_crossborder" {% if formdata.focus_country_is_crossborder == 'true' %} checked="checked"{% endif %}>
+                        Include cross-border recognition
+                    </label>
+                </div>
+            </div>
+
         </div>
     </form>
 
 
-
-    </form>
 </div>
