@@ -41,14 +41,10 @@
                         <div class="info-list__definition">
                             <div class="text u-margin">
                                 {% if institution.countries %}
-                                    <ul>
-                                        {% for location in institution.countries %}
-                                            <li>
-                                                {{ location.city }},
-                                                <a href="{{ function('get_permalink', 434) }}?id={{ location.country.id }}">{{ location.country.name_english }}</a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                                    {% for location in institution.countries %}
+                                        {{ location.city }},
+                                        <a href="{{ function('get_permalink', 434) }}?id={{ location.country.id }}">{{ location.country.name_english }}</a><br />
+                                    {% endfor %}
                                 {% endif %}
                             </div>
                         </div>
@@ -129,20 +125,19 @@
                                         {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %}, {% endif %}{% endfor %}"
 
                                         {% if name.name_valid_to != null %}
-                                            until {{ institution.historical_relationships[0].relationship_type }}
+                                            until {{ name.name_valid_to }}
                                         {% endif %}
 
                                     {% endfor %}
                                 </li>
-
-                                {# {{ dump( institution.historical_relationships[0].relationship_type ) }} #}
-                                <li><em>for all names[n] where name_valid_to is something else than null</em><br><strong>JURGEN: This happens nowhere?</strong></li>
-                                <li>{historical_relationships[0].relationship_type}
-                                    <a href="path/to/institution-page?id={historical_relationships[0].institution.id}">{historical_relationships[0].institution.name_primary}</a>
-                                </li>
-                                <li>… <em>relationship_type is a short word/phrase like “replaced”, “succeeded by”, “merged into”, …</em></li>
-                                <li>{historical_relationships[n].relationship_type} <a href="path/to/institution-page?id={historical_relationships[n].institution.id}">{historical_relationships[n].institution.name_primary}</a></li>
-
+                                {% if name.name_valid_to != null %}
+                                    {% for relation in institution.historical_relationships %}
+                                        <li>
+                                            {{ relation.relationship_type }}
+                                            <a href="{{ function('get_permalink', 418) }}?id={{ relation.institution.id }}">{{ relation.institution.name_primary }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                         </div>
 
@@ -332,20 +327,30 @@
                                             <div class="info-list__term">Valid until</div>
                                             <div class="info-list__definition">{{ result.report.valid_to|date("d-m-Y") }}</div>
                                         </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Report and decision</div>
+                                            <div class="info-list__definition">
+                                                <ul class="documents">
+                                                    {% for file in result.report.report_files %}
+                                                        <li class="documents__item">
+                                                            <a href="{{ file.file }}" target="_blank" rel="external" class="documents__link">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
+                                                                    <polygon points="5 5 1 5 5 1 5 5"/>
+                                                                    <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z"/>
+                                                                    <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z"/>
+                                                                    <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z"/>
+                                                                    <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z"/>
+                                                                    <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z"/>
+                                                                </svg>
+                                                                {{ file.file_display_name }} ({% for lang in file.languages %}{{ lang }}{% endfor %})
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+
+                                            </div>
+                                        </li>
                                     </ul>
-
-
-                                    <h3 class="subtitle u-margin-s">Report and decision</h3>
-                                    <div class="text u-margin-s">
-                                        <ul>
-                                            {% for file in result.report.report_files %}
-                                                <li>
-                                                    <a href="{{ file.file }}" target="_blank" rel="external" title="View document {{ file.file_display_name }}">{{ file.file_display_name }}</a>
-                                                    ({% for lang in file.languages %}{{ lang }}{% endfor %})
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
 
                                 </div>
                             </div>
