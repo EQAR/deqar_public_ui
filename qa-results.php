@@ -39,9 +39,9 @@ $context['institutionsByCountry']   = $eqarApi->getInstitutionsByCountry();
  */
 
 
-if ( isset( $_POST ) && !empty( $_POST ) ) {
+if ( isset( $_GET ) && !empty( $_GET ) ) {
 
-    // var_dump( $_POST );
+    // var_dump( $_GET );
 
     $limit          = 999;
     $offset         = 0;
@@ -56,44 +56,44 @@ if ( isset( $_POST ) && !empty( $_POST ) ) {
     $history        = false;
 
 
-    if ( !empty($_POST['limit']) ) {
-        $limit = $_POST['limit'];
+    if ( !empty($_GET['limit']) ) {
+        $limit = $_GET['limit'];
     }
-    if ( !empty($_POST['offset']) ) {
-        $offset = $_POST['offset'];
+    if ( !empty($_GET['offset']) ) {
+        $offset = $_GET['offset'];
     }
-    if ( !empty($_POST['ordering']) ) {
-        $ordering = $_POST['ordering'];
+    if ( !empty($_GET['ordering']) ) {
+        $ordering = $_GET['ordering'];
     }
-    if ( !empty($_POST['query']) ) {
-        $query = $_POST['query'];
+    if ( !empty($_GET['query']) ) {
+        $query = $_GET['query'];
     }
-    if ( !empty($_POST['agency']) ) {
-        $agency = $_POST['agency'];
+    if ( !empty($_GET['agency']) ) {
+        $agency = $_GET['agency'];
     }
-    if ( !empty($_POST['country']) ) {
-        $country = $_POST['country'];
+    if ( !empty($_GET['country']) ) {
+        $country = $_GET['country'];
     }
-    if ( !empty($_POST['qf_ehea_level']) ) {
-        $qf_ehea_level = $_POST['qf_ehea_level'];
+    if ( !empty($_GET['qf_ehea_level']) ) {
+        $qf_ehea_level = $_GET['qf_ehea_level'];
     }
-    if ( !empty($_POST['status']) ) {
-        $status = $_POST['status'];
+    if ( !empty($_GET['status']) ) {
+        $status = $_GET['status'];
     }
-    if ( !empty($_POST['report_year']) ) {
-        $report_year = $_POST['report_year'];
+    if ( !empty($_GET['report_year']) ) {
+        $report_year = $_GET['report_year'];
     }
-    if ( !empty($_POST['focus_country_is_crossborder']) ) {
-        $focus_country_is_crossborder = $_POST['focus_country_is_crossborder'];
+    if ( !empty($_GET['focus_country_is_crossborder']) ) {
+        $focus_country_is_crossborder = $_GET['focus_country_is_crossborder'];
     }
-    if ( !empty($_POST['history']) ) {
-        $history = $_POST['history'];
+    if ( !empty($_GET['history']) ) {
+        $history = $_GET['history'];
     }
 
     $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, $query, $agency, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
     $context['results'] = $results;
-    $context['formdata'] = $_POST;
+    $context['formdata'] = $_GET;
 
     // var_dump( $results );
 

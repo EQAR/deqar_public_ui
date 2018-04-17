@@ -16,6 +16,9 @@
                 {% include 'views/snippets/search.twig' %}
 
                 {% if results %}
+
+                    <h2 class="title u-margin">{{ results|length }} search results matching your criteria:</h2>
+
                     <div class=" u-margin">
                         <ul class="agency-list">
                             {% for institution in results %}
@@ -31,18 +34,22 @@
                         </ul>
                     </div>
                 {% else %}
-                    <p class=" u-margin">No results found matching your criteria</p>
+                    {% if formdata %}
+                        <h2 class="title u-margin">No results found matching your criteria</h2>
+                    {% endif %}
                 {% endif %}
 
-                <ul class="country-list">
-                    {% for country in countries %}
-                        <li class="country-list__item">
-                            <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" class="country-list__link">
-                                {{ country.name_english }} <span class="country-list__count">{{ country.agency_count }}</span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% if not formdata %}
+                    <ul class="country-list">
+                        {% for country in countries %}
+                            <li class="country-list__item">
+                                <a href="{{ function('get_permalink', 6) }}?query=&country={{ country.id }}" class="country-list__link">
+                                    {{ country.name_english }} <span class="country-list__count">{{ country.agency_count }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
 
             </div>
 		</div>
