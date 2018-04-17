@@ -38,6 +38,11 @@ if ( isset($_GET['list']) && !empty( $_GET['list'] ) && $_GET['list']  == 'true'
 if ( is_page('87') || is_page('420') ) {
     $context['maptype']   = 'agencies';
     $context['maptype_list'] = $showList;
+
+    if ( is_page('87') ) {
+        $context['agencies']  = $eqarApi->getAgencies();
+    }
+
     Timber::render('register-map-page.twig', $context);
 }
 

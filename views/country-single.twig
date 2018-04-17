@@ -81,16 +81,16 @@
 
                     {% if country.external_QAA_is_permitted is not empty %}
                         {% if country.external_QAA_is_permitted == 'no' %}
-                            <p class="u-margin-s">No:</p>
+                            <p class="u-margin-s">No</p>
                         {% elseif country.external_QAA_is_permitted == 'yes' %}
-                            <p class="u-margin-s">Yes:</p>
+                            <p class="u-margin-s">Yes</p>
                         {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
-                            <p class="u-margin-s">Yes, under certain conditions:</p>
+                            <p class="u-margin-s">Yes, under certain conditions</p>
                         {% endif %}
                     {% endif %}
 
                     {% if country.external_QAA_note is not empty %}
-                        <p class="u-margin-s">{{ country.external_QAA_note|split(': ')[0] }}:</p>
+                        <p class="u-margin-s">{{ country.external_QAA_note|split(': ')[0] }}</p>
                     {% endif %}
 
                     <div class="text u-margin">

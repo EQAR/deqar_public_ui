@@ -89,7 +89,7 @@
                             <ul class="documents">
                                 {% for decision in agency.decisions %}
                                     <li class="documents__item">
-                                        <a href="{{ decision.decision_file }}" class="documents__link">
+                                        <a href="{{ decision.decision_file }}" rel="external" target="_blank" class="documents__link">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
                                                 <polygon points="5 5 1 5 5 1 5 5" fill="#ff8a00"/>
                                                 <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z" fill="#ff8a00"/>
@@ -98,12 +98,13 @@
                                                 <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
                                                 <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
                                             </svg>
-
-                                            {{ decision.decision_date }} {{ decision.decision_type }}
+                                            {{ decision.decision_date|date('d-m-Y') }} {{ decision.decision_type }}
                                         </a>
+                                    </li>
 
-                                        {% if decision.decision_file_extra != null %}
-                                            <a href="{{ decision.decision_file_extra }}" class="documents__link">
+                                    {% if decision.decision_file_extra != null %}
+                                        <li class="documents__item">
+                                            <a href="{{ decision.decision_file_extra }}" rel="external" target="_blank" class="documents__link">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
                                                     <polygon points="5 5 1 5 5 1 5 5" fill="#ff8a00"/>
                                                     <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z" fill="#ff8a00"/>
@@ -112,12 +113,10 @@
                                                     <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
                                                     <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
                                                 </svg>
-
-                                                {{ decision.decision_date }} {{ decision.decision_type }} - b
+                                                {{ decision.decision_date|date('d-m-Y') }} {{ decision.decision_type }} - b
                                             </a>
-
-                                        {% endif %}
-                                    </li>
+                                        </li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -145,7 +144,7 @@
                         <li class="info-list__item">
                             <div class="info-list__term">Website</div>
                             <div class="info-list__definition">
-                                <a href="{{ agency.website_link }}" class="info-list__link">
+                                <a href="{{ agency.website_link }}" target="_blank" rel="external" class="info-list__link">
                                     {{ agency.website_link }}
                                 </a>
                             </div>
