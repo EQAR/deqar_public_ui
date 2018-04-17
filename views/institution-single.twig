@@ -7,6 +7,7 @@
 {% block content %}
 	<main class="u-padding">
 		<div class="l-two-column u-container">
+
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
 
@@ -24,6 +25,7 @@
 					</a>
 				{% endif %}
 			</div>
+
 
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
@@ -107,173 +109,172 @@
 
 
 
-<div class="accordion u-margin">
-    <div class="accordion__item">
-        <div class="accordion__definition js-accordion__definition accordion__definition--is-toggled">
-            Previous names and relationships
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
-            </svg>
-        </div>
+                <div class="accordion u-margin">
+                    <div class="accordion__item">
+                        <div class="accordion__definition js-accordion__definition accordion__definition--is-toggled">
+                            Previous names and relationships
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
+                                <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
+                            </svg>
+                        </div>
 
-        <div class="text accordion__description js-accordion__description" style="display: block;">
-            <ul>
-                <li>
-                    Known as
-                    {% for name in institution.names %}
-                        "{% if name.name_official %}{{ name.name_official }} /{% endif %}
-                        {% if name.name_official_transliterated %}{{ name.name_official_transliterated }} /{% endif %}
-                        {% if name.name_english %}{{ name.name_english }} /{% endif %}
-                        {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %}, {% endif %}{% endfor %}"
-
-                        {% if name.name_valid_to != null %}
-                            until {{ institution.historical_relationships[0].relationship_type }}
-                        {% endif %}
-
-                    {% endfor %}
-                </li>
-
-{# {{ dump( institution.historical_relationships[0].relationship_type ) }} #}
-<li><em>for all names[n] where name_valid_to is something else than null</em><br><strong>JURGEN: This happens nowhere?</strong></li>
-<li>{historical_relationships[0].relationship_type}
-    <a href="path/to/institution-page?id={historical_relationships[0].institution.id}">{historical_relationships[0].institution.name_primary}</a>
-</li>
-<li>… <em>relationship_type is a short word/phrase like “replaced”, “succeeded by”, “merged into”, …</em></li>
-<li>{historical_relationships[n].relationship_type} <a href="path/to/institution-page?id={historical_relationships[n].institution.id}">{historical_relationships[n].institution.name_primary}</a></li>
-            </ul>
-        </div>
-
-    </div>
-</div>
-
-
-<hr class="divider u-margin">
-
-<div class="text-fields u-margin">
-	<h2 class="subtitle text-fields__subtitle">National External Quality Assurance Requirements</h2>
-	<div class="text text-fields__text">
-        {% if institution.countries|length > 1 %}
-            <ul>
-                {% for country in institution.countries %}
-                    <li>
-                        {{ country.country.name_english }}<br>
-                        <ul>
-                            {% for requirement in country.country.qa_requirements %}
+                        <div class="text accordion__description js-accordion__description" style="display: block;">
+                            <ul>
                                 <li>
-                                    <strong>{{ requirement.qa_requirement }}</strong><br>
-                                    {{ requirement.qa_requirement_note }}
+                                    Known as
+                                    {% for name in institution.names %}
+                                        "{% if name.name_official %}{{ name.name_official }} /{% endif %}
+                                        {% if name.name_official_transliterated %}{{ name.name_official_transliterated }} /{% endif %}
+                                        {% if name.name_english %}{{ name.name_english }} /{% endif %}
+                                        {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %}, {% endif %}{% endfor %}"
+
+                                        {% if name.name_valid_to != null %}
+                                            until {{ institution.historical_relationships[0].relationship_type }}
+                                        {% endif %}
+
+                                    {% endfor %}
                                 </li>
-                            {% endfor %}
-                            <li>
-                                <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
-                                    Further information on external quality assurance in {{ country.country.name_english }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            {% for country in institution.countries %}
-                <ul>
-                    {% for requirement in country.country.qa_requirements %}
-                        <li>
-                            <strong>{{ requirement.qa_requirement }}</strong><br>
-                            {{ requirement.qa_requirement_note }}
-                        </li>
-                    {% endfor %}
-                    <li>
-                        <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
-                            Further information on external quality assurance in {{ country.country.name_english }}
-                        </a>
-                    </li>
-                </ul>
-            {% endfor %}
-        {% endif %}
-    </div>
-</div>
 
+                                {# {{ dump( institution.historical_relationships[0].relationship_type ) }} #}
+                                <li><em>for all names[n] where name_valid_to is something else than null</em><br><strong>JURGEN: This happens nowhere?</strong></li>
+                                <li>{historical_relationships[0].relationship_type}
+                                    <a href="path/to/institution-page?id={historical_relationships[0].institution.id}">{historical_relationships[0].institution.name_primary}</a>
+                                </li>
+                                <li>… <em>relationship_type is a short word/phrase like “replaced”, “succeeded by”, “merged into”, …</em></li>
+                                <li>{historical_relationships[n].relationship_type} <a href="path/to/institution-page?id={historical_relationships[n].institution.id}">{historical_relationships[n].institution.name_primary}</a></li>
 
+                            </ul>
+                        </div>
 
-<hr class="divider u-margin">
-<h2 class="subtitle text-fields__subtitle u-margin">External Quality Assurance Reports and Decisions</h2>
-
-<h3 class="subtitle text-fields__subtitle">Institutional level</h3>
-<div class="accordion u-margin">
-    {% if institution.reports %}
-        {% for result in institution.reports %}
-            <div class="accordion__item">
-                <div class="accordion__definition js-accordion__definition">
-                    {{ result.name }}
-                    {% if result.institution_relationship_context %}
-                        {% for context in result.institution_relationship_context %}
-                            {{ context.name_primary }}{% if loop.length != loop.index %} / {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    (by {{ result.agency_acronym }})
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                        <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
-                    </svg>
+                    </div>
                 </div>
-                <div class="accordion__description js-accordion__description">
-                    <ul class="info-list u-margin">
-                        <li class="info-list__item">
-                            <div class="info-list__term">Status</div>
-                            <div class="info-list__definition">{{ result.status }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Formal decision</div>
-                            <div class="info-list__definition">{{ result.decision }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Date</div>
-                            <div class="info-list__definition">{{ result.valid_from|date("d-m-Y") }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Valid until</div>
-                            <div class="info-list__definition">{{ result.valid_to|date("d-m-Y") }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Report and decision</div>
-                            <div class="info-list__definition">
-                                <ul class="documents">
-                                    {% for file in result.report_files %}
-                                        <li class="documents__item">
-                                            <a href="{{ file.file }}" target="_blank" rel="external" class="documents__link">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
-                                                    <polygon points="5 5 1 5 5 1 5 5"/>
-                                                    <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z"/>
-                                                    <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z"/>
-                                                    <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z"/>
-                                                    <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z"/>
-                                                    <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z"/>
-                                                </svg>
-                                                {{ file.file_display_name }}
-                                            </a>
+
+
+
+                <hr class="divider u-margin">
+                <div class="text-fields u-margin">
+                	<h2 class="subtitle text-fields__subtitle">National External Quality Assurance Requirements</h2>
+                	<div class="text text-fields__text">
+                        {% if institution.countries|length > 1 %}
+                            <ul>
+                                {% for country in institution.countries %}
+                                    <li>
+                                        {{ country.country.name_english }}<br>
+                                        <ul>
+                                            {% for requirement in country.country.qa_requirements %}
+                                                <li>
+                                                    <strong>{{ requirement.qa_requirement }}</strong><br>
+                                                    {{ requirement.qa_requirement_note }}
+                                                </li>
+                                            {% endfor %}
+                                            <li>
+                                                <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
+                                                    Further information on external quality assurance in {{ country.country.name_english }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            {% for country in institution.countries %}
+                                <ul>
+                                    {% for requirement in country.country.qa_requirements %}
+                                        <li>
+                                            <strong>{{ requirement.qa_requirement }}</strong><br>
+                                            {{ requirement.qa_requirement_note }}
                                         </li>
                                     {% endfor %}
+                                    <li>
+                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
+                                            Further information on external quality assurance in {{ country.country.name_english }}
+                                        </a>
+                                    </li>
                                 </ul>
-                            </div>
-                        </li>
-                    </ul>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No results found.</p>
-    {% endif %}
-</div>
 
 
 
+                <hr class="divider u-margin">
+                <h2 class="subtitle text-fields__subtitle u-margin">External Quality Assurance Reports and Decisions</h2>
+
+                <h3 class="subtitle text-fields__subtitle">Institutional level</h3>
+                <div class="accordion u-margin">
+                    {% if institution.reports %}
+                        {% for result in institution.reports %}
+                            <div class="accordion__item">
+                                <div class="accordion__definition js-accordion__definition">
+                                    {{ result.name }}
+                                    {% if result.institution_relationship_context %}
+                                        {% for context in result.institution_relationship_context %}
+                                            {{ context.name_primary }}{% if loop.length != loop.index %} / {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    (by {{ result.agency_acronym }})
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
+                                        <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
+                                    </svg>
+                                </div>
+                                <div class="accordion__description js-accordion__description">
+                                    <ul class="info-list u-margin">
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Status</div>
+                                            <div class="info-list__definition">{{ result.status }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Formal decision</div>
+                                            <div class="info-list__definition">{{ result.decision }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Date</div>
+                                            <div class="info-list__definition">{{ result.valid_from|date("d-m-Y") }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Valid until</div>
+                                            <div class="info-list__definition">{{ result.valid_to|date("d-m-Y") }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Report and decision</div>
+                                            <div class="info-list__definition">
+                                                <ul class="documents">
+                                                    {% for file in result.report_files %}
+                                                        <li class="documents__item">
+                                                            <a href="{{ file.file }}" target="_blank" rel="external" class="documents__link">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
+                                                                    <polygon points="5 5 1 5 5 1 5 5"/>
+                                                                    <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z"/>
+                                                                    <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z"/>
+                                                                    <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z"/>
+                                                                    <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z"/>
+                                                                    <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z"/>
+                                                                </svg>
+                                                                {{ file.file_display_name }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No results found.</p>
+                    {% endif %}
+                </div>
 
 
-<h3 class="subtitle text-fields__subtitle">Programme level</h3>
-<div class="accordion u-margin">
-    {% if institution.programmes %}
-        {% for result in institution.programmes %}
-            <div class="accordion__item">
-                <div class="accordion__definition js-accordion__definition">
+
+                <h3 class="subtitle text-fields__subtitle">Programme level</h3>
+                <div class="accordion u-margin">
+                    {% if institution.programmes %}
+                        {% for result in institution.programmes %}
+                            <div class="accordion__item">
+                                <div class="accordion__definition js-accordion__definition">
 {% for item in result.programme_names %}
     {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
 {% endfor %}
@@ -282,77 +283,77 @@
         {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
     {% endfor %}
 {% endif %}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                        <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
-                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
+                                        <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
+                                    </svg>
+                                </div>
+                                <div class="accordion__description js-accordion__description">
+                                    <ul class="info-list u-margin">
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Other names</div>
+                                            <div class="info-list__definition">
+                                                {% set i = 0 %}
+                                                {% for item in result.programme_names %}
+                                                    {% if item.name_is_primary != true %}
+                                                        {% set i = i + 1 %}
+                                                        {{ item.name }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% if i == 0 %} - {% endif %}
+                                            </div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Qualification</div>
+                                            <div class="info-list__definition">
+                                                {% for item in result.programme_names %}
+                                                    {{ item.qualification }}{% if loop.length != loop.index %}, {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">QF-EHEA level</div>
+                                            <div class="info-list__definition">
+                                                {{ result.qf_ehea_level }} <strong>{{ result.report.name }} by {{ result.report.agency_acronym }}</strong>
+                                            </div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Status</div>
+                                            <div class="info-list__definition">{{ result.report.status }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Formal decision</div>
+                                            <div class="info-list__definition">{{ result.report.decision }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Date</div>
+                                            <div class="info-list__definition">{{ result.report.valid_from|date("d-m-Y") }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Valid until</div>
+                                            <div class="info-list__definition">{{ result.report.valid_to|date("d-m-Y") }}</div>
+                                        </li>
+                                    </ul>
+
+
+                                    <h3 class="subtitle u-margin-s">Report and decision</h3>
+                                    <div class="text u-margin-s">
+                                        <ul>
+                                            {% for file in result.report.report_files %}
+                                                <li>
+                                                    <a href="{{ file.file }}" target="_blank" rel="external" title="View document {{ file.file_display_name }}">{{ file.file_display_name }}</a>
+                                                    ({% for lang in file.languages %}{{ lang }}{% endfor %})
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No results found.</p>
+                    {% endif %}
                 </div>
-                <div class="accordion__description js-accordion__description">
-                    <ul class="info-list u-margin">
-                        <li class="info-list__item">
-                            <div class="info-list__term">Other names</div>
-                            <div class="info-list__definition">
-                                {% set i = 0 %}
-                                {% for item in result.programme_names %}
-                                    {% if item.name_is_primary != true %}
-                                        {% set i = i + 1 %}
-                                        {{ item.name }}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if i == 0 %} - {% endif %}
-                            </div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Qualification</div>
-                            <div class="info-list__definition">
-                                {% for item in result.programme_names %}
-                                    {{ item.qualification }}{% if loop.length != loop.index %}, {% endif %}
-                                {% endfor %}
-                            </div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">QF-EHEA level</div>
-                            <div class="info-list__definition">
-                                {{ result.qf_ehea_level }} <strong>{{ result.report.name }} by {{ result.report.agency_acronym }}</strong>
-                            </div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Status</div>
-                            <div class="info-list__definition">{{ result.report.status }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Formal decision</div>
-                            <div class="info-list__definition">{{ result.report.decision }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Date</div>
-                            <div class="info-list__definition">{{ result.report.valid_from|date("d-m-Y") }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">Valid until</div>
-                            <div class="info-list__definition">{{ result.report.valid_to|date("d-m-Y") }}</div>
-                        </li>
-                    </ul>
-
-
-                    <h3 class="subtitle u-margin-s">Report and decision</h3>
-                    <div class="text u-margin-s">
-                        <ul>
-                            {% for file in result.report.report_files %}
-                                <li>
-                                    <a href="{{ file.file }}" target="_blank" rel="external" title="View document {{ file.file_display_name }}">{{ file.file_display_name }}</a>
-                                    ({% for lang in file.languages %}{{ lang }}{% endfor %})
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No results found.</p>
-    {% endif %}
-</div>
 
 
 
