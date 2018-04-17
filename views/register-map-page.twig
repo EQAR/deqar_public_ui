@@ -26,11 +26,15 @@
                     <ul class="agency-list">
 
                     {% if maptype == 'agencies' %}
-                        {% for country in countriesAll %}
+                        {% for agency in agencies %}
                             <li class="agency-list__item">
-                                <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
-                                    <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
-                                    {{ country.name_english }}
+                                <a href="/register/list/agency/?id={{ agency.id }}" class="agency-list__link">
+                                    <span class="agency-list__country">{{ agency.country.iso_3166_alpha2 }}</span>
+                                    {{ agency.acronym_primary }} - {{ agency.name_primary }}
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="agency-list__arrow">
+                                        <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                                    </svg>
                                 </a>
                             </li>
                         {% endfor %}
