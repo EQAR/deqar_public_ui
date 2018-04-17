@@ -35,16 +35,15 @@
                 {% endif %}
 
                 <ul class="country-list">
-                    {% for key,country in institutionsByCountry %}
-
+                    {% for country in countries %}
                         <li class="country-list__item">
-                            <a href="#" class="country-list__link">
-                                {{ key }} <span class="country-list__count">{{ country|length }}</span>
+                            <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" class="country-list__link">
+                                {{ country.name_english }} <span class="country-list__count">{{ country.agency_count }}</span>
                             </a>
                         </li>
-
                     {% endfor %}
                 </ul>
+
             </div>
 		</div>
 	</main>
