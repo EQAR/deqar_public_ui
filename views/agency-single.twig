@@ -35,7 +35,7 @@
                         <span class="label">Substantially compliant with European Standards and Guidelines</span>
                     </li>
                     <li class="l-label__item">
-                        <a href="" class="label label--qa-results">See QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
+                        <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
                     </li>
                 </ul>
 
