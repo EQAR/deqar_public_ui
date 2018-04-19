@@ -1,8 +1,8 @@
 <div class="image-accordion image-accordion--{{ block.image_size }} u-margin">
     <div class="image-accordion__container">
-        {% if block.image_size == 'portrait' %}
+        {% if block.image_size == 'landscape' %}
             <img src="{{ TimberImage(block.image)|resize(200, 150) }}" alt="{{ TimberImage(block.image).alt }}" class="image-accordion__image">
-        {% elseif block.image_size == 'landscape' %}
+        {% elseif block.image_size == 'portrait' %}
             <img src="{{ TimberImage(block.image)|resize(150, 200) }}" alt="{{ TimberImage(block.image).alt }}" class="image-accordion__image">
         {% else %}
             <img src="{{ TimberImage(block.image)|resize(160, 160) }}" alt="{{ TimberImage(block.image).alt }}" class="image-accordion__image">
