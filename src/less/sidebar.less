@@ -30,13 +30,14 @@
 }
     .sidebar__link--sub {
         position: relative;
+        padding-left: 36px;
         color: fade(@primary, 70%);
 
         &:before {
             content: '';
-            display: inline-block; vertical-align: middle;
+            display: block;
+            position: absolute; top: 10px; left: 0;
             width: 18px; height: 1px;
-            margin-right: 18px;
             background-color: fade(@primary, 30%);
         }
     }
