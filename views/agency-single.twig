@@ -100,10 +100,8 @@
                                             </svg>
                                             {{ decision.decision_date|date('d-m-Y') }} {{ decision.decision_type }}
                                         </a>
-                                    </li>
 
-                                    {% if decision.decision_file_extra != null %}
-                                        <li class="documents__item">
+                                        {% if decision.decision_file_extra != null %}
                                             <a href="{{ decision.decision_file_extra }}" rel="external" target="_blank" class="documents__link">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
                                                     <polygon points="5 5 1 5 5 1 5 5" fill="#ff8a00"/>
@@ -113,10 +111,12 @@
                                                     <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
                                                     <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
                                                 </svg>
-                                                {{ decision.decision_date|date('d-m-Y') }} {{ decision.decision_type }} - b
+                                                {{ decision.decision_date|date('d-m-Y') }} External Review Report
                                             </a>
-                                        </li>
-                                    {% endif %}
+                                        {% endif %}
+
+                                    </li>
+
                                 {% endfor %}
                             </ul>
                         </div>

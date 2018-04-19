@@ -8,6 +8,15 @@
     margin: -15px 0 15px 0;
 }
 
+    .image-accordion--portrait .image-accordion__image {
+        width: 120px; height: 90px;
+    }
+
+    .image-accordion--landscape .image-accordion__image {
+        width: 90px; height: 120px;
+    }
+
+
 .image-accordion__title {
     margin-bottom: 6px;
 }
@@ -38,6 +47,10 @@
         position: relative; 
         padding: 25px 25px 25px 135px;
     }
+
+        .image-accordion--landscape .image-accordion__container {
+            padding-left: 105px;
+        }
     
     .image-accordion__image {
         position: absolute; top: -15px; left: -15px;
@@ -55,4 +68,20 @@
     .image-accordion__container {
         padding-left: 180px;
     }
+
+        .image-accordion--portrait .image-accordion__container {
+            padding-left: 220px;
+        }
+
+        .image-accordion--portrait .image-accordion__image {
+            width: 200px; height: 150px;
+        }
+
+        .image-accordion--landscape .image-accordion__container {
+            padding-left: 170px;
+        }
+
+        .image-accordion--landscape .image-accordion__image {
+            width: 150px; height: 200px;
+        }
 }

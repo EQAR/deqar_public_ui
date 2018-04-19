@@ -19,27 +19,35 @@
     {% if navigation %}
         <ul class="sidebar__menu">
             {% for item in navigation %}
-                <li class="sidebar__item">
-                    <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link {{ item.id == post.id ? 'sidebar__link--active' }}">
-                        {{ fn('get_the_title', item) }}
-                    </a>
+                {% if item.get_field('hide_page') == 'true' %}
+                {% else %}
+                    <li class="sidebar__item">
+                        <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link {{ item.id == post.id ? 'sidebar__link--active' }}">
+                            {{ fn('get_the_title', item) }}
+                        </a>
 
-                    {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
-                        <ul class="sidebar__children">
-                            {% for item in item.children('page') %}
-                                <li class="sidebar__item">
-                                    <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
-                                        {% if item.id == 434 %}
-                                            {{ country.name_english }}  <!-- Single Country -->
-                                        {% else %}
-                                            {{ fn('get_the_title', item) }}
-                                        {% endif %}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
+                        {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
+                            <ul class="sidebar__children">
+                                {% for item in item.children('page') %}
+                                    {% if item.get_field('hide_page') == 'true' %}
+                                    {% else %}
+                                        <li class="sidebar__item">
+                                            <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
+                                                {% if item.id == 434 %}
+                                                    {{ country.name_english }}  <!-- Single Country -->
+                                                {% else %}
+                                                    {{ fn('get_the_title', item) }}
+                                                {% endif %}
+
+                                                {{ item.get_field('hide_page') == 'true' ? 'lekker hiden' }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endif %}
             {% endfor %}
         </ul>
     {% endif %}

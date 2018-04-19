@@ -46,12 +46,13 @@
     }
 
     .menu .menu-link--tertiary {
-        padding: 6px 25px;
+        position: relative;
+        padding: 6px 25px 6px 61px;
         color: fade(@primary, 70%);
 
         &:before {
             content: '';
-            display: inline-block; vertical-align: middle;
+            position: absolute; top: 16px; left: 25px;
             width: 18px; height: 1px;
             margin-right: 18px;
             background-color: fade(@primary, 30%);
@@ -71,6 +72,14 @@
     .menu .menu-link--tertiary {
         padding-left: 40px;
         padding-right: 40px;
+    }
+
+    .menu .menu-link--tertiary {
+        padding-left: 71px;
+
+        &:before {
+            left: 40px;
+        }
     }
 }
 
