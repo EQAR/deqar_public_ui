@@ -43,7 +43,7 @@
 				{% endif %}
 
 				{% if post.get_field('introduction_columns') %}
-					<hr class="divider u-margin">
+					<!-- <hr class="divider u-margin"> -->
 
 					<div class="l-text-columns">
 						{% for item in post.get_field('introduction_columns') %}
@@ -61,7 +61,7 @@
 										<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="read-more__arrow">
 											<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
 										</svg>
-										
+
 										{{ item.button['title'] }}
 									</a>
 								{% endif %}
@@ -83,7 +83,7 @@
 					See all
 				</a>
 			</header>
-			
+
 			<div class="u-margin-l">
 				<div class="l-article">
 					{% for post in posts %}
