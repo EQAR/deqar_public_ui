@@ -39,10 +39,10 @@
                     {% endif %}
 
                     {% if country.general_note %}
-                        <p class="u-margin-s">{{ country.general_note }}</p>
+                        <p class="u-margin">{{ country.general_note }}</p>
                     {% endif %}
 
-
+                    <p class="u-margin"></p>
 
 
                     <hr class="divider u-margin">
@@ -80,48 +80,61 @@
                     <h3 class="subtitle u-margin-s">Can higher education institutions choose a suitable EQAR-registered agency?</h3>
 
                     {% if country.external_QAA_is_permitted is not empty %}
-                        {% if country.external_QAA_is_permitted == 'no' %}
-                            <p class="u-margin-s">No</p>
-                        {% elseif country.external_QAA_is_permitted == 'yes' %}
-                            <p class="u-margin-s">Yes</p>
-                        {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
-                            <p class="u-margin-s">Yes, under certain conditions</p>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if country.external_QAA_note is not empty %}
-                        <p class="u-margin-s">{{ country.external_QAA_note|split(': ')[0] }}</p>
+                        <div class="text u-margin">
+                            {% if country.external_QAA_is_permitted == 'no' %}
+                                <p class="u-margin-xs"><strong>No.</strong></p>
+                            {% elseif country.external_QAA_is_permitted == 'yes' %}
+                                <p class="u-margin-xs"><strong>Yes:</strong><br>{{ country.external_QAA_note }}</p>
+                            {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                                <p class="u-margin-xs"><strong>Yes, under certain conditions:</strong><br>{{ country.external_QAA_note }}</p>
+                            {% endif %}
+                        </div>
                     {% endif %}
 
                     <div class="text u-margin">
                         <ul>
                             {% if country.eligibility is not empty %}
-                                <li>
+                                <li class="info-list__item">
                                     <p>
                                         <strong>Eligibility requirements for foreign agencies:</strong><br>
-                                        {{ country.eligibility }}
+                                        {{ country.eligibility|striptags('p') }}
                                     </p>
                                 </li>
                             {% endif %}
                             {% if country.conditions is not empty %}
-                                <li>
+                                <li class="info-list__item">
                                     <p>
                                         <strong>Conditions for the agencies’ work (e.g. criteria to be used):</strong><br>
-                                        {{ country.conditions }}
+                                        {{ country.conditions|striptags('p') }}
                                     </p>
                                 </li>
                             {% endif %}
                             {% if country.recognition is not empty %}
-                                <li>
+                                <li class="info-list__item">
                                     <p>
                                         <strong>Recognition of reviews carried out by foreign agencies:</strong><br>
-                                        {{ country.recognition }}
+                                        {{ country.recognition|striptags('p') }}
                                     </p>
                                 </li>
                             {% endif %}
                         </ul>
                     </div>
 
+                    <hr class="divider u-margin">
+
+                    <h3 class="subtitle u-margin-s">Further information</h3>
+                    <div class="text u-margin">
+                        <ul>
+                            {% for requirement in country.qa_requirements %}
+                                <li class="info-list__item">
+                                    <p>
+                                        <strong>{{ requirement.qa_requirement }}</strong><br>
+                                        {{ requirement.qa_requirement_note }}
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        <ul>
+                    </div>
 
                     <!-- <ul>
                         <li class="info-list__item">
@@ -160,8 +173,8 @@
                                 {% endfor %}
                             </div>
                         </li>
-
                     </ul> -->
+
 
 
                     <hr class="divider u-margin">
@@ -169,8 +182,14 @@
 
                     {% if country.european_approach_is_permitted is not empty %}
                         <div class="text u-margin">
-                            {{ country.european_approach_note|replace({'[not recognised]': '<strong>Not recognised:</strong>'}) }}
-                            <!-- {{ country.european_approach_note }} -->
+                            {% if country.european_approach_is_permitted == 'no' %}
+                                <p class="u-margin-s">No.</p>
+                            {% elseif country.european_approach_is_permitted == 'yes' %}
+                                <p class="u-margin-s">Yes:</p>
+                            {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
+                                <p class="u-margin-s">Yes, under certain conditions:</p>
+                            {% endif %}
+                            {{ country.european_approach_note|replace({'[not recognised]': '<strong>Not recognised.</strong>'}) }}
                         </div>
                     {% endif %}
 
