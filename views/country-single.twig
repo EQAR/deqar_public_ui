@@ -227,7 +227,7 @@
                                 {% for agency in country.agencies.byCountry %}
                                     <li>
                                         <p>
-                                            <a href="/register/list/agency/?id={{ agency.id }}"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</a>
+                                            <a href="{{ function('get_permalink', 223) }}/?id={{ agency.id }}"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</a>
                                         </p>
                                     </li>
                                 {% endfor %}
@@ -246,8 +246,8 @@
                             <ul>
                                 {% for agency in country.agencies.byFocusCountry %}
                                     <li>
-                                        <p>
-                                            <a href="/register/list/agency/?id={{ agency.id }}"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</a>
+                                        <p>223
+                                            <a href="{{ function('get_permalink', 223) }}?id={{ agency.id }}"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</a>
                                         </p>
                                     </li>
                                 {% endfor %}

@@ -38,7 +38,7 @@
                         <option value="">Select agency</option>
                         {% for agency in agencies %}
                             {% if formdata.agency == agency.id %}
-                                <option value="{{ agency.id }}" checked="selected">{{ agency.name_primary }}</option>
+                                <option value="{{ agency.id }}" selected="selected">{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
                             {% else %}
                                 <option value="{{ agency.id }}">{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
                             {% endif %}
