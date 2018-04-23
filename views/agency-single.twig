@@ -1,7 +1,17 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-    Agency: {{ agency.names[0].name_versions|last.name }}
+
+    Agency:
+    {% for name in agency.names %}
+        {% if name.name_valid_to == null %}
+            {% for version in name.name_versions %}
+                {% if version.name_is_primary == true %}
+                    {{ version.name }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
      - {{ wp_title }}
 {% endblock %}
 
@@ -28,7 +38,18 @@
 
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
-				<h1 class="title u-margin-xs">{{ agency.names[0].name_versions|last.acronym }} - {{ agency.names[0].name_versions|last.name }}</h1>
+
+				<h1 class="title u-margin-xs">
+                    {% for name in agency.names %}
+                        {% if name.name_valid_to == null %}
+                            {% for version in name.name_versions %}
+                                {% if version.name_is_primary == true %}
+                                    {{ version.name }}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </h1>
 
                 <ul class="l-label u-margin">
                     <li class="l-label__item">
@@ -40,6 +61,22 @@
                         </li>
                     {% endif %}
                 </ul>
+
+                <div class="text u-margin">
+                    <ul>
+                        {% for name in agency.names %}
+                            {% if name.name_valid_to != null %}
+                                {% for version in name.name_versions %}
+                                    {% if version.name_is_primary == true %}
+                                        <li>known as {{ version.name }} until {{ name.name_valid_to }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <h3 class="subtitle u-margin-s"></h3>
 
                 {% for name in agency.names[0].name_versions %}
                     {% if loop.index == 1 %}
