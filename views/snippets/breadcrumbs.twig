@@ -23,7 +23,11 @@
                     {{ country.name_english }}
                 {% elseif post.id == 418 %}
                     <!-- Single Institution -->
-                    {{ institution.names[0].name_english }}
+                    {% for name in institution.names %}
+                        {% if name.name_valid_to == null %}
+                            {{ name.name_official }}
+                        {% endif %}
+                    {% endfor %}
                 {% else %}
                     <!-- Single Page -->
                     {{ item.title }}
