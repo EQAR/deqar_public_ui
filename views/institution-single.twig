@@ -1,7 +1,11 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-    {{ institution.names[0].name_english }} - Institution
+    {% for name in institution.names %}
+        {% if name.name_valid_to == null %}
+            {{ name.name_official }} - Institution
+        {% endif %}
+    {% endfor %}
 {% endblock %}
 
 {% block content %}
