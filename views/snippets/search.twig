@@ -40,7 +40,7 @@
                             {% if formdata.agency == agency.id %}
                                 <option value="{{ agency.id }}" checked="selected">{{ agency.name_primary }}</option>
                             {% else %}
-                                <option value="{{ agency.id }}">{{ agency.name_primary }}</option>
+                                <option value="{{ agency.id }}">{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
                             {% endif %}
                         {% endfor %}
                     </select>
@@ -57,7 +57,7 @@
                     </select>
                 </div>
                 <div class="form__fieldset form__fieldset--half">
-                    <label for="report_year" class="form__label">Report Year</label>
+                    <label for="report_year" class="form__label">Report year</label>
                     {% set year = "now"|date('Y') %}
                     <select name="report_year">
                         <option value="">Select report year</option>
@@ -73,7 +73,7 @@
                 <div class="checkbox checkbox--horizontal">
                     <label class="checkbox__item">
                         <input type="radio" class="radio__input" value="" name="qf_ehea_level" {% if formdata.qf_ehea_level == '' %} checked="checked"{% endif %}>
-                        None
+                        Any
                     </label>
 
                     <label class="checkbox__item">
@@ -102,7 +102,7 @@
                 <div class="form__fieldset form__fieldset--half">
                     <label for="history" class="form__label">
                         <input type="checkbox" class="checkbox__input" value="true" name="history" id="history" {% if formdata.history == 'true' %} checked="checked"{% endif %}>
-                        Include Historical data
+                        Include historical data
                     </label>
                 </div>
                 <div class="form__fieldset form__fieldset--half">

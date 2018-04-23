@@ -34,9 +34,11 @@
                     <li class="l-label__item">
                         <span class="label">Substantially compliant with European Standards and Guidelines</span>
                     </li>
-                    <li class="l-label__item">
-                        <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
-                    </li>
+                    {% if agency.report_count > 0 %}
+                        <li class="l-label__item">
+                            <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
+                        </li>
+                    {% endif %}
                 </ul>
 
                 {% for name in agency.names[0].name_versions %}
@@ -128,10 +130,10 @@
 
                 <h2 class="subtitle u-margin-s">Information on the agency's work</h2>
                 <div class="text u-margin">
-                    {{ agency.description_note }}
+                    {{ agency.description_note|striptags('<br><p>') }}
 
                     {% if agency.specialisation_note %}
-                        <p>{{ agency.specialisation_note }}</p>
+                        <p>{{ agency.specialisation_note|striptags('<br><p>') }}</p>
                     {% endif %}
                 </div>
 
@@ -214,17 +216,18 @@
 
                 <hr class="divider u-margin">
 
-                <h2 class="subtitle u-margin-s">Activities within the scope of the {{ agency.names[0].name_versions|last.acronym }}</h2>
+                <h2 class="subtitle u-margin-s">Activities within the scope of ESG</h2>
                 <div class="text">
 
                     {% if agency.activities %}
                         <ul>
                             {% for activity in agency.activities %}
                                 <li>
-                                    {{ activity.activity }}
+                                    {{ activity.activity }}<br>
                                     {% if activity.reports_link %}
-                                        <a href="{{ activity.reports_link }}">Reports</a>
+                                        <a href="{{ activity.reports_link }}" rel="external" target="_blank">Reports</a> -
                                     {% endif %}
+                                    <a href="{{ function('get_permalink', 6) }}?query=&esg_activity={{ activity.id }}">QA results in DEQAR</a>
                                 </li>
                             {% endfor %}
                         </ul>

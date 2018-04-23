@@ -16,7 +16,7 @@ $context = Timber::get_context();
 
 $context['post']                    = new TimberPost();
 $context['institutions']            = $eqarApi->getInstitutions();
-$context['countries']               = $eqarApi->getCountries();
+$context['countries']               = $eqarApi->getCountriesByReports();
 $context['agencies']                = $eqarApi->getAgencies();
 $context['institutionsByCountry']   = $eqarApi->getInstitutionsByCountry();
 
@@ -48,6 +48,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $ordering       = 'DESC';
     $query          = false;
     $agency         = false;
+    $esg_activity   = false;
     $country        = false;
     $qf_ehea_level  = false;
     $status         = false;
@@ -71,6 +72,9 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     if ( !empty($_GET['agency']) ) {
         $agency = $_GET['agency'];
     }
+    if ( !empty($_GET['esg_activity']) ) {
+        $esg_activity = $_GET['esg_activity'];
+    }
     if ( !empty($_GET['country']) ) {
         $country = $_GET['country'];
     }
@@ -90,7 +94,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
         $history = $_GET['history'];
     }
 
-    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, $query, $agency, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
+    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, $query, $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
     $context['results'] = $results;
     $context['formdata'] = $_GET;
