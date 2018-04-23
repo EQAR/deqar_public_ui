@@ -308,7 +308,8 @@
                                         <li class="info-list__item">
                                             <div class="info-list__term">QF-EHEA level</div>
                                             <div class="info-list__definition">
-                                                {{ result.qf_ehea_level }} <strong>{{ result.report.name }} by {{ result.report.agency_acronym }}</strong>
+                                                {{ result.qf_ehea_level ? result.qf_ehea_level : '-' }}<br>
+                                                <small>{{ result.report.name }} by {{ result.report.agency_acronym }}</small>
                                             </div>
                                         </li>
                                         <li class="info-list__item">
