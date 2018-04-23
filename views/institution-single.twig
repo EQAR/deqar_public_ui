@@ -33,10 +33,20 @@
 
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
-				<h1 class="title u-margin-xs">{{ institution.names[0].name_english }}</h1>
 
-                <h3 class="subtitle u-margin-s">{{ institution.names[0].name_official }}</h3>
+                {% for name in institution.names %}
+                    {% if name.name_valid_to == null %}
+                        <h1 class="title u-margin-xs">{{ name.name_official }}</h1>
+                        <h3 class="subtitle">{{ name.name_english }}</h3>
+                        {% if name.name_versions %}
+                            {% for version in name.name_versions %}
+                                <h3 class="subtitle">{{ version.name }}</h3>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
 
+                <h3 class="subtitle u-margin-s"></h3>
                 <h3 class="subtitle u-margin-s">Basic information</h3>
 
                 <ul class="info-list u-margin">
