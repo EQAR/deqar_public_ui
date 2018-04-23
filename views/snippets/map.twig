@@ -89,7 +89,7 @@
             {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
                 {% if country.european_approach_is_permitted == 'yes' %}
                     {% set country_class = ' active' %}
-                {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
                     {% set country_class = ' active2' %}
                 {% else %}
                     {% set country_class = '' %}
@@ -103,7 +103,7 @@
             {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
                 {% if country.european_approach_is_permitted == 'yes' %}
                     {% set country_class = ' active' %}
-                {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
                     {% set country_class = ' active2' %}
                 {% else %}
                     {% set country_class = '' %}
