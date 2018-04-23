@@ -129,32 +129,38 @@
                         </div>
 
                         <div class="text accordion__description js-accordion__description" style="display: block;">
+
+                            <h3 class="text-fields__subtitle"><strong>Previous names</strong></h3>
                             <ul>
-                                <li>
-                                    Known as
-                                    {% for name in institution.names %}
-                                        "{% if name.name_official %}{{ name.name_official }} /{% endif %}
-                                        {% if name.name_official_transliterated %}{{ name.name_official_transliterated }} /{% endif %}
-                                        {% if name.name_english %}{{ name.name_english }} /{% endif %}
-                                        {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %}, {% endif %}{% endfor %}"
-
-                                        {% if name.name_valid_to != null %}
-                                            until {{ name.name_valid_to }}
-                                        {% endif %}
-
-                                    {% endfor %}
-                                </li>
-                                {% if name.name_valid_to != null %}
-                                    {% for relation in institution.historical_relationships %}
+                                {% for name in institution.names %}
+                                    {% if name.name_valid_to != null %}
                                         <li>
-                                            {{ relation.relationship_type }}
-                                            <a href="{{ function('get_permalink', 418) }}?id={{ relation.institution.id }}">{{ relation.institution.name_primary }}</a>
+                                            "{% if name.name_official %}{{ name.name_official }}{% endif %}
+                                            {% if name.name_official_transliterated %} / {{ name.name_official_transliterated }}{% endif %}
+                                            {% if name.name_english %} / {{ name.name_english }}{% endif %}
+                                            {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %} / {% endif %}{% endfor %}"
+                                            {% if name.name_valid_to != null %}
+                                                until {{ name.name_valid_to|date('d-m-Y') }}
+                                            {% endif %}
                                         </li>
-                                    {% endfor %}
-                                {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
-                        </div>
 
+                            <h3 class="text-fields__subtitle"><strong>Historical relationships</strong></h3>
+                            <ul>
+                                {% for historical_relationship in institution.historical_relationships|sort %}
+                                    <li>
+                                        {% if loop.index == 1 %}
+                                            spun off {{ historical_relationship.institution.name_primary }} on {{ historical_relationship.relationship_date|date('d-m-Y') }}<br>
+                                        {% else %}
+                                            succeded by {{ historical_relationship.institution.name_primary }} on {{ historical_relationship.relationship_date|date('d-m-Y') }}<br>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
                     </div>
                 </div>
 
