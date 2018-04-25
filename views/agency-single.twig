@@ -63,6 +63,20 @@
                 </ul>
 
                 <div class="text u-margin">
+                    <h3 class="subtitle u-margin-s"></h3>
+                    {% for name in agency.names %}
+                        {% if name.name_valid_to == null %}
+                            {% for version in name.name_versions %}
+                                {% if version.name_is_primary != true %}
+                                    <h3 class="subtitle u-margin-xs">{{ version.name }}</h3>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+
+                <div class="text u-margin">
                     <ul>
                         {% for name in agency.names %}
                             {% if name.name_valid_to != null %}
@@ -75,16 +89,6 @@
                         {% endfor %}
                     </ul>
                 </div>
-
-                <h3 class="subtitle u-margin-s"></h3>
-
-                {% for name in agency.names[0].name_versions %}
-                    {% if loop.index == 1 %}
-                        <h3 class="subtitle u-margin-s">{{ agency.names[0].name_versions|first.name }}</h3>
-                    {% else %}
-                        {{ name.name }} <br>
-                    {% endif %}
-                {% endfor %}
 
                 <p class="subtitle u-margin-s"></p>
 
@@ -255,21 +259,19 @@
 
                 <h2 class="subtitle u-margin-s">Activities within the scope of ESG</h2>
                 <div class="text">
-
                     {% if agency.activities %}
-                        <ul>
+                        <ul class="l-label u-margin">
                             {% for activity in agency.activities %}
-                                <li>
+                                <li class="l-label__item">
                                     {{ activity.activity }}<br>
                                     {% if activity.reports_link %}
-                                        <a href="{{ activity.reports_link }}" rel="external" target="_blank">Reports</a> -
+                                        <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label">Reports</a>
                                     {% endif %}
-                                    <a href="{{ function('get_permalink', 6) }}?query=&esg_activity={{ activity.id }}">QA results in DEQAR</a>
+                                    <a href="{{ function('get_permalink', 6) }}?query=&esg_activity={{ activity.id }}" class="label label--qa-results">QA results in DEQAR</a>
                                 </li>
                             {% endfor %}
                         </ul>
                     {% endif %}
-
                 </div>
 
 			</div>
