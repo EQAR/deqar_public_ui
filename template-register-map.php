@@ -49,7 +49,7 @@ if ( is_page('87') || is_page('420') ) {
 // $limit = 999, $offset = 0, $external_qaa = false, $european_approach = false, $eqar_governmental_member = false
 
 // Map Cross-Border Recognition
-elseif ( is_page('426') ) {
+elseif ( is_page('426') || is_page('1625') ) {
     $context['countries'] = $eqarApi->getCountries( 999, 0, $external_qaa = true );
     $context['maptype']   = 'cross-border';
     $context['maptype_list'] = $showList;
