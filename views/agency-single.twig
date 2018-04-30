@@ -55,11 +55,13 @@
                     <li class="l-label__item">
                         <span class="label">Substantially compliant with European Standards and Guidelines</span>
                     </li>
+                    {# 
                     {% if agency.report_count > 0 %}
                         <li class="l-label__item">
                             <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
                         </li>
                     {% endif %}
+                    #}
                 </ul>
 
                 <div class="text u-margin">
@@ -126,6 +128,7 @@
                             <!-- <a href="#" class="info-list__link">--</a> -->
                         </div>
                     </li>
+                    {# 
                     <li class="info-list__item">
                         <div class="info-list__term">External review reports and EQAR decisions</div>
                         <div class="info-list__definition">
@@ -164,6 +167,7 @@
                             </ul>
                         </div>
                     </li>
+                    #}
                 </ul>
 
 
@@ -267,7 +271,10 @@
                                     {% if activity.reports_link %}
                                         <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label">Reports</a>
                                     {% endif %}
+
+                                    {# 
                                     <a href="{{ function('get_permalink', 6) }}?query=&esg_activity={{ activity.id }}" class="label label--qa-results">QA results in DEQAR</a>
+                                    #}
                                 </li>
                             {% endfor %}
                         </ul>
