@@ -55,7 +55,7 @@
                     <li class="l-label__item">
                         <span class="label">Substantially compliant with European Standards and Guidelines</span>
                     </li>
-                    {# 
+                    {#
                     {% if agency.report_count > 0 %}
                         <li class="l-label__item">
                             <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
@@ -82,11 +82,19 @@
                     <ul>
                         {% for name in agency.names %}
                             {% if name.name_valid_to != null %}
-                                {% for version in name.name_versions %}
-                                    {% if version.name_is_primary == true %}
-                                        <li>known as {{ version.name }} until {{ name.name_valid_to }}</li>
-                                    {% endif %}
-                                {% endfor %}
+                                <li>
+                                    {% for version in name.name_versions %}
+                                        {% if version.name_is_primary == true %}
+                                            known as {{ version.name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for version in name.name_versions %}
+                                        {% if version.name_is_primary != true %}
+                                            / {{ version.name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                     until {{ name.name_valid_to }}
+                                </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -97,7 +105,7 @@
                 <ul class="info-list u-margin">
                     <li class="info-list__item">
                         <div class="info-list__term">Admission valid until</div>
-                        <div class="info-list__definition">{{ agency.registration_valid_to|date("d-m-Y") }} (listed since {{ agency.registration_start|date("d-m-Y") }})</div>
+                        <div class="info-list__definition">{{ agency.registration_valid_to|date("d/m/Y") }} (listed since {{ agency.registration_start|date("d/m/Y") }})</div>
                     </li>
                     {% if agency.registration_note %}
                         <li class="info-list__item">
@@ -128,7 +136,7 @@
                             <!-- <a href="#" class="info-list__link">--</a> -->
                         </div>
                     </li>
-                    {# 
+
                     <li class="info-list__item">
                         <div class="info-list__term">External review reports and EQAR decisions</div>
                         <div class="info-list__definition">
@@ -144,7 +152,7 @@
                                                 <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
                                                 <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
                                             </svg>
-                                            {{ decision.decision_date|date('d-m-Y') }} {{ decision.decision_type }}
+                                            {{ decision.decision_date|date('d/m/Y') }} {{ decision.decision_type }}
                                         </a>
 
                                         {% if decision.decision_file_extra != null %}
@@ -157,7 +165,7 @@
                                                     <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z" fill="#ff8a00"/>
                                                     <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z" fill="#ff8a00"/>
                                                 </svg>
-                                                {{ decision.decision_date|date('d-m-Y') }} External Review Report
+                                                {{ decision.decision_date|date('d/m/Y') }} External Review Report
                                             </a>
                                         {% endif %}
 
@@ -167,7 +175,7 @@
                             </ul>
                         </div>
                     </li>
-                    #}
+
                 </ul>
 
 
@@ -272,7 +280,7 @@
                                         <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label">Reports</a>
                                     {% endif %}
 
-                                    {# 
+                                    {#
                                     <a href="{{ function('get_permalink', 6) }}?query=&esg_activity={{ activity.id }}" class="label label--qa-results">QA results in DEQAR</a>
                                     #}
                                 </li>
