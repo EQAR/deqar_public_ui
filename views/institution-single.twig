@@ -140,7 +140,7 @@
                                             {% if name.name_english %} / {{ name.name_english }}{% endif %}
                                             {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %} / {% endif %}{% endfor %}"
                                             {% if name.name_valid_to != null %}
-                                                until {{ name.name_valid_to|date('d-m-Y') }}
+                                                until {{ name.name_valid_to|date('d/m/Y') }}
                                             {% endif %}
                                         </li>
                                     {% endif %}
@@ -152,9 +152,9 @@
                                 {% for historical_relationship in institution.historical_relationships|sort %}
                                     <li>
                                         {% if loop.index == 1 %}
-                                            spun off {{ historical_relationship.institution.name_primary }} on {{ historical_relationship.relationship_date|date('d-m-Y') }}<br>
+                                            spun off {{ historical_relationship.institution.name_primary }} on {{ historical_relationship.relationship_date|date('d/m/Y') }}<br>
                                         {% else %}
-                                            succeded by {{ historical_relationship.institution.name_primary }} on {{ historical_relationship.relationship_date|date('d-m-Y') }}<br>
+                                            succeded by {{ historical_relationship.institution.name_primary }} on {{ historical_relationship.relationship_date|date('d/m/Y') }}<br>
                                         {% endif %}
                                     </li>
                                 {% endfor %}
@@ -239,11 +239,11 @@
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Date</div>
-                                            <div class="info-list__definition">{{ result.valid_from|date("d-m-Y") }}</div>
+                                            <div class="info-list__definition">{{ result.valid_from|date("d/m/Y") }}</div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
-                                            <div class="info-list__definition">{{ result.valid_to|date("d-m-Y") }}</div>
+                                            <div class="info-list__definition">{{ result.valid_to|date("d/m/Y") }}</div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
@@ -336,11 +336,11 @@
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Date</div>
-                                            <div class="info-list__definition">{{ result.report.valid_from|date("d-m-Y") }}</div>
+                                            <div class="info-list__definition">{{ result.report.valid_from|date("d/m/Y") }}</div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
-                                            <div class="info-list__definition">{{ result.report.valid_to|date("d-m-Y") }}</div>
+                                            <div class="info-list__definition">{{ result.report.valid_to|date("d/m/Y") }}</div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
