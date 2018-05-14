@@ -82,11 +82,19 @@
                     <ul>
                         {% for name in agency.names %}
                             {% if name.name_valid_to != null %}
-                                {% for version in name.name_versions %}
-                                    {% if version.name_is_primary == true %}
-                                        <li>known as {{ version.name }} until {{ name.name_valid_to }}</li>
-                                    {% endif %}
-                                {% endfor %}
+                                <li>
+                                    {% for version in name.name_versions %}
+                                        {% if version.name_is_primary == true %}
+                                            known as {{ version.name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for version in name.name_versions %}
+                                        {% if version.name_is_primary != true %}
+                                            / {{ version.name }}
+                                        {% endif %}
+                                    {% endfor %}
+                                     until {{ name.name_valid_to }}
+                                </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -128,7 +136,7 @@
                             <!-- <a href="#" class="info-list__link">--</a> -->
                         </div>
                     </li>
-                    {#
+
                     <li class="info-list__item">
                         <div class="info-list__term">External review reports and EQAR decisions</div>
                         <div class="info-list__definition">
@@ -167,7 +175,7 @@
                             </ul>
                         </div>
                     </li>
-                    #}
+
                 </ul>
 
 
