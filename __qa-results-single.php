@@ -19,6 +19,10 @@ $context['post'] = new TimberPost();
 // Get the institution ID from the GET variable.
 $institutionId = $_GET['id'];
 
+
+var_dump( "qa-results-single.php" );
+exit;
+
 // Check if the institution is set.
 if ( isset($institutionId) && !empty($institutionId) ) {
 
