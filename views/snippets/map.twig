@@ -39,7 +39,6 @@
                 </a>
             {% endif %}
         {% endfor %}
-
         {% for country in countriesAll %}
             {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
                 <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
@@ -48,6 +47,7 @@
             {% endif %}
         {% endfor %}
     {% endif %}
+
 
     {% if maptype == 'cross-border' %}
         {% for country in countriesAll %}
@@ -65,7 +65,6 @@
             {% endif %}
         {% endfor %}
 
-
         {% for country in countriesAll %}
             {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
                 {% if country.external_QAA_is_permitted == 'yes' %}
@@ -80,9 +79,8 @@
                 </a>
             {% endif %}
         {% endfor %}
-
-
     {% endif %}
+
 
     {% if maptype == 'eaqejp' %}
         {% for country in countriesAll %}
@@ -115,6 +113,7 @@
         {% endfor %}
     {% endif %}
 
+
     {% if maptype == 'govermental' %}
         {% for country in countriesAll %}
             {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
@@ -142,7 +141,10 @@
         {% endfor %}
     {% endif %}
 
+
+
     <path class="eu nonehea" id="im" d="M1367.51,3132.39c-7.17,1.43-14.33,1.43-21.5,5.73-5.73,4.3-7.17,14.33-12.9,20.06-61.63,55.89,37.26,41.56,34.4-25.8Z"/>
     <path class="nonehea" id="sm" d="M3248.43,5271.5c2.87-4.3,2.87-10,7.17-12.9C3267.07,5247.14,3264.2,5291.56,3248.43,5271.5Z"/>
     <path class="nonehea" id="mc" d="M2511.79,5324.53c11.47,0,21.5-10,21.5-20.06s-10-18.63-21.5-18.63-21.5,8.6-21.5,18.63,10,20.06,21.5,20.06Z"/>
+
 </svg>

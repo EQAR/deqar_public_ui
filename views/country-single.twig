@@ -44,6 +44,22 @@
 
                     <p class="u-margin"></p>
 
+                    <hr class="divider u-margin">
+
+                    <h3 class="subtitle u-margin-s">National external quality assurance requirements</h3>
+                    <div class="text u-margin">
+                        <ul>
+                            {% for requirement in country.qa_requirements %}
+                                <li class="info-list__item">
+                                    <p>
+                                        <strong>{{ requirement.qa_requirement }}</strong><br>
+                                        {{ requirement.qa_requirement_note }}
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+
 
                     <hr class="divider u-margin">
 
@@ -118,22 +134,6 @@
                                 </li>
                             {% endif %}
                         </ul>
-                    </div>
-
-                    <hr class="divider u-margin">
-
-                    <h3 class="subtitle u-margin-s">National external quality assurance requirements</h3>
-                    <div class="text u-margin">
-                        <ul>
-                            {% for requirement in country.qa_requirements %}
-                                <li class="info-list__item">
-                                    <p>
-                                        <strong>{{ requirement.qa_requirement }}</strong><br>
-                                        {{ requirement.qa_requirement_note }}
-                                    </p>
-                                </li>
-                            {% endfor %}
-                        <ul>
                     </div>
 
                     <!-- <ul>
