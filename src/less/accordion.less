@@ -1,9 +1,14 @@
 .accordion {
     font-size: 15px;
+    position: relative
 }
 
 .accordion__item:not(:last-child) {
     margin-bottom: 10px;
+}
+
+.accordion__item.report-invalid {
+    display: none;
 }
 
 .accordion__definition {
@@ -28,12 +33,36 @@
         transform: rotate(180deg);
     }
 
-    
+.accordion__clock {
+    position: absolute; top: 16px; left: 15px;
+    fill: fade(@primary, 40%);
+}
+
+
 .accordion__description {
     display: none;
     background-color: #F6FBFE;
     padding: 15px 25px;
 }
+
+.report-switch {
+    position: absolute;
+    top: -37px;
+    right: 0px;
+    font-size: 14px;
+    cursor: pointer;
+}
+    .report-switch .js-report-witch {
+        display: inline-block;
+        width: auto;
+    }
+
+.report-invalid .accordion__definition {
+    padding-left: 45px;
+    // background-color: #FFF3D9;
+    // color: #FF8A00;
+}
+
 
 @media (min-width: 768px) {
 

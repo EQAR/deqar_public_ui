@@ -36,6 +36,23 @@
         .on('change', '.js-select-go', function(e) {
 			e.preventDefault();
 			window.location.href = $(this).val();
+		})
+
+        // Social Share
+        .on('change', '.js-report-witch', function(e) {
+			e.preventDefault();
+            console.log( this.checked );
+            var checked = this.checked;
+
+            console.log( $(this).parent().parent().find('.accordion__item.report-invalid') );
+
+            if ( checked == true ) {
+                $(this).parent().parent().find('.accordion__item.report-invalid').show();
+            }
+            if ( checked == false ) {
+                $(this).parent().parent().find('.accordion__item.report-invalid').hide();
+            }
+
 		});
 
 
