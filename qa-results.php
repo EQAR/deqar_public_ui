@@ -54,8 +54,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $status         = false;
     $report_year    = false;
     $focus_country_is_crossborder = false;
-    $history        = false;
-
+    $history        = true;
 
     if ( !empty($_GET['limit']) ) {
         $limit = $_GET['limit'];
@@ -90,16 +89,14 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     if ( !empty($_GET['focus_country_is_crossborder']) ) {
         $focus_country_is_crossborder = $_GET['focus_country_is_crossborder'];
     }
-    if ( !empty($_GET['history']) ) {
-        $history = $_GET['history'];
-    }
+    // if ( !empty($_GET['history']) ) {
+    //     $history = $_GET['history'];
+    // }
 
     $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, $query, $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
     $context['results'] = $results;
     $context['formdata'] = $_GET;
-
-    // var_dump( $results );
 
 }
 

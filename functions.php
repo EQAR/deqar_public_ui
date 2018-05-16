@@ -29,7 +29,7 @@
 			add_filter('timber_context', [$this, 'context']);
 			add_filter('get_twig', [$this, 'twig']);
 			add_filter('login_headerurl', [$this, 'login_home_url']);
-			
+
 			add_action('init', [$this, 'acf']);
 			add_action('login_enqueue_scripts', [$this, 'login_stylesheet']);
 
@@ -76,7 +76,7 @@
 				'description' => get_field('search_description', 'option'),
 				'button' => get_field('search_button', 'option'),
 			];
-			
+
 			$context['cta'] = [
 				'qa' => [
 					'title' => get_field('qa_cta_title', 'option'),
@@ -89,11 +89,11 @@
 					'link' => get_field('agency_cta_link', 'option'),
 				]
             ];
-            
+
             $context['login'] = [
                 'internal_area' => get_field('internal_area', 'option'),
 			];
-			
+
 			$context['cookie'] = [
                 'message' => get_field('cookie_message', 'option'),
             ];
@@ -116,7 +116,7 @@
 					'capability'	=> 'edit_posts',
 					'redirect'		=> false
 				]);
-				
+
 				acf_add_options_sub_page([
 					'page_title' 	=> 'Agencies',
 					'menu_title' 	=> 'Agencies',
