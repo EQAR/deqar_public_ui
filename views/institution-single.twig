@@ -119,7 +119,6 @@
                             {% set prevNames = prevNames|merge([name]) %}
                         {% endif %}
                     {% endfor %}
-                    {#{ dump( prevNames ) }#}
 
                     {% if prevNames %}
                         <li class="info-list__item">
@@ -249,17 +248,30 @@
                 </div>
 
 
-{{ dump( institution.reports ) }}
+
 
                 <hr class="divider u-margin">
                 <h2 class="subtitle text-fields__subtitle u-margin">External Quality Assurance Reports and Decisions</h2>
 
                 <h3 class="subtitle text-fields__subtitle">Institutional level</h3>
                 <div class="accordion u-margin">
+
+                    <label for="show-invalid-reports" class="report-switch">
+                        <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" class="js-report-witch">
+                        Include invalid reports
+                    </label>
+
                     {% if institution.reports %}
                         {% for result in institution.reports %}
-                            <div class="accordion__item">
+                            <div class="accordion__item{% if result.report_valid == false %} report-invalid{% else %} report-valid{% endif %}">
                                 <div class="accordion__definition js-accordion__definition">
+                                    {% if result.report_valid == false %}
+                                        <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
+                                            <path d="M12,0 C7.03,0 3,4.03 3,9 L0,9 L3.89,12.89 L3.96,13.03 L8,9 L5,9 C5,5.13 8.13,2 12,2 C15.87,2 19,5.13 19,9 C19,12.87 15.87,16 12,16 C10.07,16 8.32,15.21 7.06,13.94 L5.64,15.36 C7.27,16.99 9.51,18 12,18 C16.97,18 21,13.97 21,9 C21,4.03 16.97,0 12,0 Z" id="Path"></path>
+                                            <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
+                                        </svg>
+                                    {% endif %}
+
                                     {{ result.name }}{% if result.institution_relationship_context %}{% for context in result.institution_relationship_context %}, {{ context.name_primary }}{% endfor %}{% endif %} (by {{ result.agency_acronym }})
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                                         <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
@@ -318,12 +330,26 @@
                 </div>
 
 
+
                 <h3 class="subtitle text-fields__subtitle">Programme level</h3>
                 <div class="accordion u-margin">
+
+                    <label for="show-invalid-programme" class="report-switch">
+                        <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="" class="js-report-witch">
+                        Include invalid reports
+                    </label>
+
                     {% if institution.programmes %}
                         {% for result in institution.programmes %}
-                            <div class="accordion__item">
+                            <div class="accordion__item{% if result.report.report_valid == false %} report-invalid{% else %} report-valid{% endif %}">
                                 <div class="accordion__definition js-accordion__definition">
+                                    {% if result.report.report_valid == false %}
+                                        <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
+                                            <path d="M12,0 C7.03,0 3,4.03 3,9 L0,9 L3.89,12.89 L3.96,13.03 L8,9 L5,9 C5,5.13 8.13,2 12,2 C15.87,2 19,5.13 19,9 C19,12.87 15.87,16 12,16 C10.07,16 8.32,15.21 7.06,13.94 L5.64,15.36 C7.27,16.99 9.51,18 12,18 C16.97,18 21,13.97 21,9 C21,4.03 16.97,0 12,0 Z" id="Path"></path>
+                                            <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
+                                        </svg>
+                                    {% endif %}
+
 {% for item in result.programme_names %}
     {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
 {% endfor %}

@@ -107,7 +107,7 @@ class EqarApi {
     public function getInstitutions( $limit = 999, $offset = 0, $ordering = 'DESC', $query = false, $agency = false, $esg_activity = false, $country = false, $qf_ehea_level = false, $status = false, $report_year = false, $focus_country_is_crossborder = false, $history = false )
     {
 
-        $path   = 'institutions/?limit=' . $limit . '&offset=' . $offset .'&ordering=' . $ordering .'&query=' . $query . '&agency=' . $agency . '&esg_activity=' . $esg_activity . '&country=' . $country . '&qf_ehea_level=' . $qf_ehea_level . '&status=' . $status . '&report_year=' . $report_year . '&focus_country_is_crossborder=' . $focus_country_is_crossborder . '&history=' . $history;
+        $path   = 'institutions/?limit=' . $limit . '&offset=' . $offset .'&ordering=' . $ordering .'&query=' . $query . '&agency=' . $agency . '&esg_activity=' . $esg_activity . '&country=' . $country . '&qf_ehea_level=' . $qf_ehea_level . '&status=' . $status . '&report_year=' . $report_year . '&focus_country_is_crossborder=' . $focus_country_is_crossborder;
 
         $api    = $this->eqar( $path );
         $result = $api->get('');
@@ -130,7 +130,7 @@ class EqarApi {
     public function getReportInstitutionalByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/institutional/by-institution/' . $institutionId . '/?history=' . $history;
+        $path   = 'reports/institutional/by-institution/' . $institutionId . '/?offset=0';
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -152,7 +152,7 @@ class EqarApi {
     public function getReportProbrammesByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/programme/by-institution/' . $institutionId . '/?history=' . $history;
+        $path   = 'reports/programme/by-institution/' . $institutionId . '/?offset=0';
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
