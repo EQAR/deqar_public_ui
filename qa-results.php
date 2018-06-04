@@ -15,10 +15,10 @@ $eqarApi = new EqarApi();
 $context = Timber::get_context();
 
 $context['post']                    = new TimberPost();
-$context['institutions']            = $eqarApi->getInstitutions();
+// $context['institutions']            = $eqarApi->getInstitutions();
 $context['countries']               = $eqarApi->getCountriesByReports();
-$context['agencies']                = $eqarApi->getAgencies();
-$context['institutionsByCountry']   = $eqarApi->getInstitutionsByCountry();
+// $context['agencies']                = $eqarApi->getAgencies();
+// $context['institutionsByCountry']   = $eqarApi->getInstitutionsByCountry();
 
 
 
@@ -93,7 +93,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     //     $history = $_GET['history'];
     // }
 
-    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, $query, $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
+    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
     $context['results'] = $results;
     $context['formdata'] = $_GET;
