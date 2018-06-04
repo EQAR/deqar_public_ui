@@ -130,7 +130,7 @@ class EqarApi {
     public function getReportInstitutionalByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/institutional/by-institution/' . $institutionId . '/?offset=0';
+        $path   = 'reports/institutional/by-institution/' . $institutionId . '/?limit=200&offset=0';
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
@@ -152,7 +152,7 @@ class EqarApi {
     public function getReportProbrammesByInstitution( $institutionId = null, $history = false )
     {
 
-        $path   = 'reports/programme/by-institution/' . $institutionId . '/?offset=0';
+        $path   = 'reports/programme/by-institution/' . $institutionId . '/?limit=200&offset=0';
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
