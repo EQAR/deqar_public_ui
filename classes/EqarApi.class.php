@@ -107,7 +107,7 @@ class EqarApi {
     public function getInstitutions( $limit = 999, $offset = 0, $ordering = 'DESC', $query = false, $agency = false, $esg_activity = false, $country = false, $qf_ehea_level = false, $status = false, $report_year = false, $focus_country_is_crossborder = false, $history = false )
     {
 
-        $path   = 'institutions/?limit=' . $limit . '&offset=' . $offset .'&ordering=' . $ordering .'&query=' . $query . '&agency=' . $agency . '&esg_activity=' . $esg_activity . '&country=' . $country . '&qf_ehea_level=' . $qf_ehea_level . '&status=' . $status . '&report_year=' . $report_year . '&focus_country_is_crossborder=' . $focus_country_is_crossborder;
+        $path   = 'institutions/?limit=' . $limit . '&offset=' . $offset .'&ordering=' . $ordering .'&query=' . $query . '&agency=' . $agency . '&esg_activity=' . $esg_activity . '&country=' . $country . '&qf_ehea_level=' . $qf_ehea_level . '&status=' . $status . /*'&report_year=' . $report_year . -- emergency */ '&focus_country_is_crossborder=' . $focus_country_is_crossborder . '&foo=bar'; // CT - added junk parameter to dump .json added
 
         $api    = $this->eqar( $path );
         $result = $api->get('');
@@ -179,7 +179,7 @@ class EqarApi {
             $path       = 'agencies/' . $agencyId . '/?history=' . $history;
             $api        = $this->eqar( $path );
             $result     = $api->get('');
-            $countries  = $this->getAgencyCountries( $agencyId, true );
+            $countries  = $this->getAgencyCountries( $agencyId, 'true' ); //CT added quotes
 
             if($result->info->http_code == 200) {
                 $output = $result->decode_response();
@@ -354,7 +354,7 @@ class EqarApi {
     public function getAgencyCountries( $agencyId = null, $history = false )
     {
 
-        $path   = 'countries/by-agency-focus/' . $agencyId . '/?limit=999&offset=0&history=' . $history;
+        $path   = 'countries/by-agency-focus/' . $agencyId . '/?limit=999&offset=0&history=' . $history . '&foo=bar'; //CT added junk parameter
         $api    = $this->eqar( $path );
         $result = $api->get('');
 
