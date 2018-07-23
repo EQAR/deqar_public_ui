@@ -63,7 +63,7 @@ class EqarApi
             $programmes = $this->getReportProbrammesByInstitution($institutionId);
             $programmesHistorical = $this->getReportProbrammesByInstitution($institutionId, true);
 
-            $path = 'institutions/' . $institutionId . '/?history=' . $history;
+            $path = 'institutions/' . rawurlencode($institutionId) . '/?history=' . rawurlencode($history);
             $api = $this->eqar($path);
             $result = $api->get('');
 
@@ -107,7 +107,7 @@ class EqarApi
     public function getInstitutions($limit = 999, $offset = 0, $ordering = 'DESC', $query = false, $agency = false, $esg_activity = false, $country = false, $qf_ehea_level = false, $status = false, $report_year = false, $focus_country_is_crossborder = false, $history = false)
     {
 
-        $path = 'institutions/?limit=' . $limit . '&offset=' . $offset . '&ordering=' . $ordering . '&query=' . $query . '&agency=' . $agency . '&esg_activity=' . $esg_activity . '&country=' . $country . '&qf_ehea_level=' . $qf_ehea_level . '&status=' . $status . /*'&report_year=' . $report_year . -- emergency */ '&focus_country_is_crossborder=' . $focus_country_is_crossborder . '&foo=bar'; // CT - added junk parameter to dump .json added
+        $path = 'institutions/?limit=' . rawurlencode($limit) . '&offset=' . rawurlencode($offset) . '&ordering=' . rawurlencode($ordering) . '&query=' . rawurlencode($query) . '&agency=' . rawurlencode($agency) . '&esg_activity=' . rawurlencode($esg_activity) . '&country=' . rawurlencode($country) . '&qf_ehea_level=' . rawurlencode($qf_ehea_level) . '&status=' . rawurlencode($status) . /*'&report_year=' . rawurlencode($report_year) . -- emergency */ '&focus_country_is_crossborder=' . rawurlencode($focus_country_is_crossborder) . '&foo=bar'; // CT - added junk parameter to dump .json added
 
         $api = $this->eqar($path);
         $result = $api->get('');
@@ -130,7 +130,7 @@ class EqarApi
     public function getReportInstitutionalByInstitution($institutionId = null, $history = false)
     {
 
-        $path = 'reports/institutional/by-institution/' . $institutionId . '/?limit=200&offset=0';
+        $path = 'reports/institutional/by-institution/' . rawurlencode($institutionId) . '/?limit=200&offset=0';
         $api = $this->eqar($path);
         $result = $api->get('');
 
@@ -152,7 +152,7 @@ class EqarApi
     public function getReportProbrammesByInstitution($institutionId = null, $history = false)
     {
 
-        $path = 'reports/programme/by-institution/' . $institutionId . '/?limit=200&offset=0';
+        $path = 'reports/programme/by-institution/' . rawurlencode($institutionId) . '/?limit=200&offset=0';
         $api = $this->eqar($path);
         $result = $api->get('');
 
@@ -176,7 +176,7 @@ class EqarApi
 
         if (isset($agencyId) && !empty($agencyId)) {
 
-            $path = 'agencies/' . $agencyId . '/?history=' . $history;
+            $path = 'agencies/' . rawurlencode($agencyId) . '/?history=' . rawurlencode($history);
             $api = $this->eqar($path);
             $result = $api->get('');
             $countries = $this->getAgencyCountries($agencyId, 'true'); //CT added quotes
@@ -223,7 +223,7 @@ class EqarApi
     public function getAgenciesByCountry($countryId = null, $history = false)
     {
 
-        $path = 'agencies/based-in/' . $countryId . '/?limit=999&offset=0&history=' . $history;
+        $path = 'agencies/based-in/' . rawurlencode($countryId) . '/?limit=999&offset=0&history=' . rawurlencode($history);
         $api = $this->eqar($path);
         $result = $api->get('');
 
@@ -245,7 +245,7 @@ class EqarApi
     public function getAgenciesByFocusCountry($countryId = null, $history = false)
     {
 
-        $path = 'agencies/focusing-to/' . $countryId . '/?limit=999&offset=0&history=' . $history;
+        $path = 'agencies/focusing-to/' . rawurlencode($countryId) . '/?limit=999&offset=0&history=' . rawurlencode($history);
         $api = $this->eqar($path);
         $result = $api->get('');
 
@@ -272,7 +272,7 @@ class EqarApi
         $byFocusCountry = $this->getAgenciesByFocusCountry($countryId);
         $byFocusCountryHistory = $this->getAgenciesByFocusCountry($countryId, true);
 
-        $path = 'countries/' . $countryId . '/?history=' . $history;
+        $path = 'countries/' . rawurlencode($countryId) . '/?history=' . rawurlencode($history);
         $api = $this->eqar($path);
         $result = $api->get('');
 
@@ -312,7 +312,7 @@ class EqarApi
         $eqar_governmental_member = false
     ) {
 
-        $path = 'countries/?limit=' . $limit . '&offset=' . $offset . '&external_qaa=' . $external_qaa . '&european_approach=' . $european_approach . '&eqar_governmental_member=' . $eqar_governmental_member;
+        $path = 'countries/?limit=' . rawurlencode($limit) . '&offset=' . rawurlencode($offset) . '&external_qaa=' . rawurlencode($external_qaa) . '&european_approach=' . rawurlencode($european_approach) . '&eqar_governmental_member=' . rawurlencode($eqar_governmental_member);
         $api = $this->eqar($path);
         $result = $api->get('');
 
@@ -354,7 +354,7 @@ class EqarApi
     public function getAgencyCountries($agencyId = null, $history = false)
     {
 
-        $path = 'countries/by-agency-focus/' . $agencyId . '/?limit=999&offset=0&history=' . $history . '&foo=bar'; //CT added junk parameter
+        $path = 'countries/by-agency-focus/' . rawurlencode($agencyId) . '/?limit=999&offset=0&history=' . $history . '&foo=bar'; //CT added junk parameter
         $api = $this->eqar($path);
         $result = $api->get('');
 
