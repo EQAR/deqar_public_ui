@@ -18,19 +18,14 @@ class EqarApi {
     const EQARFORMAT  = 'json';
 
     /**
-     * cUrl Bearer auth token
-     * @var string
-     */
-    const EQARAUTHKEY = '03a64a808705672b4fc61f0da1fe28d430250cd4';
-
-
-    /**
      * Construct the main rest client
      * @param   string      $path   Api query after the base path
      * @return  RestClient          The RestClient return object
      */
     public function eqar( $path = false ) {
-
+        if (!defined('EQARAUTHKEY')) {
+            throw new \Exception('Missing EQARAUTHKEY in wp-config.php');
+        }
         if ( empty($path) ) {
             return false;
         }
@@ -38,7 +33,7 @@ class EqarApi {
         $api = new RestClient([
             'base_url'  => self::EQARBASEURL . $path,
             'format'    => self::EQARFORMAT,
-            'headers'   => [ 'Authorization' => 'Bearer ' . self::EQARAUTHKEY ],
+            'headers'   => [ 'Authorization' => 'Bearer ' . constant('EQARAUTHKEY') ],
         ]);
 
         return $api;
