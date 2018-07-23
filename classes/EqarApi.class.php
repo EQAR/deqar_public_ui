@@ -33,7 +33,10 @@ class EqarApi {
         $api = new RestClient([
             'base_url'  => self::EQARBASEURL . $path,
             'format'    => self::EQARFORMAT,
-            'headers'   => [ 'Authorization' => 'Bearer ' . constant('EQARAUTHKEY') ],
+            'headers'   => [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . constant('EQARAUTHKEY'),
+            ],
         ]);
 
         return $api;
