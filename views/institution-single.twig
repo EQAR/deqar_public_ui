@@ -71,6 +71,22 @@
                             {% endif %}
                         </div>
                     </li>
+
+                    {% if institution.founding_date or institution.closure_date %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Dates of existence</div>
+                            <div class="info-list__definition">
+                                {% if institution.founding_date %}
+                                    {{ institution.founding_date }}
+                                {% endif %}
+                                {% if institution.closure_date %}
+                                    - {{ institution.closure_date }}
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endif %}
+
+
                     <li class="info-list__item">
                         <div class="info-list__term">QF-EHEA levels</div>
                         <div class="info-list__definition">
