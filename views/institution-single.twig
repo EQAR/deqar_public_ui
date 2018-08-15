@@ -3,7 +3,7 @@
 {% block title %}
     {% for name in institution.names %}
         {% if name.name_valid_to == null %}
-            {{ name.name_official }} - Institution
+            {{ name.name_english }} - Institution
         {% endif %}
     {% endfor %}
 {% endblock %}
@@ -36,8 +36,8 @@
 
                 {% for name in institution.names %}
                     {% if name.name_valid_to == null %}
-                        <h1 class="title u-margin-xs">{{ name.name_official }}</h1>
-                        <h3 class="subtitle">{{ name.name_english }}</h3>
+                        <h1 class="title u-margin-xs">{{ name.name_english }}</h1>
+                        <h3 class="subtitle">{{ name.name_official }}</h3>
                         {% if name.name_versions %}
                             {% for version in name.name_versions %}
                                 <h3 class="subtitle">{{ version.name }}</h3>
