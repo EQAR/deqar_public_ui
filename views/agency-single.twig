@@ -130,8 +130,9 @@
                     <li class="info-list__item">
                         <div class="info-list__term">Reports by the agency</div>
                         <div class="info-list__definition">
-                            --
-                            <!-- <a href="#" class="info-list__link">--</a> -->
+                            {% if agency.reports_link %}
+                                <a href="{{ agency.reports_link }}" target="_blank" class="info-list__link">{{ agency.reports_link }}</a>
+                            {% endif %}
                         </div>
                     </li>
 
