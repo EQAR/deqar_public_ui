@@ -266,16 +266,24 @@
 
 
 
+
+
                 <hr class="divider u-margin">
                 <h2 class="subtitle text-fields__subtitle u-margin">External Quality Assurance Reports and Decisions</h2>
 
                 <h3 class="subtitle text-fields__subtitle">Institutional level</h3>
-                <div class="accordion u-margin">
+                <div class="accordion u-margin reports-institutional-container">
 
-                    <label for="show-invalid-reports" class="report-switch">
-                        <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" class="js-report-witch">
-                        Include historic reports
-                    </label>
+                    {% if institution.reports %}
+                        {% for result in institution.reports %}
+                            {% if result.report_valid == false %}
+                                <label for="show-invalid-reports" class="report-switch">
+                                    <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" checked="checked" class="js-report-witch">
+                                    show historic reports
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
 
                     {% if institution.reports %}
                         {% for result in institution.reports %}
@@ -358,12 +366,19 @@
 
 
                 <h3 class="subtitle text-fields__subtitle">Programme level</h3>
-                <div class="accordion u-margin">
+                <div class="accordion u-margin reports-programme-container">
 
-                    <label for="show-invalid-programme" class="report-switch">
-                        <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="" class="js-report-witch">
-                        Include historic reports
-                    </label>
+
+                    {% if institution.programmes %}
+                        {% for result in institution.programmes %}
+                            {% if result.report.report_valid == false %}
+                                <label for="show-invalid-programme" class="report-switch">
+                                    <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="true" checked="checked" class="js-report-witch">
+                                    show historic reports
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
 
                     {% if institution.programmes %}
                         {% for result in institution.programmes %}
@@ -377,7 +392,7 @@
                                     {% endif %}
 
 {% for item in result.programme_names %}
-    {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
+    {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %} (by {{ result.report.agency_acronym }})
 {% endfor %}
 {% if result.report.institution_relationship_context %},
     {% for item in result.report.institution_relationship_context %}
@@ -418,7 +433,7 @@
 
                                         <li class="info-list__item">
                                             <div class="info-list__term">External quality assurance</div>
-                                            <div class="info-list__definition">{{ result.report.name }} by {{ result.report.agency_acronym }}</div>
+                                            <div class="info-list__definition">{{ result.report.name }} by <a href="/register/map/agency/?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
                                         </li>
 
                                         <li class="info-list__item">
