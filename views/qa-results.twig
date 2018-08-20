@@ -9,7 +9,12 @@
 
             {#{ dump( countries ) }#}
             {#{ dump( institutions ) }#}
-            {#{ dump( institutionsByCountry ) }#}
+
+            <!-- {{ dump( pagination ) }}
+            {{ dump( formdata ) }} -->
+
+
+
 
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
@@ -24,7 +29,7 @@
                 {% if results %}
 
                     {% if formdata.query %}
-                        <h2 class="title title__small">{{ results|length }} institutions matching the term "{{ formdata.query }}":</h2>
+                        <h2 class="title title__small">{{ total }} institutions matching the term "{{ formdata.query }}":</h2>
                     {% elseif formdata.country %}
 
                         {% set selected_country = "none" %}
@@ -34,7 +39,7 @@
                             {% endif %}
                         {% endfor %}
 
-                        <h2 class="title title__small">{{ results|length }} institutions matching the country {{ selected_country }}</h2>
+                        <h2 class="title title__small">{{ total }} institutions matching the country {{ selected_country }}</h2>
                     {% endif %}
 
                     <div class=" u-margin">
@@ -56,6 +61,27 @@
                             {% endfor %}
                         </ul>
                     </div>
+
+
+                    {% set url = '?' %}
+
+                    {% for key, val in formdata %}
+                        {% if key != 'pagin' %}
+                            {% set url = url ~ key ~ '=' ~ val %}
+                            {% if not loop.last %}
+                                {% set url = url ~ '&' %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <ul class="pagination">
+                        <li class="pagination__item"><a href="{{ url }}&pagin=1">&laquo;</a></li>
+                        {% for item in 1..pagination.total %}
+                            <li class="pagination__item"><a class="pagination__link{% if loop.index == pagination.current %} current{% endif %}" href="{{ url }}&pagin={{ item }}">{{ item }}</a></li>
+                        {% endfor %}
+                        <li class="pagination__item"><a href="{{ url }}&pagin={{ pagination.total }}">&raquo;</a></li>
+                    </ul>
+
                 {% else %}
                     {% if formdata %}
                         <h2 class="title u-margin">No results found matching your criteria</h2>

@@ -46,6 +46,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $limit          = 999;
     $offset         = 0;
     $ordering       = 'DESC';
+    $pagin          = 1;
     $query          = false;
     $agency         = false;
     $esg_activity   = false;
@@ -61,6 +62,9 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     }
     if ( !empty($_GET['offset']) ) {
         $offset = $_GET['offset'];
+    }
+    if ( !empty($_GET['pagin']) ) {
+        $pagin = $_GET['pagin'];
     }
     if ( !empty($_GET['ordering']) ) {
         $ordering = $_GET['ordering'];
@@ -93,10 +97,36 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     //     $history = $_GET['history'];
     // }
 
+
+
     $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
-    $context['results'] = $results;
-    $context['formdata'] = $_GET;
+    $perPage = 20;
+
+    $total   = count($results);
+    $skip    = $pagin * $perPage;
+    $paged   = array_slice ( $results, $skip, $perPage );
+    $pages   = intval( ceil($total / $perPage) -1 );
+
+
+    $pagination = [
+        'total'     => $pages,
+        'prev'      => ($pagin - 1),
+        'current'   => $pagin,
+        'next'      => ($pagin + 1),
+        'step'      => $perPage,
+    ];
+
+    $context['total']       = $total;
+    $context['pagination']  = $pagination;
+    $context['results']     = $paged;
+    $context['formdata']    = $_GET;
+
+    // var_dump( $pages );
+    // var_dump( $pagination );
+    // var_dump( $total );
+    // exit;
+
 
 }
 
