@@ -46,7 +46,7 @@
                         <ul class="agency-list">
                             {% for institution in results %}
                                 <li class="agency-list__item">
-                                    <a href="{{ function('get_permalink', 418) }}/?id={{ institution.id }}" class="agency-list__link">
+                                    <a href="{{ function('get_permalink', 418) }}?id={{ institution.id }}" class="agency-list__link">
                                         {{ institution.name_primary }}
                                         {% if institution.hierarchical_relationships.part_of != null %}
                                             {% for item in institution.hierarchical_relationships.part_of %}
