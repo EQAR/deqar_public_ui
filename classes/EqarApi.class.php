@@ -7,16 +7,110 @@ class EqarApi
 
 
     /**
-     * Base url of the API
-     * @var string
+     * EQAR API Base URL
+     * @var string      The base url of the EQAR API
      */
-    const EQARBASEURL = 'https://backend.deqar.eu/webapi/v1/browse/';
+    public $apiUrl;
+
 
     /**
-     * Return format of the API
-     * @var string
+     * EQAR API Key
+     * @var string      The bearer key of the EQAR API
      */
-    const EQARFORMAT = 'json';
+    public $apiKey;
+
+
+    /**
+     * Main constructor function
+     */
+    public function __construct(){
+
+        if ( !defined('EQAR_ENV') ) {
+
+            throw new \Exception('Missing EQAR_ENV in wp-config.php. Set EQAR_ENV to either "LIVE" or "TEST"');
+            return false;
+
+        } else {
+
+            if ( EQAR_ENV == 'TEST' ) {
+
+                if ( !defined('EQARBASEURL_TEST') ) {
+                    throw new \Exception('Missing EQARBASEURL_TEST in wp-config.php');
+                    return false;
+                } else {
+                    $this->setApiUrl( EQARBASEURL_TEST );
+                }
+
+                if ( !defined('EQARBASEURL_TEST') ) {
+                    throw new \Exception('Missing EQARBASEURL_TEST in wp-config.php');
+                    return false;
+                } else {
+                    $this->setApiKey( EQARAUTHKEY_TEST );
+                }
+
+            }
+
+            if ( EQAR_ENV == 'LIVE' ) {
+
+                if ( !defined('EQARBASEURL_LIVE') ) {
+                    throw new \Exception('Missing EQARBASEURL_LIVE in wp-config.php');
+                    return false;
+                } else {
+                    $this->setApiUrl( EQARBASEURL_LIVE );
+                }
+
+                if ( !defined('EQARAUTHKEY_LIVE') ) {
+                    throw new \Exception('Missing EQARAUTHKEY_LIVE in wp-config.php');
+                    return false;
+                } else {
+                    $this->setApiKey( EQARAUTHKEY_LIVE );
+                }
+
+            }
+
+        }
+
+    }
+
+
+    /**
+     * Get the value of $apiUrl
+     * @return string  The Url of the EQAR API
+     */
+    public function getApiUrl() {
+        return $this->apiUrl;
+    }
+
+
+    /**
+     * Set the value of $apiUrl
+     * @param   string  $url    The Url of the EQAR API
+     * @return  na
+     */
+    public function setApiUrl( $url ) {
+        $this->apiUrl = $url;
+    }
+
+
+    /**
+     * Get the value of $apiKey
+     * @return string  The bearer key of the EQAR API
+     */
+    public function getApiKey() {
+        return $this->apiKey;
+    }
+
+
+    /**
+     * Set the value of $apiUrl
+     * @param  string  $key    The bearer key of the EQAR API
+     * @return na
+     */
+    public function setApiKey( $key ) {
+        $this->apiKey = $key;
+    }
+
+
 
     /**
      * Construct the main rest client
@@ -25,19 +119,17 @@ class EqarApi
      */
     public function eqar($path = false)
     {
-        if (!defined('EQARAUTHKEY')) {
-            throw new \Exception('Missing EQARAUTHKEY in wp-config.php');
-        }
+
         if (empty($path)) {
-            return false;
+            throw new \Exception('No api query defined.');
         }
 
         $api = new RestClient([
-            'base_url' => self::EQARBASEURL . $path,
-            'format' => self::EQARFORMAT,
-            'headers' => [
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . constant('EQARAUTHKEY'),
+            'base_url' => $this->getApiUrl() . $path,
+            'format'   => EQARFORMAT,
+            'headers'  => [
+                'Accept'        => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getApiKey(),
             ],
         ]);
 
