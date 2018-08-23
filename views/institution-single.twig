@@ -277,13 +277,13 @@
                     {% if institution.reports %}
                         {% for result in institution.reports %}
                             {% if result.report_valid == false %}
-                                <label for="show-invalid-reports" class="report-switch">
-                                    <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" checked="checked" class="js-report-witch">
-                                    show historic reports
-                                </label>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                    <label for="show-invalid-reports" class="report-switch">
+                        <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" checked="checked" class="js-report-witch">
+                        show historic reports
+                    </label>
 
                     {% if institution.reports %}
                         {% for result in institution.reports %}
@@ -372,17 +372,17 @@
                     {% if institution.programmes %}
                         {% for result in institution.programmes %}
                             {% if result.report.report_valid == false %}
-                                <label for="show-invalid-programme" class="report-switch">
-                                    <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="true" checked="checked" class="js-report-witch">
-                                    show historic reports
-                                </label>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                    <label for="show-invalid-programme" class="report-switch">
+                        <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="true" checked="checked" class="js-report-witch">
+                        show historic reports
+                    </label>
 
                     {% if institution.programmes %}
                         {% for result in institution.programmes %}
-                            <div class="accordion__item{% if result.report.report_valid == false %} report-invalid{% else %} report-valid{% endif %}">
+                            <div class="accordion__item item-visible{% if result.report.report_valid == false %} report-invalid{% else %} report-valid{% endif %}">
                                 <div class="accordion__definition js-accordion__definition">
                                     {% if result.report.report_valid == false %}
                                         <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
@@ -391,9 +391,12 @@
                                         </svg>
                                     {% endif %}
 
+                                    {{ loop.index }}
+
 {% for item in result.programme_names %}
     {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %} (by {{ result.report.agency_acronym }})
 {% endfor %}
+
 {% if result.report.institution_relationship_context %},
     {% for item in result.report.institution_relationship_context %}
         {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
@@ -480,7 +483,7 @@
                                             <li class="info-list__item">
                                                 <div class="info-list__term">Report links</div>
                                                 <div class="info-list__definition">
-                                                    <a href="{{ result.report_links[0].link }}" target="_blank">View record on age0ncy’s website.</a>
+                                                    <a href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website.</a>
                                                 </div>
                                             </li>
                                         {% endif %}
@@ -496,9 +499,18 @@
                     {% else %}
                         <p>No results found.</p>
                     {% endif %}
+
                 </div>
 
 
+                <div class="u-margin">
+                    <ul class="pagination pagination__list pagination__list--reports">
+                    </ul>
+                </div>
+
+                <!-- {% for item in 1..pages %}
+                    <li class="pagination__item"><a class="pagination__link" href="#" data-item="{{ item }}">{{ item }}</a></li>
+                {% endfor %} -->
 
 			</div>
 		</div>

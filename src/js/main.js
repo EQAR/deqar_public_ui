@@ -1,4 +1,4 @@
-(function($){
+ (function($){
 
     $('body')
         // Navigation
@@ -41,21 +41,35 @@
         // Social Share
         .on('change', '.js-report-witch', function(e) {
 			e.preventDefault();
-            console.log( this.checked );
+
+            // console.log( this.checked );
             var checked = this.checked;
 
-            console.log( $(this).parent().parent().find('.accordion__item.report-invalid') );
+            // console.log( $(this).parent().parent().find('.accordion__item.report-invalid') );
+
+            $(this).parent().parent().find('.accordion__item').removeClass('item-visible').addClass('item-hidden');
 
             if ( checked == true ) {
+                $(this).parent().parent().find('.accordion__item.report-invalid').removeClass('item-hidden').addClass('item-visible');
                 $(this).parent().parent().find('.accordion__item.report-invalid').show();
             }
             if ( checked == false ) {
+                $(this).parent().parent().find('.accordion__item').removeClass('item-hidden').addClass('item-visible');
+                $(this).parent().parent().find('.accordion__item.report-invalid').removeClass('item-visible').addClass('item-hidden');
                 $(this).parent().parent().find('.accordion__item.report-invalid').hide();
             }
+
+            // paginator.items();
 
 		});
 
 
+    // Set paginator on programme reports
+    var paginator = $('.reports-programme-container').slikPaginator({
+        'perPage': '5',
+        'items': '.accordion__item',
+        'paginator': '.pagination__list--reports',
+    });
 
 
     // Responsible Social Share Links enhancement by https://jonsuh.com/blog/social-share-links/
