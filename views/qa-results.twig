@@ -67,10 +67,10 @@
 
                     <ul class="pagination">
                         <li class="pagination__item"><a href="{{ url }}&pagin=1">&laquo;</a></li>
-                        {% for item in 1..pagination.total %}
-                            <li class="pagination__item"><a class="pagination__link{% if loop.index == pagination.current %} current{% endif %}" href="{{ url }}&pagin={{ item }}">{{ item }}</a></li>
+                        {% for item in 0..( pagination.total - 1 ) %}
+                            <li class="pagination__item"><a class="pagination__link{% if ( loop.index - 1) == pagination.current %} current{% endif %}" href="{{ url }}&pagin={{ item }}">{{ (item+1) }}</a></li>
                         {% endfor %}
-                        <li class="pagination__item"><a href="{{ url }}&pagin={{ pagination.total }}">&raquo;</a></li>
+                        <li class="pagination__item"><a href="{{ url }}&pagin={{ ( pagination.total - 1 ) }}">&raquo;</a></li>
                     </ul>
 
                 {% else %}
