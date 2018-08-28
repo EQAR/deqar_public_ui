@@ -124,7 +124,7 @@
 
     // Set paginator on programme reports
     var paginatorProgramme = new $('.reports-programme-container').slikPaginator({
-        'perPage': 4,
+        'perPage': 10,
         'items': '.accordion__item',
         'paginator': '.pagination__list--reports',
         'indicator': {
