@@ -271,19 +271,15 @@
                 <hr class="divider u-margin">
                 <h2 class="subtitle text-fields__subtitle u-margin">External Quality Assurance Reports and Decisions</h2>
 
-                <h3 class="subtitle text-fields__subtitle">Institutional level</h3>
-                <div class="accordion u-margin reports-institutional-container">
+                <h3 class="subtitle text-fields__subtitle reports-institutional-title">Institutional level <sup class="subtitle-superscript">({{ institution.reports|length }})</sup></h3>
+                <div class="accordion u-margin-s reports-institutional-container">
 
-                    {% if institution.reports %}
-                        {% for result in institution.reports %}
-                            {% if result.report_valid == false %}
-                            {% endif %}
-                        {% endfor %}
+                    {% if institution.reports|hasHistorical %}
+                        <label for="show-invalid-reports" class="report-switch">
+                            <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" checked="checked" class="js-report-witch js-report-witch-institutional">
+                            show historic reports <span>({{ institution.reports|countHistorical }})</span>
+                        </label>
                     {% endif %}
-                    <label for="show-invalid-reports" class="report-switch">
-                        <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" checked="checked" class="js-report-witch">
-                        show historic reports
-                    </label>
 
                     {% if institution.reports %}
                         {% for result in institution.reports %}
@@ -365,20 +361,15 @@
 
 
 
-                <h3 class="subtitle text-fields__subtitle">Programme level</h3>
-                <div class="accordion u-margin reports-programme-container">
+                <h3 class="subtitle text-fields__subtitle reports-programme-title">Programme level <sup class="subtitle-superscript">({{ institution.programmes|length }})</sup></h3>
+                <div class="accordion u-margin-s reports-programme-container">
 
-
-                    {% if institution.programmes %}
-                        {% for result in institution.programmes %}
-                            {% if result.report.report_valid == false %}
-                            {% endif %}
-                        {% endfor %}
+                    {% if institution.programmes|hasHistorical %}
+                        <label for="show-invalid-programme" class="report-switch">
+                            <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="true" checked="checked" class="js-report-witch js-report-witch-programme">
+                            show historic reports <span>({{ institution.programmes|countHistorical }})</span>
+                        </label>
                     {% endif %}
-                    <label for="show-invalid-programme" class="report-switch">
-                        <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="true" checked="checked" class="js-report-witch">
-                        show historic reports
-                    </label>
 
                     {% if institution.programmes %}
                         {% for result in institution.programmes %}
