@@ -46,7 +46,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $limit          = 999;
     $offset         = 0;
     $ordering       = 'DESC';
-    $pagin          = 1;
+    $pagin          = 0;
     $query          = false;
     $agency         = false;
     $esg_activity   = false;
@@ -106,8 +106,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $total   = count($results);
     $skip    = $pagin * $perPage;
     $paged   = array_slice ( $results, $skip, $perPage );
-    $pages   = intval( ceil($total / $perPage) -1 );
-
+    $pages   = intval( ceil($total / $perPage) );
 
     $pagination = [
         'total'     => $pages,
@@ -119,14 +118,9 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
 
     $context['total']       = $total;
     $context['pagination']  = $pagination;
+    $context['all']         = $results;
     $context['results']     = $paged;
     $context['formdata']    = $_GET;
-
-    // var_dump( $pages );
-    // var_dump( $pagination );
-    // var_dump( $total );
-    // exit;
-
 
 }
 
