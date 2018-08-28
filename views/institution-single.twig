@@ -283,7 +283,7 @@
 
                     {% if institution.reports %}
                         {% for result in institution.reports %}
-                            <div class="accordion__item{% if result.report_valid == false %} report-invalid{% else %} report-valid{% endif %}">
+                            <div class="accordion__item{% if result.report_valid == false %} report-invalid{% else %} report-valid{% endif %} item-visible">
                                 <div class="accordion__definition js-accordion__definition">
                                     {% if result.report_valid == false %}
                                         <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
@@ -358,6 +358,10 @@
                         <p>No results found.</p>
                     {% endif %}
                 </div>
+                <div class="pagination u-margin-l">
+                    <div class="pagination__indidator pagination__indidator--institutional"></div>
+                    <ul class="paginator pagination__list pagination__list--institutional"></ul>
+                </div>
 
 
 
@@ -373,7 +377,7 @@
 
                     {% if institution.programmes %}
                         {% for result in institution.programmes %}
-                            <div class="accordion__item item-visible{% if result.report.report_valid == false %} report-invalid{% else %} report-valid{% endif %}">
+                            <div class="accordion__item{% if result.report.report_valid == false %} report-invalid{% else %} report-valid{% endif %} item-visible">
                                 <div class="accordion__definition js-accordion__definition">
                                     {% if result.report.report_valid == false %}
                                         <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
@@ -381,8 +385,6 @@
                                             <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
                                         </svg>
                                     {% endif %}
-
-                                    {{ loop.index }}
 
 {% for item in result.programme_names %}
     {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %} (by {{ result.report.agency_acronym }})
@@ -494,14 +496,10 @@
                 </div>
 
 
-                <div class="u-margin">
-                    <ul class="pagination pagination__list pagination__list--reports">
-                    </ul>
+                <div class="u-margin-l">
+                    <div class="pagination__indidator pagination__indidator--reports u-margin-s"></div>
+                    <ul class="pagination paginator pagination__list pagination__list--reports"></ul>
                 </div>
-
-                <!-- {% for item in 1..pages %}
-                    <li class="pagination__item"><a class="pagination__link" href="#" data-item="{{ item }}">{{ item }}</a></li>
-                {% endfor %} -->
 
 			</div>
 		</div>

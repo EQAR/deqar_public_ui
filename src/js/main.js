@@ -38,38 +38,101 @@
 			window.location.href = $(this).val();
 		})
 
-        // Social Share
-        .on('change', '.js-report-witch', function(e) {
+        // Display or hide historical reports
+        .on('change', '.js-report-witch-institutional', function(e) {
 			e.preventDefault();
 
-            // console.log( this.checked );
             var checked = this.checked;
 
-            // console.log( $(this).parent().parent().find('.accordion__item.report-invalid') );
+            var $container  = $(this).parent().parent();
+            var all         = $container.find('.accordion__item').length;
+            var invalid     = $container.find('.accordion__item.report-invalid').length;
+            var valid       = (all - invalid);
 
-            $(this).parent().parent().find('.accordion__item').removeClass('item-visible').addClass('item-hidden');
+            $container.find('.accordion__item')
+                .removeClass('item-hidden')
+                .addClass('item-visible');
 
+            // Include historical reports (invalid)
             if ( checked == true ) {
-                $(this).parent().parent().find('.accordion__item.report-invalid').removeClass('item-hidden').addClass('item-visible');
-                $(this).parent().parent().find('.accordion__item.report-invalid').show();
-            }
-            if ( checked == false ) {
-                $(this).parent().parent().find('.accordion__item').removeClass('item-hidden').addClass('item-visible');
-                $(this).parent().parent().find('.accordion__item.report-invalid').removeClass('item-visible').addClass('item-hidden');
-                $(this).parent().parent().find('.accordion__item.report-invalid').hide();
+                $container.find('.accordion__item.report-invalid')
+                    .removeClass('item-hidden')
+                    .addClass('item-visible');
+                $('.reports-institutional-title .subtitle-superscript').text('(' + all + ')')
             }
 
-            // paginator.items();
+            // Exclude historical reports (invalid)
+            if ( checked == false ) {
+                $container.find('.accordion__item.report-invalid')
+                    .removeClass('item-visible')
+                    .addClass('item-hidden');
+                $('.reports-institutional-title .subtitle-superscript').text('(' + valid + ')')
+            }
+
+            // Reset the paginator
+            paginatorInstitutional.init();
+
+		})
+
+        // Display or hide historical reports
+        .on('change', '.js-report-witch-programme', function(e) {
+			e.preventDefault();
+
+            var checked = this.checked;
+
+            var $container  = $(this).parent().parent();
+            var all         = $container.find('.accordion__item').length;
+            var invalid     = $container.find('.accordion__item.report-invalid').length;
+            var valid       = (all - invalid);
+
+            $container.find('.accordion__item')
+                .removeClass('item-hidden')
+                .addClass('item-visible');
+
+            // Include historical reports (invalid)
+            if ( checked == true ) {
+                $container.find('.accordion__item.report-invalid')
+                    .removeClass('item-hidden')
+                    .addClass('item-visible');
+                $('.reports-programme-title .subtitle-superscript').text('(' + all + ')')
+            }
+
+            // Exclude historical reports (invalid)
+            if ( checked == false ) {
+                $container.find('.accordion__item.report-invalid')
+                    .removeClass('item-visible')
+                    .addClass('item-hidden');
+                $('.reports-programme-title .subtitle-superscript').text('(' + valid + ')')
+            }
+
+            // Reset the paginator
+            paginatorProgramme.init();
 
 		});
 
 
     // Set paginator on programme reports
-    var paginator = $('.reports-programme-container').slikPaginator({
-        'perPage': '5',
+    var paginatorInstitutional = new $('.reports-institutional-container').slikPaginator({
+        'perPage': 10,
+        'items': '.accordion__item',
+        'paginator': '.pagination__list--institutional',
+        'indicator': {
+            'selector': '.pagination__indidator--institutional',
+            'text': '{start}-{end} institutional level reports of {total}',
+        }
+    });
+
+    // Set paginator on programme reports
+    var paginatorProgramme = new $('.reports-programme-container').slikPaginator({
+        'perPage': 4,
         'items': '.accordion__item',
         'paginator': '.pagination__list--reports',
+        'indicator': {
+            'selector': '.pagination__indidator--reports',
+            'text': '{start}-{end} programme level reports of {total}',
+        }
     });
+
 
 
     // Responsible Social Share Links enhancement by https://jonsuh.com/blog/social-share-links/
