@@ -20,7 +20,7 @@
                 {% if results %}
 
                     {% if formdata.query %}
-                        <h2 class="title title__small">{{ total }} institutions matching the term "{{ formdata.query }}":</h2>
+                        <h2 class="title title__small">{{ paginator.total }} institutions matching the term "{{ formdata.query }}":</h2>
                     {% elseif formdata.country %}
 
                         {% set selected_country = "none" %}
@@ -30,7 +30,7 @@
                             {% endif %}
                         {% endfor %}
 
-                        <h2 class="title title__small">{{ total }} institutions matching the country {{ selected_country }}</h2>
+                        <h2 class="title title__small">{{ paginator.total }} institutions matching the country {{ selected_country }}</h2>
                     {% endif %}
 
                     <div class=" u-margin">
@@ -65,13 +65,28 @@
                         {% endif %}
                     {% endfor %}
 
-                    <ul class="pagination">
-                        <li class="pagination__item"><a href="{{ url }}&pagin=1">&laquo;</a></li>
-                        {% for item in 0..( pagination.total - 1 ) %}
-                            <li class="pagination__item"><a class="pagination__link{% if ( loop.index - 1) == pagination.current %} current{% endif %}" href="{{ url }}&pagin={{ item }}">{{ (item+1) }}</a></li>
-                        {% endfor %}
-                        <li class="pagination__item"><a href="{{ url }}&pagin={{ ( pagination.total - 1 ) }}">&raquo;</a></li>
-                    </ul>
+                    <div class="u-margin-l">
+                        <div class="pagination__indidator pagination__indidator u-margin-s">
+                            Institution {{ paginator.start }}-{{ paginator.end }} of {{ paginator.total }}
+                        </div>
+                        <ul class="pagination paginator pagination__list">
+                            {% if paginator.first == false %}
+                                <li class="pagination__item"><a href="{{ url }}pagin={{ (paginator.prev - 1) }}">&laquo;</a></li>
+                            {% else %}
+                                <li class="pagination__item pagination__item--disabled">&laquo;</li>
+                            {% endif %}
+
+                            {% for item in 0..(paginator.pages - 1) %}
+                                <li class="pagination__item"><a class="pagination__link{% if ( loop.index ) == paginator.current %} current{% endif %}" href="{{ url }}pagin={{ item }}">{{ (item + 1) }}</a></li>
+                            {% endfor %}
+
+                            {% if paginator.last == false %}
+                                <li class="pagination__item"><a href="{{ url }}pagin={{ (paginator.next - 1) }}">&raquo;</a></li>
+                            {% else %}
+                                <li class="pagination__item pagination__item--disabled">&raquo;</li>
+                            {% endif %}
+                        </ul>
+                    </div>
 
                 {% else %}
                     {% if formdata %}
