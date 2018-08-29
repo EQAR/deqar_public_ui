@@ -12,15 +12,15 @@
             <input type="submit" value="{{ search.button }}" class="qa-search__button">
         </div>
 
+        <div class="form__fieldset">
+            <button class="button qa-search__advanced js-qa-search__toggle">Advanced search</button>
+        </div>
+
         {% if type == 'advanced' %}
-
-            <div class="form__fieldset">
-                <button class="button qa-search__advanced js-qa-search__toggle">Advanced search</button>
-            </div>
-
             {% if formdata %}
                 {% set openSearchform = 'style="display: block"' %}
             {% endif %}
+        {% endif %}
 
             <div class="qa-search__expand js-qa-search__expand" {{ openSearchform }}>
 
@@ -121,11 +121,8 @@
 
             </div>
 
-        {% else %}
-
             <div class="form__fieldset"></div>
 
-        {% endif %}
 
     </form>
 

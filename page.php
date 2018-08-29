@@ -27,9 +27,9 @@ $eqarApi = new EqarApi();
 
 $context = Timber::get_context();
 $context['post'] = new TimberPost();
-// $context['institutions']            = $eqarApi->getInstitutions();
 $context['countries']               = $eqarApi->getCountries();
-$context['agencies']                = $eqarApi->getAgencies();
+// $context['institutions']            = $eqarApi->getInstitutions();
+// $context['agencies']                = $eqarApi->getAgencies();
 
 $template = 'page.twig';
 

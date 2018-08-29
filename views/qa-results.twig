@@ -10,10 +10,10 @@
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
-                {% if results %}
-                    {% include 'views/snippets/search.twig' with {type: 'advanced'} %}
+                {% if results or formdata %}
+                    {% include 'views/snippets/search.twig' with {type: 'advanced', title: true} %}
                 {% else %}
-                    {% include 'views/snippets/search.twig' with {type: 'simple'} %}
+                    {% include 'views/snippets/search.twig' with {type: 'simple', title: true} %}
                 {% endif %}
 
 
@@ -91,6 +91,7 @@
                 {% else %}
                     {% if formdata %}
                         <h2 class="title u-margin">No results found matching your criteria</h2>
+                        <p><a href="/kb/faq/">Institution not found in DEQAR?</a></p>
                     {% endif %}
                 {% endif %}
 
