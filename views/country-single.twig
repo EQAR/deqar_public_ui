@@ -32,36 +32,35 @@
                     <h1 class="title u-margin-xs">Country not found.</h1>
                 {% else %}
 
-    				<h1 class="title u-margin-xs">{{ country.name_english }}</h1>
+                    <h1 class="title u-margin-xs">{{ country.name_english }}</h1>
 
                     {% if country.eqar_governmental_member_start != null %}
-                        <h3 class="subtitle u-margin-s">{{ country.name_english }} has been a Governmental Member of EQAR since {{ country.eqar_governmental_member_start|date('Y') }}.</h3>
+                        <h3 class="subtitle u-margin-xs">{{ country.name_english }} has been a Governmental Member of EQAR since {{ country.eqar_governmental_member_start|date('Y') }}.</h3>
                     {% endif %}
 
                     {% if country.general_note %}
-                        <p class="u-margin">{{ country.general_note }}</p>
+                        <p class="u-margin-s">{{ country.general_note }}</p>
                     {% endif %}
+                    
+                    <p class="u-margin-s"></p>
 
-                    <p class="u-margin"></p>
-
-                    <hr class="divider u-margin">
+                    <hr class="divider u-margin-s">
 
                     <h3 class="subtitle u-margin-s">National external quality assurance requirements</h3>
-                    <div class="text u-margin">
+                    <div class="text u-margin-s">
                         <ul>
                             {% for requirement in country.qa_requirements %}
-                                <li class="info-list__item">
+                                <li>
                                     <p>
                                         <strong>{{ requirement.qa_requirement }}</strong><br>
                                         {{ requirement.qa_requirement_note }}
                                     </p>
                                 </li>
                             {% endfor %}
-                        <ul>
+                        </ul>
                     </div>
 
-
-                    <hr class="divider u-margin">
+                    <hr class="divider u-margin-s">
 
                     <!-- <h3 class="subtitle u-margin-s">Basic information</h3>
 
@@ -92,11 +91,10 @@
                         </li>
                     </ul> -->
 
-
-                    <h3 class="subtitle u-margin-s">Can higher education institutions choose a suitable EQAR-registered agency?</h3>
+                    <h3 class="subtitle u-margin-xs">Can higher education institutions choose a suitable EQAR-registered agency?</h3>
 
                     {% if country.external_QAA_is_permitted is not empty %}
-                        <div class="text u-margin">
+                        <div class="text">
                             {% if country.external_QAA_is_permitted == 'no' %}
                                 <p class="u-margin-xs"><strong>No.</strong></p>
                             {% elseif country.external_QAA_is_permitted == 'yes' %}
@@ -107,10 +105,10 @@
                         </div>
                     {% endif %}
 
-                    <div class="text u-margin">
+                    <div class="text u-margin-s">
                         <ul>
                             {% if country.eligibility is not empty %}
-                                <li class="info-list__item">
+                                <li>
                                     <p>
                                         <strong>Eligibility requirements for foreign agencies:</strong><br>
                                         {{ country.eligibility|striptags('p') }}
@@ -118,7 +116,7 @@
                                 </li>
                             {% endif %}
                             {% if country.conditions is not empty %}
-                                <li class="info-list__item">
+                                <li>
                                     <p>
                                         <strong>Conditions for the agencies’ work (e.g. criteria to be used):</strong><br>
                                         {{ country.conditions|striptags('p') }}
@@ -126,7 +124,7 @@
                                 </li>
                             {% endif %}
                             {% if country.recognition is not empty %}
-                                <li class="info-list__item">
+                                <li>
                                     <p>
                                         <strong>Recognition of reviews carried out by foreign agencies:</strong><br>
                                         {{ country.recognition|striptags('p') }}
@@ -175,27 +173,25 @@
                         </li>
                     </ul> -->
 
+                    <hr class="divider u-margin-s">
 
-
-                    <hr class="divider u-margin">
-                    <h3 class="subtitle u-margin-s">Can higher education institutions use the European Approach for the Quality Assurance of Joint Programmes?</h3>
+                    <h3 class="subtitle u-margin-xs">Can higher education institutions use the European Approach for the Quality Assurance of Joint Programmes?</h3>
 
                     {% if country.european_approach_is_permitted is not empty %}
-                        <div class="text u-margin">
+                        <div class="text u-margin-s">
                             {% if country.european_approach_is_permitted == 'no' %}
-                                <p class="u-margin-s">No.</p>
+                                <p class="u-margin-xs">No.</p>
                             {% elseif country.european_approach_is_permitted == 'yes' %}
-                                <p class="u-margin-s">Yes:</p>
+                                <p class="u-margin-xs">Yes:</p>
                             {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
-                                <p class="u-margin-s">Yes, under certain conditions:</p>
+                                <p class="u-margin-xs">Yes, under certain conditions:</p>
                             {% endif %}
                             {{ country.european_approach_note|replace({'[not recognised]': '<strong>Not recognised.</strong>'}) }}
                         </div>
                     {% endif %}
 
+                    <hr class="divider u-margin-s">
 
-
-                    <hr class="divider u-margin">
                     <h3 class="subtitle u-margin-s">Further Information</h3>
                     <div class="text u-margin">
                         {% if country.qaa_regulations is not empty %}
@@ -237,11 +233,10 @@
                         {% endif %}
                     </div> -->
 
+                    <hr class="divider u-margin-s">
 
-
-                    <hr class="divider u-margin">
                     <h3 class="subtitle u-margin-s">Registered agencies operating in {{ country.name_english }}</h3>
-                    <div class="text u-margin">
+                    <div class="text u-margin-s">
                         {% if country.agencies.byFocusCountry is not empty %}
                             <ul>
                                 {% for agency in country.agencies.byFocusCountry %}
