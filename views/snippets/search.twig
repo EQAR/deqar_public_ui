@@ -1,4 +1,7 @@
 <div class="qa-search u-margin {{ class }}">
+    {% if search.preview %}
+        <span class="qa-search__preview">Public Preview</span>
+    {% endif %}
 
     {% if title == true %}
         <h1 class="title qa-search__title">{{ search.title }}</h3>

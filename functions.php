@@ -75,6 +75,7 @@
 				'title' => get_field('search_title', 'option'),
 				'description' => get_field('search_description', 'option'),
 				'button' => get_field('search_button', 'option'),
+				'preview' => get_field('search_preview', 'option'),
 			];
 
 			$context['cta'] = [
