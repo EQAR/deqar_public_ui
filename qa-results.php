@@ -104,7 +104,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $perPage = 20;
 
     $total   = count($results);
-    $skip    = $pagin * $perPage;
+    $skip    = ($pagin * $perPage);
     $paged   = array_slice ( $results, $skip, $perPage );
     $pages   = intval( ceil($total / $perPage) );
     $current = (intval($pagin) + 1);

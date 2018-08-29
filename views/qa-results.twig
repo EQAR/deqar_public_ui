@@ -71,17 +71,17 @@
                         </div>
                         <ul class="pagination paginator pagination__list">
                             {% if paginator.first == false %}
-                                <li class="pagination__item"><a href="{{ url }}pagin={{ (paginator.prev - 1) }}">&laquo;</a></li>
+                                <li class="pagination__item"><a href="{{ url }}&pagin={{ (paginator.prev - 1) }}">&laquo;</a></li>
                             {% else %}
                                 <li class="pagination__item pagination__item--disabled">&laquo;</li>
                             {% endif %}
 
                             {% for item in 0..(paginator.pages - 1) %}
-                                <li class="pagination__item"><a class="pagination__link{% if ( loop.index ) == paginator.current %} current{% endif %}" href="{{ url }}pagin={{ item }}">{{ (item + 1) }}</a></li>
+                                <li class="pagination__item"><a class="pagination__link{% if ( loop.index ) == paginator.current %} current{% endif %}" href="{{ url }}&pagin={{ item }}">{{ (item + 1) }}</a></li>
                             {% endfor %}
 
                             {% if paginator.last == false %}
-                                <li class="pagination__item"><a href="{{ url }}pagin={{ (paginator.next - 1) }}">&raquo;</a></li>
+                                <li class="pagination__item"><a href="{{ url }}&pagin={{ (paginator.next - 1) }}">&raquo;</a></li>
                             {% else %}
                                 <li class="pagination__item pagination__item--disabled">&raquo;</li>
                             {% endif %}
