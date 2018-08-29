@@ -178,46 +178,6 @@
 
                 </ul>
 
-{#
-                <div class="accordion u-margin">
-                    <div class="accordion__item">
-                        <div class="accordion__definition js-accordion__definition accordion__definition--is-toggled">
-                            Previous names and relationships
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                                <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
-                            </svg>
-                        </div>
-                        <div class="text accordion__description js-accordion__description" style="display: block;">
-                            <h3 class="text-fields__subtitle"><strong>Previous names</strong></h3>
-                            <ul>
-                                {% for name in institution.names %}
-                                    {% if name.name_valid_to != null %}
-                                        <li>
-                                            "{% if name.name_official %}{{ name.name_official }}{% endif %}
-                                            {% if name.name_official_transliterated %} / {{ name.name_official_transliterated }}{% endif %}
-                                            {% if name.name_english %} / {{ name.name_english }}{% endif %}
-                                            {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %} / {% endif %}{% endfor %}"
-                                            {% if name.name_valid_to != null %}
-                                                until {{ name.name_valid_to|date('d/m/Y') }}
-                                            {% endif %}
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                            <h3 class="text-fields__subtitle"><strong>Historical relationships</strong></h3>
-                            <ul>
-                                {% for historical_relationship in institution.historical_relationships|sort %}
-                                    <li>
-                                        {{ historical_relationship.relationship_type }} {{ historical_relationship.institution.name_primary }} on {{ historical_relationship.relationship_date|date('d/m/Y') }}<br>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-#}
-
-
                 <hr class="divider u-margin">
                 <div class="text-fields u-margin">
                 	<h2 class="subtitle text-fields__subtitle">National External Quality Assurance Requirements</h2>
@@ -312,9 +272,15 @@
                                             <div class="info-list__term">Date</div>
                                             <div class="info-list__definition">{{ result.valid_from|date("d/m/Y") }}</div>
                                         </li>
-                                        <li class="info-list__item">
+					<li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
-                                            <div class="info-list__definition">{{ result.valid_to|date("d/m/Y") }}</div>
+                                            <div class="info-list__definition">
+					        {% if result.valid_to %}
+						    {{ result.valid_to|date("d/m/Y") }}
+						{% else %}
+						    not applicable
+						{% endif %}
+					    </div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
@@ -385,11 +351,12 @@
                                             <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
                                         </svg>
                                     {% endif %}
-
 {% for item in result.programme_names %}
-    {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %} (by {{ result.report.agency_acronym }})
+    {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
 {% endfor %}
-
+{% if result.qf_ehea_level %}
+, {{ result.qf_ehea_level }}
+{% endif %}
 {% if result.report.institution_relationship_context %},
     {% for item in result.report.institution_relationship_context %}
         {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
@@ -446,7 +413,13 @@
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
-                                            <div class="info-list__definition">{{ result.report.valid_to|date("d/m/Y") }}</div>
+                                            <div class="info-list__definition">
+					        {% if result.report.valid_to %}
+						    {{ result.report.valid_to|date("d/m/Y") }}
+						{% else %}
+						    not applicable
+						{% endif %}
+					    </div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
