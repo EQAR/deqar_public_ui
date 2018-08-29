@@ -107,20 +107,24 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $skip    = $pagin * $perPage;
     $paged   = array_slice ( $results, $skip, $perPage );
     $pages   = intval( ceil($total / $perPage) );
+    $current = (intval($pagin) + 1);
 
-    $pagination = [
-        'total'     => $pages,
-        'prev'      => ($pagin - 1),
-        'current'   => $pagin,
-        'next'      => ($pagin + 1),
-        'step'      => $perPage,
+    $details = [
+        'total'     => $total,
+        'perPage'   => $perPage,
+        'pages'     => $pages,
+        'start'     => ($skip + 1),
+        'end'       => ($skip + count($paged)),
+        'first'     => ($current == 1 ? true : false),
+        'last'      => ($pages == $current ? true : false),
+        'current'   => $current,
+        'prev'      => ($pagin == 0 ? false : ($current - 1)),
+        'next'      => ($pages == ($pagin + 1) ? false : ($current + 1)),
     ];
 
-    $context['total']       = $total;
-    $context['pagination']  = $pagination;
-    $context['all']         = $results;
     $context['results']     = $paged;
     $context['formdata']    = $_GET;
+    $context['paginator']    = $details;
 
 }
 
