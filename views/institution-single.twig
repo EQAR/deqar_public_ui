@@ -47,9 +47,9 @@
                 {% endfor %}
 
                 <h3 class="subtitle u-margin-s"></h3>
-                <h3 class="subtitle u-margin-s">Basic information</h3>
+                <h3 class="subtitle u-margin-xs">Basic information</h3>
 
-                <ul class="info-list u-margin">
+                <ul class="info-list u-margin-s">
                     <li class="info-list__item">
                         <div class="info-list__term">Location(s)</div>
                         <div class="info-list__definition">
@@ -178,8 +178,8 @@
 
                 </ul>
 
-                <hr class="divider u-margin">
-                <div class="text-fields u-margin">
+                <hr class="divider u-margin-s">
+                <div class="text-fields u-margin-s">
                 	<h2 class="subtitle text-fields__subtitle">National External Quality Assurance Requirements</h2>
                 	<div class="text text-fields__text">
                         {% if institution.countries|length > 1 %}
@@ -223,13 +223,8 @@
                     </div>
                 </div>
 
-
-
-
-
-
-                <hr class="divider u-margin">
-                <h2 class="subtitle text-fields__subtitle u-margin">External Quality Assurance Reports and Decisions</h2>
+                <hr class="divider u-margin-s">
+                <h2 class="subtitle text-fields__subtitle u-margin-s">External Quality Assurance Reports and Decisions</h2>
 
                 <h3 class="subtitle text-fields__subtitle reports-institutional-title">Institutional level <sup class="subtitle-superscript">({{ institution.reports|length }})</sup></h3>
                 <div class="accordion u-margin-s reports-institutional-container">
@@ -324,7 +319,7 @@
                         <p>No results found.</p>
                     {% endif %}
                 </div>
-                <div class="pagination u-margin-l">
+                <div class="pagination u-margin">
                     <div class="pagination__indidator pagination__indidator--institutional"></div>
                     <ul class="paginator pagination__list pagination__list--institutional"></ul>
                 </div>
