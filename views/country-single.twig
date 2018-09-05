@@ -34,7 +34,7 @@
 
                     <h1 class="title u-margin-xs">{{ country.name_english }}</h1>
 
-                    <ul class="l-label u-margin">
+                    <ul class="l-label u-margin-s">
                         {#% if country.report_count > 0 %#}
                         <li class="l-label__item">
                             <a href="{{ function('get_permalink', 6) }}?query=&country={{ country.id }}" class="label label--qa-results">View 999{# variable country.... to add #} institutions with 999{# variable country.... to add #} reports</a>
@@ -44,7 +44,7 @@
 
                   {% if country.ehea_is_member %}
 
-                    <ul class="info-list u-margin">
+                    <ul class="info-list u-margin-s">
 
                         <li class="info-list__item">
                             <div class="info-list__term">Membership in EQAR</div>
@@ -54,7 +54,7 @@
                                 {% else %}
                                     {{ country.name_english }} is not a Governmental Member of EQAR.
                                 {% endif %}
-			    </div>
+			                </div>
                         </li>
 
                     {% if country.general_note %}
@@ -202,7 +202,7 @@
                     </div> -->
                     #}
 
-                    <hr class="divider u-margin">
+                    <hr class="divider u-margin-s">
                     <h3 class="subtitle u-margin-s">Registered agencies operating in {{ country.name_english }}</h3>
                     <div class="text u-margin">
                         {% if country.agencies.byFocusCountry is not empty %}
