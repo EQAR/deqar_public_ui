@@ -38,12 +38,12 @@
                             {% for institution in results %}
                                 <li class="agency-list__item">
                                     <a href="{{ function('get_permalink', 418) }}?id={{ institution.id }}" class="agency-list__link">
-                                        {{ institution.name_primary }}
                                         {% if institution.hierarchical_relationships.part_of != null %}
                                             {% for item in institution.hierarchical_relationships.part_of %}
-                                                / {{ item.name_primary }}
+                                                {{ item.name_primary }} / 
                                             {% endfor %}
                                         {% endif %}
+                                        {{ institution.name_primary }}
                                         <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="agency-list__arrow">
                                             <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"></polygon>
                                         </svg>
