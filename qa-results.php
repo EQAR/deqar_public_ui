@@ -41,10 +41,10 @@ $context['agencies']                = $eqarApi->getAgencies();
 
 if ( isset( $_GET ) && !empty( $_GET ) ) {
 
-    $limit          = 999;
+    $limit          = 20;
     $offset         = 0;
     $ordering       = 'DESC';
-    $pagin          = 0;
+    $page           = 0;
     $query          = false;
     $agency         = false;
     $esg_activity   = false;
@@ -61,8 +61,8 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     if ( !empty($_GET['offset']) ) {
         $offset = $_GET['offset'];
     }
-    if ( !empty($_GET['pagin']) ) {
-        $pagin = $_GET['pagin'];
+    if ( !empty($_GET['paging']) ) {
+        $page = $_GET['paging'];
     }
     if ( !empty($_GET['ordering']) ) {
         $ordering = $_GET['ordering'];
@@ -97,30 +97,30 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
 
 
 
+    $offset  = $limit * $page;
+
     $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
-    $perPage = 20;
-
-    $total   = count($results);
-    $skip    = ($pagin * $perPage);
-    $paged   = array_slice ( $results, $skip, $perPage );
-    $pages   = intval( ceil($total / $perPage) );
-    $current = (intval($pagin) + 1);
+    $total   = intval($results->count);
+    $skip    = $offset;
+    $paged   = $results->results;
+    $pages   = intval( ceil($total / $limit) );
+    $current = ($page + 1);
 
     $details = [
         'total'     => $total,
-        'perPage'   => $perPage,
+        'perPage'   => $limit,
         'pages'     => $pages,
         'start'     => ($skip + 1),
         'end'       => ($skip + count($paged)),
         'first'     => ($current == 1 ? true : false),
         'last'      => ($pages == $current ? true : false),
         'current'   => $current,
-        'prev'      => ($pagin == 0 ? false : ($current - 1)),
-        'next'      => ($pages == ($pagin + 1) ? false : ($current + 1)),
+        'prev'      => ($page == 0 ? false : ($current - 1)),
+        'next'      => ($pages == ($page + 1) ? false : ($current + 1)),
     ];
 
-    $context['results']     = $paged;
+    $context['results']     = $results;
     $context['formdata']    = $_GET;
     $context['paginator']   = $details;
 
