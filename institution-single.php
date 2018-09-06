@@ -23,13 +23,13 @@ $institutionId = $_GET['id'];
 if ( isset($institutionId) && !empty($institutionId) ) {
     $context['institution'] = $eqarApi->getInstitution( $institutionId );
 
-    $levels = '';
+    /*$levels = '';
     foreach( array_reverse($eqarApi->getInstitution($institutionId)->qf_ehea_levels) as $level ){
         $levels .= ucwords($level->qf_ehea_level) . ', ';
     }
 
     $levels = rtrim($levels,", ");
-    $context['institution']->levels = $levels;
+    $context['institution']->levels = $levels;*/
 
 } else {
     $context['institution'] = false;

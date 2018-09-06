@@ -7,7 +7,7 @@
         {% if name.name_valid_to == null %}
             {% for version in name.name_versions %}
                 {% if version.name_is_primary == true %}
-                    {{ version.name }}
+                    {{ version.acronym }} - {{ version.name }}
                 {% endif %}
             {% endfor %}
         {% endif %}
@@ -39,28 +39,17 @@
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
-				<h1 class="title u-margin-xs">
+                <h1 class="title u-margin-xs">
                     {% for name in agency.names %}
                         {% if name.name_valid_to == null %}
                             {% for version in name.name_versions %}
                                 {% if version.name_is_primary == true %}
-                                    {{ version.name }}
+                                    {{ version.acronym }} - {{ version.name }}
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
                     {% endfor %}
                 </h1>
-
-                <ul class="l-label u-margin-s">
-                    <li class="l-label__item">
-                        <span class="label">Substantially compliant with European Standards and Guidelines</span>
-                    </li>
-                    {% if agency.report_count > 0 %}
-                        <li class="l-label__item">
-                            <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
-                        </li>
-                    {% endif %}
-                </ul>
 
                 {% for name in agency.names %}
                     {% if name.name_valid_to == null %}
@@ -71,6 +60,23 @@
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
+
+                <ul class="l-label u-margin-s">
+                    {% if agency.is_registered %}
+                        <li class="l-label__item">
+                           <span class="label">Substantially compliant with European Standards and Guidelines</span>
+                        </li>
+                    {% else %}
+                        <li class="l-label__item">
+                            <span class="label">Archived entry</span>
+                        </li>
+                    {% endif %}
+                    {% if agency.report_count > 0 %}
+                        <li class="l-label__item">
+                            <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
 
                 <div class="text u-margin-s">
                     <ul>

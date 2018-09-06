@@ -3,7 +3,12 @@
 {% block title %}
     {% for name in institution.names %}
         {% if name.name_valid_to == null %}
-            {{ name.name_english }} - Institution
+            {% if name.name_english %}
+                {{ name.name_english }}
+            {% else %}
+                {{ name.name_official }}
+            {% endif %}
+             - Institution
         {% endif %}
     {% endfor %}
 {% endblock %}
@@ -36,8 +41,12 @@
 
                 {% for name in institution.names %}
                     {% if name.name_valid_to == null %}
-                        <h1 class="title u-margin-xs">{{ name.name_english }}</h1>
-                        <h3 class="subtitle">{{ name.name_official }}</h3>
+                        {% if name.name_english %}
+                            <h1 class="title u-margin-xs">{{ name.name_english }}</h1>
+                            <h3 class="subtitle">{{ name.name_official }}</h3>
+                        {% else %}
+                            <h1 class="title u-margin-xs">{{ name.name_official }}</h1>
+                        {% endif %}
                         {% if name.name_versions %}
                             {% for version in name.name_versions %}
                                 <h3 class="subtitle">{{ version.name }}</h3>
@@ -56,7 +65,9 @@
                             <div class="text u-margin">
                                 {% if institution.countries %}
                                     {% for location in institution.countries %}
-                                        {{ location.city }},
+                                        {% if location.city %}
+                                            {{ location.city }},
+                                        {% endif %}
                                         <a href="{{ function('get_permalink', 434) }}?id={{ location.country.id }}">{{ location.country.name_english }}</a><br />
                                     {% endfor %}
                                 {% endif %}
@@ -72,27 +83,27 @@
                         </div>
                     </li>
 
-                    {% if institution.founding_date or institution.closure_date %}
+                    {% if institution.founding_date %}
                         <li class="info-list__item">
-                            <div class="info-list__term">Dates of existence</div>
-                            <div class="info-list__definition">
-                                {% if institution.founding_date %}
-                                    {{ institution.founding_date }}
-                                {% endif %}
-                                {% if institution.closure_date %}
-                                    - {{ institution.closure_date }}
-                                {% endif %}
-                            </div>
+                            <div class="info-list__term">Founding year</div>
+                            <div class="info-list__definition">{{ institution.founding_date|date('Y') }}</div>
                         </li>
                     {% endif %}
-
+                    {% if institution.closure_date %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Closing year</div>
+                            <div class="info-list__definition">{{ institution.closure_date|date('Y') }}</div>
+                        </li>
+                    {% endif %}
 
                     <li class="info-list__item">
                         <div class="info-list__term">QF-EHEA levels</div>
                         <div class="info-list__definition">
-                            {% for level in institution.qf_ehea_levels|reverse %}
-                                {{ level.qf_ehea_level|title }}{% if loop.length != loop.index %}, {% endif %}
-                            {% endfor %}
+                            {% if institution.qf_ehea_levels|length %}
+                                {% for level in institution.qf_ehea_levels|reverse %}
+                                    {{ level.qf_ehea_level }}{% if loop.length != loop.index %}, {% endif %}
+                                {% endfor %}
+                            {% else %}-{% endif %}
                         </div>
                     </li>
                     {% if institution.hierarchical_relationships.part_of %}
@@ -113,7 +124,7 @@
                     {% endif %}
                     {% if institution.hierarchical_relationships.includes %}
                         <li class="info-list__item">
-                            <div class="info-list__term">Includes</div>
+                            <div class="info-list__term">Subunits</div>
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                     <ul>
@@ -305,9 +316,9 @@
 
                                         {% if result.report_links %}
                                             <li class="info-list__item">
-                                                <div class="info-list__term">Report links</div>
+                                                <div class="info-list__term"></div>
                                                 <div class="info-list__definition">
-                                                    <a href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website.</a>
+                                                    <a href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website</a>
                                                 </div>
                                             </li>
                                         {% endif %}
@@ -349,12 +360,10 @@
 {% for item in result.programme_names %}
     {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
 {% endfor %}
-{% if result.qf_ehea_level %}
-, {{ result.qf_ehea_level }}
-{% endif %}
+{% if result.qf_ehea_level %}, {{ result.qf_ehea_level }}{% endif %}
 {% if result.report.institution_relationship_context %},
     {% for item in result.report.institution_relationship_context %}
-        {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
+      {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
     {% endfor %}
 {% endif %}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
@@ -363,30 +372,35 @@
                                 </div>
                                 <div class="accordion__description accordion__description--two-tone js-accordion__description">
                                     <ul class="info-list info-list--padding info-list--programme-description">
+                                        {% if result.programme_names|length > 1 %}
+                                            {% set i = 0 %}
+                                            {% for item in result.programme_names %}
+                                                {% if item.name_is_primary != true %}
+                                                    <li class="info-list__item">
+                                                        <div class="info-list__term">
+                                                            {% if i == 0 %}Other names{% endif %}
+                                                        </div>
+                                                        <div class="info-list__definition">{{ item.name }}</div>
+                                                    </li>
+                                                    {% set i = i + 1 %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% set i = 0 %}
+                                        {% for item in result.programme_names %}
+                                            {% if item.qualification %}
+                                                <li class="info-list__item">
+                                                    <div class="info-list__term">
+                                                        {% if i == 0 %}Qualification{% endif %}
+                                                    </div>
+                                                    <div class="info-list__definition">{{ item.qualification }}</div>
+                                                </li>
+                                                {% set i = i + 1 %}
+                                            {% endif %}
+                                        {% endfor %}
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Other names</div>
-                                            <div class="info-list__definition">
-                                                {% set i = 0 %}
-                                                {% for item in result.programme_names %}
-                                                    {% if item.name_is_primary != true %}
-                                                        {% set i = i + 1 %}
-                                                        {{ item.name }}
-                                                    {% endif %}
-                                                {% endfor %}
-                                                {% if i == 0 %} - {% endif %}
-                                            </div>
-                                        </li>
-                                        <li class="info-list__item">
-                                            <div class="info-list__term">Qualification</div>
-                                            <div class="info-list__definition">
-                                                {% for item in result.programme_names %}
-                                                    {{ item.qualification }}{% if loop.length != loop.index %}, {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                        </li>
-                                        <li class="info-list__item">
-                                            <div class="info-list__term">QF-EHEA level</div>
-                                            <div class="info-list__definition">{{ result.qf_ehea_level ? result.qf_ehea_level : '-' }}</div>
+                                            <div class="info-list__term">Level</div>
+                                            <div class="info-list__definition">{{ result.qf_ehea_level ? result.qf_ehea_level : '-' }}{% if result.nqf_level %} (NQF {{ result.nqf_level }}){% endif %}</div>
                                         </li>
                                     </ul>
                                     <ul class="info-list info-list--padding">
@@ -441,11 +455,11 @@
                                             </div>
                                         </li>
 
-                                        {% if result.report_links %}
+                                        {% if result.report.report_links %}
                                             <li class="info-list__item">
-                                                <div class="info-list__term">Report links</div>
+                                                <div class="info-list__term"></div>
                                                 <div class="info-list__definition">
-                                                    <a href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website.</a>
+                                                    <a href="{{ result.report.report_links[0].link }}" target="_blank">View record on agency’s website</a>
                                                 </div>
                                             </li>
                                         {% endif %}

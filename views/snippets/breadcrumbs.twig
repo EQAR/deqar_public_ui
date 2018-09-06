@@ -25,7 +25,11 @@
                     <!-- Single Institution -->
                     {% for name in institution.names %}
                         {% if name.name_valid_to == null %}
-                            {{ name.name_official }}
+                            {% if name.name_english %}
+                                {{ name.name_english }}
+                            {% else %}
+                                {{ name.name_official }}
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 {% else %}
