@@ -107,7 +107,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $limit   = 20;
     $offset  = $limit * $page;
 
-    $results = $eqarApi->getInstitutionsEx( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
+    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
     $total   = intval($results->count);
     $skip    = $offset;
