@@ -41,7 +41,7 @@ $context['agencies']                = $eqarApi->getAgencies();
 
 if ( isset( $_GET ) && !empty( $_GET ) ) {
 
-    $limit          = 999;
+    $limit          = 20;
     $offset         = 0;
     $ordering       = 'DESC';
     $pagin          = 0;
@@ -97,19 +97,27 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
 
 
 
-    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
+    $page = 0;
 
-    $perPage = 20;
+    if ( !empty($_GET['paging']) ) {
+        $page = $_GET['paging'];
+    }
 
-    $total   = count($results);
-    $skip    = ($pagin * $perPage);
-    $paged   = array_slice ( $results, $skip, $perPage );
-    $pages   = intval( ceil($total / $perPage) );
-    $current = (intval($pagin) + 1);
+
+    $limit   = 20;
+    $offset  = $limit * $page;
+
+    $results = $eqarApi->getInstitutionsEx( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
+
+    $total   = intval($results->count);
+    $skip    = $offset;
+    $paged   = $results->results;
+    $pages   = intval( ceil($total / $limit) );
+    $current = ($page);
 
     $details = [
         'total'     => $total,
-        'perPage'   => $perPage,
+        'perPage'   => $limit,
         'pages'     => $pages,
         'start'     => ($skip + 1),
         'end'       => ($skip + count($paged)),
@@ -120,7 +128,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
         'next'      => ($pages == ($pagin + 1) ? false : ($current + 1)),
     ];
 
-    $context['results']     = $paged;
+    $context['results']     = $results;
     $context['formdata']    = $_GET;
     $context['paginator']   = $details;
 
