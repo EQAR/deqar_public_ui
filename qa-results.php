@@ -105,7 +105,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $skip    = $offset;
     $paged   = $results->results;
     $pages   = intval( ceil($total / $limit) );
-    $current = ($page);
+    $current = ($page + 1);
 
     $details = [
         'total'     => $total,
@@ -116,8 +116,8 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
         'first'     => ($current == 1 ? true : false),
         'last'      => ($pages == $current ? true : false),
         'current'   => $current,
-        'prev'      => ($pagin == 0 ? false : ($current - 1)),
-        'next'      => ($pages == ($pagin + 1) ? false : ($current + 1)),
+        'prev'      => ($page == 0 ? false : ($current - 1)),
+        'next'      => ($pages == ($page + 1) ? false : ($current + 1)),
     ];
 
     $context['results']     = $results;
