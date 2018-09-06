@@ -44,7 +44,7 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $limit          = 20;
     $offset         = 0;
     $ordering       = 'DESC';
-    $pagin          = 0;
+    $page           = 0;
     $query          = false;
     $agency         = false;
     $esg_activity   = false;
@@ -61,8 +61,8 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     if ( !empty($_GET['offset']) ) {
         $offset = $_GET['offset'];
     }
-    if ( !empty($_GET['pagin']) ) {
-        $pagin = $_GET['pagin'];
+    if ( !empty($_GET['paging']) ) {
+        $page = $_GET['paging'];
     }
     if ( !empty($_GET['ordering']) ) {
         $ordering = $_GET['ordering'];
@@ -97,14 +97,6 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
 
 
 
-    $page = 0;
-
-    if ( !empty($_GET['paging']) ) {
-        $page = $_GET['paging'];
-    }
-
-
-    $limit   = 20;
     $offset  = $limit * $page;
 
     $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
