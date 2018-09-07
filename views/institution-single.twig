@@ -307,7 +307,7 @@
                                                                 </svg>
                                                                 {{ file.file_display_name|replace('_', ' ') }}
                                                                 {% if file.languages %}
-                                                                    ({% for lang in file.languages %}{{ lang }}{% endfor %})
+                                                                    ({% for lang in file.languages %}{{ lang }}{% if loop.length != loop.index %}, {% endif %}{% endfor %})
                                                                 {% endif %}
                                                             </a>
                                                         </li>
@@ -448,7 +448,7 @@
                                                                     <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z"/>
                                                                     <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z"/>
                                                                 </svg>
-                                                                {{ file.file_display_name|replace('_', ' ') }} ({% for lang in file.languages %}{{ lang }}{% endfor %})
+                                                                {{ file.file_display_name|replace('_', ' ') }} ({% for lang in file.languages %}{{ lang }}{% if loop.length != loop.index %}, {% endif %}{% endfor %})
                                                             </a>
                                                         </li>
                                                     {% endfor %}
