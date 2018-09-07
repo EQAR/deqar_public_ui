@@ -8,9 +8,9 @@
             {% else %}
                 {{ name.name_official }}
             {% endif %}
-             - Institution
         {% endif %}
     {% endfor %}
+     - {{ wp_title }}
 {% endblock %}
 
 {% block content %}
@@ -155,13 +155,15 @@
                                     <ul>
                                         {% for name in prevNames %}
                                             <li>
-                                                "{% if name.name_official %}{{ name.name_official }}{% endif %}
-                                                {% if name.name_official_transliterated %} / {{ name.name_official_transliterated }}{% endif %}
-                                                {% if name.name_english %} / {{ name.name_english }}{% endif %}
-                                                {% for version in name.name_versions %}{{ version.name }}{% if loop.length != loop.index %} / {% endif %}{% endfor %}"
-                                                {% if name.name_valid_to != null %}
-                                                    until {{ name.name_valid_to|date('d/m/Y') }}
+                                                {% if name.name_english %}
+                                                    {{ name.name_english }}
+                                                {% else %}
+                                                    {{ name.name_official }}
                                                 {% endif %}
+                                                {% if name.name_english or name.name_versions %}
+                                                    ({% if name.name_english %}{{ name.name_official }}{% set first = false %}{% else %}{% set first = true %}{% endif %}{% for version in name.name_versions %}{% if first != true %}, {% endif %}{{ version.name }}{% set first = false %}{% endfor %})
+                                                {% endif %}
+                                                until {{ name.name_valid_to|date('d/m/Y') }}
                                             </li>
                                         {% endfor %}
                                     </ul>

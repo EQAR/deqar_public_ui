@@ -1,8 +1,6 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-
-    Agency:
     {% for name in agency.names %}
         {% if name.name_valid_to == null %}
             {% for version in name.name_versions %}
@@ -73,32 +71,20 @@
                     {% endif %}
                     {% if agency.report_count > 0 %}
                         <li class="l-label__item">
-                            <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by {{ agency.names[0].name_versions|last.acronym }}</a>
+                            <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by
+                                {% for name in agency.names %}
+                                    {% if name.name_valid_to == null %}
+                                        {% for version in name.name_versions %}
+                                            {% if version.acronym_is_primary == true %}
+                                                {{ version.acronym }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
-
-                <div class="text u-margin-s">
-                    <ul>
-                        {% for name in agency.names %}
-                            {% if name.name_valid_to != null %}
-                                <li>
-                                    {% for version in name.name_versions %}
-                                        {% if version.name_is_primary == true %}
-                                            known as {{ version.name }}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% for version in name.name_versions %}
-                                        {% if version.name_is_primary != true %}
-                                            / {{ version.name }}
-                                        {% endif %}
-                                    {% endfor %}
-                                     until {{ name.name_valid_to }}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
 
                 <ul class="info-list u-margin-s">
                     <li class="info-list__item">
@@ -135,6 +121,34 @@
                             {% endif %}
                         </div>
                     </li>
+
+                    {% if agency.names|length > 1 %}
+                    <li class="info-list__item">
+                        <div class="info-list__term">Previous names</div>
+                        <div class="info-list__definition">
+                            <div class="text u-margin-s">
+                                <ul>
+                                    {% for name in agency.names %}
+                                        {% if name.name_valid_to != null %}
+                                            <li>
+                                                {% for version in name.name_versions %}
+                                                    {% if version.name_is_primary == true %}
+                                                        {{ version.name }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% if name.name_versions|length > 1 %}
+                                                    {% set first = true %}
+                                                    ({% for version in name.name_versions %}{% if version.name_is_primary != true %}{% if first != true %}, {% endif %}{{ version.name }}{% set first = false %}{% endif %}{% endfor %})
+                                                {% endif %}
+                                                until {{ name.name_valid_to|date("d/m/Y") }}
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    {% endif %}
 
                     <li class="info-list__item">
                         <div class="info-list__term">External review reports and EQAR decisions</div>
@@ -174,6 +188,7 @@
                             </ul>
                         </div>
                     </li>
+
                 </ul>
 
                 <hr class="divider u-margin-s">
