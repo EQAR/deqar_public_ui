@@ -35,11 +35,11 @@
                     <h1 class="title u-margin-xs">{{ country.name_english }}</h1>
 
                     <ul class="l-label u-margin-s">
-                        {#% if country.report_count > 0 %#}
+                        {% if country.report_count > 0 %}
                         <li class="l-label__item">
-                            <a href="{{ function('get_permalink', 6) }}?query=&country={{ country.id }}" class="label label--qa-results">View 999{# variable country.... to add #} institutions with 999{# variable country.... to add #} reports</a>
+                            <a href="{{ function('get_permalink', 6) }}?query=&country={{ country.id }}" class="label label--qa-results">View {{ country.institution_count }} institutions with {{ country.report_count }} reports</a>
                         </li>
-                        {#% endif %#}
+                        {% endif %}
                     </ul>
 
                   {% if country.ehea_is_member %}
@@ -223,6 +223,9 @@
                                                     {{ agency.registration_start|date('Y') }} - {{ agency.registration_valid_to|date('Y') }}
                                                 </span>
                                             </a>
+                                            {% if agency.report_count > 0 %}
+                                                <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}&country={{ country.id }}" class="label label--qa-results">View {{ agency.institution_count }} institutions</a>
+                                            {% endif %}
                                         </p>
                                     </li>
                                 {% endfor %}

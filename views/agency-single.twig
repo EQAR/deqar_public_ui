@@ -71,17 +71,7 @@
                     {% endif %}
                     {% if agency.report_count > 0 %}
                         <li class="l-label__item">
-                            <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">See {{ agency.report_count }} QA results by
-                                {% for name in agency.names %}
-                                    {% if name.name_valid_to == null %}
-                                        {% for version in name.name_versions %}
-                                            {% if version.acronym_is_primary == true %}
-                                                {{ version.acronym }}
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endfor %}
-                            </a>
+                            <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}" class="label label--qa-results">View {{ agency.report_count }} reports on {{ agency.institution_count }} institutions</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -288,10 +278,12 @@
                             {% for activity in agency.activities %}
                                 <li class="l-label__item">
                                     {{ activity.activity }}<br>
+                                    {% if activity.report_count > 0 %}
+                                        <a href="{{ function('get_permalink', 6) }}?query=&esg_activity={{ activity.id }}" class="label label--qa-results">View {{ activity.report_count }} reports on {{ activity.institution_count }} institutions</a>
+                                    {% endif %}
                                     {% if activity.reports_link %}
                                         <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label">Reports</a>
                                     {% endif %}
-                                    <a href="{{ function('get_permalink', 6) }}?query=&esg_activity={{ activity.id }}" class="label label--qa-results">QA results in DEQAR</a>
                                 </li>
                             {% endfor %}
                         </ul>
