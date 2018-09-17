@@ -196,7 +196,7 @@ class EqarApi
      * @param  boolean $history                         Indicator if the search should go trhough historical data.
      * @return array                                    Array of institutions
      */
-    public function getInstitutions($limit = 999, $offset = 0, $ordering = 'DESC', $query = false, $agency = false, $esg_activity = false, $country = false, $qf_ehea_level = false, $status = false, $report_year = false, $focus_country_is_crossborder = false, $history = false)
+    public function getInstitutions($limit = 10, $offset = 0, $ordering = 'DESC', $query = false, $agency = false, $esg_activity = false, $country = false, $qf_ehea_level = false, $status = false, $report_year = false, $focus_country_is_crossborder = false, $history = false)
     {
 
         $path = 'institutions/?limit=' . rawurlencode($limit) . '&offset=' . rawurlencode($offset) . '&ordering=' . rawurlencode($ordering) . '&query=' . rawurlencode($query) . '&agency=' . rawurlencode($agency) . '&esg_activity=' . rawurlencode($esg_activity) . '&country=' . rawurlencode($country) . '&qf_ehea_level=' . rawurlencode($qf_ehea_level) . '&status=' . rawurlencode($status) . /*'&report_year=' . rawurlencode($report_year) . -- emergency */ '&focus_country_is_crossborder=' . rawurlencode($focus_country_is_crossborder);
