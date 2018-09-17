@@ -19,17 +19,15 @@ $context['post'] = new TimberPost();
 // Get the institution ID from the GET variable.
 $institutionId = $_GET['id'];
 
-
-var_dump( "qa-results-single.php" );
-exit;
-
 // Check if the institution is set.
 if ( isset($institutionId) && !empty($institutionId) ) {
 
-    $context['institution'] = $eqarApi->getInstitution($institutionId);
+    $institution = $eqarApi->getInstitution($institutionId);
+
+    $context['institution'] = $institution;
 
     $levels = '';
-    foreach( array_reverse($eqarApi->getInstitution($institutionId)->qf_ehea_levels) as $level ){
+    foreach( array_reverse($institution->qf_ehea_levels) as $level ){
         $levels .= ucwords($level->qf_ehea_level) . ', ';
     }
 
