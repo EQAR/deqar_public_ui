@@ -21,10 +21,13 @@ $institutionId = $_GET['id'];
 
 // Check if the agency is set.
 if ( isset($institutionId) && !empty($institutionId) ) {
-    $context['institution'] = $eqarApi->getInstitution( $institutionId );
+
+    $institution = $eqarApi->getInstitution( $institutionId );
+
+    $context['institution'] = $institution;
 
     $levels = '';
-    foreach( array_reverse($eqarApi->getInstitution($institutionId)->qf_ehea_levels) as $level ){
+    foreach( array_reverse($institution->qf_ehea_levels) as $level ){
         $levels .= ucwords($level->qf_ehea_level) . ', ';
     }
 
