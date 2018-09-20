@@ -16,14 +16,26 @@ $context = Timber::get_context();
 
 $context['post'] = new TimberPost();
 
-// Get the agency ID from the GET variable.
-$agencyId = $_GET['id'];
 
 // Check if the agency is set.
-if ( isset($agencyId) && !empty($agencyId) ) {
-    $context['agency'] = $eqarApi->getAgency( $agencyId );
+if ( isset($_GET['id']) && !empty($_GET['id']) ) {
+
+    $agency = $eqarApi->getAgency( $_GET['id'] );
+
+    if ( isset($agency) && !empty($agency) && $agency != false ) {
+
+        $context['agency'] = $agency;
+
+    } else {
+
+        Site::do404($context);
+
+    }
+
 } else {
-    $context['agency'] = false;
+
+    Site::do404($context);
+
 }
 
 // Render the twig template.

@@ -11,31 +11,35 @@
 
 require_once( get_template_directory() . '/classes/EqarApi.class.php' );
 
-$eqarApi = new EqarApi();
-$context = Timber::get_context();
-
+$context         = Timber::get_context();
+$eqarApi         = new EqarApi();
 $context['post'] = new TimberPost();
 
-// Get the agency ID from the GET variable.
-$institutionId = $_GET['id'];
-
 // Check if the agency is set.
-if ( isset($institutionId) && !empty($institutionId) ) {
+if ( isset($_GET['id']) && !empty($_GET['id']) ) {
 
-    $institution = $eqarApi->getInstitution( $institutionId );
+    // Get the agency ID from the GET variable.
+    $institutionId  = $_GET['id'];
+    $institution    = $eqarApi->getInstitution( $institutionId );
 
-    $context['institution'] = $institution;
+    if ( isset($institution) && !empty($institution) && $institution != false ) {
 
-    $levels = '';
-    foreach( array_reverse($institution->qf_ehea_levels) as $level ){
-        $levels .= ucwords($level->qf_ehea_level) . ', ';
+        $context['institution'] = $institution;
+
+        $levels = '';
+        foreach( array_reverse($institution->qf_ehea_levels) as $level ){
+            $levels .= ucwords($level->qf_ehea_level) . ', ';
+        }
+
+        $levels = rtrim($levels,", ");
+        $context['institution']->levels = $levels;
+
+    } else {
+        Site::do404($context);
     }
 
-    $levels = rtrim($levels,", ");
-    $context['institution']->levels = $levels;
-
 } else {
-    $context['institution'] = false;
+    Site::do404($context);
 }
 
 // Render the twig template.

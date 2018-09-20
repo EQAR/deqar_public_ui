@@ -18,11 +18,19 @@ $context['post'] = new TimberPost();
 
 // Check if the agency is set.
 if ( isset($_GET['id']) && !empty($_GET['id']) ) {
+
     // Get the agency ID from the GET variable.
     $countryId = $_GET['id'];
-    $context['country'] = $eqarApi->getCountry( $countryId );
+    $country = $eqarApi->getCountry( $countryId );
+
+    if ( isset($country) && !empty($country) && $country != false ) {
+        $context['country'] = $country;
+    } else {
+        Site::do404($context);
+    }
+
 } else {
-    $context['country'] = false;
+    Site::do404($context);
 }
 
 // Render the twig template.

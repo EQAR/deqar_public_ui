@@ -208,6 +208,14 @@
 			return home_url();
 		}
 
+
+        public static function do404( $context ) {
+            status_header( 404 );
+            nocache_headers();
+            Timber::render('404.twig', $context);
+            die();
+        }
+
 	}
 
 	new Site();
