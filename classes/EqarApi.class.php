@@ -149,11 +149,8 @@ class EqarApi
 
         if (isset($institutionId) && !empty($institutionId)) {
 
-            $reports = $this->getReportInstitutionalByInstitution($institutionId);
-            $reportsHistorical = $this->getReportInstitutionalByInstitution($institutionId, true);
-
+            $reports    = $this->getReportInstitutionalByInstitution($institutionId);
             $programmes = $this->getReportProbrammesByInstitution($institutionId);
-            $programmesHistorical = $this->getReportProbrammesByInstitution($institutionId, true);
 
             $path = 'institutions/' . rawurlencode($institutionId) . '/?history=' . rawurlencode($history);
             $api = $this->eqar($path);
@@ -163,10 +160,8 @@ class EqarApi
 
                 $output = $result->decode_response();
 
-                $output->reports = $reports;
-                $output->reportsHistorical = $reportsHistorical;
+                $output->reports    = $reports;
                 $output->programmes = $programmes;
-                $output->programmesHistorical = $programmesHistorical;
 
                 return $output;
 
@@ -219,7 +214,7 @@ class EqarApi
      * @param   boolean  $history           Historical data parameter
      * @return  array    Reports
      */
-    public function getReportInstitutionalByInstitution($institutionId = null, $history = false)
+    public function getReportInstitutionalByInstitution($institutionId = null)
     {
 
         $path = 'reports/institutional/by-institution/' . rawurlencode($institutionId) . '/?limit=200&offset=0';
@@ -241,7 +236,7 @@ class EqarApi
      * @param   boolean  $history           Historical data parameter
      * @return  array    Programmes
      */
-    public function getReportProbrammesByInstitution($institutionId = null, $history = false)
+    public function getReportProbrammesByInstitution($institutionId = null)
     {
 
         $path = 'reports/programme/by-institution/' . rawurlencode($institutionId) . '/?limit=200&offset=0';
