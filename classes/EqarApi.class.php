@@ -217,7 +217,7 @@ class EqarApi
     public function getReportInstitutionalByInstitution($institutionId = null)
     {
 
-        $path = 'reports/institutional/by-institution/' . rawurlencode($institutionId) . '/?limit=200&offset=0';
+        $path = 'reports/institutional/by-institution/' . rawurlencode($institutionId) . '/?limit=999&offset=0';
         $api = $this->eqar($path);
         $result = $api->get('');
 
@@ -239,7 +239,7 @@ class EqarApi
     public function getReportProbrammesByInstitution($institutionId = null)
     {
 
-        $path = 'reports/programme/by-institution/' . rawurlencode($institutionId) . '/?limit=200&offset=0';
+        $path = 'reports/programme/by-institution/' . rawurlencode($institutionId) . '/?limit=999&offset=0';
         $api = $this->eqar($path);
         $result = $api->get('');
 
