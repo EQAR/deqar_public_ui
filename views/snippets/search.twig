@@ -11,7 +11,7 @@
 
     <form class="form qa-search__form" method="get" action="{{ function('get_permalink', 6) }}">
         <div class="form__fieldset form__fieldset--search">
-            <input type="search" name="query" value="{{ formdata.query }}" placeholder="{{ search.description }}">
+            <input type="search" name="query" value="{{ formdata.query|replace({"\\'": "'", "\\\\": "\\"})|escape('html_attr') }}" placeholder="{{ search.description }}">
             <input type="submit" value="{{ search.button }}" class="qa-search__button">
         </div>
 
