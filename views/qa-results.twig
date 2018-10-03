@@ -10,12 +10,11 @@
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
-                {% if results.results or formdata %}
+                {% if formdata.country or formdata.status or formdata.agency or formdata.report_year or formdata.qf_ehea_level or formdata.focus_country_is_crossborder == 'true' %}
                     {% include 'views/snippets/search.twig' with {type: 'advanced', title: true} %}
                 {% else %}
                     {% include 'views/snippets/search.twig' with {type: 'simple', title: true} %}
                 {% endif %}
-
 
                 {% if results.results %}
 
