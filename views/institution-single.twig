@@ -106,6 +106,14 @@
                             {% else %}-{% endif %}
                         </div>
                     </li>
+
+                    {% if institution.eter %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">ETER/OrgReg ID</div>
+                            <div class="info-list__definition">{{ institution.eter[:6] }}</div>
+                        </li>
+                    {% endif %}
+
                     {% if institution.hierarchical_relationships.part_of %}
                         <li class="info-list__item">
                             <div class="info-list__term">Part of</div>
@@ -521,6 +529,20 @@
                                             <div class="info-list__term">Level</div>
                                             <div class="info-list__definition">{{ result.qf_ehea_level ? result.qf_ehea_level : '-' }}{% if result.nqf_level %} (NQF {{ result.nqf_level }}){% endif %}</div>
                                         </li>
+                                        {% if result.report.agency_esg_activity_type == "joint programme" %}
+                                            {% set i = 0 %}
+                                            {% for partner in result.report.institutions %}
+                                                <li class="info-list__item">
+                                                    <div class="info-list__term">
+                                                        {% if i == 0 %}Joint programme with{% endif %}
+                                                    </div>
+                                                    <div class="info-list__definition">
+                                                        <a href="{{ function('get_permalink', 418) }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
+                                                    </div>
+                                                </li>
+                                                {% set i = i + 1 %}
+                                            {% endfor %}
+                                        {% endif %}
                                     </ul>
                                     <ul class="info-list info-list--padding">
                                         <li class="info-list__item">
