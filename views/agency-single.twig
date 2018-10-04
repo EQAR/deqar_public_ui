@@ -77,15 +77,36 @@
                 </ul>
 
                 <ul class="info-list u-margin-s">
+                    {% if agency.is_registered %}
                     <li class="info-list__item">
                         <div class="info-list__term">Admission valid until</div>
                         <div class="info-list__definition">{{ agency.registration_valid_to|date("d/m/Y") }} (listed since {{ agency.registration_start|date("d/m/Y") }})</div>
                     </li>
-                    {% if agency.registration_note %}
+                    {% endif %}
+                    {% if not agency.is_registered %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">Registration note</div>
+                            <div class="info-list__definition">
+                                {% for name in agency.names %}
+                                    {% if name.name_valid_to == null %}
+                                        {% for version in name.name_versions %}
+                                            {% if version.name_is_primary == true %}
+                                                {{ version.acronym }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                                is currently not registered on EQAR, but was registered from {{ agency.registration_start|date("d/m/Y") }} until {{ agency.registration_valid_to|date("d/m/Y") }}.
+                                {{ agency.registration_note }}
+                            </div>
+                        </li>
+                    {% else %}
+                        {% if agency.registration_note %}
                         <li class="info-list__item">
                             <div class="info-list__term">Registration note</div>
                             <div class="info-list__definition">{{ agency.registration_note }}</div>
                         </li>
+                        {% endif %}
                     {% endif %}
 
                     <li class="info-list__item">
@@ -181,6 +202,7 @@
 
                 </ul>
 
+                {% if agency.is_registered %}
                 <hr class="divider u-margin-s">
 
                 <h2 class="subtitle u-margin-xs">Information on the agency's work</h2>
@@ -191,6 +213,7 @@
                         <p>{{ agency.specialisation_note|striptags('<br><p>') }}</p>
                     {% endif %}
                 </div>
+                {% endif %}
 
 
                 <hr class="divider u-margin-s">
@@ -215,7 +238,7 @@
                             </div>
                         </li>
                     {% endif %}
-                    {% if agency.contact_person %}
+                    {% if agency.is_registered and agency.contact_person %}
                         <li class="info-list__item">
                             <div class="info-list__term">Contact Person</div>
                             <div class="info-list__definition">
@@ -245,7 +268,7 @@
                             </div>
                         </li>
                     {% endif %}
-                    {% if agency.emails %}
+                    {% if agency.emails and agency.is_registered %}
                         <li class="info-list__item">
                             <div class="info-list__term">Email</div>
                             <div class="info-list__definition">
@@ -257,7 +280,7 @@
                             </div>
                         </li>
                     {% endif %}
-                    {% if agency.associations %}
+                    {% if agency.is_registered and agency.associations %}
                         <li class="info-list__item">
                             <div class="info-list__term">ENQA membership</div>
                             <div class="info-list__definition">
