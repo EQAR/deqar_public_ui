@@ -240,12 +240,12 @@
                         {% for result in institution.reports %}
                             <div class="accordion__item{% if result.report_valid == false %} report-invalid{% else %} report-valid{% endif %} item-visible">
                                 <div class="accordion__definition js-accordion__definition">
-                                    {% if result.report_valid == false %}
-                                        <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
-                                            <path d="M12,0 C7.03,0 3,4.03 3,9 L0,9 L3.89,12.89 L3.96,13.03 L8,9 L5,9 C5,5.13 8.13,2 12,2 C15.87,2 19,5.13 19,9 C19,12.87 15.87,16 12,16 C10.07,16 8.32,15.21 7.06,13.94 L5.64,15.36 C7.27,16.99 9.51,18 12,18 C16.97,18 21,13.97 21,9 C21,4.03 16.97,0 12,0 Z" id="Path"></path>
-                                            <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
-                                        </svg>
-                                    {% endif %}
+                                        {% if result.report_valid == false %}
+                                            <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
+                                                <path d="M12,0 C7.03,0 3,4.03 3,9 L0,9 L3.89,12.89 L3.96,13.03 L8,9 L5,9 C5,5.13 8.13,2 12,2 C15.87,2 19,5.13 19,9 C19,12.87 15.87,16 12,16 C10.07,16 8.32,15.21 7.06,13.94 L5.64,15.36 C7.27,16.99 9.51,18 12,18 C16.97,18 21,13.97 21,9 C21,4.03 16.97,0 12,0 Z" id="Path"></path>
+                                                <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
+                                            </svg>
+                                        {% endif %}
 
                                     {{ result.name }}{% if result.institution_relationship_context %}{% for context in result.institution_relationship_context %}, {{ context.name_primary }}{% endfor %}{% endif %} (by {{ result.agency_acronym }})
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
@@ -340,23 +340,80 @@
                         {% for result in institution.programmes %}
                             <div class="accordion__item{% if result.report.report_valid == false %} report-invalid{% else %} report-valid{% endif %} item-visible">
                                 <div class="accordion__definition js-accordion__definition">
+
                                     {% if result.report.report_valid == false %}
                                         <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
                                             <path d="M12,0 C7.03,0 3,4.03 3,9 L0,9 L3.89,12.89 L3.96,13.03 L8,9 L5,9 C5,5.13 8.13,2 12,2 C15.87,2 19,5.13 19,9 C19,12.87 15.87,16 12,16 C10.07,16 8.32,15.21 7.06,13.94 L5.64,15.36 C7.27,16.99 9.51,18 12,18 C16.97,18 21,13.97 21,9 C21,4.03 16.97,0 12,0 Z" id="Path"></path>
                                             <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
                                         </svg>
                                     {% endif %}
-{% for item in result.programme_names %}
-    {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
-{% endfor %}
-{% if result.qf_ehea_level %}
-, {{ result.qf_ehea_level }}
-{% endif %}
-{% if result.report.institution_relationship_context %},
-    {% for item in result.report.institution_relationship_context %}
-        {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
-    {% endfor %}
-{% endif %}
+
+<!--
+                                    <div class="accordion__definition-icons">
+
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="13px" height="17px" viewBox="0 0 13 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion-icon accordion-icon__shield">
+                                                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g id="Buttons" transform="translate(-54.000000, -1215.000000)">
+                                                        <g id="shield" transform="translate(54.000000, 1215.000000)">
+                                                            <path d="M6.5,0.708344 L0.125,3.54168 L0.125,7.79168 C0.125,11.7229 2.845,15.3992 6.5,16.2917 C10.155,15.3992 12.875,11.7229 12.875,7.79168 L12.875,3.54168 L6.5,0.708344 Z" id="Shape" fill="#18498F" fill-rule="nonzero"></path>
+                                                            <g id="Shape-+-Shape-+-Shape-Mask">
+                                                                <mask id="mask-2" fill="white">
+                                                                    <use xlink:href="#path-1"></use>
+                                                                </mask>
+                                                                <use id="Mask" fill="#18498F" fill-rule="nonzero" xlink:href="#path-1"></use>
+                                                                <path d="M-0.32576,25.492 L11.6742,0.491979" id="Shape" stroke-opacity="0.25" stroke="#E6F6FF" mask="url(#mask-2)"></path>
+                                                                <path d="M1.67424,25.492 L12.5,2.5" id="Shape" stroke-opacity="0.25" stroke="#E6F6FF" mask="url(#mask-2)"></path>
+                                                                <path d="M-2.325762,25.492 L10.5,-0.5" id="Shape" stroke-opacity="0.25" stroke="#E6F6FF" mask="url(#mask-2)"></path>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </span>
+
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__gavel">
+                                                <path d="M0 16.0838H8.48656V17.4982H0V16.0838ZM2.99859 6.93951L5 4.9381L15 14.9381L12.9986 16.9395L2.99859 6.93951ZM8.00566 1.93951L12.0085 5.94234L10.0071 7.94376L6.00424 3.94093L8.00566 1.93951ZM2.00141 7.93669L6.00424 11.9395L4.00283 13.9409L0 9.9381L2.00141 7.93669Z" fill="#18498F"/>
+                                                <rect x="0.725586" y="9.73596" width="10" height="4.91375" transform="rotate(-45 0.725586 9.73596)" fill="#18498F"/>
+                                                <circle cx="21" cy="6" r="6" fill="#950000"/>
+                                                <rect x="17" y="5" width="8" height="2" fill="white"/>
+                                            </svg>
+                                        </span>
+
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__gavel">
+                                                <path d="M0 16.0838H8.48656V17.4982H0V16.0838ZM2.99859 6.93951L5 4.9381L15 14.9381L12.9986 16.9395L2.99859 6.93951ZM8.00566 1.93951L12.0085 5.94234L10.0071 7.94376L6.00424 3.94093L8.00566 1.93951ZM2.00141 7.93669L6.00424 11.9395L4.00283 13.9409L0 9.9381L2.00141 7.93669Z" fill="#18498F"/>
+                                                <rect x="0.725586" y="9.73596" width="10" height="4.91375" transform="rotate(-45 0.725586 9.73596)" fill="#18498F"/>
+                                                <circle cx="21" cy="6" r="6" fill="#41875E"/>
+                                                <rect x="17" y="5" width="8" height="2" fill="white"/>
+                                            </svg>
+                                        </span>
+
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__hub">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 0.93951C1.11914 0.93951 0 2.0588 0 3.43951C0 4.82022 1.11914 5.93951 2.5 5.93951C2.97656 5.93951 3.42236 5.80608 3.80127 5.57454L6.6665 8.43951L6.6665 11.0895C5.69971 11.4395 5 12.3562 5 13.4395C5 14.8228 6.1167 15.9395 7.5 15.9395C8.8833 15.9395 10 14.8228 10 13.4395C10 12.3562 9.2998 11.4395 8.33301 11.0895V8.43951L11.1982 5.57436C11.5771 5.80602 12.0229 5.93951 12.5 5.93951C13.8809 5.93951 15 4.82022 15 3.43951C15 2.0588 13.8809 0.93951 12.5 0.93951C11.1191 0.93951 10 2.0588 10 3.43951C10 3.71356 10.0439 3.97732 10.1255 4.22406L7.5 6.98118L4.87451 4.22436C4.95605 3.97753 5 3.71367 5 3.43951C5 2.0588 3.88086 0.93951 2.5 0.93951Z" fill="#18498F"/>
+                                            </svg>
+                                        </span>
+
+                                    </div>
+-->
+
+
+                                    <div class="accordion__title">
+                                        {% for item in result.programme_names %}
+                                            {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
+                                        {% endfor %}
+                                        {% if result.qf_ehea_level %}
+                                        , {{ result.qf_ehea_level }}
+                                        {% endif %}
+                                        {% if result.report.institution_relationship_context %},
+                                            {% for item in result.report.institution_relationship_context %}
+                                                {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                                         <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"></polygon>
                                     </svg>
