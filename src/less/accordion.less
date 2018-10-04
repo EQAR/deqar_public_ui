@@ -20,7 +20,7 @@
 }
 
 .accordion__arrow {
-    position: absolute; top: 20px; right: 15px;
+    position: absolute; top: 25px; right: 15px;
     fill: fade(@primary, 40%);
     transition: all 0.2s ease;
 }
@@ -66,6 +66,50 @@
     // background-color: #FFF3D9;
     // color: #FF8A00;
 }
+
+.accordion__definition-icons {
+    margin: 3px 0 0;
+    padding: 0 5px 0 0;
+    display: inline-block;
+}
+
+.accordion-icon-wrapper {
+    padding: 0 3px;
+    height: 22px;
+    display: inline-block;
+    border-right: solid 1px rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+        border-right: 0;
+    }
+
+}
+
+.accordion-icon {
+    margin: 0;
+    display: inline-block;
+}
+
+.accordion-icon__hub {
+    margin: 0 3px;
+}
+
+.accordion-icon__shield {
+    margin: 0 5px 0 0;
+}
+
+.accordion-icon__gavel {
+    margin: 0 5px -2px 0;
+}
+
+.accordion-icon__shield {
+    margin-bottom: 0px;
+}
+
+.accordion__title {
+    display: inline-block;
+}
+
 
 
 @media (min-width: 768px) {
