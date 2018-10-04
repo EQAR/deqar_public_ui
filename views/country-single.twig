@@ -211,16 +211,45 @@
                                     <li>
                                         <p>
                                             <a href="{{ function('get_permalink', 223) }}?id={{ agency.id }}" class="agency">
-                                                {% if agency.country_is_official %}<!-- Display a svg file -->{% endif %}
+                                                {% if agency.is_registered %}
+                                                    {% if agency.country_is_official %}
+                                                    <svg width="13px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.75 15.58" class="list-icon list-icon__shield">
+                                                        <title>Agency operates as part of the obligatory external QA system</title>
+                                                        <defs>
+                                                            <style>
+                                                                .cls-1{fill:#18498f;fill-opacity:0.8;}
+                                                                .cls-2{fill:#e6f6ff;fill-opacity:0.2;}
+                                                            </style>
+                                                        </defs>
+                                                        <path class="cls-1" d="M6.38,0,0,2.83V7.08a8.81,8.81,0,0,0,6.38,8.5,8.82,8.82,0,0,0,6.37-8.5V2.83Z"/>
+                                                        <path class="cls-2" d="M4.8,15,11,2.06l-.39-.17-.52-.24L3.93,14.49A7.61,7.61,0,0,0,4.8,15Z"/>
+                                                        <path class="cls-2" d="M11.75,2.39,5.54,15.32a7.46,7.46,0,0,0,.84.26l.16-.05L12.66,2.79Z"/>
+                                                        <path class="cls-2" d="M8.45.92,2.51,13.29a10.42,10.42,0,0,0,.77.72L9.36,1.33Z"/>
+                                                    </svg>
+                                                    </span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="list-icon list-icon__history">
+                                                        <title>Archived entry - agency was registered in the past</title>
+                                                        <g opacity="0.8">
+                                                            <path d="M10.2857 0.939514C6.02571 0.939514 2.57143 4.3938 2.57143 8.6538H0L3.33429 11.9881L3.39429 12.1081L6.85714 8.6538H4.28571C4.28571 5.33666 6.96857 2.6538 10.2857 2.6538C13.6029 2.6538 16.2857 5.33666 16.2857 8.6538C16.2857 11.9709 13.6029 14.6538 10.2857 14.6538C8.63143 14.6538 7.13143 13.9767 6.05143 12.8881L4.83429 14.1052C6.23143 15.5024 8.15143 16.3681 10.2857 16.3681C14.5457 16.3681 18 12.9138 18 8.6538C18 4.3938 14.5457 0.939514 10.2857 0.939514Z" fill="#18498F"/>
+                                                            <path d="M9.42871 5.22523V9.51094L13.0973 11.6881L13.7144 10.6509L10.7144 8.86808V5.22523H9.42871Z" fill="#18498F"/>
+                                                        </g>
+                                                    </svg>
+                                                {% endif %}
                                                 <span class="name"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</span>
-                                                <span class="since" title="Listed since {{ agency.registration_start|date('Y') }}">
+                                                <span class="since" title="{% if agency.is_registered %}Registered since {{ agency.registration_start|date('d/m/Y') }}{% else %}Registered {{ agency.registration_start|date('d/m/Y') }} - {{ agency.registration_valid_to|date('d/m/Y') }}{% endif %}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" viewBox="0 0 30 20">
                                                         <polygon points="9.48 0 0 20 2.52 20 12 0 9.48 0" fill="#033163"/>
                                                         <polygon points="15.48 0 6 20 8.52 20 18 0 15.48 0" fill="#033163" opacity="0.75"/>
                                                         <polygon points="21.48 0 12 20 14.52 20 24 0 21.48 0" fill="#033163" opacity="0.5"/>
                                                         <polygon points="27.48 0 18 20 20.52 20 30 0 27.48 0" fill="#033163" opacity="0.25"/>
                                                     </svg>
-                                                    {{ agency.registration_start|date('Y') }} - {{ agency.registration_valid_to|date('Y') }}
+                                                    {% if agency.is_registered %}
+                                                       {{ agency.registration_start|date('Y') }} -
+                                                    {% else %}
+                                                       {{ agency.registration_start|date('Y') }} - {{ agency.registration_valid_to|date('Y') }}
+                                                    {% endif %}
                                                 </span>
                                             </a>
                                             {% if agency.report_count > 0 %}

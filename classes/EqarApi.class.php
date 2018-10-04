@@ -354,10 +354,10 @@ class EqarApi
     public function getCountry($countryId, $history = true)
     {
 
-        $byCountry = $this->getAgenciesByCountry($countryId);
-        $byCountryHistory = $this->getAgenciesByCountry($countryId, true);
-        $byFocusCountry = $this->getAgenciesByFocusCountry($countryId);
-        $byFocusCountryHistory = $this->getAgenciesByFocusCountry($countryId, true);
+        //$byCountry = $this->getAgenciesByCountry($countryId);
+        //$byCountryHistory = $this->getAgenciesByCountry($countryId, true);
+        $byFocusCountry = $this->getAgenciesByFocusCountry($countryId, "true");
+        //$byFocusCountryHistory = $this->getAgenciesByFocusCountry($countryId, true);
 
         $path = 'countries/' . rawurlencode($countryId) . '/?history=' . rawurlencode($history);
         $api = $this->eqar($path);
@@ -367,10 +367,10 @@ class EqarApi
 
             $output = $result->decode_response();
             $output->agencies = [
-                'byCountry' => $byCountry,
-                'byCountryHistory' => $byCountryHistory,
+                //'byCountry' => $byCountry,
+                //'byCountryHistory' => $byCountryHistory,
                 'byFocusCountry' => $byFocusCountry,
-                'byFocusCountryHistory' => $byFocusCountryHistory,
+                //'byFocusCountryHistory' => $byFocusCountryHistory,
             ];
 
             return $output;

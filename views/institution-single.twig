@@ -328,7 +328,7 @@
                                     <ul class="info-list u-margin">
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a href="/register/map/agency/?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="/register/map/agency/?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -382,7 +382,7 @@
                                             <li class="info-list__item">
                                                 <div class="info-list__term"></div>
                                                 <div class="info-list__definition">
-                                                    <a href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website</a>
+                                                    <a class="info-list__link" href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website</a>
                                                 </div>
                                             </li>
                                         {% endif %}
@@ -537,7 +537,7 @@
                                                         {% if i == 0 %}Joint programme with{% endif %}
                                                     </div>
                                                     <div class="info-list__definition">
-                                                        <a href="{{ function('get_permalink', 418) }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
+                                                        <a class="info-list__link" href="{{ function('get_permalink', 418) }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
                                                     </div>
                                                 </li>
                                                 {% set i = i + 1 %}
@@ -551,7 +551,7 @@
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a href="/register/map/agency/?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="/register/map/agency/?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -603,7 +603,7 @@
                                             <li class="info-list__item">
                                                 <div class="info-list__term"></div>
                                                 <div class="info-list__definition">
-                                                    <a href="{{ result.report.report_links[0].link }}" target="_blank">View record on agency’s website</a>
+                                                    <a class="info-list__link" href="{{ result.report.report_links[0].link }}" target="_blank">View record on agency’s website</a>
                                                 </div>
                                             </li>
                                         {% endif %}
