@@ -7,28 +7,42 @@
 				{% include 'snippets/sidebar.twig' %}
 			</div>
 
-            {#{ dump( countries ) }#}
-            {#{ dump( institutions ) }#}
-            {#{ dump( institutionsByCountry ) }#}
-
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
-                {% include 'views/snippets/search.twig' %}
 
-                {% if results %}
+                {% if formdata.country or formdata.status or formdata.agency or formdata.report_year or formdata.qf_ehea_level or formdata.focus_country_is_crossborder == 'true' %}
+                    {% include 'views/snippets/search.twig' with {type: 'advanced', title: true} %}
+                {% else %}
+                    {% include 'views/snippets/search.twig' with {type: 'simple', title: true} %}
+                {% endif %}
 
-                    <h2 class="title u-margin">{{ results|length }} search results matching your criteria:</h2>
+                {% if results.results %}
+
+                    {% if formdata.query %}
+                        <h2 class="title title__small">{{ results.count }} institutions matching the term "{{ formdata.query }}":</h2>
+                    {% elseif formdata.country %}
+
+                        {% set selected_country = "none" %}
+                        {% for country in countries %}
+                            {% if formdata.country == country.id %}
+                                {% set selected_country = country.name_english %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <h2 class="title title__small">{{ results.count }} institutions matching the country {{ selected_country }}</h2>
+                    {% endif %}
+
                     <div class=" u-margin">
                         <ul class="agency-list">
-                            {% for institution in results %}
+                            {% for institution in results.results %}
                                 <li class="agency-list__item">
-                                    <a href="{{ function('get_permalink', 418) }}/?id={{ institution.id }}" class="agency-list__link">
-                                        {{ institution.name_primary }}
+                                    <a href="{{ function('get_permalink', 418) }}?id={{ institution.id }}" class="agency-list__link">
                                         {% if institution.hierarchical_relationships.part_of != null %}
                                             {% for item in institution.hierarchical_relationships.part_of %}
-                                                / {{ item.name_primary }}
+                                                {{ item.name_primary }} /
                                             {% endfor %}
                                         {% endif %}
+                                        {{ institution.name_primary }}
                                         <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="agency-list__arrow">
                                             <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"></polygon>
                                         </svg>
@@ -37,9 +51,46 @@
                             {% endfor %}
                         </ul>
                     </div>
+
+
+                    {% set url = '?' %}
+
+                    {% for key, val in formdata %}
+                        {% if key != 'paging' %}
+                            {% set url = url ~ key ~ '=' ~ val %}
+                            {% if not loop.last %}
+                                {% set url = url ~ '&' %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="u-margin-l">
+                        <div class="pagination__indidator pagination__indidator u-margin-s">
+                            Institution {{ paginator.start }}-{{ paginator.end }} of {{ paginator.total }}
+                        </div>
+                        <ul class="pagination paginator pagination__list">
+                            {% if paginator.first == false %}
+                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.prev - 1) }}">&laquo;</a></li>
+                            {% else %}
+                                <li class="pagination__item pagination__item--disabled">&laquo;</li>
+                            {% endif %}
+
+                            {% for item in 0..(paginator.pages - 1) %}
+                                <li class="pagination__item"><a class="pagination__link{% if ( loop.index ) == paginator.current %} current{% endif %}" href="{{ url }}&paging={{ item }}">{{ (item + 1) }}</a></li>
+                            {% endfor %}
+
+                            {% if paginator.last == false %}
+                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.next - 1) }}">&raquo;</a></li>
+                            {% else %}
+                                <li class="pagination__item pagination__item--disabled">&raquo;</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
                 {% else %}
                     {% if formdata %}
                         <h2 class="title u-margin">No results found matching your criteria</h2>
+                        <p><a href="/kb/faq/">Institution not found in DEQAR?</a></p>
                     {% endif %}
                 {% endif %}
 

@@ -1,7 +1,7 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-    {{ country.name_english }} - Country
+    {{ country.name_english }} - {{ wp_title }}
 {% endblock %}
 
 {% block content %}
@@ -32,194 +32,158 @@
                     <h1 class="title u-margin-xs">Country not found.</h1>
                 {% else %}
 
-    				<h1 class="title u-margin-xs">{{ country.name_english }}</h1>
+                    <h1 class="title u-margin-xs">{{ country.name_english }}</h1>
 
-                    {% if country.eqar_governmental_member_start != null %}
-                        <h3 class="subtitle u-margin-s">{{ country.name_english }} has been a Governmental Member of EQAR since {{ country.eqar_governmental_member_start|date('Y') }}.</h3>
-                    {% endif %}
+                    <ul class="l-label u-margin-s">
+                        {% if country.report_count > 0 %}
+                        <li class="l-label__item">
+                            <a href="{{ function('get_permalink', 6) }}?query=&country={{ country.id }}" class="label label--qa-results">View {{ country.institution_count }} institutions with {{ country.report_count }} reports</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+
+                  {% if country.ehea_is_member %}
+
+                    <ul class="info-list u-margin-s">
+
+                        <li class="info-list__item">
+                            <div class="info-list__term">Membership in EQAR</div>
+                            <div class="info-list__definition">
+                                {% if country.eqar_governmental_member_start != null %}
+                                    {{ country.name_english }} has been a Governmental Member of EQAR since {{ country.eqar_governmental_member_start|date('F Y') }}.
+                                {% else %}
+                                    {{ country.name_english }} is not a Governmental Member of EQAR.
+                                {% endif %}
+			                </div>
+                        </li>
 
                     {% if country.general_note %}
-                        <p class="u-margin">{{ country.general_note }}</p>
+                        <li class="info-list__item">
+                            <div class="info-list__term">General information on higher education</div>
+                            <div class="info-list__definition">
+                                {#<div class="text u-margin">#}{{ country.general_note }}{#</div>#}
+                            </div>
+                        </li>
                     {% endif %}
 
-                    <p class="u-margin"></p>
-
-                    <hr class="divider u-margin">
-
-                    <h3 class="subtitle u-margin-s">National external quality assurance requirements</h3>
-                    <div class="text u-margin">
-                        <ul>
-                            {% for requirement in country.qa_requirements %}
-                                <li class="info-list__item">
-                                    <p>
-                                        <strong>{{ requirement.qa_requirement }}</strong><br>
-                                        {{ requirement.qa_requirement_note }}
-                                    </p>
-                                </li>
-                            {% endfor %}
-                        <ul>
-                    </div>
-
-
-                    <hr class="divider u-margin">
-
-                    <!-- <h3 class="subtitle u-margin-s">Basic information</h3>
-
-                    <ul class="info-list u-margin">
                         <li class="info-list__item">
-                            <div class="info-list__term">ehea_is_member</div>
-                            <div class="info-list__definition">{{ country.ehea_is_member }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">qa_requirements</div>
+                            <div class="info-list__term">National external quality assurance requirements</div>
                             <div class="info-list__definition">
-                                {% for item in country.qa_requirements %}
-
-                                {% endfor %}
+                                <div class="text u-margin">
+                                    {% if country.qa_requirement_note %}
+                                    <p>{{ country.qa_requirement_note }}</p>
+                                    {% endif %}
+                                    <ul>
+                                        {% for requirement in country.qa_requirements %}
+                                        <li class="info-list__item">
+                                            <p><strong>{{ requirement.qa_requirement }}</strong><br />
+                                            {{ requirement.qa_requirement_note }}</p>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
                         </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">qa_requirement_note</div>
-                            <div class="info-list__definition">{{ country.qa_requirement_note }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">external_QAA_is_permitted</div>
-                            <div class="info-list__definition">{{ country.external_QAA_is_permitted }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">external_QAA_note</div>
-                            <div class="info-list__definition">{{ country.external_QAA_note }}</div>
-                        </li>
-                    </ul> -->
 
-
-                    <h3 class="subtitle u-margin-s">Can higher education institutions choose a suitable EQAR-registered agency?</h3>
-
-                    {% if country.external_QAA_is_permitted is not empty %}
-                        <div class="text u-margin">
-                            {% if country.external_QAA_is_permitted == 'no' %}
-                                <p class="u-margin-xs"><strong>No.</strong></p>
-                            {% elseif country.external_QAA_is_permitted == 'yes' %}
-                                <p class="u-margin-xs"><strong>Yes:</strong><br>{{ country.external_QAA_note }}</p>
-                            {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
-                                <p class="u-margin-xs"><strong>Yes, under certain conditions:</strong><br>{{ country.external_QAA_note }}</p>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-
-                    <div class="text u-margin">
-                        <ul>
-                            {% if country.eligibility is not empty %}
-                                <li class="info-list__item">
-                                    <p>
-                                        <strong>Eligibility requirements for foreign agencies:</strong><br>
-                                        {{ country.eligibility|striptags('p') }}
-                                    </p>
-                                </li>
-                            {% endif %}
-                            {% if country.conditions is not empty %}
-                                <li class="info-list__item">
-                                    <p>
-                                        <strong>Conditions for the agencies’ work (e.g. criteria to be used):</strong><br>
-                                        {{ country.conditions|striptags('p') }}
-                                    </p>
-                                </li>
-                            {% endif %}
-                            {% if country.recognition is not empty %}
-                                <li class="info-list__item">
-                                    <p>
-                                        <strong>Recognition of reviews carried out by foreign agencies:</strong><br>
-                                        {{ country.recognition|striptags('p') }}
-                                    </p>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-
-                    <!-- <ul>
                         <li class="info-list__item">
-                            <div class="info-list__term">european_approach_is_permitted</div>
-                            <div class="info-list__definition">{{ country.european_approach_is_permitted }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">european_approach_note</div>
-                            <div class="info-list__definition">{{ country.european_approach_note }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">general_note</div>
-                            <div class="info-list__definition">{{ country.general_note }}</div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">qaa_regulations</div>
+                            <div class="info-list__term">Cross-border quality assurance</div>
                             <div class="info-list__definition">
-                                {% for item in country.qaa_regulations %}
-
-                                {% endfor %}
+                                <div class="text u-margin">
+                                {% if country.external_QAA_is_permitted is not empty %}
+                                    <p class="u-margin-xs">
+                                        {% if country.external_QAA_is_permitted == 'no' %}
+                                        In {{ country.name_english }} higher education institutions may not choose among EQAR-registered agencies.
+                                        {% elseif country.external_QAA_is_permitted == 'yes' %}
+                                        In {{ country.name_english }} higher education institutions may choose a suitable EQAR-registered agency.
+                                        {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
+                                        In {{ country.name_english }} under certain conditions higher education institutions may choose a suitable EQAR-registered agency.
+                                        {% endif %}
+                                        {{ country.external_QAA_note }}
+                                    </p>
+                                {% endif %}
+                                    <ul>
+                                        {% if country.eligibility is not empty %}
+                                            <li class="info-list__item">
+                                                <p>
+                                                    <strong>Eligibility requirements for foreign agencies:</strong>
+                                                    {{ country.eligibility|striptags('p') }}
+                                                </p>
+                                            </li>
+                                        {% endif %}
+                                        {% if country.conditions is not empty %}
+                                            <li class="info-list__item">
+                                                <p>
+                                                    <strong>Conditions for the agencies’ work (e.g. criteria to be used):</strong>
+                                                    {{ country.conditions|striptags('p') }}
+                                                </p>
+                                            </li>
+                                        {% endif %}
+                                        {% if country.recognition is not empty %}
+                                            <li class="info-list__item">
+                                                <p>
+                                                    <strong>Recognition of reviews carried out by foreign agencies:</strong>
+                                                    {{ country.recognition|striptags('p') }}
+                                                </p>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
                             </div>
-                        </li>
+                        </li> {# cross-border QA #}
+
                         <li class="info-list__item">
-                            <div class="info-list__term">historical_data</div>
+                            <div class="info-list__term">European Approach for Quality Assurance of Joint Programmes</div>
                             <div class="info-list__definition">
-                                {% for item in country.historical_data %}
-
-                                {% endfor %}
+                                {# <div class="text u-margin"> #}
+                                {% if country.european_approach_is_permitted is not empty %}
+                                    {% if country.european_approach_is_permitted == 'no' %}
+                                        In {{ country.name_english }} the European Approach is not available to higher education institutions.
+                                    {% elseif country.european_approach_is_permitted == 'yes' %}
+                                        In {{ country.name_english }} the European Approach is available to higher education institutions.
+                                    {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
+                                        In {{ country.name_english }} the European Approach is available to higher education institutions under certain conditions.
+                                    {% endif %}
+                                {% endif %}
+                                {{ country.european_approach_note }}
+                                {# </div> #}
                             </div>
-                        </li>
-                        <li class="info-list__item">
-                            <div class="info-list__term">agencies</div>
-                            <div class="info-list__definition">
-                                {% for item in country.agencies %}
+                        </li> {# european approach #}
 
-                                {% endfor %}
-                            </div>
-                        </li>
-                    </ul> -->
-
-
-
-                    <hr class="divider u-margin">
-                    <h3 class="subtitle u-margin-s">Can higher education institutions use the European Approach for the Quality Assurance of Joint Programmes?</h3>
-
-                    {% if country.european_approach_is_permitted is not empty %}
-                        <div class="text u-margin">
-                            {% if country.european_approach_is_permitted == 'no' %}
-                                <p class="u-margin-s">No.</p>
-                            {% elseif country.european_approach_is_permitted == 'yes' %}
-                                <p class="u-margin-s">Yes:</p>
-                            {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
-                                <p class="u-margin-s">Yes, under certain conditions:</p>
-                            {% endif %}
-                            {{ country.european_approach_note|replace({'[not recognised]': '<strong>Not recognised.</strong>'}) }}
-                        </div>
-                    {% endif %}
-
-
-
-                    <hr class="divider u-margin">
-                    <h3 class="subtitle u-margin-s">Further Information</h3>
-                    <div class="text u-margin">
                         {% if country.qaa_regulations is not empty %}
-                            <ul>
-                                {% for regulation in country.qaa_regulations %}
-                                    <li>
-                                        <p>
+                        <li class="info-list__item">
+                            <div class="info-list__term">Further information</div>
+                            <div class="info-list__definition">
+                                <div class="text u-margin">
+                                    <ul>
+                                    {% for regulation in country.qaa_regulations %}
+                                        <li>
+                                            <p>
                                             {% if regulation.regulation_url %}
-                                                <a href="{{ regulation.regulation_url }}">{{ regulation.regulation }}</a>
+                                                <a href="{{ regulation.regulation_url }}">
+                                                {% if regulation.regulation %}
+                                                    {{ regulation.regulation }}
+                                                {% else %}
+                                                    {{ regulation.regulation_url }}
+                                                {% endif %}
+                                                </a>
                                             {% else %}
                                                 {{ regulation.regulation }}
                                             {% endif %}
-                                        </p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No QAA Regulations found</p>
+                                            </p>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
                         {% endif %}
-                    </div>
 
+                    </ul>
 
+                  {% endif %} {# ehea_is_member #}
 
-                    <hr class="divider u-margin">
+                    {#
+                    <!-- <hr class="divider u-margin">
                     <h3 class="subtitle u-margin-s">Registered agencies based in {{ country.name_english }}</h3>
                     <div class="text u-margin">
                         {% if country.agencies.byCountry is not empty %}
@@ -235,11 +199,10 @@
                         {% else %}
                             <p>No agencies found in {{ country.name_english }}</p>
                         {% endif %}
-                    </div>
+                    </div> -->
+                    #}
 
-
-
-                    <hr class="divider u-margin">
+                    <hr class="divider u-margin-s">
                     <h3 class="subtitle u-margin-s">Registered agencies operating in {{ country.name_english }}</h3>
                     <div class="text u-margin">
                         {% if country.agencies.byFocusCountry is not empty %}
@@ -247,137 +210,32 @@
                                 {% for agency in country.agencies.byFocusCountry %}
                                     <li>
                                         <p>
-                                            <a href="{{ function('get_permalink', 223) }}?id={{ agency.id }}"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</a>
+                                            <a href="{{ function('get_permalink', 223) }}?id={{ agency.id }}" class="agency">
+                                                {% if agency.country_is_official %}<!-- Display a svg file -->{% endif %}
+                                                <span class="name"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</span>
+                                                <span class="since" title="Listed since {{ agency.registration_start|date('Y') }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="20" viewBox="0 0 30 20">
+                                                        <polygon points="9.48 0 0 20 2.52 20 12 0 9.48 0" fill="#033163"/>
+                                                        <polygon points="15.48 0 6 20 8.52 20 18 0 15.48 0" fill="#033163" opacity="0.75"/>
+                                                        <polygon points="21.48 0 12 20 14.52 20 24 0 21.48 0" fill="#033163" opacity="0.5"/>
+                                                        <polygon points="27.48 0 18 20 20.52 20 30 0 27.48 0" fill="#033163" opacity="0.25"/>
+                                                    </svg>
+                                                    {{ agency.registration_start|date('Y') }} - {{ agency.registration_valid_to|date('Y') }}
+                                                </span>
+                                            </a>
+                                            {% if agency.report_count > 0 %}
+                                                <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}&country={{ country.id }}" class="label label--qa-results">View {{ agency.institution_count }} institutions</a>
+                                            {% endif %}
                                         </p>
                                     </li>
                                 {% endfor %}
                             </ul>
                         {% else %}
-                            <p>No registered international agencies operating in {{ country.name_english }} found</p>
+                            <p>No registered agencies operating in {{ country.name_english }}.</p>
                         {% endif %}
                     </div>
 
-
-                    <!-- <hr class="divider u-margin">
-
-                    <h3 class="subtitle u-margin-s">National External Quality Assurrance system</h3>
-
-                    <div class="text u-margin">
-                        <ul>
-                            <li>System Accreditation (Accreditation of internal Quality Assurance System, only in Germany);</li>
-                            <li>Consultancy for development of internal quality management systems, system-wide analysis.</li>
-                        </ul>
-                    </div>
-
-                    <hr class="divider u-margin">
-
-                    <h3 class="subtitle u-margin-xs">External Quality Assurrance Reports and Decisions</h3>
-                    <h4 class="subtitle subtitle--light u-margin-s">Institutional level</h4>
-
-                    <div class="accordion u-margin">
-                        <div class="accordion__item">
-                            <div class="accordion__definition js-accordion__definition">
-                                Why are there no agencies from country X on the Register?
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                                    <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
-                                </svg>
-                            </div>
-                            <div class="text accordion__description js-accordion__description">
-                            </div>
-                        </div>
-
-                        <div class="accordion__item">
-                            <div class="accordion__definition js-accordion__definition">
-                                Can only European agencies be included on the Register?
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                                    <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
-                                </svg>
-                            </div>
-                            <div class="text accordion__description js-accordion__description">
-                            </div>
-                        </div>
-
-                        <div class="accordion__item">
-                            <div class="accordion__definition js-accordion__definition">
-                                Can our organisation become associate member of EQAR?
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                                    <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
-                                </svg>
-                            </div>
-                            <div class="accordion__description js-accordion__description">
-                                <ul class="info-list u-margin">
-                                    <li class="info-list__item">
-                                        <div class="info-list__term">Country</div>
-                                        <div class="info-list__definition">Netherlands</div>
-                                    </li>
-                                    <li class="info-list__item">
-                                        <div class="info-list__term">Website</div>
-                                        <div class="info-list__definition">
-                                            <a href="https://www.slik.eu" class="info-list__link">https://www.slik.eu</a>
-                                        </div>
-                                    </li>
-                                    <li class="info-list__item">
-                                        <div class="info-list__term">Contact person</div>
-                                        <div class="info-list__definition">First, Second and Third Cycle</div>
-                                    </li>
-                                    <li class="info-list__item">
-                                        <div class="info-list__term">Contact person</div>
-                                        <div class="info-list__definition">
-                                            <ul class="documents">
-                                                <li class="documents__item">
-                                                    <a href="" class="documents__link">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
-                                                            <polygon points="5 5 1 5 5 1 5 5"/>
-                                                            <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z"/>
-                                                            <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z"/>
-                                                            <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z"/>
-                                                            <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z"/>
-                                                            <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z"/>
-                                                        </svg>
-
-                                                        2016-12 A26 Renewal of Registration AAQ
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h4 class="subtitle subtitle--light u-margin-s">Programme level</h4>
-
-                    <div class="accordion u-margin">
-                        <div class="accordion__item">
-                            <div class="accordion__definition js-accordion__definition">
-                                Why are there no agencies from country X on the Register?
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                                    <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
-                                </svg>
-                            </div>
-                            <div class="text accordion__description js-accordion__description">
-                            </div>
-                        </div>
-
-                        <div class="accordion__item">
-                            <div class="accordion__definition js-accordion__definition">
-                                Can only European agencies be included on the Register?
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                                    <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
-                                </svg>
-                            </div>
-                            <div class="text accordion__description js-accordion__description">
-                            </div>
-                        </div>
-                    </div> -->
-
-                {% endif %}
+                {% endif %} {# if not country #}
 
             </div>
 		</div>

@@ -15,9 +15,9 @@ $eqarApi = new EqarApi();
 $context = Timber::get_context();
 
 $context['post']                    = new TimberPost();
-// $context['institutions']            = $eqarApi->getInstitutions();
 $context['countries']               = $eqarApi->getCountriesByReports();
 $context['agencies']                = $eqarApi->getAgencies();
+// $context['institutions']            = $eqarApi->getInstitutions();
 // $context['institutionsByCountry']   = $eqarApi->getInstitutionsByCountry();
 
 
@@ -41,11 +41,10 @@ $context['agencies']                = $eqarApi->getAgencies();
 
 if ( isset( $_GET ) && !empty( $_GET ) ) {
 
-    // var_dump( $_GET );
-
-    $limit          = 999;
+    $limit          = 20;
     $offset         = 0;
     $ordering       = 'DESC';
+    $page           = 0;
     $query          = false;
     $agency         = false;
     $esg_activity   = false;
@@ -61,6 +60,9 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     }
     if ( !empty($_GET['offset']) ) {
         $offset = $_GET['offset'];
+    }
+    if ( !empty($_GET['paging']) ) {
+        $page = $_GET['paging'];
     }
     if ( !empty($_GET['ordering']) ) {
         $ordering = $_GET['ordering'];
@@ -93,10 +95,34 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     //     $history = $_GET['history'];
     // }
 
-    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, urlencode($query), $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
 
-    $context['results'] = $results;
-    $context['formdata'] = $_GET;
+
+    $offset  = $limit * $page;
+
+    $results = $eqarApi->getInstitutions( $limit, $offset, $ordering, $query, $agency, $esg_activity, $country, $qf_ehea_level, $status, $report_year, $focus_country_is_crossborder, $history );
+
+    $total   = intval($results->count);
+    $skip    = $offset;
+    $paged   = $results->results;
+    $pages   = intval( ceil($total / $limit) );
+    $current = ($page + 1);
+
+    $details = [
+        'total'     => $total,
+        'perPage'   => $limit,
+        'pages'     => $pages,
+        'start'     => ($skip + 1),
+        'end'       => ($skip + count($paged)),
+        'first'     => ($current == 1 ? true : false),
+        'last'      => ($pages == $current ? true : false),
+        'current'   => $current,
+        'prev'      => ($page == 0 ? false : ($current - 1)),
+        'next'      => ($pages == ($page + 1) ? false : ($current + 1)),
+    ];
+
+    $context['results']     = $results;
+    $context['formdata']    = $_GET;
+    $context['paginator']   = $details;
 
 }
 

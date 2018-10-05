@@ -75,6 +75,7 @@
 				'title' => get_field('search_title', 'option'),
 				'description' => get_field('search_description', 'option'),
 				'button' => get_field('search_button', 'option'),
+				'preview' => get_field('search_preview', 'option'),
 			];
 
 			$context['cta'] = [
@@ -103,8 +104,70 @@
 
 		function twig($twig){
 			$twig->addExtension(new Twig_Extension_StringLoader());
+            $twig->addFilter(new Twig_SimpleFilter('hasHistorical', [$this,'hasHistorical'] ));
+            $twig->addFilter(new Twig_SimpleFilter('countHistorical', [$this,'countHistorical'] ));
 			return $twig;
 		}
+
+
+
+        /**
+         * Get the number of invalid / historical reports from an institution
+         * @param  array    $reports      Reports
+         * @return int                    Returns the numver of invalid / historical reports
+         */
+        public function countHistorical( $reports = null ) {
+
+            $count = 0;
+
+            // Check needed for inconsistent EQAR API results
+            // Programme reports are contained in another 'report' object, institutional reports are not.
+            foreach ($reports as $report) {
+                if ( isset($report->report) ) {
+                    if ( $report->report->report_valid == false ) {
+                        $count++;
+                    }
+                } else {
+                    if ( $report->report_valid == false ) {
+                        $count++;
+                    }
+                }
+            }
+
+            return $count;
+
+        }
+
+
+
+
+        /**
+         * Check if a list of institutional or programme reports includes historical reports
+         * @param  array    $reports      Reports
+         * @return boolean                Returns true if the list includes one or more historical reports.
+         */
+        public function hasHistorical( $reports = null ) {
+
+            $hasHistoric = false;
+
+            // Check needed for inconsistent EQAR API results
+            // Programme reports are contained in another 'report' object, institutional reports are not.
+            foreach ($reports as $report) {
+                if ( isset($report->report) ) {
+                    if ( $report->report->report_valid == false ) {
+                        $hasHistoric = true;
+                    }
+                } else {
+                    if ( $report->report_valid == false ) {
+                        $hasHistoric = true;
+                    }
+                }
+            }
+
+            return $hasHistoric;
+
+        }
+
 
 		function acf(){
 			if( function_exists('acf_add_options_page') ) {
@@ -144,6 +207,14 @@
 		function login_home_url () {
 			return home_url();
 		}
+
+
+        public static function do404( $context ) {
+            status_header( 404 );
+            nocache_headers();
+            Timber::render('404.twig', $context);
+            die();
+        }
 
 	}
 

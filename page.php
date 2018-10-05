@@ -25,11 +25,12 @@ require_once( get_template_directory() . '/classes/EqarApi.class.php');
 
 $eqarApi = new EqarApi();
 
-$context = Timber::get_context();
-$context['post'] = new TimberPost();
-// $context['institutions']            = $eqarApi->getInstitutions();
-$context['countries']               = $eqarApi->getCountries();
-$context['agencies']                = $eqarApi->getAgencies();
+$context                 = Timber::get_context();
+$context['post']         = new TimberPost();
+
+$context['countries']    = $eqarApi->getCountries();
+$context['agencies']     = $eqarApi->getAgencies();
+// $context['institutions'] = $eqarApi->getInstitutions();
 
 $template = 'page.twig';
 
@@ -41,6 +42,7 @@ if(is_front_page()) {
     ]);
 
     $template = 'frontpage.twig';
+
 }
 
 Timber::render($template, $context);

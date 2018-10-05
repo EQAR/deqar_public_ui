@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 					'public/js/vendor.min.js': [
 						'node_modules/jquery/dist/jquery.js'
 					],
-					'public/js/<%= pkg.name %>.min.js': ['src/js/main.js', 'src/js/newsletter.js']
+					'public/js/<%= pkg.name %>.min.js': ['src/js/vendor/jquery.slikPaginator.min.js', 'src/js/main.js', 'src/js/newsletter.js']
 				}
 			}
 		},

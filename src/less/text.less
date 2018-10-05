@@ -2,7 +2,7 @@
     color: fade(@primary, 80%);
     font-size: 15px;
 
-    strong { 
+    strong {
         font-weight: bold;
     }
 
@@ -12,6 +12,30 @@
 
     a {
         text-decoration: underline;
+        &.agency {
+            text-decoration: none;
+
+            .name {
+                text-decoration: underline;
+            }
+
+            .since {
+                display: inline-block;
+                background-color: @secondary;
+                font-size: 13px;
+                padding: 3px 8px 0px 7px;
+                margin-left: 10px;
+                font-weight: bold;
+
+                svg {
+                    width: 15px;
+                    height: 10px;
+                    fill: @primary;
+                }
+
+            }
+
+        }
     }
 
     p:not(:last-child),
@@ -27,7 +51,7 @@
 
         &:not(:last-child) {
             margin-bottom: 10px;
-        }      
+        }
 
         &:before {
             content: '';
@@ -49,7 +73,7 @@
         border-left: 5px solid @secondary;
         font-size: 1.2em; color: @primary;
         line-height: 1.4;
-    } 
+    }
 }
 
     .text--introduction {
@@ -70,7 +94,7 @@
 
 
 @media (min-width: 768px) {
-    
+
     .text {
         font-size: 17px;
 
@@ -83,7 +107,7 @@
 
         ul li {
             padding-left: 26px;
-        
+
             &:before {
                 top: 8px;
                 width: 8px; height: 8px;

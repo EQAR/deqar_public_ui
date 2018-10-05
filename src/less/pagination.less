@@ -24,9 +24,24 @@
 }
 
 
-@media (min-width: 768px) {
+.paginator {
+    .pagination__item {
+        &.pagination__item--current {
+            a {
+                background-color: #E6F6FF;
+                font-weight: bold;
+            }
+        }
+    }
+}
 
+.pagination__indidator {
+    text-align: center;
+}
+
+
+@media (min-width: 768px) {
     .pagination {
         font-size: 17px;
-    }   
+    }
 }

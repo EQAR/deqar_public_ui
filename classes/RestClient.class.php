@@ -153,8 +153,9 @@ class RestClient implements Iterator, ArrayAccess {
             }
         }
 
-        if($client->options['format'])
-            $client->url .= '.'.$client->options['format'];
+        // See https://github.com/tcdent/php-restclient/pull/35
+        // if($client->options['format'])
+        //    $client->url .= '.'.$client->options['format'];
 
         // Allow passing parameters as a pre-encoded string (or something that
         // allows casting to a string). Parameters passed as strings will not be
@@ -187,8 +188,8 @@ class RestClient implements Iterator, ArrayAccess {
         }
 
         if($client->options['base_url']){
-            if($client->url[0] != '/' && substr($client->options['base_url'], -1) != '/')
-                $client->url = '/' . $client->url;
+//            if($client->url[0] != '/' && substr($client->options['base_url'], -1) != '/')
+//                $client->url = '/' . $client->url;
             $client->url = $client->options['base_url'] . $client->url;
         }
         $curlopt[CURLOPT_URL] = $client->url;
