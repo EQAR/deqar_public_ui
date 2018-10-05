@@ -1,4 +1,4 @@
-<div class="qa-search u-margin {{ search.preview ? 'qa-search--preview' }} {{ class }}">
+<div class="qa-search u-margin-s {{ search.preview ? 'qa-search--preview' }} {{ class }}">
     {% if search.preview %}
         <span class="qa-search__preview">Public Preview</span>
     {% endif %}
@@ -42,20 +42,43 @@
                         </select>
                     </div>
                     <div class="form__fieldset form__fieldset--half">
+                    {% if formdata.esg_activity %}
+                        {% set selected_agency = false %}
+                        {% set selected_agency_acronym = false %}
+                        {% for agency in agencies %}
+                            {% for activity in agency.activities %}
+                                {% if formdata.esg_activity == activity.id %}
+                                    {% set selected_agency = agency.id %}
+                                    {% set selected_agency_acronym = agency.acronym_primary %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        <input type="hidden" name="agency" value="{{ selected_agency }}" />
+                        <label for="esg_activity" class="form__label">Activity</label>
+                        <select name="esg_activity" id="esg_activity">
+                            <option value="">{{ selected_agency_acronym }}: all activities</option>
+                            {% for agency in agencies %}
+                                {% if selected_agency == agency.id %}
+                                    {% for activity in agency.activities %}
+                                        <option value="{{ activity.id }}"{% if formdata.esg_activity == activity.id %} selected="selected"{% endif %}>{{ selected_agency_acronym }}: {{ activity.activity }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    {% else %}
                         <label for="agency" class="form__label">Agency</label>
                         <select name="agency" id="agency">
                             <option value="">Select agency</option>
                             {% for agency in agencies %}
-                                {% if formdata.agency == agency.id %}
-                                    <option value="{{ agency.id }}" selected="selected">{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
-                                {% else %}
-                                    <option value="{{ agency.id }}">{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
-                                {% endif %}
+                                <option value="{{ agency.id }}"{% if agency.id == formdata.agency %} selected="selected"{% endif %}>{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
                             {% endfor %}
                         </select>
+                    {% endif %}
                     </div>
                 </div>
 
+
+                {# mask advanced search
                 <div class="form__columns u-margin-xs">
                     <div class="form__fieldset form__fieldset--half">
                         <label for="status" class="form__label">Report status</label>
@@ -121,6 +144,7 @@
                         </label>
                     </div>
                 </div>
+                #}
 
             </div>
 

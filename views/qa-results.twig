@@ -10,7 +10,7 @@
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
-                {% if formdata.country or formdata.status or formdata.agency or formdata.report_year or formdata.qf_ehea_level or formdata.focus_country_is_crossborder == 'true' %}
+                {% if formdata.country or formdata.status or formdata.agency or formdata.esg_activity or formdata.report_year or formdata.qf_ehea_level or formdata.focus_country_is_crossborder == 'true' %}
                     {% include 'views/snippets/search.twig' with {type: 'advanced', title: true} %}
                 {% else %}
                     {% include 'views/snippets/search.twig' with {type: 'simple', title: true} %}
@@ -18,21 +18,47 @@
 
                 {% if results.results %}
 
-                    {% if formdata.query %}
-                        <h2 class="title title__small">{{ results.count }} institutions matching the term "{{ formdata.query }}":</h2>
-                    {% elseif formdata.country %}
+                    {% set url = '?' %}
 
-                        {% set selected_country = "none" %}
-                        {% for country in countries %}
-                            {% if formdata.country == country.id %}
-                                {% set selected_country = country.name_english %}
+                    {% for key, val in formdata %}
+                        {% if key != 'paging' %}
+                            {% set url = url ~ key ~ '=' ~ val %}
+                            {% if not loop.last %}
+                                {% set url = url ~ '&' %}
                             {% endif %}
-                        {% endfor %}
+                        {% endif %}
+                    {% endfor %}
 
-                        <h2 class="title title__small">{{ results.count }} institutions matching the country {{ selected_country }}</h2>
+                    <div class="u-margin-xs">
+                    {% if paginator.pages > 1 %}
+                        <ul class="pagination paginator pagination__list u-margin-xs">
+                            {% if paginator.first == false %}
+                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.prev - 1) }}">&laquo;</a></li>
+                            {% else %}
+                                <li class="pagination__item pagination__item--disabled">&laquo;</li>
+                            {% endif %}
+
+                            {% for item in 0..(paginator.pages - 1) %}
+                                <li class="pagination__item"><a class="pagination__link{% if ( loop.index ) == paginator.current %} current{% endif %}" href="{{ url }}&paging={{ item }}">{{ (item + 1) }}</a></li>
+                            {% endfor %}
+
+                            {% if paginator.last == false %}
+                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.next - 1) }}">&raquo;</a></li>
+                            {% else %}
+                                <li class="pagination__item pagination__item--disabled">&raquo;</li>
+                            {% endif %}
+                        </ul>
                     {% endif %}
+                        <div class="pagination__indidator pagination__indidator u-margin-s">
+                            {% if paginator.pages > 1 %}
+                                {{ paginator.start }} - {{ paginator.end }} of {{ paginator.total }} institutions matching your search
+                            {% else %}
+                                {{ paginator.total }} institution{% if paginator.total > 1 %}s{% endif %} matching your search
+                            {% endif %}
+                        </div>
+                    </div>
 
-                    <div class=" u-margin">
+                    <div class=" u-margin-s">
                         <ul class="agency-list">
                             {% for institution in results.results %}
                                 <li class="agency-list__item">
@@ -52,22 +78,7 @@
                         </ul>
                     </div>
 
-
-                    {% set url = '?' %}
-
-                    {% for key, val in formdata %}
-                        {% if key != 'paging' %}
-                            {% set url = url ~ key ~ '=' ~ val %}
-                            {% if not loop.last %}
-                                {% set url = url ~ '&' %}
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-
-                    <div class="u-margin-l">
-                        <div class="pagination__indidator pagination__indidator u-margin-s">
-                            Institution {{ paginator.start }}-{{ paginator.end }} of {{ paginator.total }}
-                        </div>
+                    <div class="u-margin-xs">
                         <ul class="pagination paginator pagination__list">
                             {% if paginator.first == false %}
                                 <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.prev - 1) }}">&laquo;</a></li>
