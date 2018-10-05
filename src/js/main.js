@@ -118,7 +118,7 @@
         'paginator': '.pagination__list--institutional',
         'indicator': {
             'selector': '.pagination__indidator--institutional',
-            'text': '{start}-{end} institutional level reports of {total}',
+            'text': '{start} - {end} of {total} institutional level reports',
         }
     });
 
@@ -129,7 +129,7 @@
         'paginator': '.pagination__list--reports',
         'indicator': {
             'selector': '.pagination__indidator--reports',
-            'text': '{start}-{end} programme level reports of {total}',
+            'text': '{start} - {end} of {total} programme level reports',
         }
     });
 

@@ -247,7 +247,7 @@
                 <hr class="divider u-margin-s">
                 <h2 class="subtitle text-fields__subtitle u-margin-s">External Quality Assurance Reports and Decisions</h2>
 
-                <h3 class="subtitle text-fields__subtitle reports-institutional-title">Institutional level <sup class="subtitle-superscript">({{ institution.reports|length }})</sup></h3>
+                <h3 class="subtitle text-fields__subtitle reports-institutional-title">Institutional level</h3>
                 <div class="accordion u-margin-s reports-institutional-container">
 
                     {% if institution.reports|hasHistorical %}
@@ -342,15 +342,15 @@
                                             <div class="info-list__term">Date</div>
                                             <div class="info-list__definition">{{ result.valid_from|date("d/m/Y") }}</div>
                                         </li>
-					<li class="info-list__item">
+                                        <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
                                             <div class="info-list__definition">
-					        {% if result.valid_to %}
-						    {{ result.valid_to|date("d/m/Y") }}
-						{% else %}
-						    not applicable
-						{% endif %}
-					    </div>
+                                                {% if result.valid_to %}
+                                                    {{ result.valid_to|date("d/m/Y") }}
+                                                {% else %}
+                                                    not applicable
+                                                {% endif %}
+                                            </div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
@@ -390,18 +390,19 @@
                                 </div>
                             </div>
                         {% endfor %}
+                        {% if institution.reports|length > 10 %}
+                            <div class="u-margin">
+                                <div class="pagination__indidator pagination__indidator--institutional u-margin-xs"></div>
+                                <ul class="pagination paginator pagination__list pagination__list--institutional"></ul>
+                            </div>
+                        {% endif %}
                     {% else %}
                         <p>No results found.</p>
                     {% endif %}
                 </div>
-                <div class="pagination u-margin">
-                    <div class="pagination__indidator pagination__indidator--institutional"></div>
-                    <ul class="paginator pagination__list pagination__list--institutional"></ul>
-                </div>
 
 
-
-                <h3 class="subtitle text-fields__subtitle reports-programme-title">Programme level <sup class="subtitle-superscript">({{ institution.programmes|length }})</sup></h3>
+                <h3 class="subtitle text-fields__subtitle reports-programme-title">Programme level</h3>
                 <div class="accordion u-margin-s reports-programme-container">
 
                     {% if institution.programmes|hasHistorical %}
@@ -568,12 +569,12 @@
                                         <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
                                             <div class="info-list__definition">
-					        {% if result.report.valid_to %}
-						    {{ result.report.valid_to|date("d/m/Y") }}
-						{% else %}
-						    not applicable
-						{% endif %}
-					    </div>
+                                                {% if result.report.valid_to %}
+                                                    {{ result.report.valid_to|date("d/m/Y") }}
+                                                {% else %}
+                                                    not applicable
+                                                {% endif %}
+                                            </div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
@@ -614,18 +615,18 @@
                                 </div>
                             </div>
 
-
                         {% endfor %}
+                        {% if institution.programmes|length > 10 %}
+                            <div class="u-margin-l">
+                                <div class="pagination__indidator pagination__indidator--reports u-margin-xs"></div>
+                                <ul class="pagination paginator pagination__list pagination__list--reports"></ul>
+                            </div>
+                        {% endif %}
+
                     {% else %}
                         <p>No results found.</p>
                     {% endif %}
 
-                </div>
-
-
-                <div class="u-margin-l">
-                    <div class="pagination__indidator pagination__indidator--reports u-margin-s"></div>
-                    <ul class="pagination paginator pagination__list pagination__list--reports"></ul>
                 </div>
 
 			</div>
