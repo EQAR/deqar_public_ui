@@ -8,3 +8,27 @@
     margin: 0 7px 0 3px;
 }
 
+.country-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 639px) {
+    .country-header__title {
+        // width: 100%;
+    }
+    .country-header__map {
+        display: none;
+    }
+}
+
+@media (min-width: 640px) {
+    .country-header__title {
+        // width: ~'calc(100% - 210px)';
+    }
+    .country-header__map {
+        width: 210px;
+    }
+}
+

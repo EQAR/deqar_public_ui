@@ -10,37 +10,26 @@
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
-				<h1 class="title u-margin">{{ post.title }}</h1>
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
 
-                <div class="map-controls u-margin">
-                    {% include 'views/snippets/view-switch.twig' %}
-                    <select class="map-controls__select js-select-go" name="">
-                        <option value="{{ function('get_permalink', 87) }}"{% if function('is_page', 87) %} selected="selected"{% endif %}>Registered Agencies</option>
-                        <option value="{{ function('get_permalink', 1625) }}"{% if function('is_page', 1625) %} selected="selected"{% endif %}>Cross-Border Recognition</option>
-                        <option value="{{ function('get_permalink', 428) }}"{% if function('is_page', 428) %} selected="selected"{% endif %}>European Approach for QA of JP</option>
-                        <option value="{{ function('get_permalink', 430) }}"{% if function('is_page', 430) %} selected="selected"{% endif %}>Governmental Members</option>
-                    </select>
-                </div>
+                    {# map view #}
+                    {% include 'views/snippets/map.twig' with { 'maptype': maptype } %}
 
-                {% if maptype_list == true %}
-
-                    {% if maptype == 'agencies' %}
-                        <ul class="agency-list">
-                            {% for agency in agencies %}
-                                <li class="agency-list__item">
-                                    <a href="/register/map/agency/?id={{ agency.id }}" class="agency-list__link">
-                                        <span class="agency-list__country">{{ agency.country.iso_3166_alpha2 }}</span>
-                                        {{ agency.acronym_primary }} - {{ agency.name_primary }}
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="agency-list__arrow">
-                                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
-                                        </svg>
+                    {# list view #}
+                    {% if maptype == 'blank' %}
+                        <ul class="country-list">
+                            {% for country in countriesAll %}
+                                <li class="country-list__item">
+                                    <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
+                                        <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
+                                        {{ country.name_english }}
                                     </a>
                                 </li>
                             {% endfor %}
                         </ul>
                     {% endif %}
-
 
                     {% if maptype == 'cross-border' %}
                         <h3 class="subtitle u-margin-s">Recognising EQAR-registered agencies as part of the national external QA requirements</h3>
@@ -84,22 +73,7 @@
                                 {% endif %}
                             {% endfor %}
                         </ul>
-<!--
-
-                        <ul class="agency-list">
-                            {% for country in countriesAll %}
-                                {% if country.external_QAA_is_permitted == 'yes' %}
-                                    <li class="agency-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
-                                            <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
-                                            {{ country.name_english }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul> -->
                     {% endif %}
-
 
                     {% if maptype == 'eaqejp' %}
                         <h3 class="subtitle u-margin-s">European Approach available to all higher education institutions</h3>
@@ -147,11 +121,11 @@
 
 
                     {% if maptype == 'govermental' %}
-                        <ul class="agency-list">
+                        <ul class="country-list">
                             {% for country in countriesAll %}
                                 {% if country.eqar_governmental_member_start != null %}
                                     {% set country_class = ' active' %}
-                                    <li class="agency-list__item">
+                                    <li class="country-list__item">
                                         <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
                                             <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
                                             {{ country.name_english }}
@@ -162,14 +136,6 @@
                         </ul>
                     {% endif %}
 
-
-                {% else %}
-                    {% include 'views/snippets/map.twig' with { 'maptype': maptype } %}
-                {% endif %}
-
-				{% for block in post.get_field('blocks') %}
-					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
-				{% endfor %}
 			</div>
 		</div>
 	</main>
