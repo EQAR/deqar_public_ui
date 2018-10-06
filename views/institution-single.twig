@@ -481,13 +481,13 @@
                                     </div>
 
                                     {#<div class="accordion__title">#}
-                                        {% for item in result.programme_names %}
-                                            {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
-                                        {% endfor %}
-                                        {% if result.qf_ehea_level %}
-                                        , {{ result.qf_ehea_level }}
-                                        {% endif %}
-                                        {% if result.report.institution_relationship_context %},
+                                        {%- for item in result.programme_names -%}
+                                            {%- if item.name_is_primary == true %}{{ item.name }}{% endif -%}
+                                        {%- endfor -%}
+                                        {%- if result.qf_ehea_level -%}
+                                        , {{ result.qf_ehea_level -}}
+                                        {%- endif -%}
+                                        {%- if result.report.institution_relationship_context -%},
                                             {% for item in result.report.institution_relationship_context %}
                                                 {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
                                             {% endfor %}
@@ -500,13 +500,14 @@
                                 </div>
                                 <div class="accordion__description accordion__description--two-tone js-accordion__description">
                                     <ul class="info-list info-list--padding info-list--programme-description">
+
                                         {% if result.programme_names|length > 1 %}
-                                            {% set i = 0 %}
+                                            {% set i = 0 -%}
                                             {% for item in result.programme_names %}
                                                 {% if item.name_is_primary != true %}
                                                     <li class="info-list__item">
                                                         <div class="info-list__term">
-                                                            {% if i == 0 %}Other names{% endif %}
+                                                            {%- if i == 0 %}Other names{% endif -%}
                                                         </div>
                                                         <div class="info-list__definition">{{ item.name }}</div>
                                                     </li>
@@ -514,18 +515,20 @@
                                                 {% endif %}
                                             {% endfor %}
                                         {% endif %}
+
                                         {% set i = 0 %}
                                         {% for item in result.programme_names %}
                                             {% if item.qualification %}
                                                 <li class="info-list__item">
                                                     <div class="info-list__term">
-                                                        {% if i == 0 %}Qualification{% endif %}
+                                                        {%- if i == 0 %}Qualification{% endif -%}
                                                     </div>
                                                     <div class="info-list__definition">{{ item.qualification }}</div>
                                                 </li>
                                                 {% set i = i + 1 %}
                                             {% endif %}
                                         {% endfor %}
+
                                         <li class="info-list__item">
                                             <div class="info-list__term">Level</div>
                                             <div class="info-list__definition">{{ result.qf_ehea_level ? result.qf_ehea_level : '-' }}{% if result.nqf_level %} (NQF {{ result.nqf_level }}){% endif %}</div>
@@ -569,11 +572,11 @@
                                         <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
                                             <div class="info-list__definition">
-                                                {% if result.report.valid_to %}
-                                                    {{ result.report.valid_to|date("d/m/Y") }}
-                                                {% else %}
+                                                {%- if result.report.valid_to -%}
+                                                    {{- result.report.valid_to|date("d/m/Y") -}}
+                                                {%- else -%}
                                                     not applicable
-                                                {% endif %}
+                                                {%- endif -%}
                                             </div>
                                         </li>
                                         <li class="info-list__item">
