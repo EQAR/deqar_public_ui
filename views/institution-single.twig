@@ -328,7 +328,7 @@
                                     <ul class="info-list u-margin">
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="/register/map/agency/?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -555,7 +555,7 @@
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="/register/map/agency/?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
