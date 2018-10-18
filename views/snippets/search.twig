@@ -43,16 +43,6 @@
                     </div>
                     <div class="form__fieldset form__fieldset--half">
                     {% if formdata.esg_activity %}
-                        {% set selected_agency = false %}
-                        {% set selected_agency_acronym = false %}
-                        {% for agency in agencies %}
-                            {% for activity in agency.activities %}
-                                {% if formdata.esg_activity == activity.id %}
-                                    {% set selected_agency = agency.id %}
-                                    {% set selected_agency_acronym = agency.acronym_primary %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
                         <input type="hidden" name="agency" value="{{ selected_agency }}" />
                         <label for="esg_activity" class="form__label">Activity</label>
                         <select name="esg_activity" id="esg_activity">
