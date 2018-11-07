@@ -1,9 +1,0 @@
-{% if block.destination == 'internal' %}
-	{% set link = function('get_page_link', block.link) %}
-{% else %}
-	{% set link = block.link %}
-{% endif %}
-
-<div class="block button {{ block.classes }}">
-	<a href="{{ link }}" class="button">{{ block.text }}</a>
-</div>

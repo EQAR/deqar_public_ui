@@ -1,9 +1,0 @@
-{% if fn('cn_cookies_accepted') and fn('cn_cookies_accepted') %}
-    <div class="video u-margin">
-		<div class="video__container">
-			{{ block.video }}
-		</div>
-	</div>
-{% else %}
-	<div class="text text--cookie-warning u-margin">{{ cookie.message }}</div>
-{% endif %}
