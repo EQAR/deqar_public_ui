@@ -49,6 +49,7 @@
                                 {% else %}
                                     {{ country.name_english }} is not a Governmental Member of EQAR.
                                 {% endif %}
+                                <p>Read more: <a class="info-list__link" href="{{ function('get_permalink', 430) }}">all Governmental Members of EQAR</a></p>
 			                </div>
                         </li>
 
@@ -84,7 +85,7 @@
                             <div class="info-list__term">Cross-border quality assurance</div>
                             <div class="info-list__definition">
                                 <div class="text u-margin">
-                                {% if country.external_QAA_is_permitted is not empty %}
+                                    {% if country.external_QAA_is_permitted is not empty %}
                                     <p class="u-margin-xs">
                                         {% if country.external_QAA_is_permitted == 'no' %}
                                         In {{ country.name_english }} higher education institutions may not choose among EQAR-registered agencies.
@@ -93,9 +94,9 @@
                                         {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
                                         In {{ country.name_english }} under certain conditions higher education institutions may choose a suitable EQAR-registered agency.
                                         {% endif %}
-                                        {{ country.external_QAA_note }}
                                     </p>
-                                {% endif %}
+                                    {% endif %}
+                                    {{ country.external_QAA_note }}
                                     <ul>
                                         {% if country.eligibility is not empty %}
                                             <li class="info-list__item">
@@ -122,6 +123,7 @@
                                             </li>
                                         {% endif %}
                                     </ul>
+                                    <p>Read more: <a href="{{ function('get_permalink', 1625) }}">countries where higher education institutions may choose a suitable EQAR-registered agency</a></p>
                                 </div>
                             </div>
                         </li> {# cross-border QA #}
@@ -129,8 +131,9 @@
                         <li class="info-list__item">
                             <div class="info-list__term">European Approach for Quality Assurance of Joint Programmes</div>
                             <div class="info-list__definition">
-                                {# <div class="text u-margin"> #}
+                                <div class="text u-margin">
                                 {% if country.european_approach_is_permitted is not empty %}
+                                    <p class="u-margin-xs">
                                     {% if country.european_approach_is_permitted == 'no' %}
                                         In {{ country.name_english }} the European Approach is not available to higher education institutions.
                                     {% elseif country.european_approach_is_permitted == 'yes' %}
@@ -138,9 +141,11 @@
                                     {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
                                         In {{ country.name_english }} the European Approach is available to higher education institutions under certain conditions.
                                     {% endif %}
+                                    </p>
                                 {% endif %}
                                 {{ country.european_approach_note }}
-                                {# </div> #}
+                                <p>Read more: <a href="{{ function('get_permalink', 428) }}">countries where the European Approach is available to higher education institutions</a></p>
+                                </div>
                             </div>
                         </li> {# european approach #}
 
@@ -248,7 +253,7 @@
                                                 </span>
                                             </a>
                                             {% if agency.report_count > 0 %}
-                                                <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}&country={{ country.id }}" class="label label--qa-results">View {{ agency.institution_count }} institutions</a>
+                                                <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}&country={{ country.id }}" class="label label--qa-results" title="View the {{ agency.institution_count }} higher education institution(s) in {{ country.name_english }} with quality assurance reports by {{ agency.acronym_primary }}">View {{ agency.institution_count }} institutions with {{ agency.report_count }} reports</a>
                                             {% endif %}
                                         </p>
                                     </li>
