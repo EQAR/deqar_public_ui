@@ -1,16 +1,18 @@
 {% extends 'base.twig' %}
 
-{% block title %}
-    {% for name in institution.names %}
-        {% if name.name_valid_to == null %}
-            {% if name.name_english %}
-                {{ name.name_english }}
-            {% else %}
-                {{ name.name_official }}
-            {% endif %}
+{% set name_primary = "" %}
+{% for name in institution.names %}
+    {% if name.name_valid_to == null %}
+        {% if name.name_english %}
+            {% set name_primary = name.name_english %}
+        {% else %}
+            {% set name_primary = name.name_official %}
         {% endif %}
-    {% endfor %}
-     - {{ wp_title }}
+    {% endif %}
+{% endfor %}
+
+{% block title %}
+    {{ name_primary }} - {{ wp_title }}
 {% endblock %}
 
 {% block content %}
@@ -20,12 +22,12 @@
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
 
-                {% if cta.agency.link %}
-					<a href="{{ cta.agency.link }}" class="call-to-action">
-						<h3 class="call-to-action__title">{{ cta.agency.title }}</h3>
+                {% if cta.qa.link %}
+					<a href="{{ cta.qa.link }}" class="call-to-action">
+						<h3 class="call-to-action__title">{{ cta.qa.title }}</h3>
 
-						{% if cta.agency.description %}
-							<p class="call-to-action__description">{{ cta.agency.description }}</p>
+						{% if cta.qa.description %}
+							<p class="call-to-action__description">{{ cta.qa.description }}</p>
 						{% endif %}
 
 						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
@@ -39,13 +41,11 @@
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
+                <h1 class="title u-margin-xs">{{ name_primary }}</h1>
                 {% for name in institution.names %}
                     {% if name.name_valid_to == null %}
                         {% if name.name_english %}
-                            <h1 class="title u-margin-xs">{{ name.name_english }}</h1>
                             <h3 class="subtitle">{{ name.name_official }}</h3>
-                        {% else %}
-                            <h1 class="title u-margin-xs">{{ name.name_official }}</h1>
                         {% endif %}
                         {% if name.name_versions %}
                             {% for version in name.name_versions %}
@@ -630,9 +630,9 @@
                         <p>No results found.</p>
                     {% endif %}
 
-                </div>
+                </div> {# reports-programme-container #}
 
-			</div>
-		</div>
+			</div> {# l-two-column__content #}
+		</div> {# l-two-column #}
 	</main>
 {% endblock %}

@@ -31,7 +31,7 @@
             </div>
 
             {% if pagination.pages %}
-                <ul class="pagination">
+                <ul class="pagination u-margin">
                     {% for page in pagination.pages %}
                         <li class="pagination__item">
                             {% if page.link %}
@@ -43,6 +43,8 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+
+            {% include 'views/snippets/newsletter.twig' %}
         </div>
     </main>
 {% endblock %}

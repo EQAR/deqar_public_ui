@@ -29,6 +29,9 @@ if ( isset($_GET['id']) && !empty($_GET['id']) ) {
         Site::do404($context);
     }
 
+    $allCountries = $eqarApi->getCountries();
+    $context['countriesAll'] = $allCountries;
+
 } else {
     Site::do404($context);
 }

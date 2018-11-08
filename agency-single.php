@@ -20,7 +20,7 @@ $context['post'] = new TimberPost();
 // Check if the agency is set.
 if ( isset($_GET['id']) && !empty($_GET['id']) ) {
 
-    $agency = $eqarApi->getAgency( $_GET['id'] );
+    $agency = $eqarApi->getAgency( $_GET['id'] , 'true' );
 
     if ( isset($agency) && !empty($agency) && $agency != false ) {
 
