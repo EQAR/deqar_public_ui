@@ -20,12 +20,12 @@
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
 
-                {% if cta.agency.link %}
-					<a href="{{ cta.agency.link }}" class="call-to-action">
-						<h3 class="call-to-action__title">{{ cta.agency.title }}</h3>
+                {% if cta.qa.link %}
+					<a href="{{ cta.qa.link }}" class="call-to-action">
+						<h3 class="call-to-action__title">{{ cta.qa.title }}</h3>
 
-						{% if cta.agency.description %}
-							<p class="call-to-action__description">{{ cta.agency.description }}</p>
+						{% if cta.qa.description %}
+							<p class="call-to-action__description">{{ cta.qa.description }}</p>
 						{% endif %}
 
 						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
