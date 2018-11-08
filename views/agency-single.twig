@@ -1,16 +1,20 @@
 {% extends 'base.twig' %}
 
+{% set acronym_primary = "" %}
+{% set name_primary = "" %}
+{% for name in agency.names %}
+    {% if name.name_valid_to == null %}
+        {% for version in name.name_versions %}
+            {% if version.name_is_primary == true %}
+                {% set acronym_primary = version.acronym %}
+                {% set name_primary = version.name %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
 {% block title %}
-    {% for name in agency.names %}
-        {% if name.name_valid_to == null %}
-            {% for version in name.name_versions %}
-                {% if version.name_is_primary == true %}
-                    {{ version.acronym }} - {{ version.name }}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
-     - {{ wp_title }}
+    {{ acronym_primary }} - {{ name_primary }} - {{ wp_title }}
 {% endblock %}
 
 {% block content %}
@@ -38,15 +42,7 @@
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
                 <h1 class="title u-margin-xs">
-                    {% for name in agency.names %}
-                        {% if name.name_valid_to == null %}
-                            {% for version in name.name_versions %}
-                                {% if version.name_is_primary == true %}
-                                    {{ version.acronym }} - {{ version.name }}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
+                    {{ acronym_primary }} - {{ name_primary }}
                 </h1>
 
                 {% for name in agency.names %}
@@ -95,16 +91,7 @@
                         <li class="info-list__item">
                             <div class="info-list__term">Registration note</div>
                             <div class="info-list__definition">
-                                {% for name in agency.names %}
-                                    {% if name.name_valid_to == null %}
-                                        {% for version in name.name_versions %}
-                                            {% if version.name_is_primary == true %}
-                                                {{ version.acronym }}
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endfor %}
-                                is currently not registered on EQAR, but was registered from {{ agency.registration_start|date("d/m/Y") }} until {{ agency.registration_valid_to|date("d/m/Y") }}.
+                                {{ acronym_primary }} is currently not registered on EQAR, but was registered from {{ agency.registration_start|date("d/m/Y") }} until {{ agency.registration_valid_to|date("d/m/Y") }}.
                                 {{ agency.registration_note }}
                             </div>
                         </li>
