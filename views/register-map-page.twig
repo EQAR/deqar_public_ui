@@ -32,7 +32,7 @@
                     {% endif %}
 
                     {% if maptype == 'cross-border' %}
-                        <h3 class="subtitle u-margin-s">Recognising EQAR-registered agencies as part of the national external QA requirements</h3>
+                        <h3 class="subtitle u-margin-s map-legend-dark">Recognising EQAR-registered agencies as part of the national external QA requirements</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.external_QAA_is_permitted == 'yes' %}
@@ -46,7 +46,7 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s">Recognising foreign agencies based on their own framework/requirements</h3>
+                        <h3 class="subtitle u-margin-s map-legend-medium">Recognising foreign agencies based on their own framework/requirements</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.external_QAA_is_permitted == 'partially / with conditions' %}
@@ -60,7 +60,7 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s">Not recognising foreign agencies as part of the national external QA requirements</h3>
+                        <h3 class="subtitle u-margin-s map-legend-light">Not recognising foreign agencies as part of the national external QA requirements</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.external_QAA_is_permitted == 'no' %}
@@ -76,7 +76,7 @@
                     {% endif %}
 
                     {% if maptype == 'eaqejp' %}
-                        <h3 class="subtitle u-margin-s">European Approach available to all higher education institutions</h3>
+                        <h3 class="subtitle u-margin-s map-legend-dark">European Approach available to all higher education institutions</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.european_approach_is_permitted == 'yes' %}
@@ -90,7 +90,7 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s">European Approach available to some higher education institutions or only under specific conditions</h3>
+                        <h3 class="subtitle u-margin-s map-legend-medium">European Approach available to some higher education institutions or only under specific conditions</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.european_approach_is_permitted == 'partially / with conditions' %}
@@ -104,7 +104,7 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s">European Approach not available to higher education institutions</h3>
+                        <h3 class="subtitle u-margin-s map-legend-light">European Approach not available to higher education institutions</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.european_approach_is_permitted == 'no' %}
