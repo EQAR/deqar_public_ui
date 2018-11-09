@@ -26,14 +26,6 @@ if ( isset($_GET['id']) && !empty($_GET['id']) ) {
 
         $context['institution'] = $institution;
 
-        $levels = '';
-        foreach( array_reverse($institution->qf_ehea_levels) as $level ){
-            $levels .= ucwords($level->qf_ehea_level) . ', ';
-        }
-
-        $levels = rtrim($levels,", ");
-        $context['institution']->levels = $levels;
-
     } else {
         Site::do404($context);
     }

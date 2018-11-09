@@ -17,29 +17,13 @@
             {% else %}
                 {% if post.id == 223 %}
                     <!-- Single Agency -->
-                    {% for name in agency.names %}
-                        {% if name.name_valid_to == null %}
-                            {% for version in name.name_versions %}
-                                {% if version.acronym_is_primary == true %}
-                                    {{ version.acronym }}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
+                    {{ acronym_primary }}
                 {% elseif post.id == 434 %}
                     <!-- Single Country -->
                     {{ country.name_english }}
                 {% elseif post.id == 418 %}
                     <!-- Single Institution -->
-                    {% for name in institution.names %}
-                        {% if name.name_valid_to == null %}
-                            {% if name.name_english %}
-                                {{ name.name_english }}
-                            {% else %}
-                                {{ name.name_official }}
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
+                    {{ name_primary }}
                 {% else %}
                     <!-- Single Page -->
                     {{ item.title }}

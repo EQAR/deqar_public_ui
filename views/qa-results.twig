@@ -5,6 +5,52 @@
 		<div class="l-two-column u-container">
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
+
+                {% set selected_country = false %}
+                {% set selected_country_name = false %}
+                {% if formdata.country %}
+                    {% for country in countries %}
+                        {% if country.id == formdata.country %}
+                            {% set selected_country = country.id %}
+                            {% set selected_country_name = country.name_english %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if selected_country and results.results %}
+                        <a href="{{ function('get_permalink', 434) }}?id={{ selected_country }}" class="call-to-action">
+                            <h3 class="call-to-action__title">{{ selected_country_name }}</h3>
+                            <p class="call-to-action__description">View country profile</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                {% endif %}
+                {% set selected_agency = false %}
+                {% set selected_agency_acronym = false %}
+                {% if formdata.agency or formdata.esg_activity %}
+                    {% for agency in agencies %}
+                        {% if formdata.agency == agency.id %}
+                            {% set selected_agency = agency.id %}
+                            {% set selected_agency_acronym = agency.acronym_primary %}
+                        {% else %}
+                            {% for activity in agency.activities %}
+                                {% if formdata.esg_activity == activity.id %}
+                                    {% set selected_agency = agency.id %}
+                                    {% set selected_agency_acronym = agency.acronym_primary %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if selected_agency and results.results %}
+                        <a href="{{ function('get_permalink', 223) }}?id={{ selected_agency }}" class="call-to-action">
+                            <h3 class="call-to-action__title">{{ selected_agency_acronym }}</h3>
+                            <p class="call-to-action__description">View agency profile</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                {% endif %}
 			</div>
 
 			<div class="l-two-column__content">
@@ -100,8 +146,34 @@
 
                 {% else %}
                     {% if formdata %}
-                        <h2 class="title u-margin">No results found matching your criteria</h2>
-                        <p><a href="/kb/faq/">Institution not found in DEQAR?</a></p>
+                        <div class="u-margin-s">
+                            <div class="pagination__indidator pagination__indidator u-margin-s">
+                                No institutions with QA results match your search. Please refer to the following pages:
+                             </div>
+                        </div>
+                        <a href="{{ function('get_permalink', 1880) }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Why does institution X not show up?</h3>
+                            <p class="call-to-action__description">There could be several reasons, read our frequently asked questions for an explanation.</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                        {% if selected_country %}
+                            <a href="?country={{ selected_country }}" class="call-to-action">
+                                <h3 class="call-to-action__title">Show all institutions in {{ selected_country_name }}</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                    <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                                </svg>
+                            </a>
+                        {% endif %}
+                        {% if selected_agency %}
+                            <a href="{{ function('get_permalink', 223) }}?id={{ selected_agency }}" class="call-to-action">
+                                <h3 class="call-to-action__title">Read more about {{ selected_agency_acronym }}</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                    <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                                </svg>
+                            </a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
 

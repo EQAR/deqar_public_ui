@@ -4,6 +4,14 @@
     transition: all 0.2s ease;
 }
 
+.map .europe.active {
+    fill: #18498F;
+}
+
+.map .europe.active2 {
+    fill: #98ACCA;
+}
+
 .map path.circle {
     stroke-width: 16;
 }
@@ -19,6 +27,26 @@
 .map path:hover {
     cursor: pointer;
     fill: @accent-dark;
+}
+
+.map-highlight {
+    width: 200px;
+    margin: 0 0 15px 10px;
+}
+
+.map-legend-dark {
+    border-left: 10px solid #18498F;
+    padding-left: 10px;
+}
+
+.map-legend-medium {
+    border-left: 10px solid #98ACCA;
+    padding-left: 10px;
+}
+
+.map-legend-light {
+    border-left: 10px solid #CDD6E4;
+    padding-left: 10px;
 }
 
 // Classes and ID's from original map (/public/gfx/map-original.svg)

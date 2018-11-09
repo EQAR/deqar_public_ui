@@ -28,13 +28,12 @@ $eqarApi = new EqarApi();
 $context                 = Timber::get_context();
 $context['post']         = new TimberPost();
 
-$context['countries']    = $eqarApi->getCountries();
-$context['agencies']     = $eqarApi->getAgencies();
-// $context['institutions'] = $eqarApi->getInstitutions();
-
 $template = 'page.twig';
 
 if(is_front_page()) {
+
+    $context['countries']    = $eqarApi->getCountriesByReports();
+    $context['agencies']     = $eqarApi->getAgencies();
 
     $context['page_for_posts'] = get_option('page_for_posts');
     $context['posts'] = Timber::get_posts([
