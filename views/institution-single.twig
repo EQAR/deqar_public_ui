@@ -1,16 +1,18 @@
 {% extends 'base.twig' %}
 
-{% block title %}
-    {% for name in institution.names %}
-        {% if name.name_valid_to == null %}
-            {% if name.name_english %}
-                {{ name.name_english }}
-            {% else %}
-                {{ name.name_official }}
-            {% endif %}
+{% set name_primary = "" %}
+{% for name in institution.names %}
+    {% if name.name_valid_to == null %}
+        {% if name.name_english %}
+            {% set name_primary = name.name_english %}
+        {% else %}
+            {% set name_primary = name.name_official %}
         {% endif %}
-    {% endfor %}
-     - {{ wp_title }}
+    {% endif %}
+{% endfor %}
+
+{% block title %}
+    {{ name_primary }} - {{ wp_title }}
 {% endblock %}
 
 {% block content %}
@@ -20,12 +22,12 @@
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
 
-                {% if cta.agency.link %}
-					<a href="{{ cta.agency.link }}" class="call-to-action">
-						<h3 class="call-to-action__title">{{ cta.agency.title }}</h3>
+                {% if cta.qa.link %}
+					<a href="{{ cta.qa.link }}" class="call-to-action">
+						<h3 class="call-to-action__title">{{ cta.qa.title }}</h3>
 
-						{% if cta.agency.description %}
-							<p class="call-to-action__description">{{ cta.agency.description }}</p>
+						{% if cta.qa.description %}
+							<p class="call-to-action__description">{{ cta.qa.description }}</p>
 						{% endif %}
 
 						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
@@ -39,13 +41,11 @@
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
+                <h1 class="title u-margin-xs">{{ name_primary }}</h1>
                 {% for name in institution.names %}
                     {% if name.name_valid_to == null %}
                         {% if name.name_english %}
-                            <h1 class="title u-margin-xs">{{ name.name_english }}</h1>
                             <h3 class="subtitle">{{ name.name_official }}</h3>
-                        {% else %}
-                            <h1 class="title u-margin-xs">{{ name.name_official }}</h1>
                         {% endif %}
                         {% if name.name_versions %}
                             {% for version in name.name_versions %}
@@ -328,7 +328,7 @@
                                     <ul class="info-list u-margin">
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="/register/map/agency/?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -481,13 +481,13 @@
                                     </div>
 
                                     {#<div class="accordion__title">#}
-                                        {% for item in result.programme_names %}
-                                            {% if item.name_is_primary == true %}{{ item.name }}{% if loop.length != loop.index %}, {% endif %}{% endif %}
-                                        {% endfor %}
-                                        {% if result.qf_ehea_level %}
-                                        , {{ result.qf_ehea_level }}
-                                        {% endif %}
-                                        {% if result.report.institution_relationship_context %},
+                                        {%- for item in result.programme_names -%}
+                                            {%- if item.name_is_primary == true %}{{ item.name }}{% endif -%}
+                                        {%- endfor -%}
+                                        {%- if result.qf_ehea_level -%}
+                                        , {{ result.qf_ehea_level -}}
+                                        {%- endif -%}
+                                        {%- if result.report.institution_relationship_context -%},
                                             {% for item in result.report.institution_relationship_context %}
                                                 {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
                                             {% endfor %}
@@ -500,13 +500,14 @@
                                 </div>
                                 <div class="accordion__description accordion__description--two-tone js-accordion__description">
                                     <ul class="info-list info-list--padding info-list--programme-description">
+
                                         {% if result.programme_names|length > 1 %}
-                                            {% set i = 0 %}
+                                            {% set i = 0 -%}
                                             {% for item in result.programme_names %}
                                                 {% if item.name_is_primary != true %}
                                                     <li class="info-list__item">
                                                         <div class="info-list__term">
-                                                            {% if i == 0 %}Other names{% endif %}
+                                                            {%- if i == 0 %}Other names{% endif -%}
                                                         </div>
                                                         <div class="info-list__definition">{{ item.name }}</div>
                                                     </li>
@@ -514,18 +515,20 @@
                                                 {% endif %}
                                             {% endfor %}
                                         {% endif %}
+
                                         {% set i = 0 %}
                                         {% for item in result.programme_names %}
                                             {% if item.qualification %}
                                                 <li class="info-list__item">
                                                     <div class="info-list__term">
-                                                        {% if i == 0 %}Qualification{% endif %}
+                                                        {%- if i == 0 %}Qualification{% endif -%}
                                                     </div>
                                                     <div class="info-list__definition">{{ item.qualification }}</div>
                                                 </li>
                                                 {% set i = i + 1 %}
                                             {% endif %}
                                         {% endfor %}
+
                                         <li class="info-list__item">
                                             <div class="info-list__term">Level</div>
                                             <div class="info-list__definition">{{ result.qf_ehea_level ? result.qf_ehea_level : '-' }}{% if result.nqf_level %} (NQF {{ result.nqf_level }}){% endif %}</div>
@@ -552,7 +555,7 @@
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="/register/map/agency/?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -569,11 +572,11 @@
                                         <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
                                             <div class="info-list__definition">
-                                                {% if result.report.valid_to %}
-                                                    {{ result.report.valid_to|date("d/m/Y") }}
-                                                {% else %}
+                                                {%- if result.report.valid_to -%}
+                                                    {{- result.report.valid_to|date("d/m/Y") -}}
+                                                {%- else -%}
                                                     not applicable
-                                                {% endif %}
+                                                {%- endif -%}
                                             </div>
                                         </li>
                                         <li class="info-list__item">
@@ -627,9 +630,9 @@
                         <p>No results found.</p>
                     {% endif %}
 
-                </div>
+                </div> {# reports-programme-container #}
 
-			</div>
-		</div>
+			</div> {# l-two-column__content #}
+		</div> {# l-two-column #}
 	</main>
 {% endblock %}

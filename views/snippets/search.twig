@@ -7,9 +7,57 @@
         <h1 class="title qa-search__title">{{ search.title }}</h3>
     {% endif %}
 
-    <!-- <div class="text qa-search__text">{{ search.description }}</div> -->
-
     <form class="form qa-search__form" method="get" action="{{ function('get_permalink', 6) }}">
+
+        {% if type == 'advanced' %}
+            {% if formdata %}
+                {% set openSearchform = 'style="display: block"' %}
+            {% endif %}
+        {% endif %}
+
+        <div class="qa-search__expand js-qa-search__expand" {{ openSearchform }}>
+
+            <div class="form__columns u-margin-xs">
+                <div class="form__fieldset form__fieldset--half">
+{#<label for="country" class="form__label">Country</label>#}
+                    <select name="country" id="country">
+                        <option value="">Select country</option>
+                        {% for country in countries %}
+                            {% if formdata.country == country.id %}
+                                <option value="{{ country.id }}" selected="selected">{{ country.name_english }}</option>
+                            {% else %}
+                                <option value="{{ country.id }}">{{ country.name_english }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form__fieldset form__fieldset--half">
+                {% if formdata.esg_activity %}
+                    <input type="hidden" name="agency" value="{{ selected_agency }}" />
+{#                  <label for="esg_activity" class="form__label">Activity</label>#}
+                    <select name="esg_activity" id="esg_activity">
+                        <option value="">{{ selected_agency_acronym }}: all activities</option>
+                        {% for agency in agencies %}
+                            {% if selected_agency == agency.id %}
+                                {% for activity in agency.activities %}
+                                    <option value="{{ activity.id }}"{% if formdata.esg_activity == activity.id %} selected="selected"{% endif %}>{{ selected_agency_acronym }}: {{ activity.activity }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    {#<label for="agency" class="form__label">Agency</label>#}
+                    <select name="agency" id="agency">
+                        <option value="">Select agency</option>
+                        {% for agency in agencies %}
+                            <option value="{{ agency.id }}"{% if agency.id == formdata.agency %} selected="selected"{% endif %}>{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
         <div class="form__fieldset form__fieldset--search">
             <input type="search" name="query" value="{{ formdata.query|replace({"\\'": "'", "\\\\": "\\"})|escape('html_attr') }}" placeholder="{{ search.description }}">
             <input type="submit" value="{{ search.button }}" class="qa-search__button">
@@ -19,139 +67,6 @@
             <button class="button qa-search__advanced js-qa-search__toggle">Advanced search</button>
         </div>
 
-        {% if type == 'advanced' %}
-            {% if formdata %}
-                {% set openSearchform = 'style="display: block"' %}
-            {% endif %}
-        {% endif %}
-
-            <div class="qa-search__expand js-qa-search__expand" {{ openSearchform }}>
-
-                <div class="form__columns u-margin-xs">
-                    <div class="form__fieldset form__fieldset--half">
-                        <label for="country" class="form__label">Country</label>
-                        <select name="country" id="country">
-                            <option value="">Select country</option>
-                            {% for country in countries %}
-                                {% if formdata.country == country.id %}
-                                    <option value="{{ country.id }}" selected="selected">{{ country.name_english }}</option>
-                                {% else %}
-                                    <option value="{{ country.id }}">{{ country.name_english }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form__fieldset form__fieldset--half">
-                    {% if formdata.esg_activity %}
-                        {% set selected_agency = false %}
-                        {% set selected_agency_acronym = false %}
-                        {% for agency in agencies %}
-                            {% for activity in agency.activities %}
-                                {% if formdata.esg_activity == activity.id %}
-                                    {% set selected_agency = agency.id %}
-                                    {% set selected_agency_acronym = agency.acronym_primary %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                        <input type="hidden" name="agency" value="{{ selected_agency }}" />
-                        <label for="esg_activity" class="form__label">Activity</label>
-                        <select name="esg_activity" id="esg_activity">
-                            <option value="">{{ selected_agency_acronym }}: all activities</option>
-                            {% for agency in agencies %}
-                                {% if selected_agency == agency.id %}
-                                    {% for activity in agency.activities %}
-                                        <option value="{{ activity.id }}"{% if formdata.esg_activity == activity.id %} selected="selected"{% endif %}>{{ selected_agency_acronym }}: {{ activity.activity }}</option>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    {% else %}
-                        <label for="agency" class="form__label">Agency</label>
-                        <select name="agency" id="agency">
-                            <option value="">Select agency</option>
-                            {% for agency in agencies %}
-                                <option value="{{ agency.id }}"{% if agency.id == formdata.agency %} selected="selected"{% endif %}>{{ agency.acronym_primary }} - {{ agency.name_primary }}</option>
-                            {% endfor %}
-                        </select>
-                    {% endif %}
-                    </div>
-                </div>
-
-
-                {# mask advanced search
-                <div class="form__columns u-margin-xs">
-                    <div class="form__fieldset form__fieldset--half">
-                        <label for="status" class="form__label">Report status</label>
-                        <select name="status">
-                            <option value="">Select report status</option>
-                            <option value="1" {% if formdata.status == '1' %} selected="selected"{% endif %}>Part of obligatory EQA system</option>
-                            <option value="2" {% if formdata.status == '2' %} selected="selected"{% endif %}>Voluntary</option>
-                        </select>
-                    </div>
-                    <div class="form__fieldset form__fieldset--half">
-                        <label for="report_year" class="form__label">Report year</label>
-                        {% set year = "now"|date('Y') %}
-                        <select name="report_year">
-                            <option value="">Select report year</option>
-                            {% for i in year..2000 %}
-                                <option value="{{ i }}" {% if formdata.report_year == i %} selected="selected"{% endif %}>{{ i }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form__fieldset u-margin-s">
-                    <label for="" class="form__label">EHEA Level</label>
-                    <div class="checkbox checkbox--horizontal">
-                        <label class="checkbox__item">
-                            <input type="radio" class="radio__input" value="" name="qf_ehea_level" {% if formdata.qf_ehea_level == '' %} checked="checked"{% endif %}>
-                            Any
-                        </label>
-
-                        <label class="checkbox__item">
-                            <input type="radio" class="radio__input" value="1" name="qf_ehea_level" {% if formdata.qf_ehea_level == '1' %} checked="checked"{% endif %}>
-                            Short cycle
-                        </label>
-
-                        <label class="radio__item">
-                            <input type="radio" class="radio__input" value="2" name="qf_ehea_level" {% if formdata.qf_ehea_level == '2' %} checked="checked"{% endif %}>
-                            First cycle
-                        </label>
-
-                        <label class="radio__item">
-                            <input type="radio" class="radio__input" value="3" name="qf_ehea_level" {% if formdata.qf_ehea_level == '3' %} checked="checked"{% endif %}>
-                            Second cycle
-                        </label>
-
-                        <label class="radio__item">
-                            <input type="radio" class="radio__input" value="4" name="qf_ehea_level" {% if formdata.qf_ehea_level == '4' %} checked="checked"{% endif %}>
-                            Third cycle
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form__columns u-margin">
-                    <!-- <div class="form__fieldset form__fieldset--half">
-                        <label for="history" class="form__label">
-                            <input type="checkbox" class="checkbox__input" value="true" name="history" id="history" {% if formdata.history == 'true' %} checked="checked"{% endif %}>
-                            Include historical data
-                        </label>
-                    </div> -->
-                    <div class="form__fieldset form__fieldset">
-                        <label for="focus_country_is_crossborder" class="form__label">
-                            <input type="checkbox" class="checkbox__input" value="true" name="focus_country_is_crossborder" id="focus_country_is_crossborder" {% if formdata.focus_country_is_crossborder == 'true' %} checked="checked"{% endif %}>
-                            Include cross-border recognition
-                        </label>
-                    </div>
-                </div>
-                #}
-
-            </div>
-
-            <div class="form__fieldset"></div>
-
-
     </form>
-
 
 </div>
