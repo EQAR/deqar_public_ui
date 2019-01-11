@@ -45,15 +45,15 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $offset         = 0;
     $ordering       = 'DESC';
     $page           = 0;
-    $query          = false;
-    $agency         = false;
-    $esg_activity   = false;
-    $country        = false;
-    $qf_ehea_level  = false;
-    $status         = false;
-    $report_year    = false;
-    $focus_country_is_crossborder = false;
-    $history        = true;
+    $query          = '';
+    $agency         = '';
+    $esg_activity   = '';
+    $country        = '';
+    $qf_ehea_level  = '';
+    $status         = '';
+    $report_year    = '';
+    $focus_country_is_crossborder = '';
+    $history        = 'true';
 
     if ( !empty($_GET['limit']) ) {
         $limit = $_GET['limit'];
