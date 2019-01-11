@@ -16,7 +16,7 @@
                 <div class="country-header u-margin-s">
                     <div class="country-header__title">
                         {% include 'views/snippets/breadcrumbs.twig' %}
-                        <h1 class="title u-margin-xs">{{ country.name_english }}</h1>
+                        <h1 class="title u-margin-xs">{{ country.name_english }}{% if country.iso_3166_alpha2 == 'XK' %}<a href="#xk-note"><sup>*</sup></a>{% endif %}</h1>
                         <ul class="l-label u-margin-s">
                             {% if country.ehea_is_member and country.iso_3166_alpha2 != 'XK' %}
                             <li class="l-label__item">
@@ -263,6 +263,13 @@
                             <p>No registered agencies operating in {{ country.name_english }}.</p>
                         {% endif %}
                     </div>
+
+                    {% if country.iso_3166_alpha2 == 'XK' %}
+                    <hr class="divider u-margin-s">
+                    <div class="text u-margin" id="xk-note">
+                        <p class="footnote"><sup>*</sup>&nbsp;{{ country.general_note|striptags('p') }}</p>
+                    </div>
+                    {% endif %}
 
             </div>
 		</div>
