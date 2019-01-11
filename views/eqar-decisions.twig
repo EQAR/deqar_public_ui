@@ -1,0 +1,37 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' %}
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+
+                {% for block in post.get_field('blocks') %}
+                    {% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+                {% endfor %}
+
+                {% set year = 1970 %}
+                <div class="text">
+                    <ul>
+                    {% for decision in decisions %}
+                        {% set this_year = decision.decision_date|date('Y') %}
+                        {% if this_year != year %}
+                            {% set year = this_year %}
+                            </ul>
+                            <h2 class="subtitle u-margin-xs">{{ year }}</h2>
+                            <ul class="u-margin-s">
+                        {% endif %}
+                        <li>
+                            {{ decision.agency_acronym }}: <a href="{{ decision.decision_file }}">{{ decision.decision_type }}</a> (decision of {{ decision.decision_date|date('d/m/Y') }})
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

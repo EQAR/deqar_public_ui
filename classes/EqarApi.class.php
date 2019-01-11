@@ -518,4 +518,23 @@ class EqarApi
 
     }
 
+
+    /**
+     * Get all EQAR decisions on agencies
+     * @return  array    All decisions
+     */
+    public function getDecisions()
+    {
+
+        $api = $this->eqar();
+        $result = $api->get('agencies/decisions/');
+
+        if ($result->info->http_code == 200) {
+            return $result->decode_response();
+        }
+
+        return false;
+
+    }
+
 }
