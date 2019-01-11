@@ -21,6 +21,12 @@ class EqarApi
 
 
     /**
+     * EQAR API
+     * @var RestClient  The instance to make requests
+     */
+    protected $api;
+
+    /**
      * Main constructor function
      */
     public function __construct(){
@@ -68,6 +74,15 @@ class EqarApi
 
             }
 
+            $this->api = new RestClient([
+                'base_url' => $this->getApiUrl(),
+                'format'   => EQARFORMAT,
+                'headers'  => [
+                    'Accept'        => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->getApiKey(),
+                ],
+            ]);
+
         }
 
     }
@@ -113,28 +128,12 @@ class EqarApi
 
 
     /**
-     * Construct the main rest client
-     * @param   string      $path   Api query after the base path
+     * Return the main rest client
      * @return  RestClient          The RestClient return object
      */
-    public function eqar($path = false)
+    public function eqar()
     {
-
-        if (empty($path)) {
-            throw new \Exception('No api query defined.');
-        }
-
-        $api = new RestClient([
-            'base_url' => $this->getApiUrl() . $path,
-            'format'   => EQARFORMAT,
-            'headers'  => [
-                'Accept'        => 'application/json',
-                'Authorization' => 'Bearer ' . $this->getApiKey(),
-            ],
-        ]);
-
-        return $api;
-
+        return $this->api;
     }
 
 
@@ -144,17 +143,18 @@ class EqarApi
      * @param   boolean  Show historical data
      * @return  object   Institution object
      */
-    public function getInstitution($institutionId = null, $history = false)
+    public function getInstitution($institutionId = null, $history = 'true')
     {
 
         if (isset($institutionId) && !empty($institutionId)) {
 
-            $reports    = $this->getReportInstitutionalByInstitution($institutionId);
-            $programmes = $this->getReportProbrammesByInstitution($institutionId);
+            $reports    = $this->getReportInstitutionalByInstitution($institutionId, $history);
+            $programmes = $this->getReportProgrammesByInstitution($institutionId, $history);
 
-            $path = 'institutions/' . rawurlencode($institutionId) . '/?history=' . rawurlencode($history);
-            $api = $this->eqar($path);
-            $result = $api->get('');
+            $api = $this->eqar();
+            $result = $api->get('institutions/' . rawurlencode($institutionId) . '/', array(
+                'history' => $history,
+            ));
 
             if ($result->info->http_code == 200) {
 
@@ -191,13 +191,23 @@ class EqarApi
      * @param  boolean $history                         Indicator if the search should go trhough historical data.
      * @return array                                    Array of institutions
      */
-    public function getInstitutions($limit = 10, $offset = 0, $ordering = 'DESC', $query = false, $agency = false, $esg_activity = false, $country = false, $qf_ehea_level = false, $status = false, $report_year = false, $focus_country_is_crossborder = false, $history = false)
+    public function getInstitutions($limit = 10, $offset = 0, $ordering = 'DESC', $query = '', $agency = '', $esg_activity = '', $country = '', $qf_ehea_level = '', $status = '', $report_year = '', $focus_country_is_crossborder = '', $history = 'true')
     {
-
-        $path = 'institutions/?limit=' . rawurlencode($limit) . '&offset=' . rawurlencode($offset) . '&ordering=' . rawurlencode($ordering) . '&query=' . rawurlencode($query) . '&agency=' . rawurlencode($agency) . '&esg_activity=' . rawurlencode($esg_activity) . '&country=' . rawurlencode($country) . '&qf_ehea_level=' . rawurlencode($qf_ehea_level) . '&status=' . rawurlencode($status) . /*'&report_year=' . rawurlencode($report_year) . -- emergency */ '&focus_country_is_crossborder=' . rawurlencode($focus_country_is_crossborder);
-
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('institutions/', array(
+            'limit' =>                          $limit,
+            'offset' =>                         $offset,
+            'query' =>                          $query,
+            'agency' =>                         $agency,
+            'esg_activity' =>                   $esg_activity,
+            'country' =>                        $country,
+            'qf_ehea_level' =>                  $qf_ehea_level,
+            'status' =>                         $status,
+            'report_year' =>                    $report_year,
+            'focus_country_is_crossborder' =>   $focus_country_is_crossborder,
+            'ordering' =>                       $ordering,
+            'history' =>                        $history,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response();
@@ -214,12 +224,15 @@ class EqarApi
      * @param   boolean  $history           Historical data parameter
      * @return  array    Reports
      */
-    public function getReportInstitutionalByInstitution($institutionId = null)
+    public function getReportInstitutionalByInstitution($institutionId = null, $history = 'true')
     {
 
-        $path = 'reports/institutional/by-institution/' . rawurlencode($institutionId) . '/?limit=999&offset=0';
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('reports/institutional/by-institution/' . rawurlencode($institutionId) . '/', array(
+            'limit' => 999,
+            'offset' => 0,
+            'history' => $history,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response()->results;
@@ -236,12 +249,15 @@ class EqarApi
      * @param   boolean  $history           Historical data parameter
      * @return  array    Programmes
      */
-    public function getReportProbrammesByInstitution($institutionId = null)
+    public function getReportProgrammesByInstitution($institutionId = null, $history = 'true')
     {
 
-        $path = 'reports/programme/by-institution/' . rawurlencode($institutionId) . '/?limit=999&offset=0';
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('reports/programme/by-institution/' . rawurlencode($institutionId) . '/', array(
+            'limit' => 999,
+            'offset' => 0,
+            'history' => $history,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response()->results;
@@ -258,15 +274,16 @@ class EqarApi
      * @param   boolean  $agencyId      Historical data
      * @return  array    All Agencies
      */
-    public function getAgency($agencyId = null, $history = false)
+    public function getAgency($agencyId = null, $history = 'true')
     {
 
         if (isset($agencyId) && !empty($agencyId)) {
 
-            $path = 'agencies/' . rawurlencode($agencyId) . '/?history=' . rawurlencode($history);
-            $api = $this->eqar($path);
-            $result = $api->get('');
-            $countries = $this->getAgencyCountries($agencyId, 'true'); //CT added quotes
+            $api = $this->eqar();
+            $result = $api->get('agencies/' . rawurlencode($agencyId) . '/', array(
+                'history' => $history,
+            ));
+            $countries = $this->getAgencyCountries($agencyId, $history);
 
             if ($result->info->http_code == 200) {
                 $output = $result->decode_response();
@@ -283,14 +300,18 @@ class EqarApi
 
     /**
      * Get all Agencies
+     * @param   string   $registered      Select by current registration status (True, False or All)
      * @return  array    All Agencies
      */
-    public function getAgencies()
+    public function getAgencies($registered = 'True')
     {
 
-        $path = 'agencies/?limit=999&offset=0';
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('agencies/', array(
+            'limit' => 999,
+            'offset' => 0,
+            'registered' => $registered,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response()->results;
@@ -307,12 +328,15 @@ class EqarApi
      * @param   boolean  $history       Show historical data
      * @return  array                   All Agencies of a certain country
      */
-    public function getAgenciesByCountry($countryId = null, $history = false)
+    public function getAgenciesByCountry($countryId = null, $history = 'true')
     {
 
-        $path = 'agencies/based-in/' . rawurlencode($countryId) . '/?limit=999&offset=0&history=' . rawurlencode($history);
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('agencies/based-in/' . rawurlencode($countryId) . '/', array(
+            'limit' => 999,
+            'offset' => 0,
+            'history' => $history,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response()->results;
@@ -329,12 +353,15 @@ class EqarApi
      * @param   boolean  $history       Show historical data
      * @return  array                   All Agencies of a certain country
      */
-    public function getAgenciesByFocusCountry($countryId = null, $history = false)
+    public function getAgenciesByFocusCountry($countryId = null, $history = 'true')
     {
 
-        $path = 'agencies/focusing-to/' . rawurlencode($countryId) . '/?limit=999&offset=0&history=' . rawurlencode($history);
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('agencies/focusing-to/' . rawurlencode($countryId) . '/', array(
+            'limit' => 999,
+            'offset' => 0,
+            'history' => $history,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response()->results;
@@ -351,26 +378,21 @@ class EqarApi
      * @param   boolean  Show historical data
      * @return  object   Country object
      */
-    public function getCountry($countryId, $history = true)
+    public function getCountry($countryId, $history = 'true')
     {
 
-        //$byCountry = $this->getAgenciesByCountry($countryId);
-        //$byCountryHistory = $this->getAgenciesByCountry($countryId, true);
-        $byFocusCountry = $this->getAgenciesByFocusCountry($countryId, "true");
-        //$byFocusCountryHistory = $this->getAgenciesByFocusCountry($countryId, true);
+        $api = $this->eqar();
+        $result = $api->get('countries/' . rawurlencode($countryId) . '/', array(
+            'history' => $history,
+        ));
 
-        $path = 'countries/' . rawurlencode($countryId) . '/?history=' . rawurlencode($history);
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $byFocusCountry = $this->getAgenciesByFocusCountry($countryId, $history);
 
         if ($result->info->http_code == 200) {
 
             $output = $result->decode_response();
             $output->agencies = [
-                //'byCountry' => $byCountry,
-                //'byCountryHistory' => $byCountryHistory,
                 'byFocusCountry' => $byFocusCountry,
-                //'byFocusCountryHistory' => $byFocusCountryHistory,
             ];
 
             return $output;
@@ -394,14 +416,19 @@ class EqarApi
     public function getCountries(
         $limit = 999,
         $offset = 0,
-        $external_qaa = false,
-        $european_approach = false,
-        $eqar_governmental_member = false
+        $external_qaa = '',
+        $european_approach = '',
+        $eqar_governmental_member = ''
     ) {
 
-        $path = 'countries/?limit=' . rawurlencode($limit) . '&offset=' . rawurlencode($offset) . '&external_qaa=' . rawurlencode($external_qaa) . '&european_approach=' . rawurlencode($european_approach) . '&eqar_governmental_member=' . rawurlencode($eqar_governmental_member);
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('countries/', array(
+            'limit' =>                      $limit,
+            'offset' =>                     $offset,
+            'external_qaa' =>               $external_qaa,
+            'european_approach' =>          $european_approach,
+            'eqar_governmental_member' =>   $eqar_governmental_member,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response();
@@ -414,14 +441,17 @@ class EqarApi
 
     /**
      * Get a list of Countries
+     * @param  boolean  Show historical data
      * @return array    All Countries
      */
-    public function getCountriesByReports()
+    public function getCountriesByReports( $history = 'true' )
     {
 
-        $path = 'countries/by-reports/?limit=999';
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('countries/by-reports/', array(
+            'limit' => 999,
+            'history' => $history,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response();
@@ -438,12 +468,15 @@ class EqarApi
      * @param   boolean  Show historical data
      * @return  array    All Countries
      */
-    public function getAgencyCountries($agencyId = null, $history = false)
+    public function getAgencyCountries($agencyId = null, $history = 'true')
     {
 
-        $path = 'countries/by-agency-focus/' . rawurlencode($agencyId) . '/?limit=999&offset=0&history=' . $history;
-        $api = $this->eqar($path);
-        $result = $api->get('');
+        $api = $this->eqar();
+        $result = $api->get('countries/by-agency-focus/' . rawurlencode($agencyId) . '/', array(
+            'limit' => 999,
+            'offset' => 0,
+            'history' => $history,
+        ));
 
         if ($result->info->http_code == 200) {
             return $result->decode_response()->results;
@@ -482,6 +515,25 @@ class EqarApi
         }
 
         return $output;
+
+    }
+
+
+    /**
+     * Get all EQAR decisions on agencies
+     * @return  array    All decisions
+     */
+    public function getDecisions()
+    {
+
+        $api = $this->eqar();
+        $result = $api->get('agencies/decisions/');
+
+        if ($result->info->http_code == 200) {
+            return $result->decode_response();
+        }
+
+        return false;
 
     }
 
