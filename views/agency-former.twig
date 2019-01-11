@@ -1,0 +1,37 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' %}
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+
+                {% for block in post.get_field('blocks') %}
+                    {% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+                {% endfor %}
+
+                <div class="text">
+
+                    <ul class="agency-list">
+                    {% for agency in agencies %}
+                        <li class="agency-list__item">
+                            <strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}<br />
+                            <em>Registered: {{ agency.registration_start|date('d/m/Y') }} to {{ agency.registration_valid_to|date('d/m/Y') }}</em><br />
+                            {{ agency.registration_note|striptags('p') }}<br />
+                            <a href="{{ function('get_permalink', 223) }}?id={{ agency.id }}" class="agency-list__link">See {{ agency.acronym_primary }}'s former register entry
+                                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="agency-list__arrow">
+                                    <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                                </svg>
+                            </a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
