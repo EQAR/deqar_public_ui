@@ -17,9 +17,6 @@ $context = Timber::get_context();
 $context['post']                    = new TimberPost();
 $context['countries']               = $eqarApi->getCountriesByReports();
 $context['agencies']                = $eqarApi->getAgencies();
-// $context['institutions']            = $eqarApi->getInstitutions();
-// $context['institutionsByCountry']   = $eqarApi->getInstitutionsByCountry();
-
 
 
 /**
@@ -124,6 +121,12 @@ if ( isset( $_GET ) && !empty( $_GET ) ) {
     $context['formdata']    = $_GET;
     $context['paginator']   = $details;
 
+    Timber::render('qa-results.twig', $context);
+
+} else {
+
+    Timber::render('qa-results-home.twig', $context);
+
 }
 
-Timber::render('qa-results.twig', $context);
+
