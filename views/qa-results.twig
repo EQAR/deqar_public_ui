@@ -145,7 +145,7 @@
                     </div>
 
                 {% else %}
-                    {% if formdata %}
+
                         <div class="u-margin-s">
                             <div class="pagination__indidator pagination__indidator u-margin-s">
                                 No institutions with QA results match your search. Please refer to the following pages:
@@ -174,19 +174,7 @@
                                 </svg>
                             </a>
                         {% endif %}
-                    {% endif %}
-                {% endif %}
 
-                {% if not formdata %}
-                    <ul class="country-list">
-                        {% for country in countries %}
-                            <li class="country-list__item">
-                                <a href="{{ function('get_permalink', 6) }}/?query=&country={{ country.id }}" class="country-list__link">
-                                    {{ country.name_english }} <span class="country-list__count">{{ country.institution_count }}</span>
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
                 {% endif %}
 
             </div>
