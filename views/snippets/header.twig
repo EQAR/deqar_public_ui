@@ -27,7 +27,7 @@
 
 {% macro generate_menu(parent, post, sidebar_title) %}
     {% import _self as this %}
-    {% set children = parent|visibleChildren() %}
+    {% set children = parent|visibleChildren(sidebar_title ? post.id : false) %}
     {% if children %}
         <button class="button menu__toggle js-toggle-grandchildren{% if post|isChildOf(parent.id) %} menu__toggle--is-active{% endif %}"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" class="menu__icon">
@@ -73,7 +73,7 @@
         {% for item in menu.get_items %}
             <li class="{{ item.classes | join(' ') }} menu-item--primary">
                 <a href="{{ item.get_link }}" class="menu-link menu-link--primary">{{ item.title }}</a>
-                {% set children = item.master_object|visibleChildren() %}
+                {% set children = item.master_object|visibleChildren(sidebar_title ? post.id : false) %}
                 {% if children %}
                     <button class="button menu__toggle js-toggle-children{% if post|isChildOf(item.object_id) %} menu__toggle--is-active{% endif %}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" class="menu__icon">

@@ -1,0 +1,10 @@
+{% for parameter in formdata|keys %}
+    {% if parameter in override|keys %}
+        {% if attribute(override, parameter) != null %}
+            <input type="hidden" name="{{ parameter }}" value="{{ attribute(override, parameter) }}">
+        {% endif %}
+        {# parameters set to null are skipped #}
+    {% else %}
+        <input type="hidden" name="{{ parameter }}" value="{{ attribute(formdata, parameter) }}">
+    {% endif %}
+{% endfor %}

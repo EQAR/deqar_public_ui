@@ -4,52 +4,28 @@
 	<main class="u-padding">
 		<div class="l-two-column u-container">
 			<div class="l-two-column__sidebar">
-				{% include 'snippets/sidebar.twig' %}
+				{% include 'snippets/sidebar.twig' with { accordion_sidebar: true } %}
 
-                {% set selected_country = false %}
-                {% set selected_country_name = false %}
-                {% if formdata.country %}
-                    {% for country in countries %}
-                        {% if country.id == formdata.country %}
-                            {% set selected_country = country.id %}
-                            {% set selected_country_name = country.name_english %}
-                        {% endif %}
-                    {% endfor %}
-                    {% if selected_country and results.results %}
-                        <a href="{{ pages.country }}?id={{ selected_country }}" class="call-to-action">
-                            <h3 class="call-to-action__title">{{ selected_country_name }}</h3>
-                            <p class="call-to-action__description">View country profile</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
-                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
-                            </svg>
-                        </a>
-                    {% endif %}
+                {% include 'views/snippets/search-facets.twig' with { facets: search.facets, with_query: true } %}
+
+                {% if formdata.country and results.results %}
+                    <a href="{{ pages.country }}?id={{ countriesByName[formdata.country].id }}" class="call-to-action">
+                        <h3 class="call-to-action__title">{{ formdata.country }}</h3>
+                        <p class="call-to-action__description">View country profile</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                        </svg>
+                    </a>
                 {% endif %}
-                {% set selected_agency = false %}
-                {% set selected_agency_acronym = false %}
-                {% if formdata.agency or formdata.esg_activity %}
-                    {% for agency in agencies %}
-                        {% if formdata.agency == agency.id %}
-                            {% set selected_agency = agency.id %}
-                            {% set selected_agency_acronym = agency.acronym_primary %}
-                        {% else %}
-                            {% for activity in agency.activities %}
-                                {% if formdata.esg_activity == activity.id %}
-                                    {% set selected_agency = agency.id %}
-                                    {% set selected_agency_acronym = agency.acronym_primary %}
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                    {% if selected_agency and results.results %}
-                        <a href="{{ pages.agency }}?id={{ selected_agency }}" class="call-to-action">
-                            <h3 class="call-to-action__title">{{ selected_agency_acronym }}</h3>
-                            <p class="call-to-action__description">View agency profile</p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
-                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
-                            </svg>
-                        </a>
-                    {% endif %}
+
+                {% if formdata.agency and results.results %}
+                    <a href="{{ pages.agency }}?id={{ agenciesByName[formdata.agency].id }}" class="call-to-action">
+                        <h3 class="call-to-action__title">{{ formdata.agency }}</h3>
+                        <p class="call-to-action__description">View agency profile</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                        </svg>
+                    </a>
                 {% endif %}
 			</div>
 
@@ -60,93 +36,51 @@
 					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
 				{% endfor %}
 
-                {% if formdata.country or formdata.status or formdata.agency or formdata.esg_activity or formdata.report_year or formdata.qf_ehea_level or formdata.focus_country_is_crossborder == 'true' %}
-                    {% include 'views/snippets/search.twig' with {type: 'advanced', title: true, search_url: pages.qa_results } %}
-                {% else %}
-                    {% include 'views/snippets/search.twig' with {type: 'simple', title: true, search_url: pages.qa_results } %}
-                {% endif %}
-
                 {% if results.results %}
 
-                    {% set url = '?' %}
-
-                    {% for key, val in formdata %}
-                        {% if key != 'paging' %}
-                            {% set url = url ~ key ~ '=' ~ val %}
-                            {% if not loop.last %}
-                                {% set url = url ~ '&' %}
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-
-                    <div class="u-margin-xs">
-                    {% if paginator.pages > 1 %}
-                        <ul class="pagination paginator pagination__list u-margin-xs">
-                            {% if paginator.first == false %}
-                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.prev - 1) }}">&laquo;</a></li>
-                            {% else %}
-                                <li class="pagination__item pagination__item--disabled">&laquo;</li>
-                            {% endif %}
-
-                            {% for item in 0..(paginator.pages - 1) %}
-                                <li class="pagination__item"><a class="pagination__link{% if ( loop.index ) == paginator.current %} current{% endif %}" href="{{ url }}&paging={{ item }}">{{ (item + 1) }}</a></li>
-                            {% endfor %}
-
-                            {% if paginator.last == false %}
-                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.next - 1) }}">&raquo;</a></li>
-                            {% else %}
-                                <li class="pagination__item pagination__item--disabled">&raquo;</li>
-                            {% endif %}
-                        </ul>
-                    {% endif %}
-                        <div class="pagination__indidator pagination__indidator u-margin-s">
-                            {% if paginator.pages > 1 %}
-                                {{ paginator.start }} - {{ paginator.end }} of {{ paginator.total }} institutions matching your search
-                            {% else %}
-                                {{ paginator.total }} institution{% if paginator.total > 1 %}s{% endif %} matching your search
-                            {% endif %}
-                        </div>
-                    </div>
+                    {% include 'views/snippets/search-pagination.twig' with { paginator_style: 'select', ordering: search.ordering, results_per_page: [ 10, 20, 50, 100 ], result_type: 'institution' } %}
 
                     <div class=" u-margin-s">
-                        <ul class="agency-list">
+                        <ul class="search-results">
                             {% for institution in results.results %}
-                                <li class="agency-list__item">
-                                    <a href="{{ pages.institution -}}
-                                            ?id={{ institution.id -}}
-                                            " class="agency-list__link">
-                                        {% if institution.hierarchical_relationships.part_of != null %}
-                                            {% for item in institution.hierarchical_relationships.part_of %}
-                                                {{ item.name_primary }} /
-                                            {% endfor %}
-                                        {% endif %}
+                                <li class="search-results__item">
+                                    <a href="{{ pages.institution|addParameters(formdata, { 'query': null, 'offset': null, 'limit': null, 'ordering': null, 'id': institution.id } ) }}" class="search-results__link">
+                                        <span class="search-results__name-primary">
+                                        {% for item in institution.hierarchical_relationships.part_of %}
+                                            {% if item.relationship_type in [ 'faculty' ] %}
+                                                {{ item.name_primary }},
+                                            {% endif %}
+                                        {% endfor %}
                                         {{ institution.name_primary }}
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="agency-list__arrow">
+                                        {% for item in institution.hierarchical_relationships.part_of %}
+                                            {% if item.relationship_type not in [ 'faculty' ] %}
+                                                <span class="search-results__name-official">
+                                                    ({{- item.name_primary -}})
+                                                </span>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </span>
+                                        {% if institution.name_official_display != institution.name_primary %}
+                                        <span class="search-results__name-official">
+                                            {{ institution.name_official_display }}
+                                        </span>
+                                        {% endif %}
+                                        <span>
+                                        {% for place in institution.place %}
+                                            {%- if place.city -%}
+                                                {{ place.city }} ({{ place.country }})
+                                            {%- else -%}
+                                                {{ place.country -}}
+                                            {%- endif -%}
+                                            {% if loop.index != loop.length %}, {% endif %}
+                                        {% endfor %}
+                                        </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="search-results__arrow">
                                             <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"></polygon>
                                         </svg>
                                     </a>
                                 </li>
                             {% endfor %}
-                        </ul>
-                    </div>
-
-                    <div class="u-margin-xs">
-                        <ul class="pagination paginator pagination__list">
-                            {% if paginator.first == false %}
-                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.prev - 1) }}">&laquo;</a></li>
-                            {% else %}
-                                <li class="pagination__item pagination__item--disabled">&laquo;</li>
-                            {% endif %}
-
-                            {% for item in 0..(paginator.pages - 1) %}
-                                <li class="pagination__item"><a class="pagination__link{% if ( loop.index ) == paginator.current %} current{% endif %}" href="{{ url }}&paging={{ item }}">{{ (item + 1) }}</a></li>
-                            {% endfor %}
-
-                            {% if paginator.last == false %}
-                                <li class="pagination__item"><a href="{{ url }}&paging={{ (paginator.next - 1) }}">&raquo;</a></li>
-                            {% else %}
-                                <li class="pagination__item pagination__item--disabled">&raquo;</li>
-                            {% endif %}
                         </ul>
                     </div>
 
@@ -172,17 +106,17 @@
                             </svg>
                         </a>
                     {% endif %}
-                    {% if selected_country %}
-                        <a href="{{ pages.qa_results }}?country={{ selected_country }}" class="call-to-action">
-                            <h3 class="call-to-action__title">Show all institutions in {{ selected_country_name }}</h3>
+                    {% if formdata.country %}
+                        <a href="{{ pages.qa_results }}?country={{ countriesByName[formdata.country].id }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Show all institutions in {{ formdata.country }}</h3>
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
                                 <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
                             </svg>
                         </a>
                     {% endif %}
-                    {% if selected_agency %}
-                        <a href="{{ pages.agency }}?id={{ selected_agency }}" class="call-to-action">
-                            <h3 class="call-to-action__title">Read more about {{ selected_agency_acronym }}</h3>
+                    {% if formdata.agency %}
+                        <a href="{{ pages.agency }}?id={{ agenciesByName[formdata.agency].id }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Read more about {{ formdata.agency }}</h3>
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
                                 <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
                             </svg>

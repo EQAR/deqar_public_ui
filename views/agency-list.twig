@@ -24,6 +24,11 @@
                                     <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
                                 </svg>
                             </a>
+                            {% if agency.report_count > 0 and pages.qa_results %}
+                                <a href="{{ pages.qa_results }}?query=&agency={{ agency.id }}" class="label label--qa-results" title="View the {{ agency.institution_count }} higher education institution(s) with quality assurance reports by {{ agency.acronym_primary }}">
+                                    View {{ agency.report_count }} reports on {{ agency.institution_count }} institutions
+                                </a>
+                            {% endif %}
                         </li>
                     {% endfor %}
 				</ul>

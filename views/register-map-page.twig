@@ -15,12 +15,30 @@
 				{% endfor %}
 
                     {# map view #}
-                    {% include 'views/snippets/map.twig' with { 'maptype': map.type, 'country_page': map.country_page } %}
+                    {% include 'views/snippets/map.twig' with { 'map': map } %}
 
                     {# list view #}
                     {% if map.type == 'agencies' %}
 
                         {# no list view for agencies #}
+
+                    {% elseif map.type == 'ehea-kc' %}      {# countries by fulfilment of EHEA key commitment #}
+
+                        {% for shade in map.ehea_kc %}
+                            <h3 class="subtitle u-margin-s {{ shade.class_key }}">{{ shade.label }}</h3>
+                            <ul class="country-list u-margin">
+                                {% for country in countriesAll %}
+                                    {% if country.ehea_key_commitment == shade.tag %}
+                                        <li class="country-list__item">
+                                            <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                                <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
+                                                {{ country.name_english }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
 
                     {% elseif map.type == 'cross-border' %}      {# group by recognition of EQAR-registered agencies #}
 

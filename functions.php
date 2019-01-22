@@ -77,7 +77,25 @@
 				'button' => get_field('search_button', 'option'),
 				'preview' => get_field('search_preview', 'option'),
 				'default_target' => get_field('search_default_target', 'option'),
+                'facets' => get_field('search_facets', 'option'),
+                'ordering' => get_field('search_ordering', 'option'),
 			];
+
+			$context['report_search'] = [
+                'title' => get_field('report_search_title', 'option'),
+                'description' => get_field('report_search_description', 'option'),
+                'button' => get_field('report_search_button', 'option'),
+                'default_target' => get_field('report_search_default_target', 'option'),
+                'facets' => get_field('report_search_facets', 'option'),
+                'ordering' => get_field('report_search_ordering', 'option'),
+			];
+
+            $context['permalinks'] = [
+                'report' =>         get_field('permalink_report', 'option'),
+                'institution' =>    get_field('permalink_institution', 'option'),
+                'agency' =>         get_field('permalink_agency', 'option'),
+                'country' =>        get_field('permalink_country', 'option'),
+            ];
 
 			$context['cta'] = [
 				'qa' => [
@@ -108,6 +126,8 @@
             $twig->addFilter(new Twig_SimpleFilter('isChildOf', [$this,'isChildOf'] ));
             $twig->addFilter(new Twig_SimpleFilter('visibleChildren', [$this,'visibleChildren'] ));
             $twig->addFilter(new Twig_SimpleFilter('getSections', [$this,'getSections'] ));
+            $twig->addFilter(new Twig_SimpleFilter('addParameters', [$this,'addParameters'] ));
+            $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
 			return $twig;
 		}
 
@@ -191,11 +211,10 @@
          * @param  TimberPost    $page    Page object
          * @return array/bool             Result (false if none)
          */
-        public function visibleChildren( $page ) {
-            $current = new Timber\Post();
+        public function visibleChildren( $page, $include_id = null ) {
             $children = array();
             foreach ($page->children('page') as $subpage) {
-                if ($subpage->get_field('hide_page') != 'true' || ($current->post_type == 'page' && $subpage->id == $current->ID) ) {
+                if ( ($subpage->get_field('hide_page') != 'true') || ( isset($include_id) && $subpage->id == $include_id) ) {
                     $children[] = $subpage;
                 }
             }
@@ -231,6 +250,66 @@
             }
         }
 
+        /**
+         * Return URL with additional parameters added or removed
+         * @param  string       $base_url   Base URL
+         * @param  array        $formdata   Existing parameter array
+         * @param  array        $override   Parameters to add/change/remove
+         * @return string                   URL with parameters
+         */
+        public function addParameters( $base_url, $formdata, $override) {
+            $url = $base_url . '?';
+            if (is_array($formdata)) {
+                foreach ($formdata as $key => $value) {
+                    if (! in_array($key, array_keys($override))) {
+                        $url = $url . urlencode($key) . '=' . urlencode($value) . '&';
+                    }
+                }
+            }
+            foreach ($override as $key => $value) {
+                if (isset($value)) {
+                    $url = $url . urlencode($key) . '=' . urlencode($value) . '&';
+                }
+            }
+            if (substr($url, -1) == '&') {
+                $url = substr($url,0,-1);
+            }
+            return($url);
+        }
+
+        /**
+         * Check if institution has hierarchical or historical relationship with another
+         * @param  array        $institution    Institution object (from API)
+         * @param  array        $query_id       Institution ID to check
+         * @return boolean
+         */
+        public function relatedTo( $institution, $query_id ) {
+            if (isset($institution)) {
+                $result = false;
+                if (isset($institution->hierarchical_relationships)) {
+                    foreach ($institution->hierarchical_relationships->includes as $rel) {
+                        if ($rel->institution->id == $query_id) {
+                            $result = true;
+                        }
+                    }
+                    foreach ($institution->hierarchical_relationships->part_of as $rel) {
+                        if ($rel->institution->id == $query_id) {
+                            $result = true;
+                        }
+                    }
+                }
+                if (isset($institution->historical_relationships)) {
+                    foreach ($institution->historical_relationships as $rel) {
+                        if ($rel->institution->id == $query_id) {
+                            $result = true;
+                        }
+                    }
+                }
+                return($result);
+            } else {
+                return(false);
+            }
+        }
 
 		function acf(){
 			if( function_exists('acf_add_options_page') ) {
@@ -278,9 +357,12 @@
 		}
 
 
-        public static function do404( $context ) {
-            status_header( 404 );
+        public static function do404( $context, $http_status = 404, $error_message = null ) {
+            status_header( $http_status );
             nocache_headers();
+            if (isset($error_message)) {
+                $context['error_message'] = $error_message;
+            }
             Timber::render('404.twig', $context);
             die();
         }

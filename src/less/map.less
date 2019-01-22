@@ -1,15 +1,31 @@
 .map path {
-    fill: #cdd6e4;
+    fill: @map-light;
     stroke: #ffffff; stroke-width: 10;
     transition: all 0.2s ease;
 }
 
-.map .europe.active {
-    fill: #18498F;
-}
-
-.map .europe.active2 {
-    fill: #98ACCA;
+.map .europe {
+    &.active {
+        fill: @primary;
+    }
+    &.active2 {
+        fill: @map-medium;
+    }
+    &.bologna-darkgreen {
+        fill: @bologna-darkgreen;
+    }
+    &.bologna-lightgreen {
+        fill: @bologna-lightgreen;
+    }
+    &.bologna-yellow {
+        fill: @bologna-yellow;
+    }
+    &.bologna-orange {
+        fill: @bologna-orange;
+    }
+    &.bologna-red {
+        fill: @bologna-red;
+    }
 }
 
 .map path.circle {
@@ -24,9 +40,13 @@
     fill: @primary;
 }
 
-.map path.europe:hover {
+.map path.non-eter-with-reports {
+    fill: rgb(185,200,221);
+}
+
+.map a:hover path.europe {
     cursor: pointer;
-    fill: @accent-dark;
+    fill: @accent-dark !important;
 }
 
 .map-highlight {
@@ -35,17 +55,38 @@
 }
 
 .map-legend-dark {
-    border-left: 10px solid #18498F;
+    border-left: 10px solid @primary;
     padding-left: 10px;
 }
 
 .map-legend-medium {
-    border-left: 10px solid #98ACCA;
+    border-left: 10px solid @map-medium;
     padding-left: 10px;
 }
 
 .map-legend-light {
-    border-left: 10px solid #CDD6E4;
+    border-left: 10px solid @map-light;
+    padding-left: 10px;
+}
+
+.map-legend-darkgreen {
+    border-left: 10px solid @bologna-darkgreen;
+    padding-left: 10px;
+}
+.map-legend-lightgreen {
+    border-left: 10px solid @bologna-lightgreen;
+    padding-left: 10px;
+}
+.map-legend-yellow {
+    border-left: 10px solid @bologna-yellow;
+    padding-left: 10px;
+}
+.map-legend-orange {
+    border-left: 10px solid @bologna-orange;
+    padding-left: 10px;
+}
+.map-legend-red {
+    border-left: 10px solid @bologna-red;
     padding-left: 10px;
 }
 

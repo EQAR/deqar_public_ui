@@ -18,6 +18,7 @@ $context['post'] = new TimberPost();
 $context['agencies'] = $eqarApi->getAgencies();
 $context['pages'] = array(
         'agency' =>         get_field('agency_page'),
+        'qa_results' =>     get_field('qa-results_page'),
     );
 
 Timber::render('agency-list.twig', $context);

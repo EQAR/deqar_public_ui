@@ -1,0 +1,88 @@
+{
+    "key": "group_5d89d28ab0f2f",
+    "title": "Permalink URLs",
+    "fields": [
+        {
+            "key": "field_5d89d29a12b1e",
+            "label": "Report",
+            "name": "permalink_report",
+            "type": "url",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Use {id} as placeholder for the report ID"
+        },
+        {
+            "key": "field_5d89d2d512b1f",
+            "label": "Institution",
+            "name": "permalink_institution",
+            "type": "url",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Use {id} as placeholder for the institution ID"
+        },
+        {
+            "key": "field_5d89d2f112b20",
+            "label": "Agency",
+            "name": "permalink_agency",
+            "type": "url",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Use {id} as placeholder for the agency ID"
+        },
+        {
+            "key": "field_5d89d30812b21",
+            "label": "Country",
+            "name": "permalink_country",
+            "type": "url",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Use {id} as placeholder for the country ID"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-search"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1569313563
+}
