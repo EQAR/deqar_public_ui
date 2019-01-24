@@ -20,13 +20,7 @@
 
             <div class="l-article {{ pagination.pages ? 'u-margin' }}">
                 {% for post in posts %}
-                    <div class="l-article__item">
-                        <a href="{{ post.link }}" class="article" style="background-image: url('{{ TimberImage(post.thumbnail )}}');">
-                            <span class="article__date">{{ post.date }}</span>
-                            <span class="article__category">{{ post.category }}</span>
-                            <h2 class="article__title">{{ post.title }}</h2>
-                        </a>
-                    </div>
+                    {% include 'views/snippets/news-item.twig' %}
                 {% endfor %}
             </div>
 
