@@ -13,9 +13,11 @@
                 <h1 class="title article-header__title">{{ post.title }}</h1>
 
                 <ul class="post-meta article-header__post-meta">
+                    {% for category in post.categories %}
                     <li class="post-meta__item">
-                        <span class="post-meta__category">{{ post.category }}</span>
+                        <span class="post-meta__category">{{ category }}</span>
                     </li>
+                    {% endfor %}
                     <li class="post-meta__item">
                         <span class="post-meta__date">{{ post.date }}</span>
                     </li>
