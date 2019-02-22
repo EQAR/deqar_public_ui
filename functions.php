@@ -267,3 +267,13 @@
 		$content = ' }, false );';
 		return $content;
 	}
+
+	// Upload EPS files
+
+	function mime_types( $mimes ) {
+		$mimes['eps'] = 'application/postscript';
+		
+		return $mimes;
+	}
+	
+	add_filter( 'upload_mimes', 'mime_types' );
