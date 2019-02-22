@@ -13,6 +13,9 @@
     {% endif %}
 {% endfor %}
 
+{% set breadcrumbs_title = acronym_primary %}
+{% set sidebar_title = acronym_primary %}
+
 {% block title %}
     {{ acronym_primary }} - {{ name_primary }} - {{ wp_title }}
 {% endblock %}

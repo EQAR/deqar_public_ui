@@ -1,5 +1,8 @@
 {% extends 'base.twig' %}
 
+{% set breadcrumbs_title = country.name_english %}
+{% set sidebar_title = country.name_english %}
+
 {% block title %}
     {{ country.name_english }} - {{ wp_title }}
 {% endblock %}
