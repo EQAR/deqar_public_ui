@@ -27,11 +27,6 @@
 				{% for block in post.get_field('blocks') %}
 					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
 				{% endfor %}
-
-                {% if post.id == 32 %}{# newsletter archive #}
-                    {% include 'views/snippets/newsletter.twig' %}
-                {% endif %}
-
 			</div>
 		</div>
 	</main>

@@ -738,6 +738,15 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_5c4b75f2caeae": {
+                    "key": "layout_5c4b75f2caeae",
+                    "name": "newsletter",
+                    "label": "Newsletter sign-up form",
+                    "display": "row",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Block",
