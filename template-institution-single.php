@@ -14,6 +14,11 @@ require_once( get_template_directory() . '/classes/EqarApi.class.php' );
 $context         = Timber::get_context();
 $eqarApi         = new EqarApi();
 $context['post'] = new TimberPost();
+$context['pages'] = array(
+        'country' =>            get_field('country_page'),
+        'agency' =>             get_field('agency_page'),
+        'institution' =>        get_field('institution_page') ?: $context['post']->link ,
+    );
 
 // Check if the agency is set.
 if ( isset($_GET['id']) && !empty($_GET['id']) ) {

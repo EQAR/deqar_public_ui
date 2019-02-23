@@ -76,6 +76,7 @@
 				'description' => get_field('search_description', 'option'),
 				'button' => get_field('search_button', 'option'),
 				'preview' => get_field('search_preview', 'option'),
+				'default_target' => get_field('search_default_target', 'option'),
 			];
 
 			$context['cta'] = [
@@ -195,6 +196,12 @@
 				acf_add_options_sub_page([
 					'page_title' 	=> 'Call to Actions',
 					'menu_title' 	=> 'Call to Actions',
+					'parent_slug'	=> 'theme-general-settings',
+				]);
+
+				acf_add_options_sub_page([
+					'page_title' 	=> 'Maps',
+					'menu_title' 	=> 'Maps',
 					'parent_slug'	=> 'theme-general-settings',
 				]);
 			}

@@ -17,7 +17,7 @@
 				<ul class="agency-list">
                     {% for agency in agencies %}
                         <li class="agency-list__item">
-                            <a href="{{ function('get_permalink', 223) }}?id={{ agency.id }}" class="agency-list__link">
+                            <a href="{{ pages.agency }}?id={{ agency.id }}" class="agency-list__link">
                                 <span class="agency-list__country">{{ agency.country.iso_3166_alpha2 }}</span>
                                 <span><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="agency-list__arrow">

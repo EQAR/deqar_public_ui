@@ -7,7 +7,7 @@
         <h1 class="title qa-search__title">{{ search.title }}</h3>
     {% endif %}
 
-    <form class="form qa-search__form" method="get" action="{{ function('get_permalink', 6) }}">
+    <form class="form qa-search__form" method="get" action="{{ search_url ? search_url : search.default_target }}">
 
         {% if type == 'advanced' %}
             {% if formdata %}

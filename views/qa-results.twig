@@ -6,6 +6,10 @@
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
 
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
+
                 {% set selected_country = false %}
                 {% set selected_country_name = false %}
                 {% if formdata.country %}
@@ -16,7 +20,7 @@
                         {% endif %}
                     {% endfor %}
                     {% if selected_country and results.results %}
-                        <a href="{{ function('get_permalink', 434) }}?id={{ selected_country }}" class="call-to-action">
+                        <a href="{{ pages.country }}?id={{ selected_country }}" class="call-to-action">
                             <h3 class="call-to-action__title">{{ selected_country_name }}</h3>
                             <p class="call-to-action__description">View country profile</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
@@ -42,7 +46,7 @@
                         {% endif %}
                     {% endfor %}
                     {% if selected_agency and results.results %}
-                        <a href="{{ function('get_permalink', 223) }}?id={{ selected_agency }}" class="call-to-action">
+                        <a href="{{ pages.agency }}?id={{ selected_agency }}" class="call-to-action">
                             <h3 class="call-to-action__title">{{ selected_agency_acronym }}</h3>
                             <p class="call-to-action__description">View agency profile</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
@@ -57,9 +61,9 @@
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
                 {% if formdata.country or formdata.status or formdata.agency or formdata.esg_activity or formdata.report_year or formdata.qf_ehea_level or formdata.focus_country_is_crossborder == 'true' %}
-                    {% include 'views/snippets/search.twig' with {type: 'advanced', title: true} %}
+                    {% include 'views/snippets/search.twig' with {type: 'advanced', title: true, search_url: pages.qa_results } %}
                 {% else %}
-                    {% include 'views/snippets/search.twig' with {type: 'simple', title: true} %}
+                    {% include 'views/snippets/search.twig' with {type: 'simple', title: true, search_url: pages.qa_results } %}
                 {% endif %}
 
                 {% if results.results %}
@@ -108,7 +112,9 @@
                         <ul class="agency-list">
                             {% for institution in results.results %}
                                 <li class="agency-list__item">
-                                    <a href="{{ function('get_permalink', 418) }}?id={{ institution.id }}" class="agency-list__link">
+                                    <a href="{{ pages.institution -}}
+                                            ?id={{ institution.id -}}
+                                            " class="agency-list__link">
                                         {% if institution.hierarchical_relationships.part_of != null %}
                                             {% for item in institution.hierarchical_relationships.part_of %}
                                                 {{ item.name_primary }} /
@@ -163,15 +169,17 @@
                                 No institutions with QA results match your search. Please refer to the following pages:
                              </div>
                         </div>
-                        <a href="{{ function('get_permalink', 1880) }}" class="call-to-action">
+                        {% if pages.faq %}
+                        <a href="{{ pages.faq }}" class="call-to-action">
                             <h3 class="call-to-action__title">Why does institution X not show up?</h3>
                             <p class="call-to-action__description">There could be several reasons, read our frequently asked questions for an explanation.</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
                                 <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
                             </svg>
                         </a>
+                        {% endif %}
                         {% if selected_country %}
-                            <a href="?country={{ selected_country }}" class="call-to-action">
+                            <a href="{{ pages.qa_results }}?country={{ selected_country }}" class="call-to-action">
                                 <h3 class="call-to-action__title">Show all institutions in {{ selected_country_name }}</h3>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
                                     <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
@@ -179,7 +187,7 @@
                             </a>
                         {% endif %}
                         {% if selected_agency %}
-                            <a href="{{ function('get_permalink', 223) }}?id={{ selected_agency }}" class="call-to-action">
+                            <a href="{{ pages.agency }}?id={{ selected_agency }}" class="call-to-action">
                                 <h3 class="call-to-action__title">Read more about {{ selected_agency_acronym }}</h3>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
                                     <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>

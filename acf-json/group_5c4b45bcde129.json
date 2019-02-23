@@ -1,0 +1,89 @@
+{
+    "key": "group_5c4b45bcde129",
+    "title": "Map page",
+    "fields": [
+        {
+            "key": "field_5c4b45c64ef19",
+            "label": "Map type",
+            "name": "maptype",
+            "type": "select",
+            "instructions": "How countries should be highlighted",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "blank": "No highlight",
+                "governmental-members": "EQAR governmental members",
+                "agencies": "Countries with EQAR-registered agencies",
+                "cross-border": "Recognition of cross-border QA",
+                "european-approach": "Availability of the European Approach",
+                "ehea-kc": "EHEA key commitment on QA"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5c4b46c54ef1a",
+            "label": "Country page",
+            "name": "country_page",
+            "type": "page_link",
+            "instructions": "Single country page to link to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-register-map.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "permalink",
+        "the_content",
+        "excerpt",
+        "discussion",
+        "comments",
+        "revisions",
+        "slug",
+        "author",
+        "format",
+        "page_attributes",
+        "featured_image",
+        "categories",
+        "tags",
+        "send-trackbacks"
+    ],
+    "active": 1,
+    "description": "",
+    "modified": 1550944426
+}

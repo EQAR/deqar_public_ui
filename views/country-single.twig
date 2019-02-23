@@ -28,14 +28,14 @@
                             {% endif %}
                             {% if country.report_count > 0 %}
                             <li class="l-label__item">
-                                <a href="{{ function('get_permalink', 6) }}?query=&amp;country={{ country.id }}" class="label label--qa-results" title="View the {{ country.institution_count }} higher education institution(s) in {{ country.name_english }} with quality assurance reports by EQAR-registered agencies">View {{ country.institution_count }} institutions with {{ country.report_count }} reports</a>
+                                <a href="{{ pages.qa_results }}?query=&amp;country={{ country.id }}" class="label label--qa-results" title="View the {{ country.institution_count }} higher education institution(s) in {{ country.name_english }} with quality assurance reports by EQAR-registered agencies">View {{ country.institution_count }} institutions with {{ country.report_count }} reports</a>
                             </li>
                             {% endif %}
                         </ul>
                     </div>
                     {% if country.ehea_is_member %}
                     <div class="country-header__map">
-                        {% include 'views/snippets/map.twig' with { 'maptype': 'highlight', 'selected_country': country.iso_3166_alpha2 } %}
+                        {% include 'views/snippets/map.twig' with { 'maptype': 'highlight', 'selected_country': country.iso_3166_alpha2, 'country_page': pages.country } %}
                     </div>
                     {% endif %}
                 </div>
@@ -52,7 +52,7 @@
                                 {% else %}
                                     {{ country.name_english }} is not a Governmental Member of EQAR.
                                 {% endif %}
-                                <p>Read more: <a class="info-list__link" href="{{ function('get_permalink', 430) }}">all Governmental Members of EQAR</a></p>
+                                <p>Read more: <a class="info-list__link" href="{{ pages.members }}">all Governmental Members of EQAR</a></p>
 			                </div>
                         </li>
 
@@ -126,7 +126,7 @@
                                             </li>
                                         {% endif %}
                                     </ul>
-                                    <p>Read more: <a href="{{ function('get_permalink', 1625) }}">countries where higher education institutions may choose a suitable EQAR-registered agency</a></p>
+                                    <p>Read more: <a href="{{ pages.cross_border }}">countries where higher education institutions may choose a suitable EQAR-registered agency</a></p>
                                 </div>
                             </div>
                         </li> {# cross-border QA #}
@@ -147,7 +147,7 @@
                                     </p>
                                 {% endif %}
                                 {{ country.european_approach_note }}
-                                <p>Read more: <a href="{{ function('get_permalink', 428) }}">countries where the European Approach is available to higher education institutions</a></p>
+                                <p>Read more: <a href="{{ pages.european_approach }}">countries where the European Approach is available to higher education institutions</a></p>
                                 </div>
                             </div>
                         </li> {# european approach #}
@@ -185,26 +185,6 @@
 
                   {% endif %} {# ehea_is_member #}
 
-                    {#
-                    <!-- <hr class="divider u-margin">
-                    <h3 class="subtitle u-margin-s">Registered agencies based in {{ country.name_english }}</h3>
-                    <div class="text u-margin">
-                        {% if country.agencies.byCountry is not empty %}
-                            <ul>
-                                {% for agency in country.agencies.byCountry %}
-                                    <li>
-                                        <p>
-                                            <a href="{{ function('get_permalink', 223) }}/?id={{ agency.id }}"><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</a>
-                                        </p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No agencies found in {{ country.name_english }}</p>
-                        {% endif %}
-                    </div> -->
-                    #}
-
                     <hr class="divider u-margin-s">
                     <h3 class="subtitle u-margin-s">Registered agencies operating in {{ country.name_english }}</h3>
                     <div class="text u-margin">
@@ -213,7 +193,7 @@
                                 {% for agency in country.agencies.byFocusCountry %}
                                     <li>
                                         <p>
-                                            <a href="{{ function('get_permalink', 223) }}?id={{ agency.id }}" class="agency">
+                                            <a href="{{ pages.agency }}?id={{ agency.id }}" class="agency">
                                                 {% if agency.is_registered %}
                                                     {% if agency.country_is_official %}
                                                     <svg width="13px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.75 15.58" class="list-icon list-icon__shield">
@@ -256,7 +236,7 @@
                                                 </span>
                                             </a>
                                             {% if agency.report_count > 0 %}
-                                                <a href="{{ function('get_permalink', 6) }}?query=&agency={{ agency.id }}&country={{ country.id }}" class="label label--qa-results" title="View the {{ agency.institution_count }} higher education institution(s) in {{ country.name_english }} with quality assurance reports by {{ agency.acronym_primary }}">View {{ agency.institution_count }} institutions with {{ agency.report_count }} reports</a>
+                                                <a href="{{ pages.qa_results }}?query=&agency={{ agency.id }}&country={{ country.id }}" class="label label--qa-results" title="View the {{ agency.institution_count }} higher education institution(s) in {{ country.name_english }} with quality assurance reports by {{ agency.acronym_primary }}">View {{ agency.institution_count }} institutions with {{ agency.report_count }} reports</a>
                                             {% endif %}
                                         </p>
                                     </li>

@@ -17,7 +17,13 @@ $context = Timber::get_context();
 $context['post']                    = new TimberPost();
 $context['countries']               = $eqarApi->getCountriesByReports();
 $context['agencies']                = $eqarApi->getAgencies();
-
+$context['pages'] = array(
+        'institution' =>        get_field('institution_page'),
+        'country' =>            get_field('country_page'),
+        'agency' =>             get_field('agency_page'),
+        'qa_results' =>         get_field('qa-results_page') ?: $context['post']->link,
+        'faq' =>                get_field('faq_page'),
+    );
 
 /**
  * Get all Institutions

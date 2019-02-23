@@ -16,6 +16,9 @@ $context = Timber::get_context();
 
 $context['post'] = new TimberPost();
 $context['agencies'] = $eqarApi->getAgencies('False');
+$context['pages'] = array(
+        'agency' =>         get_field('agency_page'),
+    );
 
 Timber::render('agency-former.twig', $context);
 
