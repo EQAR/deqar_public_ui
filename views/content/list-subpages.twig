@@ -1,0 +1,16 @@
+<div class="text u-margin">
+    <ul>
+        {% if block.page.children %}
+            {% set items = block.page.children('page') %}
+        {% else %}
+            {% set items = post.children('page') %}
+        {% endif %}
+        {% for item in items %}
+        <li>
+            <a href="{{ fn('get_the_permalink', item) }}">
+                {{ fn('get_the_title', item) }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

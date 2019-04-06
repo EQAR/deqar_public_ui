@@ -747,6 +747,38 @@
                     "sub_fields": [],
                     "min": "",
                     "max": ""
+                },
+                "layout_5ca90e9912b64": {
+                    "key": "layout_5ca90e9912b64",
+                    "name": "list-subpages",
+                    "label": "Menu of subpages",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_5ca91c270b723",
+                            "label": "Page",
+                            "name": "page",
+                            "type": "post_object",
+                            "instructions": "Show subpages to this page. If empty, subpages to current page will be shown.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "page"
+                            ],
+                            "taxonomy": "",
+                            "allow_null": 1,
+                            "multiple": 0,
+                            "return_format": "object",
+                            "ui": 1
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Block",
@@ -807,7 +839,6 @@
     "instruction_placement": "label",
     "hide_on_screen": [
         "the_content",
-        "custom_fields",
         "discussion",
         "comments",
         "author",
@@ -816,5 +847,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1550958080
+    "modified": 1554586752
 }
