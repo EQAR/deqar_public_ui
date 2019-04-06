@@ -81,9 +81,7 @@
 
 			$context['cta'] = [
 				'qa' => [
-					'title' => get_field('qa_cta_title', 'option'),
-					'description' => get_field('qa_cta_description', 'option'),
-					'link' => get_field('qa_cta_link', 'option'),
+					'form' => get_field('qa_cta_form', 'option'),
 				],
 				'agency' => [
 					'title' => get_field('agency_cta_title', 'option'),
