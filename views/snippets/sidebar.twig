@@ -1,13 +1,26 @@
-{% if post.parent.parent.children('page') %}
-    {% set navigation = post.parent.parent.children('page') %}
-    {% set parent = post.parent.parent.ID %}
-{% elseif post.parent.children %}
+{% if post.parent.parent.children('page') %} {# 3rd level or below #}
+    {% set has_visible_children = 0 %}
+    {% if post.children('page') %}
+        {% for child in post.children('page') %}
+            {% if child.get_field('hide_page') != 'true' %}
+                {% set has_visible_children = 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if has_visible_children != 0 %} {# has further children that are not hidden  #}
+        {% set navigation = post.parent.children('page') %}
+        {% set parent = post.parent.ID %}
+    {% else %} {# leaf page #}
+        {% set navigation = post.parent.parent.children('page') %}
+        {% set parent = post.parent.parent.ID %}
+    {% endif %}
+{% elseif post.parent.children %} {# 2nd level #}
     {% set navigation = post.parent.children('page') %}
     {% set parent = post.parent.ID %}
-{% elseif post.children %}
+{% elseif post.children %} {# 1st level #}
     {% set navigation = post.children('page') %}
     {% set parent = post.ID %}
-{% else %}
+{% else %} {# isolated 1st level page #}
     {% set parent = post.ID %}
 {% endif %}
 
