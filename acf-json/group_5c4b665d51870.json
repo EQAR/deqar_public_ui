@@ -1,0 +1,81 @@
+{
+    "key": "group_5c4b665d51870",
+    "title": "Cross-border recognition map",
+    "fields": [
+        {
+            "key": "field_5c4b6661a4439",
+            "label": "Label \"yes\"",
+            "name": "cross-border_yes",
+            "type": "text",
+            "instructions": "Heading the list of countries marked \"yes\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5c4b66aaa443a",
+            "label": "Label \"partially\"",
+            "name": "cross-border_partially",
+            "type": "text",
+            "instructions": "Heading the list of countries marked \"partially \/ with conditions\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5c4b66d3a443b",
+            "label": "Label \"no\"",
+            "name": "cross-border_no",
+            "type": "text",
+            "instructions": "Heading the list of countries marked \"no\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-maps"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1548456044
+}

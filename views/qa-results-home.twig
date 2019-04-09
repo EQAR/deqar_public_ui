@@ -22,14 +22,18 @@
             <div class="l-two-column__content">
                 {% include 'views/snippets/breadcrumbs.twig' %}
 
-                {% include 'views/snippets/search.twig' with {type: 'simple', title: true} %}
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
+
+                {% include 'views/snippets/search.twig' with { type: 'simple', title: true, search_url: pages.qa_results } %}
 
                 <h2 class="subtitle u-margin-xs">European Higher Education Area (EHEA)</h2>
                 <ul class="country-list u-margin-s">
                     {% for country in countries %}
                         {% if country.ehea_is_member and country.iso_3166_alpha2 != 'XK' %}
                         <li class="country-list__item">
-                            <a href="{{ function('get_permalink', 6) }}/?query=&country={{ country.id }}" class="country-list__link">
+                            <a href="{{ pages.qa_results }}?query=&country={{ country.id }}" class="country-list__link">
                                 {{ country.name_english }} <span class="country-list__count">{{ country.institution_count }}</span>
                             </a>
                         </li>
@@ -41,7 +45,7 @@
                     {% for country in countries %}
                         {% if not country.ehea_is_member or country.iso_3166_alpha2 == 'XK' %}
                         <li class="country-list__item">
-                            <a href="{{ function('get_permalink', 6) }}/?query=&country={{ country.id }}" class="country-list__link">
+                            <a href="{{ pages.qa_results }}?query=&country={{ country.id }}" class="country-list__link">
                                 {{ country.name_english }} <span class="country-list__count">{{ country.institution_count }}</span>
                             </a>
                         </li>

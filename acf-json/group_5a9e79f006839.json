@@ -77,6 +77,27 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_5c4b91b45413b",
+            "label": "Default target",
+            "name": "search_default_target",
+            "type": "page_link",
+            "instructions": "Default target page for search queries, used if page not explicitly set otherwise.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
         }
     ],
     "location": [
@@ -96,5 +117,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1535547140
+    "modified": 1550944167
 }

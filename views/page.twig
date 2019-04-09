@@ -1,5 +1,25 @@
 {% extends 'base.twig' %}
 
+{% set content_title = wp_title %}
+{% set title_found = 0 %}
+{% for block in post.get_field('blocks') if title_found == 0 %}
+    {% if block.acf_fc_layout == 'title' %}
+        {% set content_title = block.title ~ ' - ' ~ site.name %}
+        {% set title_found = 1 %}
+    {% elseif block.acf_fc_layout == 'text-fields' %}
+        {% for subblock in block.text_fields if title_found == 0 %}
+            {% if subblock.acf_fc_layout == 'title' %}
+                {% set content_title = subblock.title  ~ ' - ' ~ site.name %}
+                {% set title_found = 1 %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% block title %}
+    {{ content_title }}
+{% endblock %}
+
 {% block content %}
 	<main class="{{ post.get_field('map') == 'off' ? '' : 'background' }} u-padding">
 		<div class="l-two-column u-container">
@@ -27,11 +47,6 @@
 				{% for block in post.get_field('blocks') %}
 					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
 				{% endfor %}
-
-                {% if post.id == 32 %}{# newsletter archive #}
-                    {% include 'views/snippets/newsletter.twig' %}
-                {% endif %}
-
 			</div>
 		</div>
 	</main>

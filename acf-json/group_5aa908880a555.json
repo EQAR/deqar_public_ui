@@ -3,49 +3,11 @@
     "title": "QA Results",
     "fields": [
         {
-            "key": "field_5aa908881766a",
-            "label": "Title",
-            "name": "qa_cta_title",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5aa9088817751",
-            "label": "Description",
-            "name": "qa_cta_description",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "maxlength": "",
-            "rows": 2,
-            "new_lines": ""
-        },
-        {
             "key": "field_5aa908881782f",
-            "label": "Link",
-            "name": "qa_cta_link",
-            "type": "page_link",
-            "instructions": "",
+            "label": "Feedback form",
+            "name": "qa_cta_form",
+            "type": "gravity_forms_field",
+            "instructions": "Displayed on the bottom of each search result and institution page.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -53,11 +15,8 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": [],
-            "taxonomy": [],
             "allow_null": 1,
-            "allow_archives": 1,
-            "multiple": 0
+            "allow_multiple": 0
         }
     ],
     "location": [
@@ -77,5 +36,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1521027587
+    "modified": 1554586629
 }

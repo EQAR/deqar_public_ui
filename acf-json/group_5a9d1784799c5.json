@@ -1,15 +1,8 @@
 {
     "key": "group_5a9d1784799c5",
     "title": "Hide Editor",
-    "fields": false,
+    "fields": [],
     "location": [
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "agency-list.php"
-            }
-        ],
         [
             {
                 "param": "page_template",
@@ -21,21 +14,14 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "qa-results-overview.php"
+                "value": "template-institution-single.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "qa-results-single.php"
-            }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "qa-results.php"
+                "value": "template-country-single.php"
             }
         ],
         [
@@ -53,7 +39,6 @@
     "instruction_placement": "label",
     "hide_on_screen": [
         "the_content",
-        "custom_fields",
         "discussion",
         "comments",
         "author",
@@ -62,5 +47,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1521715990
+    "modified": 1554587576
 }

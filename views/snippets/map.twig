@@ -23,7 +23,7 @@
         Released under CreativeCommons Attribution ShareAlike (http://creativecommons.org/licenses/by-sa/2.5/).
     </desc>
 
-    {% macro draw_country(maptype, country, selected_country) %}
+    {% macro draw_country(maptype, country, selected_country, country_page) %}
         {% if maptype == 'agencies' %}
             {% if country.agency_count > 0 %} active
                 {% set country_class = ' active' %}
@@ -38,7 +38,7 @@
             {% else %}
                 {% set country_class = '' %}
             {% endif %}
-        {% elseif maptype == 'eaqejp' %}
+        {% elseif maptype == 'european-approach' %}
             {% if country.european_approach_is_permitted == 'yes' %}
                 {% set country_class = ' active' %}
             {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
@@ -46,7 +46,7 @@
             {% else %}
                 {% set country_class = '' %}
             {% endif %}
-        {% elseif maptype == 'govermental' %}
+        {% elseif maptype == 'governmental-members' %}
             {% if country.eqar_governmental_member_start != null %}
                 {% set country_class = ' active' %}
             {% else %}
@@ -60,7 +60,7 @@
             {% endif %}
         {% endif %}
 
-        <a xlink:href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+        <a xlink:href="{{ country_page }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
             <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
         </a>
     {% endmacro %}
@@ -69,13 +69,13 @@
 
     {% for country in countriesAll %}
         {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
-            {{ this.draw_country(maptype, country, selected_country) }}
+            {{ this.draw_country(maptype, country, selected_country, country_page) }}
         {% endif %}
     {% endfor %}
 
     {% for country in countriesAll %}
         {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
-            {{ this.draw_country(maptype, country, selected_country) }}
+            {{ this.draw_country(maptype, country, selected_country, country_page) }}
         {% endif %}
     {% endfor %}
 
