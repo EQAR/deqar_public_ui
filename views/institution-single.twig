@@ -12,7 +12,7 @@
 {% endfor %}
 
 {% set breadcrumbs_title = name_primary %}
-{% set sidebar_title = wp_title %}
+{% set sidebar_title = post.post_title %}
 
 {% block title %}
     {{ name_primary }} - {{ wp_title }}
