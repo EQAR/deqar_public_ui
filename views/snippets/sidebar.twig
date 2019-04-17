@@ -32,7 +32,7 @@
     {% if navigation %}
         <ul class="sidebar__menu">
             {% for item in navigation %}
-                {% if item.get_field('hide_page') == 'false' or (item.id == post.id and sidebar_title) %}
+                {% if item.get_field('hide_page') != 'true' or (item.id == post.id and sidebar_title) %}
                     <li class="sidebar__item">
                         {% if (item.id == post.id and sidebar_title) %}{# title set by template #}
                         <a href="#" class="sidebar__link sidebar__link--active">
@@ -47,7 +47,7 @@
                         {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
                             <ul class="sidebar__children">
                                 {% for item in item.children('page') %}
-                                    {% if item.get_field('hide_page') == 'false' or (item.id == post.id and sidebar_title) %}
+                                    {% if item.get_field('hide_page') != 'true' or (item.id == post.id and sidebar_title) %}
                                         <li class="sidebar__item">
                                             {% if (item.id == post.id and sidebar_title) %}{# title set by template #}
                                             <a href="#" class="sidebar__link sidebar__link--sub sidebar__link--active">
