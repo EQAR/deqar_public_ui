@@ -1,0 +1,150 @@
+{
+    "key": "group_5c718af62ebc3",
+    "title": "Country page",
+    "fields": [
+        {
+            "key": "field_5c718b3a069f6",
+            "label": "QA results page",
+            "name": "qa-results_page",
+            "type": "page_link",
+            "instructions": "QA results page to link to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5c718af63e07c",
+            "label": "Agency page",
+            "name": "agency_page",
+            "type": "page_link",
+            "instructions": "Single agency page to link to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5c718b94069f7",
+            "label": "Governmental members page",
+            "name": "members_page",
+            "type": "page_link",
+            "instructions": "Link to list\/map of governmental members",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5c718bc2069f8",
+            "label": "Cross-border recognition page",
+            "name": "cross-border_page",
+            "type": "page_link",
+            "instructions": "Link to list\/map of cross-border QA recognition",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5c718be8069f9",
+            "label": "European Approach page",
+            "name": "european-approach_page",
+            "type": "page_link",
+            "instructions": "Link to list\/map of European Approach availability",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5c718af63dffd",
+            "label": "Country page",
+            "name": "country_page",
+            "type": "page_link",
+            "instructions": "Single country page to link to (default: same)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-country-single.php"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1554587348
+}

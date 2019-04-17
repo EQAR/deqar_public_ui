@@ -1,0 +1,160 @@
+@media print {
+    @page {
+        size: auto;
+        margin: 1cm 5mm 1cm 5mm;
+    }
+
+    html {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0 1cm 0 1cm;
+        font-size: 11pt;
+    }
+
+    * {
+        background-image: none !important;
+        background-color: none !important;
+    }
+
+    .header,
+    .navigation,
+    .l-two-column__sidebar,
+    .newsletter,
+    .share,
+    .footer {
+        display: none;
+    }
+
+    .u-padding {
+        padding: 0;
+    }
+    .u-container,
+    .l-single-column {
+        max-width: unset;
+    }
+
+    .u-margin-xs:not(:last-child) {
+        margin-bottom: 1em;
+    }
+
+    .u-margin-s:not(:last-child) {
+        margin-bottom: 1.5em;
+    }
+
+    .u-margin:not(:last-child),
+    .u-margin-l:not(:last-child) {
+        margin-bottom: 2em;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .l-two-column {
+        width: 100%;
+        display: block;
+    }
+
+    .l-two-column__content {
+        width: 100%;
+    }
+
+    .content .breadcrumbs {
+        margin-top: 5mm;
+        align-items: flex-start;
+        border-bottom: 1pt solid @primary;
+    }
+    .content .breadcrumbs:before {
+        content: url('../gfx/logo-eqar.svg');
+        width: 45mm;
+        height: 15mm;
+        display: block;
+        flex: 1 1 auto;
+    }
+
+    .content a {
+        font-weight: bolder;
+        text-decoration: none;
+    }
+    .content a[href^=http]:after {
+        content:" <" attr(href) "> ";
+        font-weight: normal;
+        font-size: smaller;
+        font-family: monospace;
+    }
+    .content .breadcrumbs a:not(:last-child) {
+        font-weight: normal;
+    }
+    .content .breadcrumbs a:after {
+        content: unset;
+    }
+
+    .image__caption:before {
+        content: "Image: ";
+        font-weight: bold;
+        position: static;
+        display: inline;
+        top: unset;
+        left: unset;
+        width: auto;
+        height: auto;
+        background-color: none;
+    }
+    .image__caption {
+        position: static;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: none;
+    }
+
+    .accordion__description,
+    .image-accordion__expandable {
+        display: block !important;
+    }
+    .accordion__arrow {
+        display: none;
+    }
+
+    .image-accordion__container {
+        position: static;
+        clear: both;
+        padding: 0;
+    }
+    .image-accordion__image {
+        position: static;
+        margin: 1em 0 1em 1em;
+        float: right;
+    }
+    .image-accordion__read-more {
+        display: none;
+    }
+
+    .subfooter {
+        color: @primary-dark;
+        border-top: 1pt solid @primary-dark;
+    }
+
+    abbr, acronym {
+        text-decoration: none;
+    }
+
+    .text ol, .text ul {
+        list-style: square outside;
+    }
+
+    .text ul li::before {
+        display: none;
+    }
+    .text ul li {
+        position: static;
+        padding-left: 0px;
+        margin-left: 2em;
+    }
+
+}
+

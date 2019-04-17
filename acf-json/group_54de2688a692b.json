@@ -738,6 +738,47 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_5c4b75f2caeae": {
+                    "key": "layout_5c4b75f2caeae",
+                    "name": "newsletter",
+                    "label": "Newsletter sign-up form",
+                    "display": "row",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_5ca90e9912b64": {
+                    "key": "layout_5ca90e9912b64",
+                    "name": "list-subpages",
+                    "label": "Menu of subpages",
+                    "display": "row",
+                    "sub_fields": [
+                        {
+                            "key": "field_5ca91c270b723",
+                            "label": "Page",
+                            "name": "page",
+                            "type": "post_object",
+                            "instructions": "Show subpages to this page. If empty, subpages to current page will be shown.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "page"
+                            ],
+                            "taxonomy": "",
+                            "allow_null": 1,
+                            "multiple": 0,
+                            "return_format": "object",
+                            "ui": 1
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Block",
@@ -755,9 +796,9 @@
         ],
         [
             {
-                "param": "page_template",
+                "param": "post_type",
                 "operator": "==",
-                "value": "default"
+                "value": "page"
             },
             {
                 "param": "page_type",
@@ -768,27 +809,26 @@
                 "param": "page_type",
                 "operator": "!=",
                 "value": "posts_page"
-            }
-        ],
-        [
+            },
             {
                 "param": "page_template",
-                "operator": "==",
-                "value": "internal-area.php"
-            }
-        ],
-        [
+                "operator": "!=",
+                "value": "redirect.php"
+            },
             {
                 "param": "page_template",
-                "operator": "==",
-                "value": "agency-map.php"
-            }
-        ],
-        [
+                "operator": "!=",
+                "value": "agency-single.php"
+            },
             {
                 "param": "page_template",
-                "operator": "==",
-                "value": "template-register-map.php"
+                "operator": "!=",
+                "value": "template-country-single.php"
+            },
+            {
+                "param": "page_template",
+                "operator": "!=",
+                "value": "template-institution-single.php"
             }
         ]
     ],
@@ -799,7 +839,6 @@
     "instruction_placement": "label",
     "hide_on_screen": [
         "the_content",
-        "custom_fields",
         "discussion",
         "comments",
         "author",
@@ -808,5 +847,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1524128021
+    "modified": 1554586752
 }

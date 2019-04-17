@@ -18,6 +18,17 @@
     margin-bottom: 15px;
 }
 
+.cta-form .gfield {
+    display: flex;
+    align-items: baseline;
+}
+
+.cta-form .ginput_container,
+.cta-form .ginput_container ul
+{
+    display: contents;
+}
+
     .form__fieldset:last-child {
         margin-bottom: 0;
     }
@@ -26,6 +37,15 @@
 .form__label {
     display: block;
     margin-bottom: 6px;
+}
+
+.form .hidden_label .gfield_label
+{
+    display: none;
+}
+
+.cta-form .gfield_label .gfield_required {
+    display: none;
 }
 
 .form .gform_ajax_spinner {
@@ -59,7 +79,11 @@
         color: #C0C0C0; 
     }
 }
+.cta-form textarea {
+    height: 100px;
+}
 
+.form input[type="button"],
 .form input[type="submit"] {
     cursor: pointer;
     width: auto; padding: 12px 25px;
@@ -93,7 +117,21 @@
 .form .gfield_checkbox li {
 	display: flex;
     padding: 3px 0;
+    align-items: baseline;
 }   
+.cta-form .gfield_radio li,
+.cta-form .gfield_checkbox li {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &:first-child {
+        padding-left: 0;
+    }
+
+    &:last-child {
+        padding-right: 0;
+    }
+}
 
 .form .gfield_radio input,
 .form .gfield_checkbox input {

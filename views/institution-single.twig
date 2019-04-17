@@ -11,6 +11,9 @@
     {% endif %}
 {% endfor %}
 
+{% set breadcrumbs_title = name_primary %}
+{% set sidebar_title = post.post_title %}
+
 {% block title %}
     {{ name_primary }} - {{ wp_title }}
 {% endblock %}
@@ -22,19 +25,6 @@
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
 
-                {% if cta.qa.link %}
-					<a href="{{ cta.qa.link }}" class="call-to-action">
-						<h3 class="call-to-action__title">{{ cta.qa.title }}</h3>
-
-						{% if cta.qa.description %}
-							<p class="call-to-action__description">{{ cta.qa.description }}</p>
-						{% endif %}
-
-						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
-							<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
-						</svg>
-					</a>
-				{% endif %}
 			</div>
 
 
@@ -68,7 +58,7 @@
                                         {% if location.city %}
                                             {{ location.city }},
                                         {% endif %}
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ location.country.id }}">{{ location.country.name_english }}</a><br />
+                                        <a href="{{ pages.country }}?id={{ location.country.id }}">{{ location.country.name_english }}</a><br />
                                     {% endfor %}
                                 {% endif %}
                             </div>
@@ -122,7 +112,7 @@
                                     <ul>
                                         {% for relation in institution.hierarchical_relationships.part_of %}
                                             <li>
-                                                <a href="{{ function('get_permalink', 418) }}?id={{ relation.id }}">{{ relation.name_primary }}</a>
+                                                <a href="{{ pages.institution }}?id={{ relation.id }}">{{ relation.name_primary }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -138,7 +128,7 @@
                                     <ul>
                                         {% for includes in institution.hierarchical_relationships.includes %}
                                             <li>
-                                                <a href="{{ function('get_permalink', 418) }}?id={{ includes.id }}">{{ includes.name_primary }}</a>
+                                                <a href="{{ pages.institution }}?id={{ includes.id }}">{{ includes.name_primary }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -188,7 +178,7 @@
                                     <ul>
                                         {% for historical_relationship in institution.historical_relationships|sort %}
                                             <li>
-                                                {{ historical_relationship.relationship_type }} <a href="{{ function('get_permalink', 418) }}?id={{ historical_relationship.institution.id }}">{{ historical_relationship.institution.name_primary }}</a> on {{ historical_relationship.relationship_date|date('d/m/Y') }}<br>
+                                                {{ historical_relationship.relationship_type }} <a href="{{ pages.institution }}?id={{ historical_relationship.institution.id }}">{{ historical_relationship.institution.name_primary }}</a> on {{ historical_relationship.relationship_date|date('d/m/Y') }}<br>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -216,7 +206,7 @@
                                                 </li>
                                             {% endfor %}
                                             <li>
-                                                <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
+                                                <a href="{{ pages.country }}?id={{ country.country.id }}">
                                                     Further information on external quality assurance in {{ country.country.name_english }}
                                                 </a>
                                             </li>
@@ -234,7 +224,7 @@
                                         </li>
                                     {% endfor %}
                                     <li>
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
+                                        <a href="{{ pages.country }}?id={{ country.country.id }}">
                                             Further information on external quality assurance in {{ country.country.name_english }}
                                         </a>
                                     </li>
@@ -328,7 +318,7 @@
                                     <ul class="info-list u-margin">
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ pages.agency }}?id={{ result.agency_id }}">{{ result.agency_name }} ({{ result.agency_acronym }})</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -541,7 +531,7 @@
                                                         {% if i == 0 %}Joint programme with{% endif %}
                                                     </div>
                                                     <div class="info-list__definition">
-                                                        <a class="info-list__link" href="{{ function('get_permalink', 418) }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
+                                                        <a class="info-list__link" href="{{ pages.institution }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
                                                     </div>
                                                 </li>
                                                 {% set i = i + 1 %}
@@ -555,7 +545,7 @@
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ pages.agency }}?id={{ result.report.agency_id }}">{{ result.report.agency_name }} ({{ result.report.agency_acronym }})</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -631,6 +621,12 @@
                     {% endif %}
 
                 </div> {# reports-programme-container #}
+
+                {% if cta.qa.form %}
+                <div class="form u-margin">
+                    {{ fn('gravity_form', cta.qa.form.id, false, false, false, '', true, '0') }}
+                </div>
+                {% endif %}
 
 			</div> {# l-two-column__content #}
 		</div> {# l-two-column #}

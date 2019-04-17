@@ -15,7 +15,10 @@ $eqarApi = new EqarApi();
 $context = Timber::get_context();
 
 $context['post'] = new TimberPost();
-
+$context['pages'] = array(
+        'country' =>        get_field('country_page'),
+        'qa_results' =>     get_field('qa-results_page'),
+    );
 
 // Check if the agency is set.
 if ( isset($_GET['id']) && !empty($_GET['id']) ) {

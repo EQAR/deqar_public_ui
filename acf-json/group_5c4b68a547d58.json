@@ -1,0 +1,81 @@
+{
+    "key": "group_5c4b68a547d58",
+    "title": "European Approach map",
+    "fields": [
+        {
+            "key": "field_5c4b66eda443c",
+            "label": "Label \"yes\"",
+            "name": "european-approach_yes",
+            "type": "text",
+            "instructions": "Heading the list of countries marked \"yes\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5c4b66ffa443d",
+            "label": "Label \"partially\"",
+            "name": "european-approach_partially",
+            "type": "text",
+            "instructions": "Heading the list of countries marked \"partially \/ with conditions\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5c4b6714a443e",
+            "label": "Label \"no\"",
+            "name": "european-approach_no",
+            "type": "text",
+            "instructions": "Heading the list of countries marked \"no\"",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-maps"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1548456052
+}
