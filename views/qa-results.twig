@@ -158,12 +158,12 @@
 
                 {% else %}
 
-                        <div class="u-margin-s">
-                            <div class="pagination__indidator pagination__indidator u-margin-s">
-                                No institutions with QA results match your search. Please refer to the following pages:
-                             </div>
-                        </div>
-                        {% if pages.faq %}
+                    <div class="u-margin-s">
+                        <div class="pagination__indidator pagination__indidator u-margin-s">
+                            No institutions with QA results match your search. Please refer to the following pages:
+                         </div>
+                    </div>
+                    {% if pages.faq %}
                         <a href="{{ pages.faq }}" class="call-to-action">
                             <h3 class="call-to-action__title">Why does institution X not show up?</h3>
                             <p class="call-to-action__description">There could be several reasons, read our frequently asked questions for an explanation.</p>
@@ -171,23 +171,28 @@
                                 <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
                             </svg>
                         </a>
-                        {% endif %}
-                        {% if selected_country %}
-                            <a href="{{ pages.qa_results }}?country={{ selected_country }}" class="call-to-action">
-                                <h3 class="call-to-action__title">Show all institutions in {{ selected_country_name }}</h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
-                                    <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
-                                </svg>
-                            </a>
-                        {% endif %}
-                        {% if selected_agency %}
-                            <a href="{{ pages.agency }}?id={{ selected_agency }}" class="call-to-action">
-                                <h3 class="call-to-action__title">Read more about {{ selected_agency_acronym }}</h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
-                                    <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
-                                </svg>
-                            </a>
-                        {% endif %}
+                    {% endif %}
+                    {% if selected_country %}
+                        <a href="{{ pages.qa_results }}?country={{ selected_country }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Show all institutions in {{ selected_country_name }}</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                    {% if selected_agency %}
+                        <a href="{{ pages.agency }}?id={{ selected_agency }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Read more about {{ selected_agency_acronym }}</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                    {% if cta.qa.form %}
+                        <div class="form u-margin">
+                            {{ fn('gravity_form', cta.qa.form.id, false, false, false, '', true, '0') }}
+                        </div>
+                    {% endif %}
 
                 {% endif %}
 
