@@ -775,6 +775,46 @@
                             "multiple": 0,
                             "return_format": "object",
                             "ui": 1
+                        },
+                        {
+                            "key": "field_5cc40561c835e",
+                            "label": "Depth",
+                            "name": "depth",
+                            "type": "number",
+                            "instructions": "How many levels of subpages to show",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 1,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "min": 1,
+                            "max": "",
+                            "step": 1
+                        },
+                        {
+                            "key": "field_5cc412bf311d7",
+                            "label": "Index leaf pages",
+                            "name": "leaves",
+                            "type": "true_false",
+                            "instructions": "Show content index (subtitle elements) of leaf pages",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 0,
+                            "message": "",
+                            "ui": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
                         }
                     ],
                     "min": "",
@@ -847,5 +887,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1554586752
+    "modified": 1556353865
 }
