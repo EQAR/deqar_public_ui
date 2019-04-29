@@ -105,6 +105,8 @@
 			$twig->addExtension(new Twig_Extension_StringLoader());
             $twig->addFilter(new Twig_SimpleFilter('hasHistorical', [$this,'hasHistorical'] ));
             $twig->addFilter(new Twig_SimpleFilter('countHistorical', [$this,'countHistorical'] ));
+            $twig->addFilter(new Twig_SimpleFilter('isChildOf', [$this,'isChildOf'] ));
+            $twig->addFilter(new Twig_SimpleFilter('visibleChildren', [$this,'visibleChildren'] ));
 			return $twig;
 		}
 
@@ -165,6 +167,42 @@
 
             return $hasHistoric;
 
+        }
+
+        /**
+         * Check whether Post object is given ID, or a child thereof
+         * @param  TimberPost    $post    Post object
+         *         int           $id      ID to check for
+         * @return bool                   Result
+         */
+        public function isChildOf( $post, $id ) {
+            if ($post->id == $id) {
+                return(true);
+            } elseif ($post->parent) {
+                return($this->isChildOf($post->parent, $id));
+            } else {
+                return(false);
+            }
+        }
+
+        /**
+         * Return only visible child pages, incl. current page even if hidden
+         * @param  TimberPost    $page    Page object
+         * @return array/bool             Result (false if none)
+         */
+        public function visibleChildren( $page ) {
+            $current = new Timber\Post();
+            $children = array();
+            foreach ($page->children('page') as $subpage) {
+                if ($subpage->get_field('hide_page') != 'true' || ($current->post_type == 'page' && $subpage->id == $current->ID) ) {
+                    $children[] = $subpage;
+                }
+            }
+            if (count($children) > 0) {
+                return($children);
+            } else {
+                return(false);
+            }
         }
 
 

@@ -1,5 +1,5 @@
 {% if block.title %}
-    <h3 class="subtitle u-margin-s">{{ block.title }}</h3>
+    <h3 class="subtitle u-margin-s" id="{{ fn('sanitize_title', block.title) }}">{{ block.title }}</h3>
 {% endif %}
 
 <div class="accordion u-margin">

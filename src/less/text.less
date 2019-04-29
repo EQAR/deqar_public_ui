@@ -70,6 +70,23 @@
         list-style-type: decimal;
         margin-left: 15px;
         padding-left: 5px;
+
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+
+    ul ul,
+    ol ol {
+        margin-left: 30px;
+        margin-bottom: 10px !important;
+    }
+    ul ul ul,
+    ol ol ol {
+        margin-left: 26px;
+    }
+    ul ul li {
+        padding-left: 20px;
     }
 
     blockquote {
