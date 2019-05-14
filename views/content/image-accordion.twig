@@ -1,4 +1,4 @@
-<div class="image-accordion image-accordion--{{ block.image_size }} u-margin">
+<div class="image-accordion image-accordion--{{ block.image_size }} u-margin"{% if block.title %} id="{{ fn('sanitize_title', block.title) }}"{% endif %}>
     <div class="image-accordion__container">
         {% if block.image_size == 'landscape' %}
             <img src="{{ TimberImage(block.image)|resize(200, 150) }}" alt="{{ TimberImage(block.image).alt }}" class="image-accordion__image">

@@ -1,26 +1,16 @@
-{% if post.parent.parent.children('page') %} {# 3rd level or below #}
-    {% set has_visible_children = 0 %}
-    {% if post.children('page') %}
-        {% for child in post.children('page') %}
-            {% if child.get_field('hide_page') != 'true' %}
-                {% set has_visible_children = 1 %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-    {% if has_visible_children != 0 %} {# has further children that are not hidden  #}
-        {% set navigation = post.parent.children('page') %}
+{% if post.parent.parent %} {# 3rd level or below #}
+    {% if post|visibleChildren %} {# has further children that are not hidden  #}
+        {% set navigation = post.parent|visibleChildren %}
         {% set parent = post.parent.ID %}
     {% else %} {# leaf page #}
-        {% set navigation = post.parent.parent.children('page') %}
+        {% set navigation = post.parent.parent|visibleChildren %}
         {% set parent = post.parent.parent.ID %}
     {% endif %}
-{% elseif post.parent.children %} {# 2nd level #}
-    {% set navigation = post.parent.children('page') %}
+{% elseif post.parent %} {# 2nd level #}
+    {% set navigation = post.parent|visibleChildren %}
     {% set parent = post.parent.ID %}
-{% elseif post.children %} {# 1st level #}
-    {% set navigation = post.children('page') %}
-    {% set parent = post.ID %}
-{% else %} {# isolated 1st level page #}
+{% else %} {# 1st level #}
+    {% set navigation = post|visibleChildren %}
     {% set parent = post.ID %}
 {% endif %}
 
@@ -32,9 +22,8 @@
     {% if navigation %}
         <ul class="sidebar__menu">
             {% for item in navigation %}
-                {% if item.get_field('hide_page') != 'true' or (item.id == post.id and sidebar_title) %}
                     <li class="sidebar__item">
-                        {% if (item.id == post.id and sidebar_title) %}{# title set by template #}
+                        {% if (item.id == post.id) and sidebar_title %}{# title set by template #}
                         <a href="#" class="sidebar__link sidebar__link--active">
                             {{ sidebar_title }}
                         </a>
@@ -44,10 +33,11 @@
                         </a>
                         {% endif %}
 
-                        {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
-                            <ul class="sidebar__children">
-                                {% for item in item.children('page') %}
-                                    {% if item.get_field('hide_page') != 'true' or (item.id == post.id and sidebar_title) %}
+                        {% if post|isChildOf(item.id) %}
+                            {% set children = item|visibleChildren %}
+                            {% if children %} {# has children that are not hidden  #}
+                                <ul class="sidebar__children">
+                                    {% for item in children %}
                                         <li class="sidebar__item">
                                             {% if (item.id == post.id and sidebar_title) %}{# title set by template #}
                                             <a href="#" class="sidebar__link sidebar__link--sub sidebar__link--active">
@@ -59,12 +49,11 @@
                                             </a>
                                             {% endif %}
                                         </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         {% endif %}
                     </li>
-                {% endif %}
             {% endfor %}
         </ul>
     {% endif %}

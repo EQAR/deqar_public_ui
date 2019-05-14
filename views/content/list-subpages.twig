@@ -1,16 +1,47 @@
-<div class="text u-margin">
+{% macro list_pages(parent, depth, leaves) %}
+    {% import _self as this %}
+    {% if depth > 0 %}
     <ul>
-        {% if block.page.children %}
-            {% set items = block.page.children('page') %}
-        {% else %}
-            {% set items = post.children('page') %}
-        {% endif %}
-        {% for item in items %}
-        <li>
-            <a href="{{ fn('get_the_permalink', item) }}">
-                {{ fn('get_the_title', item) }}
-            </a>
-        </li>
+        {% for item in parent.children('page') %}
+            <li>
+                <a href="{{ fn('get_the_permalink', item) }}">
+                    {{ fn('get_the_title', item) }}
+                </a>
+            </li>
+            {{ this.list_pages(item, depth - 1, leaves) }}
         {% endfor %}
     </ul>
+    {% endif %}
+    {% if leaves and ( depth == 0 or parent.children('page')|length == 0 )  %}
+    <ul>
+        {% for block in parent.get_field('blocks') %}
+            {% if block.acf_fc_layout == 'text-fields' %}
+                {% for subblock in block.text_fields %}
+                    {% if subblock.acf_fc_layout == 'subtitle' %}
+                        <li>
+                            <a href="{{ fn('get_the_permalink', parent) }}#{{ fn('sanitize_title',subblock.subtitle) }}">
+                                {{ subblock.subtitle }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% elseif (block.acf_fc_layout == 'accordion' or block.acf_fc_layout == 'image-accordion') and not block.title matches '/^\s*$/' %}
+                <li>
+                    <a href="{{ fn('get_the_permalink', parent) }}#{{ fn('sanitize_title',block.title) }}">
+                        {{ block.title }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endmacro %}
+{% import _self as this %}
+<div class="text u-margin">
+    {% if block.page.children %}
+        {% set root = block.page %}
+    {% else %}
+        {% set root = post %}
+    {% endif %}
+    {{ this.list_pages(root, block.depth, block.leaves) }}
 </div>
