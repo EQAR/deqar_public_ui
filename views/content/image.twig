@@ -1,5 +1,5 @@
 {% if block.link %}
-	<a href="{{ block.link['url'] }}" {{ block.link['target'] ? 'target="_blank"' }} class="image u-margin">
+	<a href="{{ block.link['url'] }}" {{ block.link['target'] ? 'target="_blank"' }} class="image{% if block.chart %} image--chart{% endif %} u-margin">
 		<img src="{{ TimberImage(block.image) }}" alt="{{ TimberImage(block.image).alt }}">
 
 		{% if block.caption %}
@@ -9,7 +9,7 @@
 		{% endif %}
 	</a>
 {% else %}
-	<div class="image u-margin">
+	<div class="image{% if block.chart %} image--chart{% endif %} u-margin">
 		<img src="{{ TimberImage(block.image) }}" alt="{{ TimberImage(block.image).alt }}">
 
 		{% if block.caption %}

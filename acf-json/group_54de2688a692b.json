@@ -65,6 +65,15 @@
                                     "min": "",
                                     "max": ""
                                 },
+                                "layout_5cc7009405e44": {
+                                    "key": "layout_5cc7009405e44",
+                                    "name": "title-auto",
+                                    "label": "Title (auto-generate)",
+                                    "display": "block",
+                                    "sub_fields": [],
+                                    "min": "",
+                                    "max": ""
+                                },
                                 "5a8bf1ad873c0": {
                                     "key": "5a8bf1ad873c0",
                                     "name": "subtitle",
@@ -185,6 +194,25 @@
                             "max_height": "",
                             "max_size": "",
                             "mime_types": ""
+                        },
+                        {
+                            "key": "field_5cd9e00baa364",
+                            "label": "Chart",
+                            "name": "chart",
+                            "type": "true_false",
+                            "instructions": "Border and white background",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
                         },
                         {
                             "key": "field_5a8c035547613",
@@ -887,5 +915,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1556353865
+    "modified": 1557783027
 }

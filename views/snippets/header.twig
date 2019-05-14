@@ -25,7 +25,7 @@
     </div>
 </header>
 
-{% macro generate_menu(parent, post) %}
+{% macro generate_menu(parent, post, sidebar_title) %}
     {% import _self as this %}
     {% set children = parent|visibleChildren() %}
     {% if children %}
@@ -38,7 +38,11 @@
         <ul class="menu__grandchildren js-menu__grandchildren"{% if post|isChildOf(parent.id) %} style="display: block;"{% endif %}>
         {% for item in children %}
             <li class="menu-item menu-item--tertiary">
+                {% if (item.id == post.id) and sidebar_title %}{# current page with title set by template #}
+                <a href="#" class="menu-link menu-link--tertiary">{{ sidebar_title }}</a>
+                {% else %}
                 <a href="{{ item.get_link }}" class="menu-link menu-link--tertiary">{{ item.title }}</a>
+                {% endif %}
                 {{ this.generate_menu(item, post) }}
             </li>
         {% endfor %}
@@ -48,28 +52,32 @@
 
 {% import _self as this %}
 <nav class="navigation js-navigation">
-	<ul class="menu">
-		{% for item in menu.get_items %}
-			<li class="{{ item.classes | join(' ') }} menu-item--primary">
-				<a href="{{ item.get_link }}" class="menu-link menu-link--primary">{{ item.title }}</a>
+    <ul class="menu">
+        {% for item in menu.get_items %}
+            <li class="{{ item.classes | join(' ') }} menu-item--primary">
+                <a href="{{ item.get_link }}" class="menu-link menu-link--primary">{{ item.title }}</a>
                 {% set children = item.master_object|visibleChildren() %}
-				{% if children %}
-					<button class="button menu__toggle js-toggle-children{% if post|isChildOf(item.object_id) %} menu__toggle--is-active{% endif %}">
-						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" class="menu__icon">
-							<path d="M14,8H8v6H6V8H0V6H6V0H8V6h6Z"/>
-						</svg>
-					</button>
+                {% if children %}
+                    <button class="button menu__toggle js-toggle-children{% if post|isChildOf(item.object_id) %} menu__toggle--is-active{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" class="menu__icon">
+                            <path d="M14,8H8v6H6V8H0V6H6V0H8V6h6Z"/>
+                        </svg>
+                    </button>
 
-					<ul class="menu__children js-menu__children"{% if post|isChildOf(item.object_id) %} style="display: block;"{% endif %}>
-						{% for item in children %}
-							<li class="menu-item menu-item--secondary">
-								<a href="{{ item.get_link }}" class="menu-link menu-link--secondary">{{ item.title }}</a>
-                                {{ this.generate_menu(item, post) }}
-							</li>
-						{% endfor %}
-					</ul>
-				{% endif %}
-			</li>
-		{% endfor %}
-	</ul>
+                    <ul class="menu__children js-menu__children"{% if post|isChildOf(item.object_id) %} style="display: block;"{% endif %}>
+                        {% for item in children %}
+                            <li class="menu-item menu-item--secondary">
+                                {% if (item.id == post.id) and sidebar_title %}{# current page with title set by template #}
+                                <a href="#" class="menu-link menu-link--secondary">{{ sidebar_title }}</a>
+                                {% else %}
+                                <a href="{{ item.get_link }}" class="menu-link menu-link--secondary">{{ item.title }}</a>
+                                {% endif %}
+                                {{ this.generate_menu(item, post, sidebar_title) }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 </nav>
