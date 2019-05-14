@@ -196,6 +196,25 @@
                             "mime_types": ""
                         },
                         {
+                            "key": "field_5cd9e00baa364",
+                            "label": "Chart",
+                            "name": "chart",
+                            "type": "true_false",
+                            "instructions": "Border and white background",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        },
+                        {
                             "key": "field_5a8c035547613",
                             "label": "Caption",
                             "name": "caption",
@@ -896,5 +915,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1556551656
+    "modified": 1557783027
 }
