@@ -1,6 +1,6 @@
 .form {
     font-size: 15px;
-    color: inherit;
+    color: fade(@primary, 80%);
 }
 
 .form__container {
@@ -18,20 +18,84 @@
     margin-bottom: 15px;
 }
 
-.cta-form .gfield {
-    display: flex;
-    align-items: baseline;
-}
+.gform_fields {
 
-.cta-form .ginput_container,
-.cta-form .ginput_container ul
-{
-    display: contents;
-}
-
-    .form__fieldset:last-child {
-        margin-bottom: 0;
+    .gfield {
+        display: flex;
+        flex-direction: column;
     }
+
+    .gsection_title {
+        font-size: 18px;
+        font-weight: bold;
+        color: @primary;
+    }
+
+    .gfield_label {
+        font-weight: bold;
+        width: 100%;
+        order: -2;
+        flex: 0 0 auto;
+
+        .gfield_required {
+            margin-left: 5px;
+            color: @accent-dark;
+        }
+    }
+
+    .ginput_container {
+        width: 100%;
+        order: 0;
+        flex: 1 0 auto;
+    }
+
+    .gfield_description {
+        padding-top: 5px;
+        width: 100%;
+        order: 1;
+        flex: 1 0 auto;
+    }
+
+    &.top_label .gfield.field_description_above .gfield_description {
+        order: -1;
+        padding-top: 0;
+    }
+
+}
+
+.cta-form .gform_fields {
+
+    .gfield {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: baseline;
+        justify-content: flex-start;
+    }
+
+    .ginput_container,
+    .ginput_container ul
+    {
+        display: contents;
+    }
+
+    .gfield_label .gfield_required {
+        display: none;
+    }
+
+    .gfield_radio li,
+    .gfield_checkbox li {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    textarea {
+        height: 100px;
+    }
+}
+
+.form__fieldset:last-child {
+    margin-bottom: 0;
+}
 
 .form .gfield_label,
 .form__label {
@@ -41,10 +105,6 @@
 
 .form .hidden_label .gfield_label
 {
-    display: none;
-}
-
-.cta-form .gfield_label .gfield_required {
     display: none;
 }
 
@@ -78,9 +138,6 @@
     &:-ms-input-placeholder { 
         color: #C0C0C0; 
     }
-}
-.cta-form textarea {
-    height: 100px;
 }
 
 .form input[type="button"],
@@ -119,19 +176,6 @@
     padding: 3px 0;
     align-items: baseline;
 }   
-.cta-form .gfield_radio li,
-.cta-form .gfield_checkbox li {
-    padding-left: 10px;
-    padding-right: 10px;
-
-    &:first-child {
-        padding-left: 0;
-    }
-
-    &:last-child {
-        padding-right: 0;
-    }
-}
 
 .form .gfield_radio input,
 .form .gfield_checkbox input {
@@ -163,10 +207,61 @@
         width: ~'calc(50% - 10px)';
     }
 
+@media (min-width: 640px) {
+
+    .gform_fields {
+
+        &.left_label,
+        &.right_label {
+            .gfield {
+                display: grid;
+                grid-template-columns: 33% auto;
+
+                &.gsection,
+                &.gfield_html {
+                    display: block;
+                }
+            }
+
+            .gfield_label {
+                padding-right: 15px;
+                grid-column: ~'1 / 2';
+                grid-row: ~'1 / 3';
+            }
+
+            .ginput_container {
+                grid-column: ~'2 / 3';
+                grid-row: ~'1 / 2';
+            }
+
+            .gfield_description {
+                grid-column: ~'2 / 3';
+                grid-row: ~'2 / 3';
+            }
+        }
+
+        &.right_label {
+
+            .gfield_label {
+                text-align: right;
+            }
+
+        }
+
+    }
+}
 
 @media (min-width: 768px) {
 
     .form {
         font-size: 17px;
+
+        .gfield_description {
+            font-size: 15px;
+        }
+
+        .gsection_title {
+            font-size: 20px;
+        }
     }
 }
