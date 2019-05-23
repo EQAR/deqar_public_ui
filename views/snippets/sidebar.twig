@@ -1,4 +1,13 @@
-{% if post.parent.parent %} {# 3rd level or below #}
+{% set add_class = "" %}
+{% if post.get_field('is_publication') %} {# special mode: publication/Annual Report style #}
+    {% set parent = post.ID %}
+    {% set navigation = post|visibleChildren %}
+    {% set add_class = " sidebar--publication" %}
+{% elseif post.parent.get_field('is_publication') %} {# special mode: publication/Annual Report style #}
+    {% set parent = post.parent.ID %}
+    {% set navigation = post.parent|visibleChildren %}
+    {% set add_class = " sidebar--publication" %}
+{% elseif post.parent.parent %} {# 3rd level or below #}
     {% if post|visibleChildren %} {# has further children that are not hidden  #}
         {% set navigation = post.parent|visibleChildren %}
         {% set parent = post.parent.ID %}
@@ -14,7 +23,7 @@
     {% set parent = post.ID %}
 {% endif %}
 
-<nav class="sidebar">
+<nav class="sidebar{{ add_class }}">
     <a href="{{ fn('get_the_permalink', parent) }}" class="sidebar__title">
         {{ fn('get_the_title', parent) }}
     </a>
@@ -32,7 +41,20 @@
                             {{ fn('get_the_title', item) }}
                         </a>
                         {% endif %}
-
+                        {% if item.id == post.id and post.parent.get_field('is_publication') %}
+                            {% set sections = post|getSections %}
+                            {% if sections|length > 0 %}{# page has sections #}
+                                <ul class="sidebar__children">
+                                    {% for item in sections %}
+                                        <li class="sidebar__item">
+                                            <a href="{{ item.link }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
+                                                {{ item.text }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endif %}
                         {% if post|isChildOf(item.id) %}
                             {% set children = item|visibleChildren %}
                             {% if children %} {# has children that are not hidden  #}

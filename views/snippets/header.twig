@@ -47,6 +47,23 @@
             </li>
         {% endfor %}
         </ul>
+    {% elseif parent.parent.get_field('is_publication') %}
+        {% set sections = parent|getSections %}
+        {% if sections|length > 0 %}{# page has sections #}
+            <button class="button menu__toggle js-toggle-grandchildren{% if post.id == parent.id %} menu__toggle--is-active{% endif %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" class="menu__icon">
+                    <path d="M14,8H8v6H6V8H0V6H6V0H8V6h6Z"/>
+                </svg>
+            </button>
+
+            <ul class="menu__grandchildren js-menu__grandchildren"{% if post.id == parent.id %} style="display: block;"{% endif %}>
+            {% for item in sections %}
+                <li class="menu-item menu-item--tertiary">
+                    <a href="{{ item.link }}" class="menu-link menu-link--tertiary">{{ item.text }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     {% endif %}
 {% endmacro %}
 
