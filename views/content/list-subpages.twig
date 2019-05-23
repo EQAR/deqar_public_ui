@@ -1,39 +1,30 @@
-{% macro list_pages(parent, depth, leaves) %}
+{% macro list_pages(parent, depth, leaves, style) %}
     {% import _self as this %}
-    {% if depth > 0 %}
-    <ul>
+    {% if depth > 0 and parent|visibleChildren|length > 0 %}
+        {% if style == 'numbered' %}<ol>{% else %}<ul>{% endif %}
         {% for item in parent.children('page') %}
             <li>
                 <a href="{{ fn('get_the_permalink', item) }}">
                     {{ fn('get_the_title', item) }}
                 </a>
+                {{ this.list_pages(item, depth - 1, leaves, style) }}
             </li>
-            {{ this.list_pages(item, depth - 1, leaves) }}
         {% endfor %}
-    </ul>
+        {% if style == 'numbered' %}</ol>{% else %}</ul>{% endif %}
     {% endif %}
-    {% if leaves and ( depth == 0 or parent.children('page')|length == 0 )  %}
-    <ul>
-        {% for block in parent.get_field('blocks') %}
-            {% if block.acf_fc_layout == 'text-fields' %}
-                {% for subblock in block.text_fields %}
-                    {% if subblock.acf_fc_layout == 'subtitle' %}
-                        <li>
-                            <a href="{{ fn('get_the_permalink', parent) }}#{{ fn('sanitize_title',subblock.subtitle) }}">
-                                {{ subblock.subtitle }}
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            {% elseif (block.acf_fc_layout == 'accordion' or block.acf_fc_layout == 'image-accordion') and not block.title matches '/^\s*$/' %}
+    {% if leaves and ( depth == 0 or parent|visibleChildren|length == 0 )  %}
+        {% set sections = parent|getSections %}
+        {% if sections|length > 0 %}
+            {% if style == 'numbered' %}<ol>{% else %}<ul>{% endif %}
+            {% for section in sections %}
                 <li>
-                    <a href="{{ fn('get_the_permalink', parent) }}#{{ fn('sanitize_title',block.title) }}">
-                        {{ block.title }}
+                    <a href="{{ section.link }}">
+                        {{ section.text }}
                     </a>
                 </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+            {% endfor %}
+            {% if style == 'numbered' %}</ol>{% else %}</ul>{% endif %}
+        {% endif %}
     {% endif %}
 {% endmacro %}
 {% import _self as this %}
@@ -43,5 +34,5 @@
     {% else %}
         {% set root = post %}
     {% endif %}
-    {{ this.list_pages(root, block.depth, block.leaves) }}
+    {{ this.list_pages(root, block.depth, block.leaves, block.style) }}
 </div>

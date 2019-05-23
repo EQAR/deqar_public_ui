@@ -66,27 +66,39 @@
         }
     }
 
+    ol {
+        counter-reset: item;
+    }
+
     ol li {
-        list-style-type: decimal;
+        display: block;
         margin-left: 15px;
         padding-left: 5px;
 
+        &:before {
+            content: counter(item) ". ";
+            counter-increment: item;
+            margin-right: 5px;
+        }
         &:not(:last-child) {
             margin-bottom: 10px;
         }
     }
 
-    ul ul,
-    ol ol {
+    ol ol li:before {
+        content: counters(item, ".") " ";
+    }
+
+    ul li > ul,
+    ol li > ol {
+        margin-top: 10px;
+        margin-left: 4px;
+    }
+
+    ul > ul,
+    ol > ol {
         margin-left: 30px;
         margin-bottom: 10px !important;
-    }
-    ul ul ul,
-    ol ol ol {
-        margin-left: 26px;
-    }
-    ul ul li {
-        padding-left: 20px;
     }
 
     blockquote {

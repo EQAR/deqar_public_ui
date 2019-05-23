@@ -107,6 +107,7 @@
             $twig->addFilter(new Twig_SimpleFilter('countHistorical', [$this,'countHistorical'] ));
             $twig->addFilter(new Twig_SimpleFilter('isChildOf', [$this,'isChildOf'] ));
             $twig->addFilter(new Twig_SimpleFilter('visibleChildren', [$this,'visibleChildren'] ));
+            $twig->addFilter(new Twig_SimpleFilter('getSections', [$this,'getSections'] ));
 			return $twig;
 		}
 
@@ -200,6 +201,31 @@
             }
             if (count($children) > 0) {
                 return($children);
+            } else {
+                return(false);
+            }
+        }
+
+        /**
+         * Return page section titles and slugs
+         * @param  TimberPost    $page    Page object
+         * @return array/bool             Result (false if none)
+         */
+        public function getSections( $page ) {
+            $sections = array();
+            foreach ($page->get_field('blocks') as $block) {
+                if ($block['acf_fc_layout'] == 'text-fields') {
+                    foreach ($block['text_fields'] as $subblock) {
+                        if ($subblock['acf_fc_layout'] == 'subtitle') {
+                            $sections[] = array('link' => get_the_permalink($page) . '#' . sanitize_title($subblock['subtitle']), 'text' => $subblock['subtitle']);
+                        }
+                    }
+                } elseif ( ($block['acf_fc_layout'] == 'accordion' || $block['acf_fc_layout'] == 'image-accordion') && !preg_match('/^\s*$/', $block['title']) ) {
+                    $sections[] = array('link' => get_the_permalink($page) . '#' . sanitize_title($block['title']), 'text' => $block['title']);
+                }
+            }
+            if (count($sections) > 0) {
+                return($sections);
             } else {
                 return(false);
             }
