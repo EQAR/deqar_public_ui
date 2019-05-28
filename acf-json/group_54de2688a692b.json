@@ -843,6 +843,28 @@
                             "ui": 0,
                             "ui_on_text": "",
                             "ui_off_text": ""
+                        },
+                        {
+                            "key": "field_5cded2cd95ca1",
+                            "label": "Style",
+                            "name": "style",
+                            "type": "button_group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "bullets": "Bullets",
+                                "numbered": "Numbered list"
+                            },
+                            "allow_null": 0,
+                            "default_value": "bullets",
+                            "layout": "horizontal",
+                            "return_format": "value"
                         }
                     ],
                     "min": "",
@@ -915,5 +937,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1557783027
+    "modified": 1558642650
 }
