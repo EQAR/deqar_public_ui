@@ -31,7 +31,7 @@
             "label": "Annual Report style",
             "name": "is_publication",
             "type": "true_false",
-            "instructions": "Sticky sidebar and section index in sidebar",
+            "instructions": "Sidebar: sticky and with section index (set this flag on main\/TOC page only)",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -68,5 +68,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1558114015
+    "modified": 1559027451
 }
