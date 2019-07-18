@@ -29,6 +29,11 @@
         font-size: 18px;
         font-weight: bold;
         color: @primary;
+        margin-top: 15px;
+
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
     }
 
     .gfield_label {
@@ -61,6 +66,52 @@
         padding-top: 0;
     }
 
+    .gsection_description, .gfield_description, .gfield_html {
+        p:not(:last-child),
+        ul:not(:last-child),
+        ol:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        strong, b {
+            font-weight: bold;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 20px;
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+
+            &:before {
+                content: '';
+                position: absolute; top: 7px; left: 0;
+                display: block;
+                width: 6px; height: 6px;
+                background-color: @accent-dark;
+            }
+        }
+
+        ol {
+            counter-reset: item;
+        }
+
+        ol li {
+            display: block;
+            padding-left: 0px;
+
+            &:before {
+                content: counter(item) ". ";
+                counter-increment: item;
+                margin-right: 5px;
+            }
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+        }
+    }
 }
 
 .cta-form .gform_fields {
@@ -255,10 +306,6 @@
 
     .form {
         font-size: 17px;
-
-        .gfield_description {
-            font-size: 15px;
-        }
 
         .gsection_title {
             font-size: 20px;
