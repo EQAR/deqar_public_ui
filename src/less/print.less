@@ -129,6 +129,7 @@
         position: static;
         margin: 1em 0 1em 1em;
         float: right;
+        page-break-inside: avoid;
     }
     .image-accordion__read-more {
         display: none;
@@ -139,21 +140,40 @@
         border-top: 1pt solid @primary-dark;
     }
 
+    .accordion__definition,
+    .image-accordion__title,
+    .text-fields__title,
+    .text-fields__subtitle,
+    .title,
+    .subtitle {
+        page-break-after: avoid;
+    }
+
     abbr, acronym {
         text-decoration: none;
     }
 
-    .text ol, .text ul {
-        list-style: square outside;
-    }
-
-    .text ul li::before {
-        display: none;
-    }
-    .text ul li {
-        position: static;
-        padding-left: 0px;
-        margin-left: 2em;
+    .text {
+        ol, ul {
+            list-style: square outside;
+        }
+        ul {
+            li::before {
+                display: none;
+            }
+            li {
+                position: static;
+                padding-left: 0px;
+                margin-left: 2em;
+            }
+        }
+        table {
+            th {
+                color: @primary;
+                font-weight: bold;
+                background-color: none;
+            }
+        }
     }
 
 }
