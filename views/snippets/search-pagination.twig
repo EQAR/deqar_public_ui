@@ -1,0 +1,115 @@
+<div class="search-bar">
+    <div class="search-bar__pages">
+        <ul class="pagination paginator pagination__list u-margin-xs">
+            <li class="pagination__indicator">
+            {% if paginator.pages > 1 %}
+                {{ paginator.start }} - {{ paginator.end }} of {{ paginator.total }} {{ result_type ? result_type : 'result' }}s
+            {% else %}
+                {{ paginator.total }} {{ result_type ? result_type : 'result' }}{% if paginator.total > 1 %}s{% endif %}
+            {% endif %}
+            </li>
+        </ul>
+        <ul class="pagination paginator pagination__list u-margin-xs">
+        {% if paginator.prev is null %}
+            <li class="pagination__item--disabled pagination__link">&laquo;</li>
+            <li class="pagination__item--disabled pagination__link">&lsaquo;</li>
+        {% else %}
+            <li class="pagination__item" title="First page"><a class="pagination__link" href="{{ post.link|addParameters(formdata,{ 'offset': 0, 'offset_page': null }) }}">&laquo;</a></li>
+            <li class="pagination__item" title="Previous page"><a class="pagination__link" href="{{ post.link|addParameters(formdata, { 'offset': paginator.prev, 'offset_page': null }) }}">&lsaquo;</a></li>
+        {% endif %}
+        {% if paginator_style in [ 'input', 'select' ] %}
+            <form action="{{ post.link }}" method="GET">
+            {% include 'views/snippets/form-parameters.twig' with { override: { 'offset': null, 'offset_page': null } } %}
+            {% if paginator_style == 'select' %}
+                <div class="pagination__select" title="Select page">
+                    <select name="offset_page" class="js-pagination__select">
+                    {% for item in 1..(paginator.pages) %}
+                        <option value="{{ item }}"{% if item == paginator.current %} selected="selected"{% endif %}>{{ item }}</option>
+                    {% endfor %}
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
+                        <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
+                    </svg>
+                </div>
+            {% else %}
+                <input class="pagination__input" type="text" size="3" name="offset_page" value="{{ paginator.current }}" pattern="\d+">
+            {% endif %}
+            <input class="pagination__submit" type="submit" value="Go to page">
+            </form>
+        {% else %}
+            {% set from_page = 1 %}
+            {% set to_page = paginator.pages %}
+            {% if paginator_style == 'compact' and paginator.pages > 6 %}
+                {% if paginator.current <= 4 %}
+                    {% set to_page = 5 %}
+                {% else %}
+                    <li class="pagination__item pagination__item--disabled">...</li>
+                    {% if paginator.current >= (paginator.pages - 3) %}
+                        {% set from_page = (paginator.pages - 5) %}
+                    {% else %}
+                        {% set from_page = paginator.current - 2 %}
+                        {% set to_page = paginator.current + 2 %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+            {% for item in (from_page)..(to_page) %}
+                <li class="pagination__item">
+                    <a class="pagination__link{% if item == paginator.current %} current{% endif %}" href="{{ post.link|addParameters(formdata,{ 'offset': ( (item - 1) * paginator.limit), 'offset_page': null}) }}">
+                        {{ item }}
+                    </a>
+                </li>
+            {% endfor %}
+
+            {% if paginator_style == 'compact' and paginator.pages > 10 and paginator.current <= (paginator.pages - 6) %}
+                <li class="pagination__item pagination__item--disabled">...</li>
+            {% endif %}
+        {% endif %}
+
+        {% if paginator.next is null %}
+            <li class="pagination__item--disabled pagination__link">&rsaquo;</li>
+            <li class="pagination__item--disabled pagination__link">&raquo;</li>
+        {% else %}
+            <li class="pagination__item" title="Next page"><a class="pagination__link" href="{{ post.link|addParameters(formdata,{ 'offset': paginator.next, 'offset_page': null }) }}">&rsaquo;</a></li>
+            <li class="pagination__item" title="Last page"><a class="pagination__link" href="{{ url|addParameters(formdata,{ 'offset': ((paginator.pages - 1) * paginator.limit), 'offset_page': null }) }}">&raquo;</a></li>
+        {% endif %}
+        </ul>
+    </div>
+    <div class="search-bar__order js-search-bar__order">
+        <h3 class="u-margin-xs">Sort by</h3>
+        {% set current_order, current_label = "", "" %}
+        <ul class="search-order">
+        {% for key in ordering %}
+            {% set tag_secondary = ( key.tag[:1] == '-' ? key.tag[1:] : '-' ~ key.tag ) %}
+            <li class="
+                {% if formdata.ordering in [ key.tag, tag_secondary ] %}
+                    {% set current_label = key.label %}
+                        current
+                    {% if formdata.ordering[:1] == '-' %}
+                        reverse
+                    {% endif %}
+                {% else %}
+                    js-not-current
+                    {% if key.tag[:1] == '-' %}
+                        reverse
+                    {% endif %}
+                {% endif %}">
+                <a href="{{ post.link|addParameters(formdata, { 'offset': 0, 'offset_page': null, 'ordering': (formdata.ordering == key.tag ? tag_secondary : key.tag ) } ) }}">
+                    {{ key.label }}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
+                        <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
+                    </svg>
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="search-bar__pagesize">
+        <h3 class="u-margin-xs">Results per page</h3>
+        <ul class="results-per-page">
+            {% for limit in results_per_page %}
+                <li><a {% if limit == formdata.limit %}class="current" {% endif %}href="{{ post.link|addParameters(formdata, { 'limit': limit, 'offset': ((formdata.offset/limit)|round(0,'floor'))*limit, 'offset_page': null }) }}">{{ limit }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

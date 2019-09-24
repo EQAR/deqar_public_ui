@@ -1,0 +1,167 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' with { accordion_sidebar: true } %}
+
+                {% include 'views/snippets/search-facets.twig' with { facets: report_search.facets } %}
+
+                {% if formdata.country and results.results %}
+                    <a href="{{ pages.country }}?id={{ countriesByName[formdata.country].id }}" class="call-to-action">
+                        <h3 class="call-to-action__title">{{ formdata.country }}</h3>
+                        <p class="call-to-action__description">View country profile</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                        </svg>
+                    </a>
+                {% endif %}
+
+                {% if formdata.agency and results.results %}
+                    <a href="{{ pages.agency }}?id={{ agenciesByName[formdata.agency].id }}" class="call-to-action">
+                        <h3 class="call-to-action__title">{{ formdata.agency }}</h3>
+                        <p class="call-to-action__description">View agency profile</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                        </svg>
+                    </a>
+                {% endif %}
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
+
+                {% if results.results %}
+
+                    {% include 'views/snippets/search-pagination.twig' with { paginator_style: 'select', ordering: report_search.ordering, results_per_page: [ 10, 20, 50, 100 ], result_type: 'report' } %}
+
+                    <div class=" u-margin-s">
+                        <ul class="search-results">
+                                <li class="search-results__link">
+                                    <div class="search-results__name-official">
+                                        Report date - valid to / Uploaded / Changed
+                                    </div>
+                                    <div class="search-results__name-official">
+                                        Agency / Type
+                                    </div>
+                                    <div class="search-results__name-official">
+                                        Institution / Programme
+                                    </div>
+                                    <div class="search-results__name-official">
+                                        Country
+                                    </div>
+                                </li>
+                            {% for report in results.results %}
+                                <li class="search-results__item">
+                                    <a href="{{ pages.report|addParameters(formdata, { 'query': null, 'offset': null, 'limit': null, 'ordering': null, 'id': report.id } ) }}" class="search-results__link">
+                                        <div class="search-results__name-primary">
+                                            <span>
+                                                {{ report.valid_from|date("d/m/Y") }}
+                                                {% if report.valid_to %}
+                                                    - {{ report.valid_to|date("d/m/Y") }}
+                                                {% elseif formdata.ordering in [ 'valid_to_calculated', '-valid_to_calculated' ] %}
+                                                    <span class="search-results__light search-results__has-tooltip"
+                                                        title="This report does not have a validity period. As a default, it is considered valid for 6 years.">
+                                                        - {{ report.valid_to_calculated|date("d/m/Y") }}
+                                                    </span>
+                                                {% endif %}
+                                            </span>
+                                            <span class="search-results__light">
+                                                uploaded {{ report.date_created|date("d/m/Y") }}
+                                            </span>
+                                            {% if report.date_updated != report.date_created %}
+                                                <span class="search-results__light">
+                                                    changed {{ report.date_updated|date("d/m/Y") }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="search-results__name-primary">
+                                            <span title="{{ report.agency_name }}">
+                                                {{ report.agency_acronym }}
+                                            </span>
+                                            <span class="label">
+                                                {{ report.agency_esg_activity }}
+                                            </span>
+                                        </div>
+                                        <div class="search-results__name-official">
+                                            {% for item in report.institutions %}
+                                                {{ item.name_primary }}{% if loop.index != loop.length %},{% endif %}
+                                            {% endfor %}
+                                            {% if report.programmes %} -
+                                                {% for item in report.programmes %}
+                                                    {{ item.name_primary -}}
+                                                    {%- if item.qf_ehea_level %} ({{ item.qf_ehea_level }}){%- endif -%}
+                                                    {%- if loop.index != loop.length -%}, {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            {% for item in report.country %}
+                                                {{ item }}{% if loop.index != loop.length %},{% endif %}
+                                            </span>
+                                            {% endfor %}
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="6" height="12" viewBox="0 0 7 12" class="search-results__arrow">
+                                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"></polygon>
+                                        </svg>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    {% if cta.qa.form %}
+                    <div class="form u-margin">
+                        {{ fn('gravity_form', cta.qa.form.id, false, false, false, '', true, '0') }}
+                    </div>
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="u-margin-s">
+                        <div class="pagination__indidator pagination__indidator u-margin-s">
+                            No reports match your criteria.
+                         </div>
+                    </div>
+                    {% if pages.faq %}
+                        <a href="{{ pages.faq }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Why does institution X not show up?</h3>
+                            <p class="call-to-action__description">There could be several reasons, read our frequently asked questions for an explanation.</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                    {% if selected_country %}
+                        <a href="{{ pages.qa_results }}?country={{ selected_country }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Show all institutions in {{ selected_country_name }}</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                    {% if selected_agency %}
+                        <a href="{{ pages.agency }}?id={{ selected_agency }}" class="call-to-action">
+                            <h3 class="call-to-action__title">Read more about {{ selected_agency_acronym }}</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                                <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                    {% if cta.qa.form %}
+                        <div class="form u-margin">
+                            {{ fn('gravity_form', cta.qa.form.id, false, false, false, '', true, '0') }}
+                        </div>
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+		</div>
+	</main>
+{% endblock %}

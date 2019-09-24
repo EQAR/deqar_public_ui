@@ -74,6 +74,10 @@ class EqarApi
 
             }
 
+            if ( !defined('EQAR_CACHE_TIME') ) {
+                define('EQAR_CACHE_TIME', 60); // unless higher time set, we cache for 1 minute
+            }
+
             $this->api = new RestClient([
                 'base_url' => $this->getApiUrl(),
                 'format'   => EQARFORMAT,
@@ -148,11 +152,53 @@ class EqarApi
 
         if (isset($institutionId) && !empty($institutionId)) {
 
-            $reports    = $this->getReportInstitutionalByInstitution($institutionId, $history);
-            $programmes = $this->getReportProgrammesByInstitution($institutionId, $history);
+            return Timber\Helper::transient('DEQAR:institution-'.$institutionId.'-history='.$history, function() use ($institutionId, $history) {
+
+                $reports    = $this->getReportInstitutionalByInstitution($institutionId, $history);
+                $programmes = $this->getReportProgrammesByInstitution($institutionId, $history);
+
+                $api = $this->eqar();
+                $result = $api->get('institutions/' . rawurlencode($institutionId) . '/', array(
+                    'history' => $history,
+                ));
+
+                if ($result->info->http_code == 200) {
+
+                    $output = $result->decode_response();
+
+                    $output->reports    = $reports;
+                    $output->programmes = $programmes;
+
+                    return $output;
+
+                } else {
+
+                    return false;
+
+                }
+
+            }, EQAR_CACHE_TIME);
+
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Get an Institution using the ETER ID
+     * @param   string   ETER ID
+     * @param   boolean  Show historical data
+     * @return  object   Institution object
+     */
+    public function getInstitutionByEterId($eterId, $history = 'true')
+    {
+
+        if (!empty($eterId)) {
 
             $api = $this->eqar();
-            $result = $api->get('institutions/' . rawurlencode($institutionId) . '/', array(
+            $result = $api->get('institutions/by-eter/' . rawurlencode($eterId) . '/', array(
                 'history' => $history,
             ));
 
@@ -160,8 +206,8 @@ class EqarApi
 
                 $output = $result->decode_response();
 
-                $output->reports    = $reports;
-                $output->programmes = $programmes;
+                $output->reports    = $this->getReportInstitutionalByInstitution($output->id, $history);
+                $output->programmes = $this->getReportProgrammesByInstitution($output->id, $history);
 
                 return $output;
 
@@ -172,7 +218,6 @@ class EqarApi
         return false;
 
     }
-
 
 
     /**
@@ -191,23 +236,10 @@ class EqarApi
      * @param  boolean $history                         Indicator if the search should go trhough historical data.
      * @return array                                    Array of institutions
      */
-    public function getInstitutions($limit = 10, $offset = 0, $ordering = 'DESC', $query = '', $agency = '', $esg_activity = '', $country = '', $qf_ehea_level = '', $status = '', $report_year = '', $focus_country_is_crossborder = '', $history = 'true')
+    public function getInstitutions($parameters)
     {
         $api = $this->eqar();
-        $result = $api->get('institutions/', array(
-            'limit' =>                          $limit,
-            'offset' =>                         $offset,
-            'query' =>                          $query,
-            'agency' =>                         $agency,
-            'esg_activity' =>                   $esg_activity,
-            'country' =>                        $country,
-            'qf_ehea_level' =>                  $qf_ehea_level,
-            'status' =>                         $status,
-            'report_year' =>                    $report_year,
-            'focus_country_is_crossborder' =>   $focus_country_is_crossborder,
-            'ordering' =>                       $ordering,
-            'history' =>                        $history,
-        ));
+        $result = $api->get('institutions/', $parameters);
 
         if ($result->info->http_code == 200) {
             return $result->decode_response();
@@ -217,6 +249,46 @@ class EqarApi
 
     }
 
+
+    /**
+     * Get single Report
+     * @param   int     $reportId           Report ID
+     * @return  array                       Report record
+     */
+    public function getReport ($reportId)
+    {
+
+        if (isset($reportId) && !empty($reportId)) {
+
+            $result = $this->eqar()->get('reports/' . rawurlencode($reportId) . '/');
+
+            if ($result->info->http_code == 200) {
+                return $result->decode_response();
+            }
+
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Search reports
+     * @param   array   $parameters         Array of search parameters
+     * @return  array                       Array of matching report records
+     */
+    public function getReports ($parameters)
+    {
+        $api = $this->eqar();
+        $result = $api->get('reports/', $parameters);
+
+        if ($result->info->http_code == 200) {
+            return $result->decode_response();
+        }
+
+        return false;
+
+    }
 
     /**
      * Get institution Reports
@@ -306,19 +378,54 @@ class EqarApi
     public function getAgencies($registered = 'True')
     {
 
-        $api = $this->eqar();
-        $result = $api->get('agencies/', array(
-            'limit' => 999,
-            'offset' => 0,
-            'registered' => $registered,
-        ));
+        return Timber\Helper::transient('DEQAR:agencies-registered='.$registered, function() use ($registered) {
 
-        if ($result->info->http_code == 200) {
-            return $result->decode_response()->results;
+                $result = $this->eqar()->get('agencies/', array(
+                    'limit' => 999,
+                    'offset' => 0,
+                    'registered' => $registered,
+                ));
+
+                if ($result->info->http_code == 200) {
+                    return $result->decode_response()->results;
+                }
+
+                return false;
+
+            }, EQAR_CACHE_TIME);
+
+    }
+
+
+    /**
+     * Get a list of Agencies indexed by ID
+     * @return array    All Agencies, ID as key
+     */
+    public function getAgenciesByID ()
+    {
+        $result = array();
+
+        foreach($this->getAgencies() as $agency) {
+            $result[$agency->id] = $agency;
         }
 
-        return false;
+        return($result);
+    }
 
+
+    /**
+     * Get a list of Agencies indexed by Name (= acronym)
+     * @return array    All Agencies, acronym as key
+     */
+    public function getAgenciesByName ()
+    {
+        $result = array();
+
+        foreach($this->getAgencies() as $agency) {
+            $result[$agency->acronym_primary] = $agency;
+        }
+
+        return($result);
     }
 
 
@@ -405,36 +512,33 @@ class EqarApi
 
 
     /**
-     * Get a list of Countries
-     * @param  integer $limit                       Limit the number or returned countries
-     * @param  integer $offset                      Results offset (for pagin purposes)
+     * Get a list of EHEA countries
      * @param  boolean $external_qaa                Query External QAA
      * @param  boolean $european_approach           Query External European Approach
      * @param  boolean $eqar_governmental_member    Query Eqar governmental members
      * @return array                                All Countries
      */
     public function getCountries(
-        $limit = 999,
-        $offset = 0,
         $external_qaa = '',
         $european_approach = '',
         $eqar_governmental_member = ''
     ) {
 
-        $api = $this->eqar();
-        $result = $api->get('countries/', array(
-            'limit' =>                      $limit,
-            'offset' =>                     $offset,
-            'external_qaa' =>               $external_qaa,
-            'european_approach' =>          $european_approach,
-            'eqar_governmental_member' =>   $eqar_governmental_member,
-        ));
+        return Timber\Helper::transient('DEQAR:countries-CBQA='.$external_qaa.'-EQAJP='.$european_approach.'-MEMBER='.$eqar_governmental_member,
+            function() use ($external_qaa, $european_approach, $eqar_governmental_member) {
+                $result = $this->eqar()->get('countries/', array(
+                    'external_qaa' =>               $external_qaa,
+                    'european_approach' =>          $european_approach,
+                    'eqar_governmental_member' =>   $eqar_governmental_member,
+                ));
 
-        if ($result->info->http_code == 200) {
-            return $result->decode_response();
-        }
+                if ($result->info->http_code == 200) {
+                    return $result->decode_response();
+                }
 
-        return false;
+                return false;
+
+            }, EQAR_CACHE_TIME);
 
     }
 
@@ -444,26 +548,57 @@ class EqarApi
      * @param  boolean  Show historical data
      * @return array    All Countries
      */
-    public function getCountriesByReports( $history = 'true' )
+    public function getCountriesByReports()
     {
 
-        $api = $this->eqar();
-        $result = $api->get('countries/by-reports/', array(
-            'limit' => 999,
-            'history' => $history,
-        ));
+        return Timber\Helper::transient('DEQAR:countriesByReports', function() {
+            $result = $this->eqar()->get('countries/by-reports/');
 
-        if ($result->info->http_code == 200) {
-            return $result->decode_response();
-        }
+            if ($result->info->http_code == 200) {
+                return $result->decode_response();
+            }
 
-        return false;
+            return false;
+
+        }, EQAR_CACHE_TIME);
 
     }
 
 
     /**
-     * Get all Countries
+     * Get a list of Countries by ID
+     * @return array    All Countries
+     */
+    public function getCountriesByReportsByID ()
+    {
+        $result = array();
+
+        foreach($this->getCountriesByReports() as $country) {
+            $result[$country->id] = $country;
+        }
+
+        return($result);
+    }
+
+
+    /**
+     * Get a list of Countries by Name
+     * @return array    All Countries
+     */
+    public function getCountriesByReportsByName ()
+    {
+        $result = array();
+
+        foreach($this->getCountriesByReports() as $country) {
+            $result[$country->name_english] = $country;
+        }
+
+        return($result);
+    }
+
+
+    /**
+     * Get all Countries where Agency operates
      * @param   int      Agency Id
      * @param   boolean  Show historical data
      * @return  array    All Countries
@@ -526,14 +661,15 @@ class EqarApi
     public function getDecisions()
     {
 
-        $api = $this->eqar();
-        $result = $api->get('agencies/decisions/');
+        return Timber\Helper::transient('DEQAR:agencyDecisions', function() {
+            $result = $this->eqar()->get('agencies/decisions/');
 
-        if ($result->info->http_code == 200) {
-            return $result->decode_response();
-        }
+            if ($result->info->http_code == 200) {
+                return $result->decode_response();
+            }
 
-        return false;
+            return false;
+        }, EQAR_CACHE_TIME);
 
     }
 

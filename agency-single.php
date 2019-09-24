@@ -18,6 +18,7 @@ $context['post'] = new TimberPost();
 $context['pages'] = array(
         'country' =>        get_field('country_page'),
         'qa_results' =>     get_field('qa-results_page'),
+        'reports' =>        get_field('reports_page'),
     );
 
 // Check if the agency is set.

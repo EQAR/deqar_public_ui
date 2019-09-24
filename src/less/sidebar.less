@@ -4,9 +4,32 @@
     font-size: 17px;
 }
 
+
 .sidebar--publication {
     position: sticky;
     top: 15px;
+}
+
+.sidebar--accordion {
+    position: relative;
+    cursor: pointer;
+
+    .accordion__arrow {
+        top: 43px;
+        right: 25px;
+    }
+
+    &:hover .accordion__arrow {
+        fill: @primary;
+    }
+
+    &.sidebar--accordion--is-toggled .accordion__arrow {
+        transform: rotate(180deg);
+    }
+
+    .sidebar__menu {
+        display: none;
+    }
 }
 
 .sidebar__title {

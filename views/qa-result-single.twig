@@ -1,0 +1,280 @@
+{% extends 'base.twig' %}
+
+{% set breadcrumbs_title = report.agency_acronym ~ ': ' ~ report.name %}
+
+{% block title %}
+    {{ report.agency_acronym }}: {{ report.name }} -
+    {% for institution in report.institutions %}
+        {{ institution.name_primary }}{% if loop.index != loop.length %} / {% endif %}
+    {% endfor %} -
+    {% if report.programmes %}
+        {% for programme in report.programmes %}
+            {{ programme.name_primary -}}
+            {%- if programme.qf_ehea_level -%}
+            , {{ programme.qf_ehea_level -}}
+            {%- endif -%}
+            {% if loop.index != loop.length %} / {% endif %}
+        {% endfor %} -
+    {% endif %}
+    {{ wp_title }}
+{% endblock %}
+
+{% block content %}
+	<main class="u-padding">
+		<div class="l-two-column u-container">
+
+			<div class="l-two-column__sidebar">
+				{% include 'snippets/sidebar.twig' %}
+
+			</div>
+
+			<div class="l-two-column__content">
+				{% include 'views/snippets/breadcrumbs.twig' %}
+
+                <div class="u-margin-s">
+                {% for institution in report.institutions %}
+                    <h1 class="title u-margin-xs">{{ institution.name_primary }}</h1>
+                {% endfor %}
+                {% for programme in report.programmes %}
+                    <h2 class="subtitle u-margin-xs">
+                        {{ programme.name_primary }}
+                        {%- if programme.qf_ehea_level -%}
+                            , {{ programme.qf_ehea_level -}}
+                        {%- endif -%}
+                    </h2>
+                {% endfor %}
+                </div>
+
+                <div class="accordion">
+                    <div class="accordion__item accordion__item--always-open{% if report.report_valid == false %} report-invalid{% endif %}">
+                        <div class="accordion__definition">
+                                        {% if report.report_valid == false %}
+                                            <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
+                                                {% if report.valid_to %}
+                                                    <title>This report is not currently valid but part of the historic record.</title>
+                                                {% else %}
+                                                    <title>This report does not have a validity period, but it is older than 6 years and thus considered part of the historic record.</title>
+                                                {% endif %}
+                                                <path d="M12,0 C7.03,0 3,4.03 3,9 L0,9 L3.89,12.89 L3.96,13.03 L8,9 L5,9 C5,5.13 8.13,2 12,2 C15.87,2 19,5.13 19,9 C19,12.87 15.87,16 12,16 C10.07,16 8.32,15.21 7.06,13.94 L5.64,15.36 C7.27,16.99 9.51,18 12,18 C16.97,18 21,13.97 21,9 C21,4.03 16.97,0 12,0 Z" id="Path"></path>
+                                                <polygon id="Path" points="11 5 11 10 15.28 12.54 16 11.33 12.5 9.25 12.5 5"></polygon>
+                                            </svg>
+                                        {% endif %}
+
+                                    <div class="accordion__definition-icons">
+
+                                        {% if report.status == "part of obligatory EQA system" %}
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="13px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.75 15.58" class="accordion-icon accordion-icon__shield">
+                                                <title>Part of the obligatory external QA system</title>
+                                                <defs>
+                                                    <style>
+                                                        .cls-1{fill:#18498f;}
+                                                        .cls-2{fill:#e6f6ff;fill-opacity:0.25;}
+                                                    </style>
+                                                </defs>
+                                                <path class="cls-1" d="M6.38,0,0,2.83V7.08a8.81,8.81,0,0,0,6.38,8.5,8.82,8.82,0,0,0,6.37-8.5V2.83Z"/>
+                                                <path class="cls-2" d="M4.8,15,11,2.06l-.39-.17-.52-.24L3.93,14.49A7.61,7.61,0,0,0,4.8,15Z"/>
+                                                <path class="cls-2" d="M11.75,2.39,5.54,15.32a7.46,7.46,0,0,0,.84.26l.16-.05L12.66,2.79Z"/>
+                                                <path class="cls-2" d="M8.45.92,2.51,13.29a10.42,10.42,0,0,0,.77.72L9.36,1.33Z"/>
+                                            </svg>
+                                        </span>
+                                        {% endif %}
+
+                                        {% if report.decision == "negative" %}
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__gavel">
+                                                <title>Decision: {{ report.decision }}</title>
+                                                <path d="M0 16.0838H8.48656V17.4982H0V16.0838ZM2.99859 6.93951L5 4.9381L15 14.9381L12.9986 16.9395L2.99859 6.93951ZM8.00566 1.93951L12.0085 5.94234L10.0071 7.94376L6.00424 3.94093L8.00566 1.93951ZM2.00141 7.93669L6.00424 11.9395L4.00283 13.9409L0 9.9381L2.00141 7.93669Z" fill="#18498F"/>
+                                                <rect x="0.725586" y="9.73596" width="10" height="4.91375" transform="rotate(-45 0.725586 9.73596)" fill="#18498F"/>
+                                                <circle cx="21" cy="6" r="6" fill="#950000"/>
+                                                <rect x="17" y="5" width="8" height="2" fill="white"/>
+                                            </svg>
+                                        </span>
+                                        {% endif %}
+
+                                        {% if report.decision starts with "positive" %}
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__gavel">
+                                                <title>Decision: {{ report.decision }}</title>
+                                                <path d="M0 16.0838H8.48656V17.4982H0V16.0838ZM2.99859 6.93951L5 4.9381L15 14.9381L12.9986 16.9395L2.99859 6.93951ZM8.00566 1.93951L12.0085 5.94234L10.0071 7.94376L6.00424 3.94093L8.00566 1.93951ZM2.00141 7.93669L6.00424 11.9395L4.00283 13.9409L0 9.9381L2.00141 7.93669Z" fill="#18498F"/>
+                                                <rect x="0.725586" y="9.73596" width="10" height="4.91375" transform="rotate(-45 0.725586 9.73596)" fill="#18498F"/>
+                                                <circle cx="21" cy="6" r="6" fill="#41875E"/>
+                                                <path d="M18.3825 5.36666L17 6.86156L19.9033 10L25 4.49387L23.6175 3L19.9026 7.01299L18.3825 5.36666Z" fill="white"/>
+                                            </svg>
+                                        </span>
+                                        {% endif %}
+
+                                        {% if report.agency_esg_activity_type == "joint programme" %}
+                                        <span class="accordion-icon-wrapper">
+                                            <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__hub">
+                                                <title>Joint programme</title>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 0.93951C1.11914 0.93951 0 2.0588 0 3.43951C0 4.82022 1.11914 5.93951 2.5 5.93951C2.97656 5.93951 3.42236 5.80608 3.80127 5.57454L6.6665 8.43951L6.6665 11.0895C5.69971 11.4395 5 12.3562 5 13.4395C5 14.8228 6.1167 15.9395 7.5 15.9395C8.8833 15.9395 10 14.8228 10 13.4395C10 12.3562 9.2998 11.4395 8.33301 11.0895V8.43951L11.1982 5.57436C11.5771 5.80602 12.0229 5.93951 12.5 5.93951C13.8809 5.93951 15 4.82022 15 3.43951C15 2.0588 13.8809 0.93951 12.5 0.93951C11.1191 0.93951 10 2.0588 10 3.43951C10 3.71356 10.0439 3.97732 10.1255 4.22406L7.5 6.98118L4.87451 4.22436C4.95605 3.97753 5 3.71367 5 3.43951C5 2.0588 3.88086 0.93951 2.5 0.93951Z" fill="#18498F"/>
+                                            </svg>
+                                        </span>
+                                        {% endif %}
+
+                                    </div>
+                                    {{ report.agency_acronym }}: {{ report.name }}
+                        </div>
+                        <div class="accordion__description accordion__description--two-tone" style="display: block;">
+                                {% if report.programmes %}
+                                    <ul class="info-list info-list--padding info-list--programme-description">
+                                    {% for programme in report.programmes %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">
+                                                Programme
+                                            </div>
+                                            <div class="info-list__definition">
+                                                {{ programme.name_primary -}}
+                                            </div>
+                                        </li>
+                                        {% if programme.programme_names|length > 1 %}
+                                            {% set first = true -%}
+                                            {% for item in programme.programme_names %}
+                                                {% if item.name_is_primary != true %}
+                                                    <li class="info-list__item">
+                                                        <div class="info-list__term">
+                                                            {%- if first %}Other names{% endif -%}
+                                                        </div>
+                                                        <div class="info-list__definition">{{ item.name }}</div>
+                                                    </li>
+                                                    {% set first = false %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        {% for item in programme.programme_names %}
+                                            {% if item.qualification %}
+                                                <li class="info-list__item">
+                                                    <div class="info-list__term">
+                                                        {%- if loop.index == 1 %}Qualification{% endif -%}
+                                                    </div>
+                                                    <div class="info-list__definition">{{ item.qualification }}</div>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        <li class="info-list__item info-list__item--separator">
+                                            <div class="info-list__term">Level</div>
+                                            <div class="info-list__definition">{{ programme.qf_ehea_level ? programme.qf_ehea_level : '-' }}{% if programme.nqf_level %} (NQF {{ programme.nqf_level }}){% endif %}</div>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
+
+                                    <ul class="info-list info-list--padding">
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">DEQAR Report ID</div>
+                                            <div class="info-list__definition">{{ report.id }}</div>
+                                        </li>
+
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Agency</div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ pages.agency }}?id={{ report.agency_id }}">{{ report.agency_name }} ({{ report.agency_acronym }})</a></div>
+                                        </li>
+
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Type</div>
+                                            <div class="info-list__definition">{{ report.agency_esg_activity }}</a></div>
+                                        </li>
+
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Status</div>
+                                            <div class="info-list__definition">{{ report.status }}</div>
+                                        </li>
+
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Formal decision</div>
+                                            <div class="info-list__definition">{{ report.decision }}</div>
+                                        </li>
+
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Date</div>
+                                            <div class="info-list__definition">{{ report.valid_from|date("d/m/Y") }}</div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Valid until</div>
+                                            <div class="info-list__definition">
+                                                {%- if report.valid_to -%}
+                                                    {{- report.valid_to|date("d/m/Y") -}}
+                                                {%- else -%}
+                                                    not applicable
+                                                {%- endif -%}
+                                            </div>
+                                        </li>
+                                        {% if report.other_comment %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Notes</div>
+                                            <div class="info-list__definition">
+                                                {{ report.other_comment|e }}
+                                            </div>
+                                        </li>
+                                        {% endif %}
+
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Report and decision</div>
+                                            <div class="info-list__definition">
+                                                <ul class="documents">
+                                                    {% for file in report.report_files %}
+                                                        <li class="documents__item">
+                                                            <a href="{{ file.file }}" target="_blank" rel="external" class="documents__link">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
+                                                                    <polygon points="5 5 1 5 5 1 5 5"/>
+                                                                    <path d="M6,15a25.85,25.85,0,0,1,3-.8A13.79,13.79,0,0,1,7.23,12,25.86,25.86,0,0,1,6,15Z"/>
+                                                                    <path d="M7.35,8H7.28a.33.33,0,0,0-.19.08c-.2.19,0,.54.27.92.25-.65.12-.93,0-1Z"/>
+                                                                    <path d="M5.77,0V5.79H0V21H15V0Zm6.52,15.62a1.15,1.15,0,0,1-1,.52,2.88,2.88,0,0,1-1.82-1,20.69,20.69,0,0,0-3.82,1.23,12.51,12.51,0,0,1-1,1.85c-.44.63-.83.92-1.2.92A.69.69,0,0,1,3,19a1,1,0,0,1-.48-1c.08-.71,1-1.45,2.59-2.2a29.27,29.27,0,0,0,1.64-4.68c-.43-.94-.85-2.17-.55-2.89a.89.89,0,0,1,.54-.51.92.92,0,0,1,.29-.05A.68.68,0,0,1,7.61,8c.13.16.51.66-.07,3.1a13.92,13.92,0,0,0,2.2,3.29,8.29,8.29,0,0,1,1.45-.16c.68,0,1.09.16,1.26.49a.88.88,0,0,1-.17.94Z"/>
+                                                                    <path d="M3,17.8s0,.1.14.2.33-.13.86-1c-.7.35-1,.64-1,.8Z"/>
+                                                                    <path d="M10,15.06c.26.28.49.44.66.44s.17,0,.27-.22a.8.8,0,0,0,.07-.19.73.73,0,0,0-.44-.09,3,3,0,0,0-.56.06Z"/>
+                                                                </svg>
+                                                                {{ file.file_display_name|replace('_', ' ') }} ({% for lang in file.languages %}{{ lang }}{% if loop.length != loop.index %}, {% endif %}{% endfor %})
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+
+                                            </div>
+                                        </li>
+
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Permalink</div>
+                                            <div class="info-list__definition">
+                                                <a class="info-list__link" href="{{ permalinks.report|replace({ '{id}': report.id }) }}">{{ permalinks.report|replace({ '{id}': report.id }) }}</a>
+                                            </div>
+                                        </li>
+
+                                        {% for institution in report.institutions %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">{% if loop.index == 1 %}Institution page{% endif %}</div>
+                                            <div class="info-list__definition">
+                                                <a class="info-list__link" href="{{ pages.institution }}?id={{ institution.id }}">
+                                                    {{ institution.name_primary }}
+                                                </a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+
+                                        {% if report.report_links %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term"></div>
+                                                <div class="info-list__definition">
+                                                    <a class="info-list__link" href="{{ report.report_links[0].link }}" target="_blank">View record on agency’s website</a>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+
+
+                                    </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {% if cta.qa.form %}
+                <div class="form u-margin">
+                    {{ fn('gravity_form', cta.qa.form.id, false, false, false, '', true, '0') }}
+                </div>
+                {% endif %}
+
+			</div> {# l-two-column__content #}
+		</div> {# l-two-column #}
+	</main>
+{% endblock %}

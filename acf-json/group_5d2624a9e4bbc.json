@@ -1,51 +1,9 @@
 {
-    "key": "group_5c718833b45e0",
-    "title": "Institution page",
+    "key": "group_5d2624a9e4bbc",
+    "title": "QA Results (reports) page",
     "fields": [
         {
-            "key": "field_5c718833d3855",
-            "label": "Country page",
-            "name": "country_page",
-            "type": "page_link",
-            "instructions": "Single country page to link to",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "post_type": [
-                "page"
-            ],
-            "taxonomy": [],
-            "allow_null": 0,
-            "allow_archives": 1,
-            "multiple": 0
-        },
-        {
-            "key": "field_5c7188588b2a1",
-            "label": "Agency page",
-            "name": "agency_page",
-            "type": "page_link",
-            "instructions": "Single agency page to link to",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "post_type": [
-                "page"
-            ],
-            "taxonomy": [],
-            "allow_null": 0,
-            "allow_archives": 1,
-            "multiple": 0
-        },
-        {
-            "key": "field_5d7d564c787c5",
+            "key": "field_5d2624da9e52e",
             "label": "Report page",
             "name": "report_page",
             "type": "page_link",
@@ -66,11 +24,74 @@
             "multiple": 0
         },
         {
-            "key": "field_5c7189e793d9d",
+            "key": "field_5d2624aa31d4a",
             "label": "Institution page",
             "name": "institution_page",
             "type": "page_link",
-            "instructions": "Single institution page to link to (default: same page)",
+            "instructions": "Single institution page to link to",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5d2624aa31d8c",
+            "label": "Country page",
+            "name": "country_page",
+            "type": "page_link",
+            "instructions": "Single country page to link to",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5d2624aa31dca",
+            "label": "Agency page",
+            "name": "agency_page",
+            "type": "page_link",
+            "instructions": "Single agency page to link to",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5d2624aa31e46",
+            "label": "FAQ page",
+            "name": "faq_page",
+            "type": "page_link",
+            "instructions": "FAQ page (optional)",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -92,11 +113,11 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "template-institution-single.php"
+                "value": "qa-results-reports.php"
             }
         ]
     ],
-    "menu_order": 1,
+    "menu_order": 99,
     "position": "acf_after_title",
     "style": "default",
     "label_placement": "top",
@@ -104,5 +125,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1568495271
+    "modified": 1562780990
 }

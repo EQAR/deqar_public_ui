@@ -31,6 +31,7 @@ $context['map'] = array(
             'partially' =>  get_field('european-approach_partially', 'option'),
             'no' =>         get_field('european-approach_no', 'option'),
         ),
+        'ehea_kc' =>        get_field('ehea-kc_labels', 'option'),
     );
 
 Timber::render('register-map-page.twig', $context);

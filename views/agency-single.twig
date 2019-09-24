@@ -227,7 +227,7 @@
                                     {% endif %}
                                     {{ activity.activity }}<br>
                                     {% if activity.report_count > 0 %}
-                                        <a href="{{ pages.qa_results }}?query=&esg_activity={{ activity.id }}" class="label label--qa-results" title="View the {{ activity.institution_count }} higher education institution(s) where {{ acronym_primary }} carried out {{ activity.activity }}">View {{ activity.report_count }} reports on {{ activity.institution_count }} institutions</a>
+                                        <a href="{{ pages.reports }}?agency={{ agency.id }}&activity={{ activity.activity }}" class="label label--qa-results" title="View the {{ activity.institution_count }} higher education institution(s) where {{ acronym_primary }} carried out {{ activity.activity }}">View {{ activity.report_count }} reports on {{ activity.institution_count }} institutions</a>
                                     {% endif %}
                                     {% if activity.reports_link %}
                                         <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label">Reports</a>
@@ -264,6 +264,11 @@
                                         </svg>
                                         {% endif %}
                                         <span class="name">{{ country.country }}</span>
+                                        {% if country.country_is_ehea %}
+                                        <span class="search-results__eter-id label">
+                                            EHEA
+                                        </span>
+                                        {% endif %}
                                         {% if country.report_count > 0 %}
                                             <a href="{{ pages.qa_results }}?query=&agency={{ agency.id }}&country={{ country.country_url|split('/')[7] }}" class="label label--qa-results">View {{ country.report_count }} reports on {{ country.institution_count }} institutions</a>
                                         {% endif %}
