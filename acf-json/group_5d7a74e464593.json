@@ -1,9 +1,9 @@
 {
-    "key": "group_5c718a5273044",
-    "title": "Agency page",
+    "key": "group_5d7a74e464593",
+    "title": "Report page",
     "fields": [
         {
-            "key": "field_5c718a528079f",
+            "key": "field_5d7a74e48e480",
             "label": "Country page",
             "name": "country_page",
             "type": "page_link",
@@ -24,11 +24,11 @@
             "multiple": 0
         },
         {
-            "key": "field_5c718a528089e",
-            "label": "QA results page",
-            "name": "qa-results_page",
+            "key": "field_5d7a74e48e4b3",
+            "label": "Agency page",
+            "name": "agency_page",
             "type": "page_link",
-            "instructions": "QA results page to link to",
+            "instructions": "Single agency page to link to",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -45,12 +45,33 @@
             "multiple": 0
         },
         {
-            "key": "field_5d88082337910",
-            "label": "Reports page",
-            "name": "reports_page",
+            "key": "field_5d7a74e48e4ef",
+            "label": "Institution page",
+            "name": "institution_page",
             "type": "page_link",
-            "instructions": "Report search page to link to",
+            "instructions": "Single institution page to link to",
             "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5d7a74fa990d7",
+            "label": "Report page",
+            "name": "report_page",
+            "type": "page_link",
+            "instructions": "Single report page to link to (default: same page)",
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -71,7 +92,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "agency-single.php"
+                "value": "qa-result-single.php"
             }
         ]
     ],
@@ -83,5 +104,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1569196106
+    "modified": 1568306491
 }

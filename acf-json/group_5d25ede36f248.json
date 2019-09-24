@@ -1,11 +1,11 @@
 {
-    "key": "group_5a9e79f006839",
-    "title": "Search (by institution)",
+    "key": "group_5d25ede36f248",
+    "title": "Search (by reports)",
     "fields": [
         {
-            "key": "field_5a9e7a01d1076",
+            "key": "field_5d25ede3a1821",
             "label": "Title",
-            "name": "search_title",
+            "name": "report_search_title",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -22,9 +22,9 @@
             "maxlength": ""
         },
         {
-            "key": "field_5a9e7a06d1077",
+            "key": "field_5d25ede3a185f",
             "label": "Description",
-            "name": "search_description",
+            "name": "report_search_description",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -41,9 +41,9 @@
             "maxlength": ""
         },
         {
-            "key": "field_5a9e7a44d1079",
+            "key": "field_5d25ede3a189b",
             "label": "Button",
-            "name": "search_button",
+            "name": "report_search_button",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -60,28 +60,9 @@
             "maxlength": ""
         },
         {
-            "key": "field_5b8696b185c5a",
-            "label": "Public Preview",
-            "name": "search_preview",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_5c4b91b45413b",
+            "key": "field_5d25ede3a1912",
             "label": "Default target",
-            "name": "search_default_target",
+            "name": "report_search_default_target",
             "type": "page_link",
             "instructions": "Default target page for search queries, used if page not explicitly set otherwise.",
             "required": 0,
@@ -94,15 +75,15 @@
             "post_type": [
                 "page"
             ],
-            "taxonomy": [],
+            "taxonomy": "",
             "allow_null": 0,
             "allow_archives": 1,
             "multiple": 0
         },
         {
-            "key": "field_5d1fbe7608429",
+            "key": "field_5d25ede3a194e",
             "label": "QA results search facets",
-            "name": "search_facets",
+            "name": "report_search_facets",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -112,14 +93,14 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "field_5d1fbec10842b",
+            "collapsed": "field_5d25ede401683",
             "min": 0,
             "max": 0,
             "layout": "row",
             "button_label": "Add facet",
             "sub_fields": [
                 {
-                    "key": "field_5d1fbea00842a",
+                    "key": "field_5d25ede401642",
                     "label": "Tag",
                     "name": "tag",
                     "type": "text",
@@ -138,7 +119,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5d1fbec10842b",
+                    "key": "field_5d25ede401683",
                     "label": "Display label",
                     "name": "label",
                     "type": "text",
@@ -157,7 +138,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5d1fbed80842c",
+                    "key": "field_5d25ede4016c1",
                     "label": "Facet field",
                     "name": "field",
                     "type": "text",
@@ -176,7 +157,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5d20abcc95858",
+                    "key": "field_5d25ede4016ff",
                     "label": "Report field",
                     "name": "report_field",
                     "type": "text",
@@ -195,7 +176,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5d5ece6fcae1f",
+                    "key": "field_5d5efd9181e50",
                     "label": "Value labels",
                     "name": "value_labels",
                     "type": "repeater",
@@ -214,7 +195,7 @@
                     "button_label": "",
                     "sub_fields": [
                         {
-                            "key": "field_5d5ece8ecae20",
+                            "key": "field_5d5efda181e51",
                             "label": "Value",
                             "name": "value",
                             "type": "text",
@@ -233,7 +214,7 @@
                             "maxlength": ""
                         },
                         {
-                            "key": "field_5d5eceb2cae21",
+                            "key": "field_5d5efda781e52",
                             "label": "Label",
                             "name": "label",
                             "type": "text",
@@ -256,9 +237,9 @@
             ]
         },
         {
-            "key": "field_5d25f8598148c",
+            "key": "field_5d25eefc9a00c",
             "label": "Sort options",
-            "name": "search_ordering",
+            "name": "report_search_ordering",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -275,7 +256,7 @@
             "button_label": "",
             "sub_fields": [
                 {
-                    "key": "field_5d25f8598148d",
+                    "key": "field_5d25ef2f9a00d",
                     "label": "Tag",
                     "name": "tag",
                     "type": "text",
@@ -294,7 +275,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5d25f8598148e",
+                    "key": "field_5d25ef539a00e",
                     "label": "Label",
                     "name": "label",
                     "type": "text",
@@ -332,5 +313,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1566494593
+    "modified": 1566506507
 }

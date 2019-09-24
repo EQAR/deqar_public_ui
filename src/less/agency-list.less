@@ -7,7 +7,11 @@
 }
 
 .agency-list__item {
-    border-bottom: 1px solid #F4F4F4;
+    border-bottom: 1px solid fade(@primary, 15%);
+
+    .label--qa-results {
+        margin: 0 12px 12px 0;
+    }
 }
 
 .agency-list__link {
@@ -45,5 +49,9 @@
 
     .agency-list__arrow {
         top: 20px;
+    }
+
+    .agency-list__item .label--qa-results {
+        margin: 0 14px 14px 14px;
     }
 }
