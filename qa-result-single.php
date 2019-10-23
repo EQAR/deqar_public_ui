@@ -21,31 +21,17 @@ $context['pages'] = array(
         'report' =>             get_field('report_page') ?: $context['post']->link ,
     );
 
-// Check if the agency is set.
+// check if report ID is provided
 if ( isset($_GET['id']) && !empty($_GET['id']) ) {
 
     $context['report'] = $eqarApi->getReport($_GET['id']);
 
     if ($context['report'] == false) {
-        Site::do404($context);
+        Site::do404();
     }
 
-    // Get the agency ID from the GET variable.
-    //$institutionId  = $_GET['id'];
-    //$institution    = $eqarApi->getInstitution( $institutionId );
-
-    /*if ( isset($institution) && !empty($institution) && $institution != false ) {
-
-        $context['institution'] = $institution;
-        $context['formdata']['agency'] = isset($_GET['agency']) ? $_GET['agency'] : null;
-        $context['formdata']['esg_activity'] = isset($_GET['esg_activity']) ? $_GET['esg_activity'] : null;
-
-    } else {
-        Site::do404($context);
-    }*/
-
 } else {
-    Site::do404($context);
+    Site::do404(400, "DEQAR report ID must be provided.");
 }
 
 // Render the twig template.
