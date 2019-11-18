@@ -15,29 +15,39 @@
 				{% endfor %}
 
                     {# map view #}
-                    {% include 'views/snippets/map.twig' with { 'maptype': maptype } %}
+                    {% include 'views/snippets/map.twig' with { 'map': map } %}
 
                     {# list view #}
-                    {% if maptype == 'blank' %}
-                        <ul class="country-list">
-                            {% for country in countriesAll %}
-                                <li class="country-list__item">
-                                    <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
-                                        <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
-                                        {{ country.name_english }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
+                    {% if map.type == 'agencies' %}
 
-                    {% if maptype == 'cross-border' %}
-                        <h3 class="subtitle u-margin-s map-legend-dark">Recognising EQAR-registered agencies as part of the national external QA requirements</h3>
+                        {# no list view for agencies #}
+
+                    {% elseif map.type == 'ehea-kc' %}      {# countries by fulfilment of EHEA key commitment #}
+
+                        {% for shade in map.ehea_kc %}
+                            <h3 class="subtitle u-margin-s {{ shade.class_key }}">{{ shade.label }}</h3>
+                            <ul class="country-list u-margin">
+                                {% for country in countriesAll %}
+                                    {% if country.ehea_key_commitment == shade.tag %}
+                                        <li class="country-list__item">
+                                            <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                                <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
+                                                {{ country.name_english }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+
+                    {% elseif map.type == 'cross-border' %}      {# group by recognition of EQAR-registered agencies #}
+
+                        <h3 class="subtitle u-margin-s map-legend-dark">{{ map.cross_border.yes }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.external_QAA_is_permitted == 'yes' %}
                                     <li class="country-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                        <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
                                             {{ country.name_english }}
                                         </a>
@@ -46,12 +56,12 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s map-legend-medium">Recognising foreign agencies based on their own framework/requirements</h3>
+                        <h3 class="subtitle u-margin-s map-legend-medium">{{ map.cross_border.partially }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.external_QAA_is_permitted == 'partially / with conditions' %}
                                     <li class="country-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                        <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
                                             {{ country.name_english }}
                                         </a>
@@ -60,12 +70,12 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s map-legend-light">Not recognising foreign agencies as part of the national external QA requirements</h3>
+                        <h3 class="subtitle u-margin-s map-legend-light">{{ map.cross_border.no }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.external_QAA_is_permitted == 'no' %}
                                     <li class="country-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                        <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
                                             {{ country.name_english }}
                                         </a>
@@ -73,15 +83,15 @@
                                 {% endif %}
                             {% endfor %}
                         </ul>
-                    {% endif %}
 
-                    {% if maptype == 'eaqejp' %}
-                        <h3 class="subtitle u-margin-s map-legend-dark">European Approach available to all higher education institutions</h3>
+                    {% elseif map.type == 'european-approach' %}     {# countries where European Approach is available #}
+
+                        <h3 class="subtitle u-margin-s map-legend-dark">{{ map.european_approach.yes }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.european_approach_is_permitted == 'yes' %}
                                     <li class="country-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                        <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
                                             {{ country.name_english }}
                                         </a>
@@ -90,12 +100,12 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s map-legend-medium">European Approach available to some higher education institutions or only under specific conditions</h3>
+                        <h3 class="subtitle u-margin-s map-legend-medium">{{ map.european_approach.partially }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.european_approach_is_permitted == 'partially / with conditions' %}
                                     <li class="country-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                        <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
                                             {{ country.name_english }}
                                         </a>
@@ -104,12 +114,12 @@
                             {% endfor %}
                         </ul>
 
-                        <h3 class="subtitle u-margin-s map-legend-light">European Approach not available to higher education institutions</h3>
+                        <h3 class="subtitle u-margin-s map-legend-light">{{ map.european_approach.no }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
                                 {% if country.european_approach_is_permitted == 'no' %}
                                     <li class="country-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
+                                        <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
                                             {{ country.name_english }}
                                         </a>
@@ -117,16 +127,15 @@
                                 {% endif %}
                             {% endfor %}
                         </ul>
-                    {% endif %}
 
+                    {% elseif map.type == 'governmental-members' %}  {# highlight EQAR governmental members #}
 
-                    {% if maptype == 'govermental' %}
                         <ul class="country-list">
                             {% for country in countriesAll %}
                                 {% if country.eqar_governmental_member_start != null %}
                                     {% set country_class = ' active' %}
                                     <li class="country-list__item">
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
+                                        <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
                                             <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
                                             {{ country.name_english }}
                                         </a>
@@ -134,6 +143,20 @@
                                 {% endif %}
                             {% endfor %}
                         </ul>
+
+                    {% else %}                                       {# all other maps: list of all EHEA countries #}
+
+                        <ul class="country-list">
+                            {% for country in countriesAll %}
+                                <li class="country-list__item">
+                                    <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
+                                        <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
+                                        {{ country.name_english }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
                     {% endif %}
 
 			</div>

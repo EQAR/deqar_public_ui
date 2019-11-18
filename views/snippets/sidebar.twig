@@ -1,53 +1,102 @@
-{% if post.parent.parent.children('page') %}
-    {% set navigation = post.parent.parent.children('page') %}
-    {% set parent = post.parent.parent.ID %}
-{% elseif post.parent.children %}
-    {% set navigation = post.parent.children('page') %}
-    {% set parent = post.parent.ID %}
-{% elseif post.children %}
-    {% set navigation = post.children('page') %}
+{% if sidebar_title %}
+    {% set include_id = post.id %}
+{% endif %}
+{% set add_class = "" %}
+{% if post.get_field('is_publication') %} {# special mode: publication/Annual Report style #}
     {% set parent = post.ID %}
-{% else %}
+    {% set navigation = post|visibleChildren(include_id) %}
+    {% set add_class = " sidebar--publication" %}
+{% elseif post.parent.get_field('is_publication') %} {# special mode: publication/Annual Report style #}
+    {% set parent = post.parent.ID %}
+    {% set navigation = post.parent|visibleChildren(include_id) %}
+    {% set add_class = " sidebar--publication" %}
+{% elseif post.parent.parent %} {# 3rd level or below #}
+    {% if post|visibleChildren(include_id) %} {# has further children that are not hidden  #}
+        {% set navigation = post.parent|visibleChildren(include_id) %}
+        {% set parent = post.parent.ID %}
+    {% elseif post.parent|visibleChildren(include_id) %} {# leaf page, visible itself or with visible sibblings #}
+        {% set navigation = post.parent.parent|visibleChildren(include_id) %}
+        {% set parent = post.parent.parent.ID %}
+    {% elseif post.parent.parent.parent %} {# leaf page, not visible and no visible sibblings #}
+        {% set navigation = post.parent.parent.parent|visibleChildren(include_id) %}
+        {% set parent = post.parent.parent.parent.ID %}
+    {% else %}
+        {% set navigation = post.parent.parent|visibleChildren(include_id) %}
+        {% set parent = post.parent.parent.ID %}
+    {% endif %}
+{% elseif post.parent %} {# 2nd level #}
+    {% set navigation = post.parent|visibleChildren(include_id) %}
+    {% set parent = post.parent.ID %}
+{% else %} {# 1st level #}
+    {% set navigation = post|visibleChildren(include_id) %}
     {% set parent = post.ID %}
 {% endif %}
+{% if accordion_sidebar %}
+    {% set add_class = add_class ~ " sidebar--accordion js-sidebar--accordion" %}
+{% endif %}
 
-<nav class="sidebar">
+<nav class="sidebar{{ add_class }}">
+    {% if accordion_sidebar %}
+    <span class="sidebar__title">
+        {{ fn('get_the_title', parent) }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
+            <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
+        </svg>
+    </span>
+    {% else %}
     <a href="{{ fn('get_the_permalink', parent) }}" class="sidebar__title">
         {{ fn('get_the_title', parent) }}
     </a>
+    {% endif %}
 
     {% if navigation %}
         <ul class="sidebar__menu">
             {% for item in navigation %}
-                {% if item.get_field('hide_page') == 'true' %}
-                {% else %}
                     <li class="sidebar__item">
+                        {% if (item.id == post.id) and sidebar_title %}{# title set by template #}
+                        <a href="#" class="sidebar__link sidebar__link--active">
+                            {{ sidebar_title }}
+                        </a>
+                        {% else %}
                         <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link {{ item.id == post.id ? 'sidebar__link--active' }}">
                             {{ fn('get_the_title', item) }}
                         </a>
-
-                        {% if item.id == post.id and item.children('page') or item.id == post.parent.ID and item.children('page') %}
-                            <ul class="sidebar__children">
-                                {% for item in item.children('page') %}
-                                    {% if item.get_field('hide_page') == 'true' %}
-                                    {% else %}
+                        {% endif %}
+                        {% if item.id == post.id and post.parent.get_field('is_publication') %}
+                            {% set sections = post|getSections %}
+                            {% if sections|length > 0 %}{# page has sections #}
+                                <ul class="sidebar__children">
+                                    {% for item in sections %}
                                         <li class="sidebar__item">
-                                            <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
-                                                {% if item.id == 434 %}
-                                                    {{ country.name_english }}  <!-- Single Country -->
-                                                {% else %}
-                                                    {{ fn('get_the_title', item) }}
-                                                {% endif %}
-
-                                                {{ item.get_field('hide_page') == 'true' ? 'lekker hiden' }}
+                                            <a href="{{ item.link }}" class="sidebar__link sidebar__link--sub {{ item.id == post.id ? 'sidebar__link--active' }}">
+                                                {{ item.text }}
                                             </a>
                                         </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endif %}
+                        {% if post|isChildOf(item.id) %}
+                            {% set children = item|visibleChildren(include_id) %}
+                            {% if children %} {# has children that are not hidden  #}
+                                <ul class="sidebar__children">
+                                    {% for item in children %}
+                                        <li class="sidebar__item">
+                                            {% if (item.id == post.id and sidebar_title) %}{# title set by template #}
+                                            <a href="#" class="sidebar__link sidebar__link--sub sidebar__link--active">
+                                                {{ sidebar_title }}
+                                            </a>
+                                            {% else %}
+                                            <a href="{{ fn('get_the_permalink', item) }}" class="sidebar__link sidebar__link--sub {{ post|isChildOf(item.id) ? 'sidebar__link--active' }}">
+                                                {{ fn('get_the_title', item) }}
+                                            </a>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         {% endif %}
                     </li>
-                {% endif %}
             {% endfor %}
         </ul>
     {% endif %}

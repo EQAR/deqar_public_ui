@@ -15,7 +15,11 @@ $eqarApi = new EqarApi();
 $context = Timber::get_context();
 
 $context['post'] = new TimberPost();
-
+$context['pages'] = array(
+        'country' =>        get_field('country_page'),
+        'qa_results' =>     get_field('qa-results_page'),
+        'reports' =>        get_field('reports_page'),
+    );
 
 // Check if the agency is set.
 if ( isset($_GET['id']) && !empty($_GET['id']) ) {
@@ -28,13 +32,13 @@ if ( isset($_GET['id']) && !empty($_GET['id']) ) {
 
     } else {
 
-        Site::do404($context);
+        Site::do404();
 
     }
 
 } else {
 
-    Site::do404($context);
+    Site::do404(400, "DEQAR agency ID must be provided.");
 
 }
 

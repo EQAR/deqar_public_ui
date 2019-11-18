@@ -11,32 +11,19 @@
     {% endif %}
 {% endfor %}
 
+{% set breadcrumbs_title = name_primary %}
+
 {% block title %}
     {{ name_primary }} - {{ wp_title }}
 {% endblock %}
 
 {% block content %}
 	<main class="u-padding">
-		<div class="l-two-column u-container">
+		<div class="l-two-column u-container u-margin-s">
 
 			<div class="l-two-column__sidebar">
-				{% include 'snippets/sidebar.twig' %}
-
-                {% if cta.qa.link %}
-					<a href="{{ cta.qa.link }}" class="call-to-action">
-						<h3 class="call-to-action__title">{{ cta.qa.title }}</h3>
-
-						{% if cta.qa.description %}
-							<p class="call-to-action__description">{{ cta.qa.description }}</p>
-						{% endif %}
-
-						<svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
-							<polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
-						</svg>
-					</a>
-				{% endif %}
+				{% include 'snippets/sidebar.twig' with { accordion_sidebar: false } %}
 			</div>
-
 
 			<div class="l-two-column__content">
 				{% include 'views/snippets/breadcrumbs.twig' %}
@@ -60,6 +47,21 @@
 
                 <ul class="info-list u-margin-s">
                     <li class="info-list__item">
+                        <div class="info-list__term">Identifiers</div>
+                        <div class="info-list__definition">
+                            <span class="label">DEQARINST{{ institution.id }}</span>
+                            {% if institution.eter %}
+                                <span class="search-results__eter-id label">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="57 31 91 19" class="eter-logo">
+                                        <path d="m 56.772029,46.704174 v -3.704167 h 1.719792 1.719791 v 3.704167 3.704166 h -1.719791 -1.719792 z m 6.085417,-2.645834 v -6.35 h 1.719791 1.719792 v 6.35 6.35 h -1.719792 -1.719791 z m 6.879166,-1.852083 v -8.202084 h 1.719792 1.719791 v 8.202084 8.202083 h -1.719791 -1.719792 z m 6.879167,-1.984375 V 30.035423 h 1.5875 1.587499 V 40.221882 50.40834 h -1.587499 -1.5875 z M 83.230362,40.08959 V 30.035423 h 5.688541 5.688542 v 2.248958 2.248959 h -3.042709 -3.042708 v 1.5875 1.5875 h 2.910417 2.910416 v 2.248958 2.248959 h -2.910416 -2.910417 v 1.719791 1.719792 h 3.042708 3.042709 v 2.248959 2.248958 h -5.688542 -5.688541 z m 19.049998,2.248958 V 34.53334 h -2.24896 -2.248955 v -2.248959 -2.248958 h 7.011455 7.01146 v 2.248958 2.248959 h -2.11667 -2.11666 v 7.805208 7.805209 h -2.64584 -2.64583 z M 115.50953,40.08959 V 30.035423 h 5.82083 5.82083 v 2.248958 2.248959 h -3.175 -3.175 v 1.5875 1.5875 h 3.04271 3.04271 v 2.240293 2.240293 l -2.97657,0.07481 -2.97656,0.07481 -0.0788,1.653646 -0.0788,1.653646 h 3.18762 3.18763 v 2.248959 2.248958 h -5.82083 -5.82083 z m 16.66874,0 V 30.035423 h 4.93024 c 5.38176,0 6.43433,0.182047 7.86341,1.360016 2.04066,1.682085 2.7624,5.41384 1.5186,7.851894 -0.5282,1.035347 -2.16302,2.429757 -2.84868,2.429757 -1.04089,0 -0.71321,0.529304 4.21769,6.813021 l 1.29764,1.653646 -3.39622,-7.94e-4 -3.39622,-7.94e-4 -2.38125,-3.730348 -2.38125,-3.730348 -0.0734,3.731154 -0.0734,3.73113 h -2.63857 -2.63857 z m 8.43873,-1.631454 c 0.2979,-0.186039 0.68324,-0.680125 0.85631,-1.097968 0.6478,-1.563928 -0.59396,-3.023692 -2.68045,-3.151036 l -1.19063,-0.07267 -0.0766,2.485485 -0.0766,2.485486 1.31314,-0.155523 c 0.72223,-0.08554 1.55688,-0.307737 1.85478,-0.493777 z" />
+                                    </svg>
+                                    {{ institution.eter[:6] }}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li class="info-list__item">
                         <div class="info-list__term">Location(s)</div>
                         <div class="info-list__definition">
                             <div class="text u-margin">
@@ -68,7 +70,7 @@
                                         {% if location.city %}
                                             {{ location.city }},
                                         {% endif %}
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ location.country.id }}">{{ location.country.name_english }}</a><br />
+                                        <a href="{{ pages.country }}?id={{ location.country.id }}">{{ location.country.name_english }}</a><br />
                                     {% endfor %}
                                 {% endif %}
                             </div>
@@ -107,13 +109,6 @@
                         </div>
                     </li>
 
-                    {% if institution.eter %}
-                        <li class="info-list__item">
-                            <div class="info-list__term">ETER/OrgReg ID</div>
-                            <div class="info-list__definition">{{ institution.eter[:6] }}</div>
-                        </li>
-                    {% endif %}
-
                     {% if institution.hierarchical_relationships.part_of %}
                         <li class="info-list__item">
                             <div class="info-list__term">Part of</div>
@@ -121,9 +116,12 @@
                                 <div class="text u-margin">
                                     <ul>
                                         {% for relation in institution.hierarchical_relationships.part_of %}
+                                            {% if relation.valid_to == null %}
                                             <li>
-                                                <a href="{{ function('get_permalink', 418) }}?id={{ relation.id }}">{{ relation.name_primary }}</a>
+                                                <a href="{{ pages.institution }}?id={{ relation.institution.id }}">{{ relation.institution.name_primary }}</a>
+                                                ({{ relation.relationship_type }}{% if relation.valid_from %} since {{ relation.valid_from|date('Y') }}{% endif %})
                                             </li>
+                                            {% endif %}
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -136,10 +134,13 @@
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                     <ul>
-                                        {% for includes in institution.hierarchical_relationships.includes %}
+                                        {% for relation in institution.hierarchical_relationships.includes %}
+                                            {% if relation.valid_to == null %}
                                             <li>
-                                                <a href="{{ function('get_permalink', 418) }}?id={{ includes.id }}">{{ includes.name_primary }}</a>
+                                                <a href="{{ pages.institution }}?id={{ relation.institution.id }}">{{ relation.institution.name_primary }}</a>
+                                                ({{ relation.relationship_type }}{% if relation.valid_from %} since {{ relation.valid_from|date('Y') }}{% endif %})
                                             </li>
+                                            {% endif %}
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -188,7 +189,19 @@
                                     <ul>
                                         {% for historical_relationship in institution.historical_relationships|sort %}
                                             <li>
-                                                {{ historical_relationship.relationship_type }} <a href="{{ function('get_permalink', 418) }}?id={{ historical_relationship.institution.id }}">{{ historical_relationship.institution.name_primary }}</a> on {{ historical_relationship.relationship_date|date('d/m/Y') }}<br>
+                                                {{ historical_relationship.relationship_type }}
+                                                <a href="{{ pages.institution }}?id={{ historical_relationship.institution.id }}">
+                                                    {{- historical_relationship.institution.name_primary -}}
+                                                </a>
+                                                {% if historical_relationship.relationship_date %}
+                                                    in {{ historical_relationship.relationship_date|date('Y') }}
+                                                {% endif %}
+                                                {% if historical_relationship.valid_from %}
+                                                    from {{ historical_relationship.valid_from|date('Y') }}
+                                                {% endif %}
+                                                {% if historical_relationship.valid_to %}
+                                                    until {{ historical_relationship.valid_to|date('Y') }}
+                                                {% endif %}
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -197,6 +210,12 @@
                         </li>
                     {% endif %}
 
+                    <li class="info-list__item">
+                        <div class="info-list__term">Permalink</div>
+                        <div class="info-list__definition">
+                            <a class="info-list__link" href="{{ permalinks.institution|replace({ '{id}': institution.id }) }}">{{ permalinks.institution|replace({ '{id}': institution.id }) }}</a>
+                        </div>
+                    </li>
                 </ul>
 
                 <hr class="divider u-margin-s">
@@ -216,7 +235,7 @@
                                                 </li>
                                             {% endfor %}
                                             <li>
-                                                <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
+                                                <a href="{{ pages.country }}?id={{ country.country.id }}">
                                                     Further information on external quality assurance in {{ country.country.name_english }}
                                                 </a>
                                             </li>
@@ -234,7 +253,7 @@
                                         </li>
                                     {% endfor %}
                                     <li>
-                                        <a href="{{ function('get_permalink', 434) }}?id={{ country.country.id }}">
+                                        <a href="{{ pages.country }}?id={{ country.country.id }}">
                                             Further information on external quality assurance in {{ country.country.name_english }}
                                         </a>
                                     </li>
@@ -247,19 +266,63 @@
                 <hr class="divider u-margin-s">
                 <h2 class="subtitle text-fields__subtitle u-margin-s">External Quality Assurance Reports and Decisions</h2>
 
+            </div> {# l-two-column__content #}
+        </div> {# l-two-column #}
+
+		<div class="l-two-column u-container">
+
+			<div class="l-two-column__sidebar">
+                <div class="call-to-action search-facets">
+                    <h3 class="call-to-action__title js-accordion__definition accordion__definition--is-toggled">
+                        Filter reports
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
+                            <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
+                        </svg>
+                    </h3>
+                    <div class="report-switches js-report-switch js-accordion__description">
+                        {% for facet in search.facets %}
+                            {% if facet.report_field %}
+                                <div class="search-facet__item">
+                                    <div class="search-facet__label">
+                                        {{ facet.label }}
+                                    </div>
+                                    <ul class="search-facet__choices search-facet--active" data-report-field="{{ facet.report_field }}">
+                                    {% for value, count in facet.field %}
+                                        <li class="report-switch">
+                                            <input type="checkbox" name="show-{{ facet.report_field }}-{{ value|e('html_attr') }}" value="{{ value|e('html_attr') }}"{% if not facet.select or facet.select == value %} checked="checked"{% endif %}>
+                                            <label for="show-{{ facet.report_field }}-{{ value|e('html_attr') }}">
+                                                {% if attribute(facet.value_labels, value) %}
+                                                    {{ attribute(facet.value_labels, value) }}
+                                                {% else %}
+                                                    {{ value }}
+                                                {% endif %}
+                                                <span class="report-counter"></span>
+                                            </label>
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+			</div>
+
+			<div class="l-two-column__content">
                 <h3 class="subtitle text-fields__subtitle reports-institutional-title">Institutional level</h3>
-                <div class="accordion u-margin-s reports-institutional-container">
-
-                    {% if institution.reports|hasHistorical %}
-                        <label for="show-invalid-reports" class="report-switch">
-                            <input type="checkbox" name="show-invalid-reports" id="show-invalid-reports" value="" checked="checked" class="js-report-witch js-report-witch-institutional">
-                            show historic reports <span>({{ institution.reports|countHistorical }})</span>
-                        </label>
-                    {% endif %}
-
+                <div class="accordion u-margin reports-container reports-institutional-container">
                     {% if institution.reports %}
+                        <div class="pagination__indicator pagination__indicator--institutional u-margin-xs"></div>
+                        {% if institution.reports|length > 10 %}
+                            <ul class="pagination paginator pagination__list pagination__list--institutional u-margin-xs"></ul>
+                        {% endif %}
                         {% for result in institution.reports %}
-                            <div class="accordion__item{% if result.report_valid == false %} report-invalid{% else %} report-valid{% endif %} item-visible">
+                            <div class="accordion__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
+                                    data-report_valid="{% if result.report_valid %}1{% else %}0{% endif %}"
+                                    data-agency_acronym="{{ result.agency_acronym }}"
+                                    data-agency_esg_activity="{{ result.agency_esg_activity }}"
+                                    data-decision="{{ result.decision }}"
+                                    data-status="{{ result.status }}">
                                 <div class="accordion__definition js-accordion__definition">
                                         {% if result.report_valid == false %}
                                             <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
@@ -316,7 +379,12 @@
                                     </div>
 
                                     {#<div class="accordion__title">#}
-                                    {{ result.name }}{% if result.institution_relationship_context %}{% for context in result.institution_relationship_context %}, {{ context.name_primary }}{% endfor %}{% endif %}
+                                    {{- result.name -}}
+                                    {%- for context in result.institutions -%}
+                                        {%- if institution|relatedTo(context.id) -%}
+                                            , {{ context.name_primary -}}
+                                        {%- endif -%}
+                                    {%- endfor -%}
                                     {#</div>#}
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
@@ -327,8 +395,30 @@
                                 <div class="accordion__description js-accordion__description">
                                     <ul class="info-list u-margin">
                                         <li class="info-list__item">
+                                            <div class="info-list__term">DEQAR Report ID</div>
+                                            <div class="info-list__definition">{{ result.id }}</div>
+                                        </li>
+                                        {% set first = true %}
+                                        {% for partner in result.institutions %}
+                                            {% if partner.id != institution.id and not institution|relatedTo(partner.id) %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">
+                                                    {% if first %}Report also applies to{% endif %}
+                                                </div>
+                                                <div class="info-list__definition">
+                                                    <a class="info-list__link" href="{{ pages.institution }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
+                                                </div>
+                                            </li>
+                                            {% set first = false %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.agency_id }}">{{ result.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ pages.agency }}?id={{ result.agency_id }}">{{ result.agency_name }} ({{ result.agency_acronym }})</a></div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Type</div>
+                                            <div class="info-list__definition">{{ result.agency_esg_activity }}</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
@@ -352,6 +442,14 @@
                                                 {% endif %}
                                             </div>
                                         </li>
+                                        {% if result.other_comment %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Notes</div>
+                                            <div class="info-list__definition">
+                                                {{ result.other_comment|e }}
+                                            </div>
+                                        </li>
+                                        {% endif %}
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
                                             <div class="info-list__definition">
@@ -377,6 +475,12 @@
                                                 </ul>
                                             </div>
                                         </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Permalink</div>
+                                            <div class="info-list__definition">
+                                                <a class="info-list__link" href="{{ permalinks.report|replace({ '{id}': result.id }) }}">{{ permalinks.report|replace({ '{id}': result.id }) }}</a>
+                                            </div>
+                                        </li>
 
                                         {% if result.report_links %}
                                             <li class="info-list__item">
@@ -390,12 +494,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-                        {% if institution.reports|length > 10 %}
-                            <div class="u-margin">
-                                <div class="pagination__indidator pagination__indidator--institutional u-margin-xs"></div>
-                                <ul class="pagination paginator pagination__list pagination__list--institutional"></ul>
-                            </div>
-                        {% endif %}
                     {% else %}
                         <p>No results found.</p>
                     {% endif %}
@@ -403,21 +501,27 @@
 
 
                 <h3 class="subtitle text-fields__subtitle reports-programme-title">Programme level</h3>
-                <div class="accordion u-margin-s reports-programme-container">
-
-                    {% if institution.programmes|hasHistorical %}
-                        <label for="show-invalid-programme" class="report-switch">
-                            <input type="checkbox" name="show-invalid-programme" id="show-invalid-programme" value="true" checked="checked" class="js-report-witch js-report-witch-programme">
-                            show historic reports <span>({{ institution.programmes|countHistorical }})</span>
-                        </label>
-                    {% endif %}
+                <div class="accordion u-margin-l reports-container reports-programme-container">
 
                     {% if institution.programmes %}
+                        <div class="pagination__indicator pagination__indicator--reports u-margin-xs"></div>
+                        {% if institution.programmes|length > 10 %}
+                            <ul class="pagination paginator pagination__list pagination__list--reports u-margin-xs"></ul>
+                        {% endif %}
                         {% for result in institution.programmes %}
-                            <div class="accordion__item{% if result.report.report_valid == false %} report-invalid{% else %} report-valid{% endif %} item-visible">
+                            {% for programme in result.programmes %}
+                            <div class="accordion__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
+                                    data-programme_name="{{ programme.name_primary }}"
+                                    data-programme_level="{{ programme.qf_ehea_level }}"
+                                    data-report_valid="{% if result.report_valid %}1{% else %}0{% endif %}"
+                                    data-valid_from="{{ result.valid_from }}"
+                                    data-agency_acronym="{{ result.agency_acronym }}"
+                                    data-agency_esg_activity="{{ result.agency_esg_activity }}"
+                                    data-decision="{{ result.decision }}"
+                                    data-status="{{ result.status }}">
                                 <div class="accordion__definition js-accordion__definition">
 
-                                    {% if result.report.report_valid == false %}
+                                    {% if result.report_valid == false %}
                                         <svg width="20px" height="20px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="accordion__clock">
                                             <title>Historic report</title>
                                             <path d="M12,0 C7.03,0 3,4.03 3,9 L0,9 L3.89,12.89 L3.96,13.03 L8,9 L5,9 C5,5.13 8.13,2 12,2 C15.87,2 19,5.13 19,9 C19,12.87 15.87,16 12,16 C10.07,16 8.32,15.21 7.06,13.94 L5.64,15.36 C7.27,16.99 9.51,18 12,18 C16.97,18 21,13.97 21,9 C21,4.03 16.97,0 12,0 Z" id="Path"></path>
@@ -427,7 +531,7 @@
 
                                     <div class="accordion__definition-icons">
 
-                                        {% if result.report.status == "part of obligatory EQA system" %}
+                                        {% if result.status == "part of obligatory EQA system" %}
                                         <span class="accordion-icon-wrapper">
                                             <svg width="13px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.75 15.58" class="accordion-icon accordion-icon__shield">
                                                 <title>Part of the obligatory external QA system</title>
@@ -445,10 +549,10 @@
                                         </span>
                                         {% endif %}
 
-                                        {% if result.report.decision == "negative" %}
+                                        {% if result.decision == "negative" %}
                                         <span class="accordion-icon-wrapper">
                                             <svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__gavel">
-                                                <title>Decision: {{ result.report.decision }}</title>
+                                                <title>Decision: {{ result.decision }}</title>
                                                 <path d="M0 16.0838H8.48656V17.4982H0V16.0838ZM2.99859 6.93951L5 4.9381L15 14.9381L12.9986 16.9395L2.99859 6.93951ZM8.00566 1.93951L12.0085 5.94234L10.0071 7.94376L6.00424 3.94093L8.00566 1.93951ZM2.00141 7.93669L6.00424 11.9395L4.00283 13.9409L0 9.9381L2.00141 7.93669Z" fill="#18498F"/>
                                                 <rect x="0.725586" y="9.73596" width="10" height="4.91375" transform="rotate(-45 0.725586 9.73596)" fill="#18498F"/>
                                                 <circle cx="21" cy="6" r="6" fill="#950000"/>
@@ -457,10 +561,10 @@
                                         </span>
                                         {% endif %}
 
-                                        {% if result.report.decision starts with "positive" %}
+                                        {% if result.decision starts with "positive" %}
                                         <span class="accordion-icon-wrapper">
                                             <svg width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__gavel">
-                                                <title>Decision: {{ result.report.decision }}</title>
+                                                <title>Decision: {{ result.decision }}</title>
                                                 <path d="M0 16.0838H8.48656V17.4982H0V16.0838ZM2.99859 6.93951L5 4.9381L15 14.9381L12.9986 16.9395L2.99859 6.93951ZM8.00566 1.93951L12.0085 5.94234L10.0071 7.94376L6.00424 3.94093L8.00566 1.93951ZM2.00141 7.93669L6.00424 11.9395L4.00283 13.9409L0 9.9381L2.00141 7.93669Z" fill="#18498F"/>
                                                 <rect x="0.725586" y="9.73596" width="10" height="4.91375" transform="rotate(-45 0.725586 9.73596)" fill="#18498F"/>
                                                 <circle cx="21" cy="6" r="6" fill="#41875E"/>
@@ -469,7 +573,7 @@
                                         </span>
                                         {% endif %}
 
-                                        {% if result.report.agency_esg_activity_type == "joint programme" %}
+                                        {% if result.agency_esg_activity_type == "joint programme" %}
                                         <span class="accordion-icon-wrapper">
                                             <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="accordion-icon accordion-icon__hub">
                                                 <title>Joint programme</title>
@@ -481,17 +585,15 @@
                                     </div>
 
                                     {#<div class="accordion__title">#}
-                                        {%- for item in result.programme_names -%}
-                                            {%- if item.name_is_primary == true %}{{ item.name }}{% endif -%}
-                                        {%- endfor -%}
-                                        {%- if result.qf_ehea_level -%}
-                                        , {{ result.qf_ehea_level -}}
+                                        {{ programme.name_primary }}
+                                        {%- if programme.qf_ehea_level -%}
+                                        , {{ programme.qf_ehea_level -}}
                                         {%- endif -%}
-                                        {%- if result.report.institution_relationship_context -%},
-                                            {% for item in result.report.institution_relationship_context %}
-                                                {{ item.name_primary }}{% if loop.length != loop.index %} / {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
+                                        {%- for context in result.institutions -%}
+                                            {%- if institution|relatedTo(context.id) -%}
+                                                , {{ context.name_primary -}}
+                                            {%- endif -%}
+                                        {%- endfor %}
                                     {#</div>#}
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
@@ -501,89 +603,113 @@
                                 <div class="accordion__description accordion__description--two-tone js-accordion__description">
                                     <ul class="info-list info-list--padding info-list--programme-description">
 
-                                        {% if result.programme_names|length > 1 %}
-                                            {% set i = 0 -%}
-                                            {% for item in result.programme_names %}
+                                        {% if programme.programme_names|length > 1 %}
+                                            {% set first = true -%}
+                                            {% for item in programme.programme_names %}
                                                 {% if item.name_is_primary != true %}
                                                     <li class="info-list__item">
                                                         <div class="info-list__term">
-                                                            {%- if i == 0 %}Other names{% endif -%}
+                                                            {%- if first %}Other names{% endif -%}
                                                         </div>
                                                         <div class="info-list__definition">{{ item.name }}</div>
                                                     </li>
-                                                    {% set i = i + 1 %}
+                                                    {% set first = false %}
                                                 {% endif %}
                                             {% endfor %}
                                         {% endif %}
 
-                                        {% set i = 0 %}
-                                        {% for item in result.programme_names %}
+                                        {% for item in programme.programme_names %}
                                             {% if item.qualification %}
                                                 <li class="info-list__item">
                                                     <div class="info-list__term">
-                                                        {%- if i == 0 %}Qualification{% endif -%}
+                                                        {%- if loop.index == 1 %}Qualification{% endif -%}
                                                     </div>
                                                     <div class="info-list__definition">{{ item.qualification }}</div>
                                                 </li>
-                                                {% set i = i + 1 %}
                                             {% endif %}
                                         {% endfor %}
 
                                         <li class="info-list__item">
                                             <div class="info-list__term">Level</div>
-                                            <div class="info-list__definition">{{ result.qf_ehea_level ? result.qf_ehea_level : '-' }}{% if result.nqf_level %} (NQF {{ result.nqf_level }}){% endif %}</div>
+                                            <div class="info-list__definition">{{ programme.qf_ehea_level ? programme.qf_ehea_level : '-' }}{% if programme.nqf_level %} (NQF {{ programme.nqf_level }}){% endif %}</div>
                                         </li>
-                                        {% if result.report.agency_esg_activity_type == "joint programme" %}
-                                            {% set i = 0 %}
-                                            {% for partner in result.report.institutions %}
+                                        {% if result.agency_esg_activity_type == "joint programme" %}
+                                            {% set first = true -%}
+                                            {% for partner in result.institutions %}
+                                                {% if partner.id != institution.id and not institution|relatedTo(partner.id) %}
                                                 <li class="info-list__item">
                                                     <div class="info-list__term">
-                                                        {% if i == 0 %}Joint programme with{% endif %}
+                                                        {% if first %}Joint programme with{% endif %}
                                                     </div>
                                                     <div class="info-list__definition">
-                                                        <a class="info-list__link" href="{{ function('get_permalink', 418) }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
+                                                        <a class="info-list__link" href="{{ pages.institution }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
                                                     </div>
                                                 </li>
-                                                {% set i = i + 1 %}
+                                                {% set first = false %}
+                                                {% endif %}
                                             {% endfor %}
                                         {% endif %}
                                     </ul>
                                     <ul class="info-list info-list--padding">
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Type</div>
-                                            <div class="info-list__definition">{{ result.report.name }}</a></div>
+                                            <div class="info-list__term">DEQAR Report ID</div>
+                                            <div class="info-list__definition">{{ result.id }}</div>
                                         </li>
+                                        {% if result.programmes|length > 1 %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Clustered with</div>
+                                            {% for other in result.programmes %}
+                                                {% if other.id != programme.id %}
+                                                    <div class="info-list__definition">
+                                                        {{ other.name_primary }}{% if other.qf_ehea_level %} ({{ other.qf_ehea_level }}){% endif %}
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </li>
+                                        {% endif %}
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
-                                            <div class="info-list__definition"><a class="info-list__link" href="{{ function('get_permalink', 223) }}?id={{ result.report.agency_id }}">{{ result.report.agency_acronym }}</a></div>
+                                            <div class="info-list__definition"><a class="info-list__link" href="{{ pages.agency }}?id={{ result.agency_id }}">{{ result.agency_name }} ({{ result.agency_acronym }})</a></div>
+                                        </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Type</div>
+                                            <div class="info-list__definition">{{ result.name }} ({{ result.agency_esg_activity }})</a></div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Status</div>
-                                            <div class="info-list__definition">{{ result.report.status }}</div>
+                                            <div class="info-list__definition">{{ result.status }}</div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Formal decision</div>
-                                            <div class="info-list__definition">{{ result.report.decision }}</div>
+                                            <div class="info-list__definition">{{ result.decision }}</div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Date</div>
-                                            <div class="info-list__definition">{{ result.report.valid_from|date("d/m/Y") }}</div>
+                                            <div class="info-list__definition">{{ result.valid_from|date("d/m/Y") }}</div>
                                         </li>
                                         <li class="info-list__item">
                                             <div class="info-list__term">Valid until</div>
                                             <div class="info-list__definition">
-                                                {%- if result.report.valid_to -%}
-                                                    {{- result.report.valid_to|date("d/m/Y") -}}
+                                                {%- if result.valid_to -%}
+                                                    {{- result.valid_to|date("d/m/Y") -}}
                                                 {%- else -%}
                                                     not applicable
                                                 {%- endif -%}
                                             </div>
                                         </li>
+                                        {% if result.other_comment %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Notes</div>
+                                            <div class="info-list__definition">
+                                                {{ result.other_comment|e }}
+                                            </div>
+                                        </li>
+                                        {% endif %}
                                         <li class="info-list__item">
                                             <div class="info-list__term">Report and decision</div>
                                             <div class="info-list__definition">
                                                 <ul class="documents">
-                                                    {% for file in result.report.report_files %}
+                                                    {% for file in result.report_files %}
                                                         <li class="documents__item">
                                                             <a href="{{ file.file }}" target="_blank" rel="external" class="documents__link">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" class="documents__icon">
@@ -602,12 +728,18 @@
 
                                             </div>
                                         </li>
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Permalink</div>
+                                            <div class="info-list__definition">
+                                                <a class="info-list__link" href="{{ permalinks.report|replace({ '{id}': result.id }) }}">{{ permalinks.report|replace({ '{id}': result.id }) }}</a>
+                                            </div>
+                                        </li>
 
-                                        {% if result.report.report_links %}
+                                        {% if result.report_links %}
                                             <li class="info-list__item">
                                                 <div class="info-list__term"></div>
                                                 <div class="info-list__definition">
-                                                    <a class="info-list__link" href="{{ result.report.report_links[0].link }}" target="_blank">View record on agency’s website</a>
+                                                    <a class="info-list__link" href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website</a>
                                                 </div>
                                             </li>
                                         {% endif %}
@@ -618,19 +750,20 @@
                                 </div>
                             </div>
 
+                            {% endfor %}
                         {% endfor %}
-                        {% if institution.programmes|length > 10 %}
-                            <div class="u-margin-l">
-                                <div class="pagination__indidator pagination__indidator--reports u-margin-xs"></div>
-                                <ul class="pagination paginator pagination__list pagination__list--reports"></ul>
-                            </div>
-                        {% endif %}
 
                     {% else %}
                         <p>No results found.</p>
                     {% endif %}
 
                 </div> {# reports-programme-container #}
+
+                {% if cta.qa.form %}
+                <div class="form u-margin">
+                    {{ fn('gravity_form', cta.qa.form.id, false, false, false, '', true, '0') }}
+                </div>
+                {% endif %}
 
 			</div> {# l-two-column__content #}
 		</div> {# l-two-column #}

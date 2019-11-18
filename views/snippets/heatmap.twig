@@ -1,0 +1,73 @@
+<svg
+    id="eheamap"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 8729.1 6842.74"
+    class="map map-{{ maptype }} {{ post.get_field('blocks') ? 'u-margin' }}">
+    <metadata id="metadata0">
+        <rdf:RDF>
+            <cc:Work rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                <dc:title>Map of the European Higher Education Area (EHEA)</dc:title>
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    <title id="title0">Map of the European Higher Education Area (EHEA)</title>
+    <desc id="desc0">
+        A blank map of the European Higher Education Area (EHEA) and countries fully surrounded by the EHEA.
+        Every country has an id which is its ISO-3116-1-ALPHA2 code in lower case.
+        Members of the EU have a class=&quot;eu&quot;, all EHEA countries have a class=&quot;europe&quot;, non-EHEA countries have a class=&quot;nonehea&quot;.
+        Image based on https://commons.wikimedia.org/wiki/File:Blank_map_of_Europe_(with_disputed_regions).svg
+        by Júlio &quot;Tintazul&quot; Reis and Marian &quot;maix&quot; Sigler.
+        Made by Colin Tück, EQAR, 2017
+        Released under CreativeCommons Attribution ShareAlike (http://creativecommons.org/licenses/by-sa/2.5/).
+    </desc>
+
+    {% macro draw_country(country) %}
+        {% set color = { r: 24, g: 73, b: 143 } %}
+        {% set add_class = "" %}
+        {% if country.has_full_institution_list %}
+            {% if country.institution_count %}
+                {% set add_class = " eter-with-reports" %}
+                {% set shade = 0.3 + fn('log10',min(1, country.institution_count / country.institution_total) * 9 + 1) * 0.7 %}
+                {% set style = 'fill: rgb(' ~ (color.r+(255-color.r)*(1-shade))|round ~ ',' ~ (color.g+(255-color.g)*(1-shade))|round ~ ',' ~ (color.b+(255-color.b)*(1-shade))|round ~ ')' %}
+            {% else %}
+                {% set add_class = " eter-no-reports" %}
+            {% endif %}
+        {% else %}
+            {% if country.institution_count %}
+                {% set add_class = " non-eter-with-reports" %}
+            {% else %}
+                {% set add_class = " non-eter-no-reports" %}
+            {% endif %}
+        {% endif %}
+        {% if country.institution_count %}
+            <a xlink:href="?country={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english }}: {{ country.institution_count }} {% if country.has_full_institution_list %}({{ (100 * country.institution_count / country.institution_total)|round }}%) of {{ country.institution_total }} institutions have {{ country.reports_total }} QA reports{% else %}institutions with {{ country.reports_total }} QA reports{% endif %}">
+                <path id="{{ country.iso_3166_alpha2 }}" style="{{ style }}" class="europe{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}{{ add_class }}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+            </a>
+        {% else %}
+            <path id="{{ country.iso_3166_alpha2 }}" class="europe{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}{{ add_class }}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %}>
+                <title>{{ country.name_english }}: no institutions with reports</title>
+            </path>
+        {% endif %}
+    {% endmacro %}
+
+    {% import _self as this %}
+
+    {% for country in countriesEHEA %}
+        {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+            {{ this.draw_country( attribute(countriesByID, country.id) ? attribute(countriesByID, country.id) : country ) }}
+        {% endif %}
+    {% endfor %}
+
+    {% for country in countriesEHEA %}
+        {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+            {{ this.draw_country( attribute(countriesByID, country.id) ? attribute(countriesByID, country.id) : country ) }}
+        {% endif %}
+    {% endfor %}
+
+    <path class="eu nonehea" id="im" d="M1367.51,3132.39c-7.17,1.43-14.33,1.43-21.5,5.73-5.73,4.3-7.17,14.33-12.9,20.06-61.63,55.89,37.26,41.56,34.4-25.8Z"/>
+    <path class="nonehea" id="sm" d="M3248.43,5271.5c2.87-4.3,2.87-10,7.17-12.9C3267.07,5247.14,3264.2,5291.56,3248.43,5271.5Z"/>
+    <path class="nonehea" id="mc" d="M2511.79,5324.53c11.47,0,21.5-10,21.5-20.06s-10-18.63-21.5-18.63-21.5,8.6-21.5,18.63,10,20.06,21.5,20.06Z"/>
+
+</svg>

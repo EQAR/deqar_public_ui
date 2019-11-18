@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Agencies | List
+ * Template Name: Agencies | EQAR decisions
  *
  * Methods for TimberHelper can be found in the /functions sub-directory
  *
@@ -15,11 +15,7 @@ $eqarApi = new EqarApi();
 $context = Timber::get_context();
 
 $context['post'] = new TimberPost();
-$context['agencies'] = $eqarApi->getAgencies();
-$context['pages'] = array(
-        'agency' =>         get_field('agency_page'),
-        'qa_results' =>     get_field('qa-results_page'),
-    );
+$context['decisions'] = $eqarApi->getDecisions();
 
-Timber::render('agency-list.twig', $context);
+Timber::render('eqar-decisions.twig', $context);
 

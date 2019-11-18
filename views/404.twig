@@ -2,6 +2,15 @@
 
 {% block content %}
 <div class="error-404">
-    Sorry, the requested page cannot be found
+    {% if http_status == 404 %}
+        Sorry, the requested page cannot be found.
+    {% else %}
+        Sorry, the requested page caused an error.
+    {% endif %}
+    {% if error_message %}
+    <pre class="error-detail">
+        {{ error_message|e }}
+    </pre>
+    {% endif %}
 </div>
 {% endblock %}

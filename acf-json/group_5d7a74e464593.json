@@ -1,0 +1,108 @@
+{
+    "key": "group_5d7a74e464593",
+    "title": "Report page",
+    "fields": [
+        {
+            "key": "field_5d7a74e48e480",
+            "label": "Country page",
+            "name": "country_page",
+            "type": "page_link",
+            "instructions": "Single country page to link to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5d7a74e48e4b3",
+            "label": "Agency page",
+            "name": "agency_page",
+            "type": "page_link",
+            "instructions": "Single agency page to link to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5d7a74e48e4ef",
+            "label": "Institution page",
+            "name": "institution_page",
+            "type": "page_link",
+            "instructions": "Single institution page to link to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5d7a74fa990d7",
+            "label": "Report page",
+            "name": "report_page",
+            "type": "page_link",
+            "instructions": "Single report page to link to (default: same page)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "qa-result-single.php"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1568306491
+}

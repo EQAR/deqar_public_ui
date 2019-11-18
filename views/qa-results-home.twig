@@ -1,0 +1,73 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <main class="u-padding">
+        <div class="l-two-column u-container">
+            <div class="l-two-column__sidebar">
+                {% include 'snippets/sidebar.twig' %}
+
+                {% if post.get_field('cta_link') %}
+                    <a href="{{ post.get_field('cta_link') }}" class="call-to-action">
+                        <h3 class="call-to-action__title">{{ post.get_field('cta_title') }}</h3>
+                        {% if post.get_field('cta_description') %}
+                            <p class="call-to-action__description">{{ post.get_field('cta_description') }}</p>
+                        {% endif %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" class="call-to-action__arrow">
+                            <polygon points="0 1.21 1.18 0 7 6 7 6 7 6 1.18 12 0 10.78 4.64 6 0 1.21"/>
+                        </svg>
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class="l-two-column__content">
+                {% include 'views/snippets/breadcrumbs.twig' %}
+
+				{% for block in post.get_field('blocks') %}
+					{% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
+				{% endfor %}
+
+                {% include 'views/snippets/search.twig' with { type: 'simple', title: true, search_url: pages.qa_results } %}
+
+                {# map view #}
+                {% include 'views/snippets/heatmap.twig' %}
+
+                <h2 class="subtitle u-margin-xs">European Higher Education Area (EHEA)</h2>
+                <ul class="country-list u-margin-s">
+                    {% for country in countries %}
+                        {% if country.ehea_is_member and country.iso_3166_alpha2 != 'XK' %}
+                        <li class="country-list__item" title="{{ country.institution_count }} {% if country.has_full_institution_list %}({{ (100 * country.institution_count / country.institution_total)|round }}%) of {{ country.institution_total }} {% endif %}institutions in {{ country.name_english }} have QA reports">
+                            <a href="{{ pages.qa_results }}?query=&country={{ country.id }}" class="country-list__link">
+                                <span>{{ country.name_english }}</span>
+                                {#
+                                <span class="country-list__data">
+                                    <span class="country-list__battery--outer">
+                                        <span class="country-list__battery--inner" style="width: {{ (100 * country.institution_count / country.institution_total)|round }}%;"></span>
+                                    </span>
+                                #}
+                                <span class="country-list__count">{{ country.institution_count }}</span>
+                                {#
+                                </span>
+                                #}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <h2 class="subtitle u-margin-xs">Outside the EHEA</h2>
+                <ul class="country-list">
+                    {% for country in countries %}
+                        {% if not country.ehea_is_member or country.iso_3166_alpha2 == 'XK' %}
+                        <li class="country-list__item">
+                        <li class="country-list__item" title="See {{ country.institution_count }} institutions in {{ country.name_english }} with QA reports">
+                            <a href="{{ pages.qa_results }}?query=&country={{ country.id }}" class="country-list__link">
+                                {{ country.name_english }} <span class="country-list__count">{{ country.institution_count }}</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </main>
+{% endblock %}
