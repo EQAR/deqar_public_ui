@@ -357,9 +357,11 @@
 		}
 
 
-        public static function do404( $context, $http_status = 404, $error_message = null ) {
+        public static function do404( $http_status = 404, $error_message = null ) {
             status_header( $http_status );
             nocache_headers();
+            $context = Timber::get_context();
+            $context['http_status'] = $http_status;
             if (isset($error_message)) {
                 $context['error_message'] = $error_message;
             }

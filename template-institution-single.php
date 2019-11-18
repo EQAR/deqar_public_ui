@@ -34,7 +34,7 @@ if ( isset($context['request']->get['id']) ) {
     } elseif (preg_match('/^[A-Z][A-Z][0-9]{4}$/', $id, $matches)) {
         $institution    = $eqarApi->getInstitutionByEterId( $matches[0] );
     } else {
-        Site::do404($context, 400, "Malformed DEQARINST or ETER ID provided.");
+        Site::do404(400, "Malformed DEQARINST or ETER ID provided.");
     }
 
     if ( isset($institution) && !empty($institution) && $institution != false ) {
@@ -98,11 +98,11 @@ if ( isset($context['request']->get['id']) ) {
         }
 
     } else {
-        Site::do404($context);
+        Site::do404();
     }
 
 } else {
-    Site::do404($context, 400, "DEQARINST or ETER ID needs to be given in 'id' parameter.");
+    Site::do404(400, "DEQAR institution ID or ETER ID must be provided.");
 }
 
 // Render the twig template.
