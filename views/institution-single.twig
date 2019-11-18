@@ -511,7 +511,10 @@
                         {% for result in institution.programmes %}
                             {% for programme in result.programmes %}
                             <div class="accordion__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
+                                    data-programme_name="{{ programme.name_primary }}"
+                                    data-programme_level="{{ programme.qf_ehea_level }}"
                                     data-report_valid="{% if result.report_valid %}1{% else %}0{% endif %}"
+                                    data-valid_from="{{ result.valid_from }}"
                                     data-agency_acronym="{{ result.agency_acronym }}"
                                     data-agency_esg_activity="{{ result.agency_esg_activity }}"
                                     data-decision="{{ result.decision }}"
