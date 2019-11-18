@@ -216,7 +216,7 @@
                         <ul class="{% if agency.activities|length > 3 %}activity-list {% endif %}l-label u-margin">
                             {% for activity in agency.activities %}
                                 <li class="l-label__item activity-list__item">
-                                    {% if activity.activity_valid_to %}
+                                    {% if activity.activity_valid_to and date(activity.activity_valid_to) < date() %}
                                         <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="list-icon list-icon__history">
                                             <title>Archived entry - activity that was carried out in the past</title>
                                             <g opacity="0.8">

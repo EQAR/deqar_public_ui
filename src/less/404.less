@@ -2,10 +2,22 @@
     text-align: center;
     font-size: 50px;
     padding: 100px;
-    opacity: 0.5;
+    color: fade(@primary, 50%);
     @media (max-width: 580px) {
         font-size: 35px;
         line-height: 35px;
         padding: 100px;
+    }
+
+    .error-detail {
+        text-align: left;
+        font-size: 14px;
+        font-family: monospace;
+        color: @accent-dark;
+        background-color: @accent-light;
+        white-space: pre-line;
+        padding: 15px;
+        margin: 20px auto 0 auto;
+        max-width: 900px;
     }
 }

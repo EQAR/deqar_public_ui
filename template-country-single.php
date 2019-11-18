@@ -34,14 +34,14 @@ if ( isset($_GET['id']) && !empty($_GET['id']) ) {
     if ( isset($country) && !empty($country) && $country != false ) {
         $context['country'] = $country;
     } else {
-        Site::do404($context);
+        Site::do404();
     }
 
     $allCountries = $eqarApi->getCountries();
     $context['countriesAll'] = $allCountries;
 
 } else {
-    Site::do404($context);
+    Site::do404(400, "Country ID must be provided.");
 }
 
 // Render the twig template.

@@ -143,6 +143,28 @@
 		})
         // Run once
         .ready(function() {
+            $('.reports-programme-container > .accordion__item').sort( function(a,b) {
+                var cmpName = a.dataset.programme_name.localeCompare(b.dataset.programme_name);
+                if (cmpName == 0) {
+                    var cmpLevel = a.dataset.programme_level.localeCompare(b.dataset.programme_level);
+                    if (cmpLevel == 0) {
+                        var aDate = new Date(a.dataset.valid_from);
+                        var bDate = new Date(b.dataset.valid_from);
+                        if (aDate < bDate) {
+                            return(-1);
+                        } else if (aDate > bDate) {
+                            return(1);
+                        } else {
+                            return(0);
+                        }
+                    } else {
+                        return(cmpLevel);
+                    }
+                } else {
+                    return(cmpName);
+                }
+            }).appendTo('.reports-programme-container');
+
             $('.js-report-switch').trigger('change');
             if (window.innerWidth < 1024) {
                 $('.search-facets .js-accordion__description').hide();

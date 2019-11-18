@@ -32,13 +32,13 @@ if ( isset($_GET['id']) && !empty($_GET['id']) ) {
 
     } else {
 
-        Site::do404($context);
+        Site::do404();
 
     }
 
 } else {
 
-    Site::do404($context);
+    Site::do404(400, "DEQAR agency ID must be provided.");
 
 }
 
