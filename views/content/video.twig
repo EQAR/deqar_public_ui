@@ -1,4 +1,6 @@
-{% if fn('cn_cookies_accepted') and fn('cn_cookies_accepted') %}
+{{ fn('wpsc_delete_post_cache', post.ID) ? '' : '' }}
+
+{% if fn('function_exists', 'cn_cookies_accepted') and fn('cn_cookies_accepted') %}
     <div class="video u-margin">
 		<div class="video__container">
 			{{ block.video }}
