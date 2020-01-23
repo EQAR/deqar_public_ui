@@ -259,6 +259,13 @@
                                         </li>
                                         {% endfor %}
 
+                                        {% if report.local_identifier %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">Agency's identifier</div>
+                                                <div class="info-list__definition">{{ report.local_identifier }}</div>
+                                            </li>
+                                        {% endif %}
+
                                         {% if report.report_links %}
                                             <li class="info-list__item">
                                                 <div class="info-list__term"></div>
