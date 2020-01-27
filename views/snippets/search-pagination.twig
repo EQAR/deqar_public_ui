@@ -14,8 +14,8 @@
             <li class="pagination__item--disabled pagination__link">&laquo;</li>
             <li class="pagination__item--disabled pagination__link">&lsaquo;</li>
         {% else %}
-            <li class="pagination__item" title="First page"><a class="pagination__link" href="{{ post.link|addParameters(formdata,{ 'offset': 0, 'offset_page': null }) }}">&laquo;</a></li>
-            <li class="pagination__item" title="Previous page"><a class="pagination__link" href="{{ post.link|addParameters(formdata, { 'offset': paginator.prev, 'offset_page': null }) }}">&lsaquo;</a></li>
+            <li class="pagination__item" title="First page"><a class="pagination__link" href="{{ post.link|addParameters(formdata,{ 'offset': 0, 'offset_page': null }, masks|keys) }}">&laquo;</a></li>
+            <li class="pagination__item" title="Previous page"><a class="pagination__link" href="{{ post.link|addParameters(formdata, { 'offset': paginator.prev, 'offset_page': null }, masks|keys) }}">&lsaquo;</a></li>
         {% endif %}
         {% if paginator_style in [ 'input', 'select' ] %}
             <form action="{{ post.link }}" method="GET">
@@ -55,7 +55,7 @@
 
             {% for item in (from_page)..(to_page) %}
                 <li class="pagination__item">
-                    <a class="pagination__link{% if item == paginator.current %} current{% endif %}" href="{{ post.link|addParameters(formdata,{ 'offset': ( (item - 1) * paginator.limit), 'offset_page': null}) }}">
+                    <a class="pagination__link{% if item == paginator.current %} current{% endif %}" href="{{ post.link|addParameters(formdata,{ 'offset': ( (item - 1) * paginator.limit), 'offset_page': null}, masks|keys) }}">
                         {{ item }}
                     </a>
                 </li>
@@ -70,8 +70,8 @@
             <li class="pagination__item--disabled pagination__link">&rsaquo;</li>
             <li class="pagination__item--disabled pagination__link">&raquo;</li>
         {% else %}
-            <li class="pagination__item" title="Next page"><a class="pagination__link" href="{{ post.link|addParameters(formdata,{ 'offset': paginator.next, 'offset_page': null }) }}">&rsaquo;</a></li>
-            <li class="pagination__item" title="Last page"><a class="pagination__link" href="{{ url|addParameters(formdata,{ 'offset': ((paginator.pages - 1) * paginator.limit), 'offset_page': null }) }}">&raquo;</a></li>
+            <li class="pagination__item" title="Next page"><a class="pagination__link" href="{{ post.link|addParameters(formdata,{ 'offset': paginator.next, 'offset_page': null }, masks|keys) }}">&rsaquo;</a></li>
+            <li class="pagination__item" title="Last page"><a class="pagination__link" href="{{ url|addParameters(formdata,{ 'offset': ((paginator.pages - 1) * paginator.limit), 'offset_page': null }, masks|keys) }}">&raquo;</a></li>
         {% endif %}
         </ul>
     </div>
@@ -94,7 +94,7 @@
                         reverse
                     {% endif %}
                 {% endif %}">
-                <a href="{{ post.link|addParameters(formdata, { 'offset': 0, 'offset_page': null, 'ordering': (formdata.ordering == key.tag ? tag_secondary : key.tag ) } ) }}">
+                <a href="{{ post.link|addParameters(formdata, { 'offset': 0, 'offset_page': null, 'ordering': (formdata.ordering == key.tag ? tag_secondary : key.tag ) }, masks|keys) }}">
                     {{ key.label }}
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                         <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
@@ -108,7 +108,7 @@
         <h3 class="u-margin-xs">Results per page</h3>
         <ul class="results-per-page">
             {% for limit in results_per_page %}
-                <li><a {% if limit == formdata.limit %}class="current" {% endif %}href="{{ post.link|addParameters(formdata, { 'limit': limit, 'offset': ((formdata.offset/limit)|round(0,'floor'))*limit, 'offset_page': null }) }}">{{ limit }}</a></li>
+                <li><a {% if limit == formdata.limit %}class="current" {% endif %}href="{{ post.link|addParameters(formdata, { 'limit': limit, 'offset': ((formdata.offset/limit)|round(0,'floor'))*limit, 'offset_page': null }, masks|keys) }}">{{ limit }}</a></li>
             {% endfor %}
         </ul>
     </div>

@@ -255,19 +255,20 @@
          * @param  string       $base_url   Base URL
          * @param  array        $formdata   Existing parameter array
          * @param  array        $override   Parameters to add/change/remove
+         * @param  array        $masks      Parameters to mask
          * @return string                   URL with parameters
          */
-        public function addParameters( $base_url, $formdata, $override) {
+        public function addParameters( $base_url, $formdata, $override, $masks = array()) {
             $url = $base_url . '?';
             if (is_array($formdata)) {
                 foreach ($formdata as $key => $value) {
-                    if (! in_array($key, array_keys($override))) {
+                    if ( (! in_array($key, array_keys($override))) && (! in_array($key, $masks)) ) {
                         $url = $url . urlencode($key) . '=' . urlencode($value) . '&';
                     }
                 }
             }
             foreach ($override as $key => $value) {
-                if (isset($value)) {
+                if ($value !== null && (! in_array($key, $masks)) ) {
                     $url = $url . urlencode($key) . '=' . urlencode($value) . '&';
                 }
             }

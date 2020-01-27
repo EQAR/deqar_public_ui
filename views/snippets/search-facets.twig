@@ -14,10 +14,10 @@
                 <ul class="search-facet__choices search-facet--active">
                     <li class="search-query">
                         <form method="get" action="{{ url }}">
-                            {% include 'views/snippets/form-parameters.twig' with { override: { 'query': null, 'offset': null, 'offset_page': null } } %}
+                            {% include 'views/snippets/form-parameters.twig' with { override: { 'query': null, 'offset': 0, 'offset_page': null } } %}
                             <input type="text" name="query" class="search-query__text" value="{{ formdata.query|e }}" placeholder="{{ search.description }}">
                             {% if formdata.query %}
-                            <a class="search-query__clear js-search-query__clear" href="{{ url|addParameters(formdata,{ 'query': null, 'offset': null, 'ordering': null }) }}">
+                            <a class="search-query__clear js-search-query__clear" href="{{ url|addParameters(formdata,{ 'query': '', 'offset': 0, 'ordering': null }, masks|keys ) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
                                     <polygon points="10.79 0 12 1.18 7.22 5.82 12 10.46 10.79 11.64 6 7 1.22 11.64 0 10.46 4.78 5.82 0 1.18 1.22 0 6 4.64 10.79 0"/>
                                 </svg>
@@ -30,6 +30,7 @@
             </div>
         {% endif %}
         {% for facet in facets %}
+            {% if facet.tag not in masks|keys %}
             {% if attribute(formdata, facet.tag) %}
                 <div class="search-facet__item">
                     <div class="search-facet__label">
@@ -37,7 +38,7 @@
                     </div>
                     <ul class="search-facet__choices search-facet--active">
                         <li>
-                            <a class="search-facet__button--active" href="{{ post.link|addParameters(formdata,{ (facet.tag): null, 'offset': null }) }}">
+                            <a class="search-facet__button--active" href="{{ post.link|addParameters(formdata,{ (facet.tag): '', 'offset': 0 }, masks|keys) }}">
                                 {% if attribute(facet.value_labels, formdata[facet.tag]) %}
                                     {{ attribute(facet.value_labels, formdata[facet.tag]) }}
                                 {% else %}
@@ -63,7 +64,7 @@
                         <ul class="search-facet__choices js-accordion__description">
                         {% for i in 0..(field|length / 2 - 1) %}
                             <li>
-                                <a href="{{ url|addParameters(formdata,{ (facet.tag): field[2*i], offset: null }) }}">
+                                <a href="{{ url|addParameters(formdata,{ (facet.tag): field[2*i], offset: 0 }, masks|keys) }}">
                                 {% if attribute(facet.value_labels, field[2*i]) %}
                                     {{ attribute(facet.value_labels, field[2*i]) }}
                                 {% else %}
@@ -76,6 +77,7 @@
                         </ul>
                     </div>
                 {% endif %}
+            {% endif %}
             {% endif %}
         {% endfor %}
     </div>

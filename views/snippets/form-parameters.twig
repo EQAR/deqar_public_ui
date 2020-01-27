@@ -1,10 +1,14 @@
 {% for parameter in formdata|keys %}
-    {% if parameter in override|keys %}
-        {% if attribute(override, parameter) != null %}
-            <input type="hidden" name="{{ parameter }}" value="{{ attribute(override, parameter) }}">
+    {% if parameter not in masks|keys %}
+        {# masked parameters will be excluded #}
+        {% if parameter in override|keys %}
+            {# override parameter value, or skipped if null #}
+            {% if attribute(override, parameter) is not null %}
+            <input type="hidden" name="{{ parameter }}" value="{{ attribute(override, parameter) }}" />
+            {% endif %}
+        {% else %}
+            {# all other parameters are passed through #}
+            <input type="hidden" name="{{ parameter }}" value="{{ attribute(formdata, parameter) }}" />
         {% endif %}
-        {# parameters set to null are skipped #}
-    {% else %}
-        <input type="hidden" name="{{ parameter }}" value="{{ attribute(formdata, parameter) }}">
     {% endif %}
 {% endfor %}

@@ -32,15 +32,17 @@ $context['pages'] = array(
         'faq' =>                get_field('faq_page'),
     );
 
+// build list of allowed parameters
 $parameter_list = array(
     'limit',                                        // Number of entries to display.
     'offset',                                       // Number of entries to skip/offset.
     'offset_page',                                  // Number of entries to skip/offset as page number
     'ordering',                                     // Define the field upon which the results should be ordered
+    'query'
 );
 
 foreach($context['report_search']['facets'] as &$facet) {
-    // add facet to list of allowed parameters
+    // add facets to list of allowed parameters
     $parameter_list[] = $facet['tag'];
     // re-organise value labels
     if ( is_array($facet['value_labels']) ) {
@@ -52,12 +54,19 @@ foreach($context['report_search']['facets'] as &$facet) {
     }
 }
 
-// default parameters - currently, only for limit we have a default
-$parameters = array(    'limit'     => 20,              // 20 results/page
-                        'offset'    => 0,               // first page
-                        'ordering'  => '-date_created', // default sort (score if query, name else)
+// default parameters - fixed and variable ones
+$parameters = array(    'limit'     => get_field('limit'),      // results/page
+                        'offset'    => 0,                       // first page
+                        'ordering'  => get_field('ordering'),   // default sort order
     );
 
+if (is_array(get_field('defaults'))) {
+    foreach (get_field('defaults') as $d) {
+        $parameters[$d['key']] = $d['value'];
+    }
+}
+
+// get actual parameters passed in URL
 foreach ($parameter_list as $p) {
     if ( isset($context['request']->get[$p]) ) {
         $parameters[$p] = $context['request']->get[$p];
@@ -75,6 +84,15 @@ if (isset($parameters['agency']) && is_numeric($parameters['agency'])) {
 
 if (isset($parameters['country']) && is_numeric($parameters['country'])) {
     $parameters['country'] = $context['countriesByID'][$parameters['country']]->name_english;
+}
+
+// finally, masked parameters always override
+$context['masks'] = array();
+if (is_array(get_field('masks'))) {
+    foreach (get_field('masks') as $m) {
+        $parameters[$m['key']] = $m['value'];
+        $context['masks'][$m['key']] = $m['value'];
+    }
 }
 
 $results = $eqarApi->getReports($parameters);
