@@ -32,17 +32,23 @@
 				{% include 'views/snippets/breadcrumbs.twig' %}
 
                 <div class="u-margin-s">
-                {% for institution in report.institutions %}
-                    <h1 class="title u-margin-xs">{{ institution.name_primary }}</h1>
-                {% endfor %}
-                {% for programme in report.programmes %}
-                    <h2 class="subtitle u-margin-xs">
-                        {{ programme.name_primary }}
-                        {%- if programme.qf_ehea_level -%}
-                            , {{ programme.qf_ehea_level -}}
-                        {%- endif -%}
-                    </h2>
-                {% endfor %}
+                {% if report.agency_esg_activity_type == "institutional" %}
+                    {% for institution in report.institutions %}
+                        <h1 class="title u-margin-xs">{{ institution.name_primary }}</h1>
+                    {% endfor %}
+                {% else %}
+                    {% for programme in report.programmes %}
+                        <h1 class="title u-margin-xs">
+                            {{ programme.name_primary }}
+                            {%- if programme.qf_ehea_level -%}
+                                , {{ programme.qf_ehea_level -}}
+                            {%- endif -%}
+                        </h1>
+                    {% endfor %}
+                    {% for institution in report.institutions %}
+                        <h2 class="subtitle u-margin-xs">{{ institution.name_primary }}</h2>
+                    {% endfor %}
+                {% endif %}
                 </div>
 
                 <div class="accordion">
@@ -252,6 +258,13 @@
                                             </div>
                                         </li>
                                         {% endfor %}
+
+                                        {% if report.local_identifier %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">Agency's identifier</div>
+                                                <div class="info-list__definition">{{ report.local_identifier }}</div>
+                                            </li>
+                                        {% endif %}
 
                                         {% if report.report_links %}
                                             <li class="info-list__item">

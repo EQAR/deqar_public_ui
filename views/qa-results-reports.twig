@@ -58,7 +58,7 @@
                                 </li>
                             {% for report in results.results %}
                                 <li class="search-results__item">
-                                    <a href="{{ pages.report|addParameters(formdata, { 'query': null, 'offset': null, 'limit': null, 'ordering': null, 'id': report.id } ) }}" class="search-results__link">
+                                    <a href="{{ pages.report|addParameters(formdata, { 'query': null, 'offset': null, 'limit': null, 'ordering': null, 'id': report.id }, masks|keys) }}" class="search-results__link">
                                         <div class="search-results__name-primary">
                                             <span>
                                                 {{ report.valid_from|date("d/m/Y") }}
