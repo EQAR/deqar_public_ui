@@ -185,13 +185,67 @@
                                         </li>
 
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Status</div>
+                                            <div class="info-list__term">
+                                                <span class="u-highlight js-toggle-modal" data-modal="modal-status">Status</span>
+                                                <button class="button tooltip-button js-toggle-modal" data-modal="modal-status">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                                        <path d="M10,0A10,10,0,1,0,20,10,10,10,0,0,0,10,0Zm1,17H9V15h2Zm2.07-7.75-.9.92A3.4,3.4,0,0,0,11,13H9v-.5a4,4,0,0,1,1.17-2.83l1.24-1.26A2,2,0,0,0,12,7,2,2,0,0,0,8,7H6a4,4,0,0,1,8,0A3.18,3.18,0,0,1,13.07,9.25Z"/>
+                                                    </svg>                                      
+                                                </button>
+                                            </div>
                                             <div class="info-list__definition">{{ report.status }}</div>
+
+                                            <div class="modal js-modal" data-modal="modal-status">
+                                                <div class="modal__overlay js-close-modal"></div>
+
+                                                <div class="modal__body">
+                                                    <button class="button modal__close js-close-modal">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                                            <path d="M10,0A10,10,0,1,0,20,10,10,10,0,0,0,10,0Zm5,13.59L13.59,15,10,11.41,6.41,15,5,13.59,8.59,10,5,6.41,6.41,5,10,8.59,13.59,5,15,6.41,11.41,10Z"/>
+                                                        </svg>
+                                                    </button>
+
+                                                    <div class="text-fields">
+                                                        <h3 class="subtitle subtitle--light text-fields__subtitle">Status</h3>
+                                                        <div class="text text--modal text-fields__text">
+                                                            <p>“Part of the obligatory EQA system” means that the QA Result carries an official status by law or statute in the higher education system where the institution is based. For example, the results of an obligatory accreditation or evaluation will have this status.</p>
+                                                            <p>Any other QA Results are marked as “voluntary”. While these QA Results do not have an official status, they were nevertheless carried out in compliance with European standards. For example, institutions might hold an accreditation by a <a href="">European subject-specific label</a>, which is in addition to the required national accreditation.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </li>
 
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Formal decision</div>
+                                            <div class="info-list__term">
+                                                <span class="u-highlight js-toggle-modal" data-modal="modal-formal-decision">Formal decision</span>
+                                                <button class="button tooltip-button js-toggle-modal" data-modal="modal-formal-decision">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                                        <path d="M10,0A10,10,0,1,0,20,10,10,10,0,0,0,10,0Zm1,17H9V15h2Zm2.07-7.75-.9.92A3.4,3.4,0,0,0,11,13H9v-.5a4,4,0,0,1,1.17-2.83l1.24-1.26A2,2,0,0,0,12,7,2,2,0,0,0,8,7H6a4,4,0,0,1,8,0A3.18,3.18,0,0,1,13.07,9.25Z"/>
+                                                    </svg>                                      
+                                                </button>
+                                            </div>
                                             <div class="info-list__definition">{{ report.decision }}</div>
+
+                                            <div class="modal js-modal" data-modal="modal-formal-decision">
+                                                <div class="modal__overlay js-close-modal"></div>
+
+                                                <div class="modal__body">
+                                                    <button class="button modal__close js-close-modal">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                                            <path d="M10,0A10,10,0,1,0,20,10,10,10,0,0,0,10,0Zm5,13.59L13.59,15,10,11.41,6.41,15,5,13.59,8.59,10,5,6.41,6.41,5,10,8.59,13.59,5,15,6.41,11.41,10Z"/>
+                                                        </svg>
+                                                    </button>
+
+                                                    <div class="text-fields">
+                                                        <h3 class="subtitle subtitle--light text-fields__subtitle">Formal Decision</h3>
+                                                        <div class="text text--modal text-fields__text">
+                                                            <p>Within the framework of the ESG (see Part 1 and standard 2.1) quality assurance agencies set their own standards, which they apply in their external QA procedures.</p>
+                                                            <p>The agency imposed some conditions or other formal restrictions or qualifications. Conditions usually have to be fulfilled by the institution/programme concerned before it can be considered as meeting the standards.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </li>
 
                                         <li class="info-list__item">
