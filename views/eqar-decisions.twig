@@ -26,7 +26,7 @@
                             <ul class="u-margin-s">
                         {% endif %}
                         <li>
-                            {{ decision.agency_acronym }}: <a href="{{ decision.decision_file }}">{{ decision.decision_type }}</a> (decision of {{ decision.decision_date|date('d/m/Y') }})
+                            {{ decision.agency_acronym }}: <a href="{{ decision.decision_file }}">{{ decision.decision_type }}</a> (decision of {{ decision.decision_date|date('d/m/Y') }}{% if decision.decision_file_extra %}, annex: <a href="{{ decision.decision_file_extra }}">external review report</a>{% endif %})
                         </li>
                     {% endfor %}
                     </ul>
