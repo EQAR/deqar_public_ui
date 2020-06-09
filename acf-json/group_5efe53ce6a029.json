@@ -1,0 +1,66 @@
+{
+    "key": "group_5efe53ce6a029",
+    "title": "Footer EU Funding",
+    "fields": [
+        {
+            "key": "field_5efe53e906a5f",
+            "label": "Text",
+            "name": "eu_footer_text",
+            "type": "wysiwyg",
+            "instructions": "This text will be displayed next to the EU logo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5efe549406a60",
+            "label": "Pages",
+            "name": "eu_footer_pages",
+            "type": "post_object",
+            "instructions": "These pages will include the EU Funding Footer",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page",
+                "post"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 1,
+            "return_format": "id",
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 90,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1593731500
+}
