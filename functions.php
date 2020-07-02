@@ -48,6 +48,11 @@
 				'navigation_title' => get_field('footer_navigation_title', 'option'),
 			];
 
+			$context['eu_footer'] = [
+				'text' => get_field('eu_footer_text', 'option'),
+				'pages' => get_field('eu_footer_pages', 'option'),
+			];
+
 			$context['contact'] = [
 				'telephone' => get_field('contact_telephone', 'option'),
 				'email' => get_field('contact_email', 'option'),
