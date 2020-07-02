@@ -1,4 +1,5 @@
-<div class="image-accordion image-accordion--{{ block.image_size }} u-margin"{% if block.title %} id="{{ fn('sanitize_title', block.title) }}"{% endif %}>
+{% set fragment_id = block.title|uniqueId %}
+<div class="image-accordion image-accordion--{{ block.image_size }} u-margin"{% if block.title %} id="{{ fragment_id }}"{% endif %}>
     <div class="image-accordion__container">
         {% if block.image_size == 'landscape' %}
             <img src="{{ TimberImage(block.image)|resize(200, 150) }}" alt="{{ TimberImage(block.image).alt }}" class="image-accordion__image">
@@ -12,12 +13,12 @@
         <div class="text">{{ block.preview|wpautop }}</div>
 
         {% if block.read_more %}
-            <button class="button image-accordion__read-more js-image-accordion__read-more">
+            <a class="button image-accordion__read-more js-image-accordion__read-more" href="#{{ fragment_id }}">
                 Read more
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 12 7" class="image-accordion__arrow">
                     <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
                 </svg>
-            </button>
+            </a>
 
             <div class="text image-accordion__expandable js-image-accordion__expandable">{{ block.read_more }}</div>
         {% endif %}

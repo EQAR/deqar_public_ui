@@ -14,13 +14,22 @@
 			$(this).next('.js-menu__grandchildren').slideToggle();
         })
         // Image Accordion
-        .on('click', '.js-image-accordion__read-more', function(){
+        .on('click', '.js-image-accordion__read-more', function(e){
+            $(this).toggleClass('image-accordion__read-more--is-toggled');
             $(this).next('.js-image-accordion__expandable').slideToggle();
+            if ($(this).hasClass('image-accordion__read-more--is-toggled')) {
+                history.replaceState(null, null, this.hash);
+            }
+            e.preventDefault();
         })
         // Accordion
-        .on('click', '.js-accordion__definition', function(){
+        .on('click', '.js-accordion__definition', function(e){
             $(this).toggleClass('accordion__definition--is-toggled');
             $(this).next('.js-accordion__description').slideToggle();
+            if ($(this).hasClass('accordion__definition--is-toggled')) {
+                history.replaceState(null, null, this.hash);
+            }
+            e.preventDefault();
         })
         // Sidebar as accordion
         .on('click', '.js-sidebar--accordion', function() {
@@ -151,6 +160,20 @@
 		})
         // Run once
         .ready(function() {
+            // open (image) accordion if addressed in URL fragment
+            $('.js-accordion__definition').each(function() {
+                if (this.hash == window.location.hash) {
+                    $(this).toggleClass('accordion__definition--is-toggled');
+                    $(this).next('.js-accordion__description').toggle();
+                }
+            });
+            $('.js-image-accordion__read-more').each(function() {
+                if (this.hash == window.location.hash) {
+                    $(this).toggleClass('image-accordion__read-more--is-toggled');
+                    $(this).next('.js-image-accordion__expandable').toggle();
+                }
+            });
+            // sort programme level QA reports
             $('.reports-programme-container > .accordion__item').sort( function(a,b) {
                 var cmpName = a.dataset.programme_name.localeCompare(b.dataset.programme_name);
                 if (cmpName == 0) {
@@ -172,8 +195,9 @@
                     return(cmpName);
                 }
             }).appendTo('.reports-programme-container');
-
+            // initialise report filters
             $('.js-report-switch').trigger('change');
+            // collapse search facets on narrow display
             if (window.innerWidth < 1024) {
                 $('.search-facets .js-accordion__description').hide();
                 $('.search-facets .js-accordion__definition').removeClass('accordion__definition--is-toggled');

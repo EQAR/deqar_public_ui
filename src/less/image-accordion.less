@@ -28,6 +28,11 @@
 
 .image-accordion__arrow {
     fill: @primary;
+    transition: all 0.2s ease;
+}
+
+.image-accordion__read-more--is-toggled .image-accordion__arrow {
+    transform: rotate(180deg);
 }
 
 .image-accordion__expandable {

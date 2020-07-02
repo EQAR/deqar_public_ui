@@ -1,17 +1,18 @@
 {% if block.title %}
-    <h3 class="subtitle u-margin-s" id="{{ fn('sanitize_title', block.title) }}">{{ block.title }}</h3>
+    <h3 class="subtitle u-margin-s" id="{{ block.title|uniqueId }}">{{ block.title }}</h3>
 {% endif %}
 
 <div class="accordion u-margin">
     {% for item in block.items %}
-        <div class="accordion__item">
-            <div class="accordion__definition js-accordion__definition">
+        {% set fragment_id = item.definition|uniqueId %}
+        <div class="accordion__item" id="{{ fragment_id }}">
+            <a class="accordion__definition js-accordion__definition" href="#{{ fragment_id }}">
                 {{ item.definition }}
                 
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
                     <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
                 </svg>
-            </div>
+            </a>
             <div class="text accordion__description js-accordion__description">{{ item.description }}</div>
         </div>
     {% endfor %}
