@@ -1,0 +1,22 @@
+.tooltip-button,
+.tooltip-button svg {
+    width: 14px;
+    height: 14px;
+}
+
+.tooltip-button {
+    display: inline;
+    vertical-align: middle;
+    margin: -2px 0 0 0;
+    padding: 0;
+    background-color: transparent;
+
+    svg {
+        fill: @primary;
+        transition: all 0.2s ease;
+    }
+}
+
+    .tooltip-button:hover svg {
+        fill: @primary-dark;
+    }

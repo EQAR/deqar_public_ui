@@ -484,9 +484,24 @@
 
                                         {% if result.report_links %}
                                             <li class="info-list__item">
-                                                <div class="info-list__term"></div>
+                                                <div class="info-list__term">External link{% if result.report_links|length > 1 %}s{% endif %}</div>
                                                 <div class="info-list__definition">
+                                                {% if result.report_links|length > 1 %}
+                                                    View record on agency’s website:
+                                                    <ul>
+                                                    {% for link in result.report_links %}
+                                                        <li><a class="info-list__link" href="{{ link.link }}" target="_blank">
+                                                            {% if link.link_display_name %}
+                                                                {{ link.link_display_name }}
+                                                            {% else %}
+                                                                {{ link.link }}
+                                                            {% endif %}
+                                                        </a></li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                {% else %}
                                                     <a class="info-list__link" href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website</a>
+                                                {% endif %}
                                                 </div>
                                             </li>
                                         {% endif %}
@@ -658,13 +673,15 @@
                                         {% if result.programmes|length > 1 %}
                                         <li class="info-list__item">
                                             <div class="info-list__term">Clustered with</div>
-                                            {% for other in result.programmes %}
-                                                {% if other.id != programme.id %}
-                                                    <div class="info-list__definition">
-                                                        {{ other.name_primary }}{% if other.qf_ehea_level %} ({{ other.qf_ehea_level }}){% endif %}
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
+                                            <div class="info-list__definition">
+                                                <ul>
+                                                {% for other in result.programmes %}
+                                                    {% if other.id != programme.id %}
+                                                        <li>{{ other.name_primary }}{% if other.qf_ehea_level %} ({{ other.qf_ehea_level }}){% endif %}</li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
                                         </li>
                                         {% endif %}
                                         <li class="info-list__item">
@@ -737,9 +754,24 @@
 
                                         {% if result.report_links %}
                                             <li class="info-list__item">
-                                                <div class="info-list__term"></div>
+                                                <div class="info-list__term">External link{% if result.report_links|length > 1 %}s{% endif %}</div>
                                                 <div class="info-list__definition">
+                                                {% if result.report_links|length > 1 %}
+                                                    View record on agency’s website:
+                                                    <ul>
+                                                    {% for link in result.report_links %}
+                                                        <li><a class="info-list__link" href="{{ link.link }}" target="_blank">
+                                                            {% if link.link_display_name %}
+                                                                {{ link.link_display_name }}
+                                                            {% else %}
+                                                                {{ link.link }}
+                                                            {% endif %}
+                                                        </a></li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                {% else %}
                                                     <a class="info-list__link" href="{{ result.report_links[0].link }}" target="_blank">View record on agency’s website</a>
+                                                {% endif %}
                                                 </div>
                                             </li>
                                         {% endif %}
