@@ -27,6 +27,14 @@
             $(this).toggleClass('sidebar--accordion--is-toggled');
             $(this).find('.sidebar__menu').slideToggle();
         })
+        .on('click', '.js-toggle-modal', function(){
+			var value = $(this).data('modal');
+
+			$('.js-modal[data-modal="'+ value +'"]').toggleClass('modal--is-open');
+		})
+		.on('click', '.js-close-modal', function(){
+			$(this).closest('.js-modal').removeClass('modal--is-open');
+		})
         // Search term field
         .on('click', '.js-search-query', function(e) {
             $(e.currentTarget).find('.search-query__text').focus().select();
