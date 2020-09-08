@@ -398,20 +398,24 @@
                                             <div class="info-list__term">DEQAR Report ID</div>
                                             <div class="info-list__definition">{{ result.id }}</div>
                                         </li>
-                                        {% set first = true %}
+                                        {% set partners = [] %}
                                         {% for partner in result.institutions %}
                                             {% if partner.id != institution.id and not institution|relatedTo(partner.id) %}
-                                            <li class="info-list__item">
-                                                <div class="info-list__term">
-                                                    {% if first %}Report also applies to{% endif %}
-                                                </div>
-                                                <div class="info-list__definition">
-                                                    <a class="info-list__link" href="{{ pages.institution }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
-                                                </div>
-                                            </li>
-                                            {% set first = false %}
+                                                {% set partners = partners|merge([partner]) %}
                                             {% endif %}
                                         {% endfor %}
+                                        {% if partners %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">Report also applies to</div>
+                                                <div class="info-list__definition">
+                                                    <ul>
+                                                    {% for partner in partners %}
+                                                        <li><a class="info-list__link" href="{{ pages.institution }}?id={{ partner.id }}">{{ partner.name_primary }}</a></li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        {% endif %}
                                         <li class="info-list__item">
                                             <div class="info-list__term">Agency</div>
                                             <div class="info-list__definition"><a class="info-list__link" href="{{ pages.agency }}?id={{ result.agency_id }}">{{ result.agency_name }} ({{ result.agency_acronym }})</a></div>
@@ -619,50 +623,54 @@
                                     <ul class="info-list info-list--padding info-list--programme-description">
 
                                         {% if programme.programme_names|length > 1 %}
-                                            {% set first = true -%}
-                                            {% for item in programme.programme_names %}
-                                                {% if item.name_is_primary != true %}
-                                                    <li class="info-list__item">
-                                                        <div class="info-list__term">
-                                                            {%- if first %}Other names{% endif -%}
-                                                        </div>
-                                                        <div class="info-list__definition">{{ item.name }}</div>
-                                                    </li>
-                                                    {% set first = false %}
-                                                {% endif %}
-                                            {% endfor %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">Other names</div>
+                                                <div class="info-list__definition">
+                                                    <ul>
+                                                    {% for item in programme.programme_names %}
+                                                        {% if item.name_is_primary != true %}
+                                                            <li>{{ item.name }}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </li>
                                         {% endif %}
 
-                                        {% for item in programme.programme_names %}
-                                            {% if item.qualification %}
-                                                <li class="info-list__item">
-                                                    <div class="info-list__term">
-                                                        {%- if loop.index == 1 %}Qualification{% endif -%}
-                                                    </div>
-                                                    <div class="info-list__definition">{{ item.qualification }}</div>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">Qualification</div>
+                                            <div class="info-list__definition">
+                                                <ul>
+                                                {% for item in programme.programme_names %}
+                                                    {% if item.qualification %}
+                                                        <li>{{ item.qualification }}</li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </li>
 
                                         <li class="info-list__item">
                                             <div class="info-list__term">Level</div>
                                             <div class="info-list__definition">{{ programme.qf_ehea_level ? programme.qf_ehea_level : '-' }}{% if programme.nqf_level %} (NQF {{ programme.nqf_level }}){% endif %}</div>
                                         </li>
                                         {% if result.agency_esg_activity_type == "joint programme" %}
-                                            {% set first = true -%}
+                                            {% set partners = [] %}
                                             {% for partner in result.institutions %}
                                                 {% if partner.id != institution.id and not institution|relatedTo(partner.id) %}
-                                                <li class="info-list__item">
-                                                    <div class="info-list__term">
-                                                        {% if first %}Joint programme with{% endif %}
-                                                    </div>
-                                                    <div class="info-list__definition">
-                                                        <a class="info-list__link" href="{{ pages.institution }}?id={{ partner.id }}">{{ partner.name_primary }}</a>
-                                                    </div>
-                                                </li>
-                                                {% set first = false %}
+                                                    {% set partners = partners|merge([partner]) %}
                                                 {% endif %}
                                             {% endfor %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">Joint programme with</div>
+                                                <div class="info-list__definition">
+                                                    <ul>
+                                                    {% for partner in partners %}
+                                                        <li><a class="info-list__link" href="{{ pages.institution }}?id={{ partner.id }}">{{ partner.name_primary }}</a></li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </li>
                                         {% endif %}
                                     </ul>
                                     <ul class="info-list info-list--padding">
