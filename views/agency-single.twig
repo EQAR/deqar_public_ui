@@ -227,10 +227,10 @@
                                     {% endif %}
                                     {{ activity.activity }}<br>
                                     {% if activity.report_count > 0 %}
-                                        <a href="{{ pages.reports }}?agency={{ agency.id }}&activity={{ activity.activity }}" class="label label--qa-results" title="View the {{ activity.institution_count }} higher education institution(s) where {{ acronym_primary }} carried out {{ activity.activity }}">View {{ activity.report_count }} reports on {{ activity.institution_count }} institutions</a>
+                                        <a href="{{ pages.reports }}?agency={{ agency.id }}&activity={{ activity.activity }}" class="label label--qa-results" title="View {{ activity.activity }} reports by {{ acronym_primary }} (on {{ activity.institution_count }} higher education institutions)">View {{ activity.report_count }} reports</a>
                                     {% endif %}
                                     {% if activity.reports_link %}
-                                        <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label">Reports</a>
+                                        <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label" title="Link to procedural documents, criteria, handbooks or other documentation about this activity on the agency's website">Documentation</a>
                                     {% endif %}
                                 </li>
                             {% endfor %}
