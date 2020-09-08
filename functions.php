@@ -133,6 +133,7 @@
             $twig->addFilter(new Twig_SimpleFilter('getSections', [$this,'getSections'] ));
             $twig->addFilter(new Twig_SimpleFilter('addParameters', [$this,'addParameters'] ));
             $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
+            $twig->addFilter(new Twig_SimpleFilter('uniqueId', [$this,'uniqueId'] ));
 			return $twig;
 		}
 
@@ -314,6 +315,27 @@
                 return($result);
             } else {
                 return(false);
+            }
+        }
+
+        protected $fragments = array();
+
+        /**
+         * Return unique fragment identifier
+         * @param  string       $title          Human-readable block title
+         * @return string
+         */
+        public function uniqueId( $title = '_item' ) {
+            if (strlen($title) == 0) {
+                $title = '_item';
+            }
+            $base = sanitize_title($title);
+            if (isset($this->fragments[$base])) {
+                $this->fragments[$base]++;
+                return($base . '-' . $this->fragments[$base]);
+            } else {
+                $this->fragments[$base] = 1;
+                return($base);
             }
         }
 
