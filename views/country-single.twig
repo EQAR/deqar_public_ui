@@ -21,7 +21,7 @@
                         {% include 'views/snippets/breadcrumbs.twig' %}
                         <h1 class="title u-margin-xs">{{ country.name_english }}{% if country.iso_3166_alpha2 == 'XK' %}<a href="#xk-note"><sup>*</sup></a>{% endif %}</h1>
                         <ul class="l-label u-margin-s">
-                            {% if country.ehea_is_member and country.iso_3166_alpha2 != 'XK' %}
+                            {% if country.ehea_is_member %}
                             <li class="l-label__item">
                                <span class="label" title="{{ country.name_english }} is a part of the European Higher Education Area (EHEA) built by the Bologna Process">European Higher Education Area - EHEA</span>
                             </li>
@@ -40,7 +40,7 @@
                     {% endif %}
                 </div>
 
-                  {% if country.ehea_is_member and country.iso_3166_alpha2 != 'XK' %}
+                  {% if country.ehea_is_member %}
 
                     <ul class="info-list u-margin-s">
 
