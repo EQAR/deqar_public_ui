@@ -43,10 +43,10 @@
         {% endif %}
         {% if country.institution_count %}
             <a xlink:href="?country={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english }}: {{ country.institution_count }} {% if country.has_full_institution_list %}({{ (100 * country.institution_count / country.institution_total)|round }}%) of {{ country.institution_total }} institutions have {{ country.reports_total }} QA reports{% else %}institutions with {{ country.reports_total }} QA reports{% endif %}">
-                <path id="{{ country.iso_3166_alpha2 }}" style="{{ style }}" class="europe{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}{{ add_class }}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+                <path id="{{ country.iso_3166_alpha2 }}" style="{{ style }}" class="europe{% if country.is_micro_state %} circle{% endif %}{{ add_class }}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
             </a>
         {% else %}
-            <path id="{{ country.iso_3166_alpha2 }}" class="europe{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}{{ add_class }}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %}>
+            <path id="{{ country.iso_3166_alpha2 }}" class="europe{% if country.is_micro_state %} circle{% endif %}{{ add_class }}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %}>
                 <title>{{ country.name_english }}: no institutions with reports</title>
             </path>
         {% endif %}
@@ -55,19 +55,17 @@
     {% import _self as this %}
 
     {% for country in countriesEHEA %}
-        {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+        {% if not country.is_micro_state %}
             {{ this.draw_country( attribute(countriesByID, country.id) ? attribute(countriesByID, country.id) : country ) }}
         {% endif %}
     {% endfor %}
 
     {% for country in countriesEHEA %}
-        {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+        {% if country.is_micro_state %}
             {{ this.draw_country( attribute(countriesByID, country.id) ? attribute(countriesByID, country.id) : country ) }}
         {% endif %}
     {% endfor %}
 
     <path class="eu nonehea" id="im" d="M1367.51,3132.39c-7.17,1.43-14.33,1.43-21.5,5.73-5.73,4.3-7.17,14.33-12.9,20.06-61.63,55.89,37.26,41.56,34.4-25.8Z"/>
-    <path class="nonehea" id="sm" d="M3248.43,5271.5c2.87-4.3,2.87-10,7.17-12.9C3267.07,5247.14,3264.2,5291.56,3248.43,5271.5Z"/>
-    <path class="nonehea" id="mc" d="M2511.79,5324.53c11.47,0,21.5-10,21.5-20.06s-10-18.63-21.5-18.63-21.5,8.6-21.5,18.63,10,20.06,21.5,20.06Z"/>
 
 </svg>

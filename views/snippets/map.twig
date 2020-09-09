@@ -28,66 +28,54 @@
         {% if map.type == 'agencies' %}
             {% if country.agency_count > 0 %} active
                 {% set country_class = ' active' %}
-            {% else %}
-                {% set country_class = '' %}
             {% endif %}
-        {% elseif map.type == 'ehea-kc' %}
+        {% elseif country.ehea_is_member and map.type == 'ehea-kc' %}
             {% for shade in map.ehea_kc %}
                 {% if country.ehea_key_commitment == shade.tag %}
                     {% set country_class = ' ' ~ shade.class_map %}
                 {% endif %}
             {% endfor %}
-        {% elseif map.type == 'cross-border' %}
+        {% elseif country.ehea_is_member and map.type == 'cross-border' %}
             {% if country.external_QAA_is_permitted == 'yes' %}
                 {% set country_class = ' active' %}
             {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
                 {% set country_class = ' active2' %}
-            {% else %}
-                {% set country_class = '' %}
             {% endif %}
-        {% elseif map.type == 'european-approach' %}
+        {% elseif country.ehea_is_member and map.type == 'european-approach' %}
             {% if country.european_approach_is_permitted == 'yes' %}
                 {% set country_class = ' active' %}
             {% elseif country.european_approach_is_permitted == 'partially / with conditions' %}
                 {% set country_class = ' active2' %}
-            {% else %}
-                {% set country_class = '' %}
             {% endif %}
         {% elseif map.type == 'governmental-members' %}
             {% if country.eqar_governmental_member_start != null %}
                 {% set country_class = ' active' %}
-            {% else %}
-                {% set country_class = '' %}
             {% endif %}
         {% elseif map.type == 'highlight' %}
             {% if country.iso_3166_alpha2|upper == selected_country|upper %}
                 {% set country_class = ' active' %}
-            {% else %}
-                {% set country_class = '' %}
             {% endif %}
         {% endif %}
 
         <a xlink:href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
-            <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
+            <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.is_micro_state %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
         </a>
     {% endmacro %}
 
     {% import _self as this %}
 
     {% for country in countriesAll %}
-        {% if country.iso_3166_alpha2 not in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+        {% if not country.is_micro_state %}
             {{ this.draw_country(map, country, selected_country) }}
         {% endif %}
     {% endfor %}
 
     {% for country in countriesAll %}
-        {% if country.iso_3166_alpha2 in ['LU', 'MT', 'LI', 'VA', 'AD'] %}
+        {% if country.is_micro_state %}
             {{ this.draw_country(map, country, selected_country) }}
         {% endif %}
     {% endfor %}
 
     <path class="eu nonehea" id="im" d="M1367.51,3132.39c-7.17,1.43-14.33,1.43-21.5,5.73-5.73,4.3-7.17,14.33-12.9,20.06-61.63,55.89,37.26,41.56,34.4-25.8Z"/>
-    <path class="nonehea" id="sm" d="M3248.43,5271.5c2.87-4.3,2.87-10,7.17-12.9C3267.07,5247.14,3264.2,5291.56,3248.43,5271.5Z"/>
-    <path class="nonehea" id="mc" d="M2511.79,5324.53c11.47,0,21.5-10,21.5-20.06s-10-18.63-21.5-18.63-21.5,8.6-21.5,18.63,10,20.06,21.5,20.06Z"/>
 
 </svg>
