@@ -34,7 +34,7 @@
                 <h2 class="subtitle u-margin-xs">European Higher Education Area (EHEA)</h2>
                 <ul class="country-list u-margin-s">
                     {% for country in countries %}
-                        {% if country.ehea_is_member and country.iso_3166_alpha2 != 'XK' %}
+                        {% if country.ehea_is_member %}
                         <li class="country-list__item" title="{{ country.institution_count }} {% if country.has_full_institution_list %}({{ (100 * country.institution_count / country.institution_total)|round }}%) of {{ country.institution_total }} {% endif %}institutions in {{ country.name_english }} have QA reports">
                             <a href="{{ pages.qa_results }}?query=&country={{ country.id }}" class="country-list__link">
                                 <span>{{ country.name_english }}</span>
@@ -56,7 +56,7 @@
                 <h2 class="subtitle u-margin-xs">Outside the EHEA</h2>
                 <ul class="country-list">
                     {% for country in countries %}
-                        {% if not country.ehea_is_member or country.iso_3166_alpha2 == 'XK' %}
+                        {% if not country.ehea_is_member %}
                         <li class="country-list__item">
                         <li class="country-list__item" title="See {{ country.institution_count }} institutions in {{ country.name_english }} with QA reports">
                             <a href="{{ pages.qa_results }}?query=&country={{ country.id }}" class="country-list__link">

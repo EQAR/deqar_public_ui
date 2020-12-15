@@ -28,7 +28,7 @@
                             <h3 class="subtitle u-margin-s {{ shade.class_key }}">{{ shade.label }}</h3>
                             <ul class="country-list u-margin">
                                 {% for country in countriesAll %}
-                                    {% if country.ehea_key_commitment == shade.tag %}
+                                    {% if country.ehea_is_member and country.ehea_key_commitment == shade.tag %}
                                         <li class="country-list__item">
                                             <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                                 <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
@@ -45,7 +45,7 @@
                         <h3 class="subtitle u-margin-s map-legend-dark">{{ map.cross_border.yes }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
-                                {% if country.external_QAA_is_permitted == 'yes' %}
+                                {% if country.ehea_is_member and country.external_QAA_is_permitted == 'yes' %}
                                     <li class="country-list__item">
                                         <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
@@ -59,7 +59,7 @@
                         <h3 class="subtitle u-margin-s map-legend-medium">{{ map.cross_border.partially }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
-                                {% if country.external_QAA_is_permitted == 'partially / with conditions' %}
+                                {% if country.ehea_is_member and country.external_QAA_is_permitted == 'partially / with conditions' %}
                                     <li class="country-list__item">
                                         <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
@@ -73,7 +73,7 @@
                         <h3 class="subtitle u-margin-s map-legend-light">{{ map.cross_border.no }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
-                                {% if country.external_QAA_is_permitted == 'no' %}
+                                {% if country.ehea_is_member and country.external_QAA_is_permitted == 'no' %}
                                     <li class="country-list__item">
                                         <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
@@ -89,7 +89,7 @@
                         <h3 class="subtitle u-margin-s map-legend-dark">{{ map.european_approach.yes }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
-                                {% if country.european_approach_is_permitted == 'yes' %}
+                                {% if country.ehea_is_member and country.european_approach_is_permitted == 'yes' %}
                                     <li class="country-list__item">
                                         <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
@@ -103,7 +103,7 @@
                         <h3 class="subtitle u-margin-s map-legend-medium">{{ map.european_approach.partially }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
-                                {% if country.european_approach_is_permitted == 'partially / with conditions' %}
+                                {% if country.ehea_is_member and country.european_approach_is_permitted == 'partially / with conditions' %}
                                     <li class="country-list__item">
                                         <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
@@ -117,7 +117,7 @@
                         <h3 class="subtitle u-margin-s map-legend-light">{{ map.european_approach.no }}</h3>
                         <ul class="country-list u-margin">
                             {% for country in countriesAll %}
-                                {% if country.european_approach_is_permitted == 'no' %}
+                                {% if country.ehea_is_member and country.european_approach_is_permitted == 'no' %}
                                     <li class="country-list__item">
                                         <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="country-list__link">
                                             <!-- <span class="country-list__item">{{ country.iso_3166_alpha2 }}</span> -->
@@ -148,12 +148,14 @@
 
                         <ul class="country-list">
                             {% for country in countriesAll %}
+                                {% if country.ehea_is_member %}
                                 <li class="country-list__item">
                                     <a href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" title="{{ country.name_english }}" class="agency-list__link">
                                         <span class="agency-list__country">{{ country.iso_3166_alpha2 }}</span>
                                         {{ country.name_english }}
                                     </a>
                                 </li>
+                                {% endif %}
                             {% endfor %}
                         </ul>
 

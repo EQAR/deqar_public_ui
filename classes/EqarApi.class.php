@@ -455,12 +455,26 @@ class EqarApi
 
         return Timber\Helper::transient('DEQAR:countries-CBQA='.$external_qaa.'-EQAJP='.$european_approach.'-MEMBER='.$eqar_governmental_member,
             function() use ($external_qaa, $european_approach, $eqar_governmental_member) {
-                return $this->get('countries/', array(
+                $countries = $this->get('countries/', array(
                     'external_qaa' =>               $external_qaa,
                     'european_approach' =>          $european_approach,
                     'eqar_governmental_member' =>   $eqar_governmental_member,
                 ));
-
+                foreach($countries as $country) {
+                    $country->ehea_is_member = true; // API call above returns EHEA countries by definition, but they're not marked
+                    $country->is_micro_state = false; // default
+                }
+                // for the map not to have holes, we add non-EHEA territories in Europe:
+                foreach(EQAR_MAP_ADDITIONAL_COUNTRIES as $id) {
+                    array_push($countries, $this->get('countries/' . rawurlencode($id) . '/'));
+                }
+                // finally, we mark geographically small countries, which will be rendered as circle
+                foreach($countries as $country) {
+                    if (in_array($country->id, EQAR_MAP_MICRO_STATES)) {
+                        $country->is_micro_state = true;
+                    }
+                }
+                return($countries);
             }, EQAR_CACHE_TIME);
 
     }
@@ -476,7 +490,16 @@ class EqarApi
 
         return Timber\Helper::transient('DEQAR:countriesByReports', function() {
 
-            return $this->get('countries/by-reports/');
+            $countries = $this->get('countries/by-reports/');
+            foreach($countries as $country) {
+                // this array may be used in maps, thus we mark geographically small countries
+                if (in_array($country->id, EQAR_MAP_MICRO_STATES)) {
+                    $country->is_micro_state = true;
+                } else {
+                    $country->is_micro_state = false;
+                }
+            }
+            return $countries;
 
         }, EQAR_CACHE_TIME);
 

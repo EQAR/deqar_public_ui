@@ -135,30 +135,36 @@
                                             </div>
                                         </li>
                                         {% if programme.programme_names|length > 1 %}
-                                            {% set first = true -%}
-                                            {% for item in programme.programme_names %}
-                                                {% if item.name_is_primary != true %}
-                                                    <li class="info-list__item">
-                                                        <div class="info-list__term">
-                                                            {%- if first %}Other names{% endif -%}
-                                                        </div>
-                                                        <div class="info-list__definition">{{ item.name }}</div>
-                                                    </li>
-                                                    {% set first = false %}
-                                                {% endif %}
-                                            {% endfor %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">
+                                                    Other names
+                                                </div>
+                                                <div class="info-list__definition">
+                                                    <ul>
+                                                    {% for item in programme.programme_names %}
+                                                        {% if item.name_is_primary != true %}
+                                                            <li>{{ item.name }}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </li>
                                         {% endif %}
 
-                                        {% for item in programme.programme_names %}
-                                            {% if item.qualification %}
-                                                <li class="info-list__item">
-                                                    <div class="info-list__term">
-                                                        {%- if loop.index == 1 %}Qualification{% endif -%}
-                                                    </div>
-                                                    <div class="info-list__definition">{{ item.qualification }}</div>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
+                                        <li class="info-list__item">
+                                            <div class="info-list__term">
+                                                Qualification
+                                            </div>
+                                            <div class="info-list__definition">
+                                                <ul>
+                                                {% for item in programme.programme_names %}
+                                                    {% if item.qualification %}
+                                                        <li>{{ item.qualification }}</li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </li>
 
                                         <li class="info-list__item info-list__item--separator">
                                             <div class="info-list__term">Level</div>
@@ -248,16 +254,18 @@
                                             </div>
                                         </li>
 
-                                        {% for institution in report.institutions %}
                                         <li class="info-list__item">
-                                            <div class="info-list__term">{% if loop.index == 1 %}Institution page{% endif %}</div>
+                                            <div class="info-list__term">Institution page{% if report.institutions|length > 1 %}s{% endif %}</div>
                                             <div class="info-list__definition">
-                                                <a class="info-list__link" href="{{ pages.institution }}?id={{ institution.id }}">
+                                                <ul>
+                                                {% for institution in report.institutions %}
+                                                    <li><a class="info-list__link" href="{{ pages.institution }}?id={{ institution.id }}">
                                                     {{ institution.name_primary }}
-                                                </a>
+                                                    </a></li>
+                                                {% endfor %}
+                                                </ul>
                                             </div>
                                         </li>
-                                        {% endfor %}
 
                                         {% if report.local_identifier %}
                                             <li class="info-list__item">
@@ -268,9 +276,24 @@
 
                                         {% if report.report_links %}
                                             <li class="info-list__item">
-                                                <div class="info-list__term"></div>
+                                                <div class="info-list__term">External link{% if report.report_links|length > 1 %}s{% endif %}</div>
                                                 <div class="info-list__definition">
+                                                {% if report.report_links|length > 1 %}
+                                                    View record on agency’s website:
+                                                    <ul>
+                                                    {% for link in report.report_links %}
+                                                        <li><a class="info-list__link" href="{{ link.link }}" target="_blank">
+                                                            {% if link.link_display_name %}
+                                                                {{ link.link_display_name }}
+                                                            {% else %}
+                                                                {{ link.link }}
+                                                            {% endif %}
+                                                        </a></li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                {% else %}
                                                     <a class="info-list__link" href="{{ report.report_links[0].link }}" target="_blank">View record on agency’s website</a>
+                                                {% endif %}
                                                 </div>
                                             </li>
                                         {% endif %}
