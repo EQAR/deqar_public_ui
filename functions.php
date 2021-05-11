@@ -129,6 +129,7 @@
             $twig->addFilter(new Twig_SimpleFilter('countHistorical', [$this,'countHistorical'] ));
             $twig->addFilter(new Twig_SimpleFilter('isChildOf', [$this,'isChildOf'] ));
             $twig->addFilter(new Twig_SimpleFilter('visibleChildren', [$this,'visibleChildren'] ));
+            $twig->addFilter(new Twig_SimpleFilter('visibleSublevels', [$this,'visibleSublevels'] ));
             $twig->addFilter(new Twig_SimpleFilter('getSections', [$this,'getSections'] ));
             $twig->addFilter(new Twig_SimpleFilter('addParameters', [$this,'addParameters'] ));
             $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
@@ -228,6 +229,22 @@
             } else {
                 return(false);
             }
+        }
+
+        /**
+         * Return number of sublevels with visible pages, incl. current page even if hidden
+         * @param  TimberPost    $page    Page object
+         * @return array/bool             Result (false if none)
+         */
+        public function visibleSublevels( $page, $include_id = null ) {
+            $levels = 0;
+            foreach ($page->children('page') as $subpage) {
+                if ( ($subpage->get_field('hide_page') != 'true') || ( isset($include_id) && $subpage->id == $include_id) ) {
+                    $sublevels = $this->visibleSublevels( $subpage, $include_id);
+                    $levels = max($levels, $sublevels + 1);
+                }
+            }
+            return($levels);
         }
 
         /**

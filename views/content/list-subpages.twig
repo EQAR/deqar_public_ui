@@ -2,7 +2,7 @@
     {% import _self as this %}
     {% if depth > 0 and parent|visibleChildren|length > 0 %}
         {% if style == 'numbered' %}<ol>{% else %}<ul>{% endif %}
-        {% for item in parent.children('page') %}
+        {% for item in parent|visibleChildren %}
             <li>
                 <a href="{{ fn('get_the_permalink', item) }}">
                     {{ fn('get_the_title', item) }}
