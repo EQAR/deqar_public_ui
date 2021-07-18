@@ -1,0 +1,142 @@
+{
+    "key": "group_5fde2cefd103a",
+    "title": "Tooltips",
+    "fields": [
+        {
+            "key": "field_5fde2cd460ee7",
+            "label": "",
+            "name": "tooltips",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_5fde2cde60ee8",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add Tooltip",
+            "sub_fields": [
+                {
+                    "key": "field_5fde2cde60ee8",
+                    "label": "Location",
+                    "name": "id",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "registration-valid-until": "Agency - registration dates",
+                        "agency-decisions": "Agency - decisions and reports",
+                        "governmental-membership": "Country - governmental membership",
+                        "eqa-requirements": "Country - external QA requirements",
+                        "cross-border-quality-assurance": "Country - cross-border QA - label",
+                        "eligibility-requirements": "Country - cross-border QA - eligibility",
+                        "conditions": "Country - cross-border QA - conditions",
+                        "recognition": "Country - cross-border QA - recognition",
+                        "european-approach": "Country - European Approach",
+                        "deqar-report-id": "DEQAR - report ID",
+                        "status": "DEQAR - status",
+                        "formal-decision": "DEQAR - formal decision",
+                        "no-valid-to-date": "DEQAR - no valid to date set",
+                        "level": "DEQAR - programme level"
+                    },
+                    "default_value": false,
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 0,
+                    "return_format": "value",
+                    "ajax": 0,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5fde2cf360ee9",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5fde2cfe60eea",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0
+                },
+                {
+                    "key": "field_5fde2d1f60eeb",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "page_link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "page",
+                        "attachment"
+                    ],
+                    "taxonomy": "",
+                    "allow_null": 0,
+                    "allow_archives": 1,
+                    "multiple": 0
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-tooltips"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1626634171
+}

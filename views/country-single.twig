@@ -45,7 +45,7 @@
                     <ul class="info-list u-margin-s">
 
                         <li class="info-list__item">
-                            <div class="info-list__term">Membership in EQAR</div>
+                            <div class="info-list__term">{{ 'Governmental membership'|tooltip }}</div>
                             <div class="info-list__definition">
                                 {% if country.eqar_governmental_member_start != null %}
                                     {{ country.name_english }} has been a Governmental Member of EQAR since {{ country.eqar_governmental_member_start|date('F Y') }}.
@@ -66,7 +66,7 @@
                     {% endif %}
 
                         <li class="info-list__item">
-                            <div class="info-list__term">National external quality assurance requirements</div>
+                            <div class="info-list__term">{{ 'National external quality assurance requirements'|tooltip('eqa-requirements') }}</div>
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                     {% if country.qa_requirement_note %}
@@ -85,7 +85,7 @@
                         </li>
 
                         <li class="info-list__item">
-                            <div class="info-list__term">Cross-border quality assurance</div>
+                            <div class="info-list__term">{{ 'Cross-border quality assurance'|tooltip }}</div>
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                     {% if country.external_QAA_is_permitted is not empty %}
@@ -104,7 +104,7 @@
                                         {% if country.eligibility is not empty %}
                                             <li class="info-list__item">
                                                 <p>
-                                                    <strong>Eligibility requirements for foreign agencies:</strong>
+                                                    <strong>{{ 'Eligibility requirements'|tooltip }} for foreign agencies:</strong>
                                                     {{ country.eligibility|striptags('p') }}
                                                 </p>
                                             </li>
@@ -112,7 +112,7 @@
                                         {% if country.conditions is not empty %}
                                             <li class="info-list__item">
                                                 <p>
-                                                    <strong>Conditions for the agencies’ work (e.g. criteria to be used):</strong>
+                                                    <strong>{{ 'Conditions'|tooltip }} for the agencies’ work (e.g. criteria to be used):</strong>
                                                     {{ country.conditions|striptags('p') }}
                                                 </p>
                                             </li>
@@ -120,7 +120,7 @@
                                         {% if country.recognition is not empty %}
                                             <li class="info-list__item">
                                                 <p>
-                                                    <strong>Recognition of reviews carried out by foreign agencies:</strong>
+                                                    <strong>{{ 'Recognition'|tooltip }} of reviews carried out by foreign agencies:</strong>
                                                     {{ country.recognition|striptags('p') }}
                                                 </p>
                                             </li>
@@ -132,7 +132,7 @@
                         </li> {# cross-border QA #}
 
                         <li class="info-list__item">
-                            <div class="info-list__term">European Approach for Quality Assurance of Joint Programmes</div>
+                            <div class="info-list__term">{{ 'European Approach for Quality Assurance of Joint Programmes'|tooltip('european-approach') }}</div>
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                 {% if country.european_approach_is_permitted is not empty %}

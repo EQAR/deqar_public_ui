@@ -395,7 +395,7 @@
                                 <div class="accordion__description js-accordion__description">
                                     <ul class="info-list u-margin">
                                         <li class="info-list__item">
-                                            <div class="info-list__term">DEQAR Report ID</div>
+                                            <div class="info-list__term">{{ 'DEQAR Report ID'|tooltip }}</div>
                                             <div class="info-list__definition">{{ result.id }}</div>
                                         </li>
                                         {% set partners = [] %}
@@ -425,11 +425,11 @@
                                             <div class="info-list__definition">{{ result.agency_esg_activity }}</a></div>
                                         </li>
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Status</div>
+                                            <div class="info-list__term">{{ 'Status'|tooltip }}</div>
                                             <div class="info-list__definition">{{ result.status }}</div>
                                         </li>
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Formal decision</div>
+                                            <div class="info-list__term">{{ 'Formal decision'|tooltip }}</div>
                                             <div class="info-list__definition">{{ result.decision }}</div>
                                         </li>
                                         <li class="info-list__item">
@@ -442,7 +442,7 @@
                                                 {% if result.valid_to %}
                                                     {{ result.valid_to|date("d/m/Y") }}
                                                 {% else %}
-                                                    not applicable
+                                                    {{ 'not applicable'|tooltip('no-valid-to-date') }}
                                                 {% endif %}
                                             </div>
                                         </li>
@@ -651,7 +651,7 @@
                                         </li>
 
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Level</div>
+                                            <div class="info-list__term">{{ 'Level'|tooltip }}</div>
                                             <div class="info-list__definition">{{ programme.qf_ehea_level ? programme.qf_ehea_level : '-' }}{% if programme.nqf_level %} (NQF {{ programme.nqf_level }}){% endif %}</div>
                                         </li>
                                         {% if result.agency_esg_activity_type == "joint programme" %}
@@ -675,7 +675,7 @@
                                     </ul>
                                     <ul class="info-list info-list--padding">
                                         <li class="info-list__item">
-                                            <div class="info-list__term">DEQAR Report ID</div>
+                                            <div class="info-list__term">{{ 'DEQAR Report ID'|tooltip }}</div>
                                             <div class="info-list__definition">{{ result.id }}</div>
                                         </li>
                                         {% if result.programmes|length > 1 %}
@@ -701,11 +701,11 @@
                                             <div class="info-list__definition">{{ result.name }} ({{ result.agency_esg_activity }})</a></div>
                                         </li>
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Status</div>
+                                            <div class="info-list__term">{{ 'Status'|tooltip }}</div>
                                             <div class="info-list__definition">{{ result.status }}</div>
                                         </li>
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Formal decision</div>
+                                            <div class="info-list__term">{{ 'Formal decision'|tooltip }}</div>
                                             <div class="info-list__definition">{{ result.decision }}</div>
                                         </li>
                                         <li class="info-list__item">
@@ -718,7 +718,7 @@
                                                 {%- if result.valid_to -%}
                                                     {{- result.valid_to|date("d/m/Y") -}}
                                                 {%- else -%}
-                                                    not applicable
+                                                    {{- 'not applicable'|tooltip('no-valid-to-date') -}}
                                                 {%- endif -%}
                                             </div>
                                         </li>

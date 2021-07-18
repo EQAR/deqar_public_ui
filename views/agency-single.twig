@@ -86,7 +86,7 @@
                 <ul class="info-list u-margin-s">
                     {% if agency.is_registered %}
                     <li class="info-list__item">
-                        <div class="info-list__term">Admission valid until</div>
+                        <div class="info-list__term">{{ 'Registration valid until'|tooltip }}</div>
                         <div class="info-list__definition">{{ agency.registration_valid_to|date("d/m/Y") }} (listed since {{ agency.registration_start|date("d/m/Y") }})</div>
                     </li>
                     {% endif %}
@@ -155,7 +155,7 @@
                     {% endif %}
 
                     <li class="info-list__item">
-                        <div class="info-list__term">EQAR registration decisions and reports on the agency</div>
+                        <div class="info-list__term">{{ 'EQAR registration decisions and reports on the agency'|tooltip('agency-decisions') }}</div>
                         <div class="info-list__definition">
                             <ul class="documents">
                                 {% for decision in agency.decisions %}

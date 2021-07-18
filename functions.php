@@ -32,6 +32,10 @@
 			add_action('init', [$this, 'acf']);
 			add_action('login_enqueue_scripts', [$this, 'login_stylesheet']);
 
+            foreach (get_field('tooltips', 'option') as $tooltip) {
+                $this->known_tooltips[] = $tooltip['id'];
+            }
+
 			parent::__construct();
 		}
 
@@ -134,6 +138,8 @@
             $twig->addFilter(new Twig_SimpleFilter('addParameters', [$this,'addParameters'] ));
             $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
             $twig->addFilter(new Twig_SimpleFilter('uniqueId', [$this,'uniqueId'] ));
+            $twig->addFilter(new Twig_SimpleFilter('tooltip', [$this,'tooltip'], ['is_safe' => ['html']] ));
+            $twig->addFunction(new Twig_SimpleFunction('usedTooltips', [$this,'usedTooltips'] ));
 			return $twig;
 		}
 
@@ -355,6 +361,41 @@
             }
         }
 
+        protected $known_tooltips = array();
+        protected $used_tooltips = array();
+
+        /**
+         * Highlight text as tooltip anchor
+         * @param  string       $text           The text to highlight
+         * @param  string       $tag            Tag name/ID of the tooltip
+         * @return string
+         */
+        public function tooltip( $text, $tag = null) {
+            if (! isset($tag)) {
+                $tag = sanitize_title($text);
+            }
+            if (in_array($tag, $this->known_tooltips)) {
+                $this->used_tooltips[$tag] = 1;
+                return(Timber::compile('snippets/tooltip.twig', ['tag' => $tag, 'text' => $text]));
+            } else {
+                return($text);
+            }
+        }
+
+        /**
+         * Return tooltips used on this page
+         * @return array
+         */
+        public function usedTooltips() {
+            $used = [];
+            foreach (get_field('tooltips', 'option') as $tooltip) {
+                if (isset($this->used_tooltips[$tooltip['id']])) {
+                    $used[] = $tooltip;
+                }
+            }
+            return($used);
+        }
+
 		function acf(){
 			if( function_exists('acf_add_options_page') ) {
 
@@ -387,6 +428,12 @@
 				acf_add_options_sub_page([
 					'page_title' 	=> 'Maps',
 					'menu_title' 	=> 'Maps',
+					'parent_slug'	=> 'theme-general-settings',
+				]);
+
+				acf_add_options_sub_page([
+					'page_title' 	=> 'Tooltips',
+					'menu_title' 	=> 'Tooltips',
 					'parent_slug'	=> 'theme-general-settings',
 				]);
 			}
