@@ -280,7 +280,7 @@
          * @param  array        $masks      Parameters to mask
          * @return string                   URL with parameters
          */
-        public function addParameters( $base_url, $formdata, $override, $masks = array()) {
+        public function addParameters( $base_url, $formdata, $override = array(), $masks = array()) {
             $url = $base_url . '?';
             if (is_array($formdata)) {
                 foreach ($formdata as $key => $value) {
