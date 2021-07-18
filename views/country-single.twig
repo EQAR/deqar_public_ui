@@ -35,7 +35,7 @@
                     </div>
                     {% if country.ehea_is_member %}
                     <div class="country-header__map">
-                        {% include 'views/snippets/map.twig' with { 'maptype': 'highlight', 'selected_country': country.iso_3166_alpha2, 'country_page': pages.country } %}
+                        {% include 'views/snippets/map.twig' with { 'map': { 'type': 'highlight', 'selected': country.iso_3166_alpha2, 'country_page': pages.country } } %}
                     </div>
                     {% endif %}
                 </div>
@@ -95,7 +95,7 @@
                                         {% elseif country.external_QAA_is_permitted == 'yes' %}
                                         In {{ country.name_english }} higher education institutions may choose a suitable EQAR-registered agency.
                                         {% elseif country.external_QAA_is_permitted == 'partially / with conditions' %}
-                                        In {{ country.name_english }} under certain conditions higher education institutions may choose a suitable EQAR-registered agency.
+                                        In {{ country.name_english }} higher education institutions may choose a suitable EQAR-registered agency under certain conditions.
                                         {% endif %}
                                     </p>
                                     {% endif %}
