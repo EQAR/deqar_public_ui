@@ -152,6 +152,13 @@
                             </div>
                         </li> {# european approach #}
 
+                        <li class="info-list__item">
+                            <div class="info-list__term">Permalink</div>
+                            <div class="info-list__definition">
+                                <a class="info-list__link" href="{{ permalinks.country|replace({ '{id}': country.id }) }}">{{ permalinks.country|replace({ '{id}': country.id }) }}</a>
+                            </div>
+                        </li>
+
                         {% if country.qaa_regulations is not empty %}
                         <li class="info-list__item">
                             <div class="info-list__term">Further information</div>

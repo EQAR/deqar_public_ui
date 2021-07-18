@@ -193,6 +193,13 @@
                         </div>
                     </li>
 
+                    <li class="info-list__item">
+                        <div class="info-list__term">Permalink</div>
+                        <div class="info-list__definition">
+                            <a class="info-list__link" href="{{ permalinks.agency|replace({ '{id}': agency.id }) }}">{{ permalinks.agency|replace({ '{id}': agency.id }) }}</a>
+                        </div>
+                    </li>
+
                 </ul>
 
                 {% if agency.is_registered %}
