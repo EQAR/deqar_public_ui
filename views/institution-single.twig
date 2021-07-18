@@ -486,6 +486,13 @@
                                             </div>
                                         </li>
 
+                                        {% if result.local_identifier %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">Agency's identifier</div>
+                                                <div class="info-list__definition">{{ result.local_identifier }}</div>
+                                            </li>
+                                        {% endif %}
+
                                         {% if result.report_links %}
                                             <li class="info-list__item">
                                                 <div class="info-list__term">External link{% if result.report_links|length > 1 %}s{% endif %}</div>
@@ -759,6 +766,13 @@
                                                 <a class="info-list__link" href="{{ permalinks.report|replace({ '{id}': result.id }) }}">{{ permalinks.report|replace({ '{id}': result.id }) }}</a>
                                             </div>
                                         </li>
+
+                                        {% if result.local_identifier %}
+                                            <li class="info-list__item">
+                                                <div class="info-list__term">Agency's identifier</div>
+                                                <div class="info-list__definition">{{ result.local_identifier }}</div>
+                                            </li>
+                                        {% endif %}
 
                                         {% if result.report_links %}
                                             <li class="info-list__item">
