@@ -62,17 +62,7 @@ if ( isset($context['request']->get['id']) ) {
             }
         }
 
-        foreach(array_merge($institution->reports, $institution->programmes) as $report) {
-            foreach($context['search']['facets'] as &$facet) {
-                if ( !empty($facet['report_field']) ) {
-                    if ( isset($facet['field'][$report->{$facet['report_field']}]) ) {
-                        $facet['field'][$report->{$facet['report_field']}]++;
-                    } else {
-                        $facet['field'][$report->{$facet['report_field']}] = 1;
-                    }
-                }
-            }
-        }
+        make_facet_field(array_merge($institution->reports, $institution->programmes), $context['search']['facets']);
 
         foreach($institution->hierarchical_relationships->includes as $rel) {
             if (isset($rel->valid_to) and $rel->valid_to != null) {

@@ -272,40 +272,7 @@
 		<div class="l-two-column u-container">
 
 			<div class="l-two-column__sidebar">
-                <div class="call-to-action search-facets">
-                    <h3 class="call-to-action__title js-accordion__definition accordion__definition--is-toggled">
-                        Filter reports
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">
-                            <polygon points="10.79 0 12 1.18 6 7 6 7 6 7 0 1.18 1.22 0 6 4.64 10.79 0"/>
-                        </svg>
-                    </h3>
-                    <div class="report-switches js-report-switch js-accordion__description">
-                        {% for facet in search.facets %}
-                            {% if facet.report_field %}
-                                <div class="search-facet__item">
-                                    <div class="search-facet__label">
-                                        {{ facet.label }}
-                                    </div>
-                                    <ul class="search-facet__choices search-facet--active" data-report-field="{{ facet.report_field }}">
-                                    {% for value, count in facet.field %}
-                                        <li class="report-switch">
-                                            <input type="checkbox" name="show-{{ facet.report_field }}-{{ value|e('html_attr') }}" value="{{ value|e('html_attr') }}"{% if not facet.select or facet.select == value %} checked="checked"{% endif %}>
-                                            <label for="show-{{ facet.report_field }}-{{ value|e('html_attr') }}">
-                                                {% if attribute(facet.value_labels, value) %}
-                                                    {{ attribute(facet.value_labels, value) }}
-                                                {% else %}
-                                                    {{ value }}
-                                                {% endif %}
-                                                <span class="report-counter"></span>
-                                            </label>
-                                        </li>
-                                    {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
+                {{ include('snippets/js-search-facets.twig', { title: 'Filter reports', facets: search.facets }) }}
 			</div>
 
 			<div class="l-two-column__content">
@@ -317,7 +284,7 @@
                             <ul class="pagination paginator pagination__list pagination__list--institutional u-margin-xs"></ul>
                         {% endif %}
                         {% for result in institution.reports %}
-                            <div class="accordion__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
+                            <div class="accordion__item facet-search__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
                                     data-report_valid="{% if result.report_valid %}1{% else %}0{% endif %}"
                                     data-agency_acronym="{{ result.agency_acronym }}"
                                     data-agency_esg_activity="{{ result.agency_esg_activity }}"
@@ -536,7 +503,7 @@
                         {% endif %}
                         {% for result in institution.programmes %}
                             {% for programme in result.programmes %}
-                            <div class="accordion__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
+                            <div class="accordion__item facet-search__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
                                     data-programme_name="{{ programme.name_primary }}"
                                     data-programme_level="{{ programme.qf_ehea_level }}"
                                     data-report_valid="{% if result.report_valid %}1{% else %}0{% endif %}"

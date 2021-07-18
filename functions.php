@@ -521,3 +521,18 @@
 	}
 	
 	add_filter( 'upload_mimes', 'mime_types' );
+
+    // initialise facet fields for frontend filtering
+    function make_facet_field( $source, &$facets ) {
+        foreach($source as $item) {
+            foreach($facets as &$facet) {
+                if ( !empty($facet['report_field']) ) {
+                    if ( isset($facet['field'][$item->{$facet['report_field']}]) ) {
+                        $facet['field'][$item->{$facet['report_field']}]++;
+                    } else {
+                        $facet['field'][$item->{$facet['report_field']}] = 1;
+                    }
+                }
+            }
+        }
+    }
