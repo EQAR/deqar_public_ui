@@ -78,7 +78,7 @@
                     {% endif %}
                     {% if agency.report_count > 0 %}
                         <li class="l-label__item">
-                            <a href="{{ pages.qa_results }}?query=&agency={{ agency.id }}" class="label label--qa-results" title="View the {{ agency.institution_count }} higher education institutions with quality assurance reports by {{ acronym_primary }}">View {{ agency.report_count }} reports on {{ agency.institution_count }} institutions</a>
+                            <a href="{{ pages.qa_results|addParameters({'query': '', 'agency': agency.id }) }}" class="label label--qa-results" title="View the {{ agency.institution_count }} higher education institutions with quality assurance reports by {{ acronym_primary }}">View {{ agency.report_count }} reports on {{ agency.institution_count }} institutions</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -86,7 +86,7 @@
                 <ul class="info-list u-margin-s">
                     {% if agency.is_registered %}
                     <li class="info-list__item">
-                        <div class="info-list__term">Admission valid until</div>
+                        <div class="info-list__term">{{ 'Registration valid until'|tooltip }}</div>
                         <div class="info-list__definition">{{ agency.registration_valid_to|date("d/m/Y") }} (listed since {{ agency.registration_start|date("d/m/Y") }})</div>
                     </li>
                     {% endif %}
@@ -155,7 +155,7 @@
                     {% endif %}
 
                     <li class="info-list__item">
-                        <div class="info-list__term">EQAR registration decisions and reports on the agency</div>
+                        <div class="info-list__term">{{ 'EQAR registration decisions and reports on the agency'|tooltip('agency-decisions') }}</div>
                         <div class="info-list__definition">
                             <ul class="documents">
                                 {% for decision in agency.decisions %}
@@ -193,6 +193,13 @@
                         </div>
                     </li>
 
+                    <li class="info-list__item">
+                        <div class="info-list__term">Permalink</div>
+                        <div class="info-list__definition">
+                            <a class="info-list__link" href="{{ permalinks.agency|replace({ '{id}': agency.id }) }}">{{ permalinks.agency|replace({ '{id}': agency.id }) }}</a>
+                        </div>
+                    </li>
+
                 </ul>
 
                 {% if agency.is_registered %}
@@ -227,7 +234,7 @@
                                     {% endif %}
                                     {{ activity.activity }}<br>
                                     {% if activity.report_count > 0 %}
-                                        <a href="{{ pages.reports }}?agency={{ agency.id }}&activity={{ activity.activity }}" class="label label--qa-results" title="View {{ activity.activity }} reports by {{ acronym_primary }} (on {{ activity.institution_count }} higher education institutions)">View {{ activity.report_count }} reports</a>
+                                        <a href="{{ pages.reports|addParameters({'agency': agency.id, 'activity': activity.activity}) }}" class="label label--qa-results" title="View {{ activity.activity }} reports by {{ acronym_primary }} (on {{ activity.institution_count }} higher education institutions)">View {{ activity.report_count }} reports</a>
                                     {% endif %}
                                     {% if activity.reports_link %}
                                         <a href="{{ activity.reports_link }}" rel="external" target="_blank" class="label" title="Link to procedural documents, criteria, handbooks or other documentation about this activity on the agency's website">Documentation</a>
@@ -247,7 +254,7 @@
                         {% for country in agency.countries %}
                             <li class="activity-list__item">
                                 <p>
-                                    <a class="agency" href="{{ pages.country }}?id={{ country.country_url|split('/')[7] }}">
+                                    <a class="agency" href="{{ pages.country|addParameters({'id': country.country_url|split('/')[7]}) }}">
                                         {% if country.country_is_official %}
                                         <svg width="13px" height="17px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.75 15.58" class="list-icon list-icon__shield">
                                             <title>{{ acronym_primary }} operates as part of the obligatory external QA system in {{ country.name_english }}</title>
@@ -270,7 +277,7 @@
                                         </span>
                                         {% endif %}
                                         {% if country.report_count > 0 %}
-                                            <a href="{{ pages.qa_results }}?query=&agency={{ agency.id }}&country={{ country.country_url|split('/')[7] }}" class="label label--qa-results">View {{ country.report_count }} reports on {{ country.institution_count }} institutions</a>
+                                            <a href="{{ pages.qa_results|addParameters({'query': '', 'agency': agency.id, 'country': country.country_url|split('/')[7] }) }}" class="label label--qa-results">View {{ country.report_count }} reports on {{ country.institution_count }} institutions</a>
                                         {% endif %}
                                     </a>
                                 </p>
@@ -289,7 +296,7 @@
                             <div class="info-list__term">Address</div>
                             <div class="info-list__definition">
                                 {{ agency.address }}
-                                <a href="{{ pages.country }}?id={{ agency.country.id }}" class="info-list__link">{{ agency.country.name_english }}</a>
+                                <a href="{{ pages.country|addParameters({'id': agency.country.id }) }}" class="info-list__link">{{ agency.country.name_english }}</a>
                             </div>
                         </li>
                     {% endif %}
