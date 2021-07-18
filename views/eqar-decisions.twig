@@ -5,6 +5,12 @@
 		<div class="l-two-column u-container">
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
+
+                {{ include('snippets/js-search-facets.twig', { title: "Filter decisions", facets: [
+                    { report_field: 'decision_type',    label: 'Type' },
+                    { report_field: 'year',             label: 'Year' }
+                 ] } ) }}
+                {#  { report_field: 'agency_acronym',   label: 'Agency' }, #}
 			</div>
 
 			<div class="l-two-column__content">
@@ -15,7 +21,7 @@
                 {% endfor %}
 
                 {% set year = 1970 %}
-                <div class="text">
+                <div class="text facet-search-container">
                     <ul>
                     {% for decision in decisions %}
                         {% set this_year = decision.decision_date|date('Y') %}
@@ -25,7 +31,10 @@
                             <h2 class="subtitle u-margin-xs">{{ year }}</h2>
                             <ul class="u-margin-s">
                         {% endif %}
-                        <li>
+                        <li class="facet-search__item"
+                            data-decision_type="{{ decision.decision_type }}"
+                            data-agency_acronym="{{ decision.agency_acronym }}"
+                            data-year="{{ year }}">
                             {{ decision.agency_acronym }}: <a href="{{ decision.decision_file }}">{{ decision.decision_type }}</a> (decision of {{ decision.decision_date|date('d/m/Y') }}{% if decision.decision_file_extra %}, annex: <a href="{{ decision.decision_file_extra }}">external review report</a>{% endif %})
                         </li>
                     {% endfor %}
