@@ -487,31 +487,6 @@
 	// Disable WordPress admin bar for all users.
 	show_admin_bar(false);
 
-	// Initiate and move Gravity Forms scripts to footer
-	// https://gist.github.com/eriteric/5d6ca5969a662339c4b3
-
-	add_filter( 'gform_init_scripts_footer', '__return_true' );
-	add_filter( 'gform_cdata_open', 'wrap_gform_cdata_open', 1 );
-	add_filter( 'gform_cdata_close', 'wrap_gform_cdata_close', 99 );
-
-	function wrap_gform_cdata_open( $content = '' ) {
-		if ( ( defined('DOING_AJAX') && DOING_AJAX ) || isset( $_POST['gform_ajax'] ) ) {
-			return $content;
-		}
-
-		$content = 'document.addEventListener( "DOMContentLoaded", function() { ';
-		return $content;
-	}
-
-	function wrap_gform_cdata_close( $content = '' ) {
-		if ( ( defined('DOING_AJAX') && DOING_AJAX ) || isset( $_POST['gform_ajax'] ) ) {
-			return $content;
-		}
-
-		$content = ' }, false );';
-		return $content;
-	}
-
 	// Upload EPS files
 
 	function mime_types( $mimes ) {
