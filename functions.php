@@ -32,8 +32,10 @@
 			add_action('init', [$this, 'acf']);
 			add_action('login_enqueue_scripts', [$this, 'login_stylesheet']);
 
-            foreach (get_field('tooltips', 'option') as $tooltip) {
-                $this->known_tooltips[] = $tooltip['id'];
+            if (get_field('tooltips', 'option')) {
+                foreach (get_field('tooltips', 'option') as $tooltip) {
+                    $this->known_tooltips[] = $tooltip['id'];
+                }
             }
 
 			parent::__construct();
@@ -388,9 +390,11 @@
          */
         public function usedTooltips() {
             $used = [];
-            foreach (get_field('tooltips', 'option') as $tooltip) {
-                if (isset($this->used_tooltips[$tooltip['id']])) {
-                    $used[] = $tooltip;
+            if (get_field('tooltips', 'option')) {
+                foreach (get_field('tooltips', 'option') as $tooltip) {
+                    if (isset($this->used_tooltips[$tooltip['id']])) {
+                        $used[] = $tooltip;
+                    }
                 }
             }
             return($used);
