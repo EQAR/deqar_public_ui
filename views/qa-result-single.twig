@@ -37,7 +37,7 @@
                         <h1 class="title u-margin-xs">{{ institution.name_primary }}</h1>
                     {% endfor %}
                 {% else %}
-                    {% for programme in report.programmes %}
+                    {% for programme in report.programmes|programmeSort %}
                         <h1 class="title u-margin-xs">
                             {{ programme.name_primary }}
                             {%- if programme.qf_ehea_level -%}
@@ -125,7 +125,7 @@
                         <div class="accordion__description accordion__description--two-tone" style="display: block;">
                                 {% if report.programmes %}
                                     <ul class="info-list info-list--padding info-list--programme-description">
-                                    {% for programme in report.programmes %}
+                                    {% for programme in report.programmes|programmeSort %}
                                         <li class="info-list__item">
                                             <div class="info-list__term">
                                                 Programme

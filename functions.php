@@ -141,6 +141,7 @@
             $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
             $twig->addFilter(new Twig_SimpleFilter('uniqueId', [$this,'uniqueId'] ));
             $twig->addFilter(new Twig_SimpleFilter('tooltip', [$this,'tooltip'], ['is_safe' => ['html']] ));
+            $twig->addFilter(new Twig_SimpleFilter('programmeSort', [$this,'programmeSort'] ));
             $twig->addFunction(new Twig_SimpleFunction('usedTooltips', [$this,'usedTooltips'] ));
 			return $twig;
 		}
@@ -398,6 +399,22 @@
                 }
             }
             return($used);
+        }
+
+        /**
+         * Sort array of programmes
+         * @param  array        $source         Source array
+         * @return string
+         */
+        public function programmeSort($source) {
+            usort($source, function( $a, $b ) {
+                if (strcmp($a->name_primary, $b->name_primary)) {
+                    return(strcmp($a->name_primary, $b->name_primary));
+                } else {
+                    return(strcmp($a->qf_ehea_level, $b->qf_ehea_level));
+                }
+            });
+            return($source);
         }
 
 		function acf(){
