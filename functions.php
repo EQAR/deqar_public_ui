@@ -141,6 +141,8 @@
             $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
             $twig->addFilter(new Twig_SimpleFilter('uniqueId', [$this,'uniqueId'] ));
             $twig->addFilter(new Twig_SimpleFilter('tooltip', [$this,'tooltip'], ['is_safe' => ['html']] ));
+            $twig->addFilter(new Twig_SimpleFilter('programmeSort', [$this,'programmeSort'] ));
+            $twig->addFilter(new Twig_SimpleFilter('coalesce', [$this,'coalesce'] ));
             $twig->addFunction(new Twig_SimpleFunction('usedTooltips', [$this,'usedTooltips'] ));
 			return $twig;
 		}
@@ -400,6 +402,32 @@
             return($used);
         }
 
+        /**
+         * Sort array of programmes
+         * @param  array        $source         Source array
+         * @return string
+         */
+        public function programmeSort($source) {
+            usort($source, function( $a, $b ) {
+                if (strcmp($a->name_primary, $b->name_primary)) {
+                    return(strcmp($a->name_primary, $b->name_primary));
+                } else {
+                    return(strcmp($a->qf_ehea_level, $b->qf_ehea_level));
+                }
+            });
+            return($source);
+        }
+
+        /**
+         * Return value if set, or default otherwise
+         * @param  string       $value          Value
+         * @param  string       $default        Default to return if value unset
+         * @return string
+         */
+        public function coalesce($value, $default) {
+            return($value ? $value : $default);
+        }
+
 		function acf(){
 			if( function_exists('acf_add_options_page') ) {
 
@@ -505,7 +533,7 @@
     function make_facet_field( $source, &$facets ) {
         foreach($source as $item) {
             foreach($facets as &$facet) {
-                if ( !empty($facet['report_field']) ) {
+                if ( !empty($facet['report_field']) && property_exists($item, $facet['report_field']) ) {
                     if ( isset($facet['field'][$item->{$facet['report_field']}]) ) {
                         $facet['field'][$item->{$facet['report_field']}]++;
                     } else {

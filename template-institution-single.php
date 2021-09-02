@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Institution | Single
+ * Template Name: QA Results | Single Institution
  *
  * Methods for TimberHelper can be found in the /functions sub-directory
  *
