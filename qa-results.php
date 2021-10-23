@@ -14,9 +14,9 @@ require_once( get_template_directory() . '/classes/EqarApi.class.php');
 $eqarApi = new EqarApi();
 $context = Timber::get_context();
 
-if ( isset($context['request']->get['query']) and preg_match('/^\s*(DEQARINST([0-9]+)|([0-9]+)|[A-Z][A-Z]([0-9]{4}))\s*$/', strtoupper($context['request']->get['query']), $matches) ) {
+if ( isset($context['request']->get['query']) and preg_match('/^\s*(DEQARINST([0-9]+)|([0-9]+)|[A-Z][A-Z][A-Z]?([0-9]{4}))\s*$/', strtoupper($context['request']->get['query']), $matches) ) {
     // if the search term is numerical, a DEQARINST ID or an ETER ID, redirect to the institution directly
-    wp_redirect( Site::addParameters(get_field('institution_page'), array(), array('id' => $matches[0])) );
+    wp_redirect( Site::addParameters(get_field('institution_page'), array(), array('id' => $matches[1])) );
 }
 
 $context['post']                    = new TimberPost();
