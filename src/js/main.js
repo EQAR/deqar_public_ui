@@ -196,6 +196,23 @@
                     return(cmpName);
                 }
             }).appendTo('.reports-programme-container');
+            // sort institution level QA reports
+            $('.reports-institutional-container > .accordion__item').sort( function(a,b) {
+                var cmpName = a.dataset.report_title.localeCompare(b.dataset.report_title);
+                if (cmpName == 0) {
+                    var aDate = new Date(a.dataset.valid_from);
+                    var bDate = new Date(b.dataset.valid_from);
+                    if (aDate < bDate) {
+                        return(-1);
+                    } else if (aDate > bDate) {
+                        return(1);
+                    } else {
+                        return(0);
+                    }
+                } else {
+                    return(cmpName);
+                }
+            }).appendTo('.reports-institutional-container');
             // initialise report filters
             initFacetSearch('.js-report-switch', [
                 { 'container': '.facet-search-container',          'paginator': null,                   'indicator': '.facet-search__indicator'},

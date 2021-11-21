@@ -115,7 +115,7 @@
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                     <ul>
-                                        {% for relation in institution.hierarchical_relationships.part_of %}
+                                        {% for relation in institution.hierarchical_relationships.part_of|sortByInstitution %}
                                             {% if relation.valid_to == null %}
                                             <li>
                                                 <a href="{{ pages.institution }}?id={{ relation.institution.id }}">{{ relation.institution.name_primary }}</a>
@@ -134,7 +134,7 @@
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                     <ul>
-                                        {% for relation in institution.hierarchical_relationships.includes %}
+                                        {% for relation in institution.hierarchical_relationships.includes|sortByInstitution %}
                                             {% if relation.valid_to == null %}
                                             <li>
                                                 <a href="{{ pages.institution }}?id={{ relation.institution.id }}">{{ relation.institution.name_primary }}</a>
@@ -187,7 +187,7 @@
                             <div class="info-list__definition">
                                 <div class="text u-margin">
                                     <ul>
-                                        {% for historical_relationship in institution.historical_relationships|sort %}
+                                        {% for historical_relationship in institution.historical_relationships|sortByInstitution %}
                                             <li>
                                                 {{ historical_relationship.relationship_type }}
                                                 <a href="{{ pages.institution }}?id={{ historical_relationship.institution.id }}">
@@ -284,8 +284,16 @@
                             <ul class="pagination paginator pagination__list pagination__list--institutional u-margin-xs"></ul>
                         {% endif %}
                         {% for result in institution.reports %}
+                            {%- set this_name = result.name -%}
+                            {%- for context in result.institutions -%}
+                                {%- if institution|relatedTo(context.id) -%}
+                                    {%- set this_name = this_name ~ ", " ~ context.name_primary -%}
+                                {%- endif -%}
+                            {%- endfor -%}
                             <div class="accordion__item facet-search__item item-visible{% if result.report_valid == false %} report-invalid{% endif %}"
+                                    data-report_title="{{ this_name }}"
                                     data-report_valid="{% if result.report_valid %}1{% else %}0{% endif %}"
+                                    data-valid_from="{{ result.valid_from }}"
                                     data-agency_acronym="{{ result.agency_acronym }}"
                                     data-agency_esg_activity="{{ result.agency_esg_activity }}"
                                     data-decision="{{ result.decision }}"
@@ -346,12 +354,7 @@
                                     </div>
 
                                     {#<div class="accordion__title">#}
-                                    {{- result.name -}}
-                                    {%- for context in result.institutions -%}
-                                        {%- if institution|relatedTo(context.id) -%}
-                                            , {{ context.name_primary -}}
-                                        {%- endif -%}
-                                    {%- endfor -%}
+                                    {{ this_name }}
                                     {#</div>#}
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" class="accordion__arrow">

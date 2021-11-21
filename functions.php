@@ -141,6 +141,7 @@
             $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
             $twig->addFilter(new Twig_SimpleFilter('uniqueId', [$this,'uniqueId'] ));
             $twig->addFilter(new Twig_SimpleFilter('tooltip', [$this,'tooltip'], ['is_safe' => ['html']] ));
+            $twig->addFilter(new Twig_SimpleFilter('sortByInstitution', [$this,'sortByInstitution'] ));
             $twig->addFilter(new Twig_SimpleFilter('programmeSort', [$this,'programmeSort'] ));
             $twig->addFilter(new Twig_SimpleFilter('coalesce', [$this,'coalesce'] ));
             $twig->addFunction(new Twig_SimpleFunction('usedTooltips', [$this,'usedTooltips'] ));
@@ -400,6 +401,18 @@
                 }
             }
             return($used);
+        }
+
+        /**
+         * Sort array of objects with institution objects
+         * @param  array        $source         Source array
+         * @return array
+         */
+        public function sortByInstitution($source) {
+            usort($source, function($a, $b) {
+                return(strcmp($a->institution->name_primary, $b->institution->name_primary));
+            });
+            return($source);
         }
 
         /**
