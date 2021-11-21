@@ -358,7 +358,7 @@ class EqarApi
     {
         $result = array();
 
-        foreach($this->getAgencies() as $agency) {
+        foreach($this->getAgencies("All") as $agency) {
             $result[$agency->id] = $agency;
         }
 
@@ -374,7 +374,7 @@ class EqarApi
     {
         $result = array();
 
-        foreach($this->getAgencies() as $agency) {
+        foreach($this->getAgencies("All") as $agency) {
             $result[$agency->acronym_primary] = $agency;
         }
 

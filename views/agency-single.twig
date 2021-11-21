@@ -63,7 +63,7 @@
                         <li class="l-label__item">
                            <span class="label" title="{{ acronym_primary }} complies substantially with the Standards and Guidelines for Quality Assurance in the European Higher Education Area (ESG)">Substantial compliance with the ESG</span>
                         </li>
-                    {% else %}
+                    {% elseif agency.registration_start and agency.registration_valid_to %}
                         <li class="l-label__item">
                             <span class="label" title="{{ acronym_primary }} was previously registered on EQAR, see notes below">
                             <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="list-icon list-icon__history">
@@ -85,12 +85,17 @@
 
                 <ul class="info-list u-margin-s">
                     {% if agency.is_registered %}
-                    <li class="info-list__item">
-                        <div class="info-list__term">{{ 'Registration valid until'|tooltip }}</div>
-                        <div class="info-list__definition">{{ agency.registration_valid_to|date("d/m/Y") }} (listed since {{ agency.registration_start|date("d/m/Y") }})</div>
-                    </li>
-                    {% endif %}
-                    {% if not agency.is_registered %}
+                        <li class="info-list__item">
+                            <div class="info-list__term">{{ 'Registration valid until'|tooltip }}</div>
+                            <div class="info-list__definition">{{ agency.registration_valid_to|date("d/m/Y") }} (listed since {{ agency.registration_start|date("d/m/Y") }})</div>
+                        </li>
+                        {% if agency.registration_note %}
+                            <li class="info-list__item">
+                                <div class="info-list__term">Registration note</div>
+                                <div class="info-list__definition">{{ agency.registration_note }}</div>
+                            </li>
+                        {% endif %}
+                    {% elseif agency.registration_start and agency.registration_valid_to %}
                         <li class="info-list__item">
                             <div class="info-list__term">Registration note</div>
                             <div class="info-list__definition">
@@ -99,12 +104,13 @@
                             </div>
                         </li>
                     {% else %}
-                        {% if agency.registration_note %}
                         <li class="info-list__item">
                             <div class="info-list__term">Registration note</div>
-                            <div class="info-list__definition">{{ agency.registration_note }}</div>
+                            <div class="info-list__definition">
+                                {{ acronym_primary }} is not registered on EQAR.
+                                {{ agency.registration_note }}
+                            </div>
                         </li>
-                        {% endif %}
                     {% endif %}
 
                     {% if agency.website_link %}
@@ -117,6 +123,8 @@
                         </div>
                     </li>
                     {% endif %}
+
+                    {% if agency.reports_link %}
                     <li class="info-list__item">
                         <div class="info-list__term">Reports by the agency</div>
                         <div class="info-list__definition">
@@ -125,6 +133,7 @@
                             {% endif %}
                         </div>
                     </li>
+                    {% endif %}
 
                     {% if agency.names|length > 1 %}
                     <li class="info-list__item">
@@ -202,7 +211,7 @@
 
                 </ul>
 
-                {% if agency.is_registered %}
+                {% if agency.is_registered %} {# registered #}
                 <hr class="divider u-margin-s">
 
                 <h2 class="subtitle u-margin-xs">Information on the agency's work</h2>
@@ -213,8 +222,9 @@
                         <p>{{ agency.specialisation_note|striptags('<br><p>') }}</p>
                     {% endif %}
                 </div>
-                {% endif %}
+                {% endif %} {# registered #}
 
+                {% if agency.is_registered or ( agency.registration_start and agency.registration_valid_to ) %} {# registered or former entry #}
                 <hr class="divider u-margin-s">
 
                 <h2 class="subtitle u-margin-s">Activities within the scope of ESG</h2>
@@ -353,6 +363,7 @@
                         </li>
                     {% endif %}
                 </ul>
+                {% endif %} {# registered or former entry #}
 
 			</div>
 		</div>

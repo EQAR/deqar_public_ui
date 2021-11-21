@@ -88,6 +88,15 @@
         .on('click', '.report-switch label', function(e) {
             $(this).parent().find('input[type=checkbox]').click();
         })
+        .on('click', '.js-report-switch .search-facet__toggle-all label', function(e) {
+            $(this).parent().find('input[type=checkbox]').click();
+        })
+        // Toggle all checkboxes
+        .on('click', '.js-report-switch .search-facet__toggle-all input[type=checkbox]', function(e) {
+            if (! $(this).prop("indeterminate")) {
+                $(this).closest('.search-facet__item').find('.search-facet__choices').find('input[type=checkbox]').prop("checked", $(this).prop("checked"));
+            }
+        })
         // Apply filters
         .on('change', '.js-report-switch', function(e) {
             e.preventDefault();
@@ -95,14 +104,28 @@
             var filters = $(this).data("filters");
 
             for (var field in filters) {
+                var all_checked = true;
+                var all_unchecked = true;
                 for (var value in filters[field].values) {
                     filters[field].values[value].checked = filters[field].values[value].input.prop("checked");
+                    all_checked = all_checked && filters[field].values[value].checked;
+                    all_unchecked = all_unchecked && (! filters[field].values[value].checked);
                     filters[field].values[value].counter = 0;
                     if (filters[field].values[value].checked) {
                         filters[field].values[value].outer.addClass('report-switch--active');
                     } else {
                         filters[field].values[value].outer.removeClass('report-switch--active');
                     }
+                }
+                // set the toggle-all checkbox
+                if (all_checked) {
+                    filters[field].toggle.prop("indeterminate", false);
+                    filters[field].toggle.prop("checked", true);
+                } else if (all_unchecked) {
+                    filters[field].toggle.prop("indeterminate", false);
+                    filters[field].toggle.prop("checked", false);
+                } else {
+                    filters[field].toggle.prop("indeterminate", true);
                 }
             }
 
@@ -196,6 +219,23 @@
                     return(cmpName);
                 }
             }).appendTo('.reports-programme-container');
+            // sort institution level QA reports
+            $('.reports-institutional-container > .accordion__item').sort( function(a,b) {
+                var cmpName = a.dataset.report_title.localeCompare(b.dataset.report_title);
+                if (cmpName == 0) {
+                    var aDate = new Date(a.dataset.valid_from);
+                    var bDate = new Date(b.dataset.valid_from);
+                    if (aDate < bDate) {
+                        return(-1);
+                    } else if (aDate > bDate) {
+                        return(1);
+                    } else {
+                        return(0);
+                    }
+                } else {
+                    return(cmpName);
+                }
+            }).appendTo('.reports-institutional-container');
             // initialise report filters
             initFacetSearch('.js-report-switch', [
                 { 'container': '.facet-search-container',          'paginator': null,                   'indicator': '.facet-search__indicator'},
@@ -251,6 +291,7 @@
         $(facet_container).find('ul.search-facet__choices').each(function() {
             filters[$(this).attr('data-report-field')] = {
                 container: $(this),
+                toggle: $(this).parent().find('.search-facet__toggle-all').find('input[type=checkbox]'),
                 values: { }
             }
         });

@@ -31,7 +31,7 @@ if ( isset($context['request']->get['id']) ) {
         $institution    = $eqarApi->getInstitution( $id );
     } elseif (preg_match('/^DEQARINST([0-9]+)$/', $id, $matches)) {
         $institution    = $eqarApi->getInstitution( $matches[1] );
-    } elseif (preg_match('/^[A-Z][A-Z][0-9]{4}$/', $id, $matches)) {
+    } elseif (preg_match('/^[A-Z][A-Z][A-Z]?[0-9]{4}$/', $id, $matches)) {
         $institution    = $eqarApi->getInstitutionByEterId( $matches[0] );
     } else {
         Site::do404(400, "Malformed DEQARINST or ETER ID provided.");
@@ -57,7 +57,7 @@ if ( isset($context['request']->get['id']) ) {
                 }
                 // pass through to template those facets that were set
                 if ( isset($context['request']->get[$facet['tag']]) ) {
-                    $facet['select'] = $context['request']->get[$facet['tag']];
+                    $facet['select'] = stripslashes($context['request']->get[$facet['tag']]);
                 }
             }
         }

@@ -5,6 +5,10 @@
 		<div class="l-two-column u-container">
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
+
+                {{ include('snippets/js-search-facets.twig', { title: "Filter agencies", facets: [
+                    { report_field: 'country',          label: 'Country' },
+                 ] } ) }}
 			</div>
 
 			<div class="l-two-column__content">
@@ -14,9 +18,10 @@
                     {% include 'views/content/' ~ block.acf_fc_layout ~ '.twig' %}
                 {% endfor %}
 
-				<ul class="agency-list">
+				<ul class="agency-list facet-search-container">
                     {% for agency in agencies %}
-                        <li class="agency-list__item">
+                        <li class="agency-list__item facet-search__item"
+                            data-country="{{ agency.country.name_english }}">
                             <a href="{{ pages.agency }}?id={{ agency.id }}" class="agency-list__link">
                                 <span class="agency-list__country">{{ agency.country.iso_3166_alpha2 }}</span>
                                 <span><strong>{{ agency.acronym_primary }}</strong> - {{ agency.name_primary }}</span>
