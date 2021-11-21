@@ -57,7 +57,7 @@ if ( isset($context['request']->get['id']) ) {
                 }
                 // pass through to template those facets that were set
                 if ( isset($context['request']->get[$facet['tag']]) ) {
-                    $facet['select'] = $context['request']->get[$facet['tag']];
+                    $facet['select'] = stripslashes($context['request']->get[$facet['tag']]);
                 }
             }
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: QA Results
+ * Template Name: QA Results | Search by institution
  *
  * Methods for TimberHelper can be found in the /functions sub-directory
  *
@@ -67,7 +67,7 @@ if ( !empty( $context['request']->get ) ) {
 
     foreach ($parameter_list as $p) {
         if ( isset($context['request']->get[$p]) ) {
-            $parameters[$p] = $context['request']->get[$p];
+            $parameters[$p] = stripslashes($context['request']->get[$p]);
         }
     }
 
