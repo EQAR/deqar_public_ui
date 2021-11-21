@@ -11,6 +11,10 @@
                 <div class="search-facet__item">
                     <div class="search-facet__label">
                         {{ facet.label }}
+                        <span class="search-facet__toggle-all">
+                            <label for="show-{{ facet.report_field }}">all</label>
+                            <input type="checkbox" name="show-{{ facet.report_field }}" checked="checked">
+                        </span>
                     </div>
                     <ul class="search-facet__choices search-facet--active" data-report-field="{{ facet.report_field }}">
                     {#% for value, count in facet.field %}
