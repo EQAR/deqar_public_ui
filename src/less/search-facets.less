@@ -1,15 +1,24 @@
+.facet-search__item {
+    &.item-hidden {
+        display: none;
+    }
+}
+
 .search-facets {
 
     width: 100%;
 
     .call-to-action__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5px;
         cursor: pointer;
-        position: relative;
-        margin-bottom: 10px;
+        margin: 0 5px 10px 0;
 
         .accordion__arrow {
-            top: 9px;
-            right: 5px;
+            position: static;
+            flex: 0 0 auto;
             fill: fade(@accent, 40%);
         }
         &:hover .accordion__arrow {
@@ -24,25 +33,43 @@
 }
 
 .search-facet__label {
-    position: relative;
-    padding: 10px 37px 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin: 0 5px 0 0;
+    padding: 10px 0 10px 0;
     font-weight: inherit;
-    cursor: pointer;
+
+    &.js-accordion__definition {
+        cursor: pointer;
+    }
 
     .accordion__arrow {
-        top: 19px;
-        right: 5px;
+        position: static;
+        flex: 0 0 auto;
         fill: fade(@accent, 40%);
     }
     &:hover .accordion__arrow {
         fill: @accent;
     }
+
+    .search-facet__toggle-all {
+        font-size: 14px;
+        label {
+            cursor: pointer;
+        }
+        input {
+            margin: 0 0 0 5px;
+            width: auto;
+            cursor: pointer;
+        }
+    }
 }
 
 .search-facet__cross {
-    position: absolute;
-    top: 2px;
-    right: 5px;
+    position: static;
+    flex: 0 0 auto;
     fill: @accent;
 }
 
@@ -108,17 +135,18 @@
 }
 
 .search-facet__button--active {
-    position: relative;
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
     padding: 0;
-    margin: 0;
+    margin: 0 5px 0 0;
 }
 
 
 @media (min-width: 768px) {
 
     .search-facet__label {
-        padding: 10px 37px 10px 0px;
         font-size: 17px;
     }
 

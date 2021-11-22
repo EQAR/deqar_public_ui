@@ -37,7 +37,7 @@
                         <h1 class="title u-margin-xs">{{ institution.name_primary }}</h1>
                     {% endfor %}
                 {% else %}
-                    {% for programme in report.programmes %}
+                    {% for programme in report.programmes|programmeSort %}
                         <h1 class="title u-margin-xs">
                             {{ programme.name_primary }}
                             {%- if programme.qf_ehea_level -%}
@@ -125,7 +125,7 @@
                         <div class="accordion__description accordion__description--two-tone" style="display: block;">
                                 {% if report.programmes %}
                                     <ul class="info-list info-list--padding info-list--programme-description">
-                                    {% for programme in report.programmes %}
+                                    {% for programme in report.programmes|programmeSort %}
                                         <li class="info-list__item">
                                             <div class="info-list__term">
                                                 Programme
@@ -167,7 +167,7 @@
                                         </li>
 
                                         <li class="info-list__item info-list__item--separator">
-                                            <div class="info-list__term">Level</div>
+                                            <div class="info-list__term">{{ 'Level'|tooltip }}</div>
                                             <div class="info-list__definition">{{ programme.qf_ehea_level ? programme.qf_ehea_level : '-' }}{% if programme.nqf_level %} (NQF {{ programme.nqf_level }}){% endif %}</div>
                                         </li>
                                     {% endfor %}
@@ -176,7 +176,7 @@
 
                                     <ul class="info-list info-list--padding">
                                         <li class="info-list__item">
-                                            <div class="info-list__term">DEQAR Report ID</div>
+                                            <div class="info-list__term">{{ 'DEQAR Report ID'|tooltip }}</div>
                                             <div class="info-list__definition">{{ report.id }}</div>
                                         </li>
 
@@ -191,12 +191,12 @@
                                         </li>
 
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Status</div>
+                                            <div class="info-list__term">{{ 'Status'|tooltip }}</div>
                                             <div class="info-list__definition">{{ report.status }}</div>
                                         </li>
 
                                         <li class="info-list__item">
-                                            <div class="info-list__term">Formal decision</div>
+                                            <div class="info-list__term">{{ 'Formal decision'|tooltip }}</div>
                                             <div class="info-list__definition">{{ report.decision }}</div>
                                         </li>
 
@@ -210,7 +210,7 @@
                                                 {%- if report.valid_to -%}
                                                     {{- report.valid_to|date("d/m/Y") -}}
                                                 {%- else -%}
-                                                    not applicable
+                                                    {{- 'not applicable'|tooltip('no-valid-to-date') -}}
                                                 {%- endif -%}
                                             </div>
                                         </li>

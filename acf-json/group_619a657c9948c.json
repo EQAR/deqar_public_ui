@@ -1,0 +1,45 @@
+{
+    "key": "group_619a657c9948c",
+    "title": "Decisions page",
+    "fields": [
+        {
+            "key": "field_619a657d05418",
+            "label": "Agency page",
+            "name": "agency_page",
+            "type": "page_link",
+            "instructions": "Single agency page to link to",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "allow_archives": 1,
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-eqar-decisions.php"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1637508531
+}

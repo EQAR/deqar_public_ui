@@ -88,39 +88,54 @@
         .on('click', '.report-switch label', function(e) {
             $(this).parent().find('input[type=checkbox]').click();
         })
+        .on('click', '.js-report-switch .search-facet__toggle-all label', function(e) {
+            $(this).parent().find('input[type=checkbox]').click();
+        })
+        // Toggle all checkboxes
+        .on('click', '.js-report-switch .search-facet__toggle-all input[type=checkbox]', function(e) {
+            if (! $(this).prop("indeterminate")) {
+                $(this).closest('.search-facet__item').find('.search-facet__choices').find('input[type=checkbox]').prop("checked", $(this).prop("checked"));
+            }
+        })
         // Apply filters
         .on('change', '.js-report-switch', function(e) {
             e.preventDefault();
 
-            var filters = { };
-            $(this).find('ul.search-facet__choices').each(function() {
-                var field = $(this).attr('data-report-field');
-                filters[field] = { };
-                $(this).find('.report-switch').removeClass('report-switch--active');
-                $(this).find('input[type=checkbox]').each(function() {
-                    filters[field][$(this).attr('value')] = {
-                        checked:    $(this).prop('checked'),
-                        counter:    0,
-                        container:  $(this).parent().find('.report-counter'),
-                        input:      $(this),
-                        outer:      $(this).parent()
-                    };
-                    if ($(this).prop('checked')) {
-                        $(this).parent().addClass('report-switch--active');
-                    }
-                });
-            });
+            var filters = $(this).data("filters");
 
-            [
-                { 'container': '.reports-institutional-container', 'paginator': paginatorInstitutional, 'indicator': '.pagination__indicator--institutional'},
-                { 'container': '.reports-programme-container',     'paginator': paginatorProgramme,     'indicator': '.pagination__indicator--reports'}
-            ].forEach(function(i) {
+            for (var field in filters) {
+                var all_checked = true;
+                var all_unchecked = true;
+                for (var value in filters[field].values) {
+                    filters[field].values[value].checked = filters[field].values[value].input.prop("checked");
+                    all_checked = all_checked && filters[field].values[value].checked;
+                    all_unchecked = all_unchecked && (! filters[field].values[value].checked);
+                    filters[field].values[value].counter = 0;
+                    if (filters[field].values[value].checked) {
+                        filters[field].values[value].outer.addClass('report-switch--active');
+                    } else {
+                        filters[field].values[value].outer.removeClass('report-switch--active');
+                    }
+                }
+                // set the toggle-all checkbox
+                if (all_checked) {
+                    filters[field].toggle.prop("indeterminate", false);
+                    filters[field].toggle.prop("checked", true);
+                } else if (all_unchecked) {
+                    filters[field].toggle.prop("indeterminate", false);
+                    filters[field].toggle.prop("checked", false);
+                } else {
+                    filters[field].toggle.prop("indeterminate", true);
+                }
+            }
+
+            $(this).data("containers").forEach(function(i) {
                 var visible_reports = 0;
-                $(i.container).find('.accordion__item').each(function() {
+                $(i.container).find('.facet-search__item').each(function() {
                     $(this).removeClass('item-hidden').addClass('item-visible');
                     for (var field in filters) {
                         var value = $(this).attr("data-" + field);
-                        if ( (typeof value !== typeof undefined) && (value !== false) && (! filters[field][value].checked) ) {
+                        if ( (typeof value !== typeof undefined) && (value !== false) && (! filters[field].values[value].checked) ) {
                             // hide entry if value is set, but not contained in selected values
                             $(this).addClass('item-hidden').removeClass('item-visible');
                         }
@@ -129,30 +144,39 @@
                         visible_reports++;
                     }
                     for (var field in filters) {
-                        if ( ($(this).hasClass('item-visible') && filters[field][$(this).attr("data-" + field)].checked) 
-                           || (! $(this).hasClass('item-visible') && ! filters[field][$(this).attr("data-" + field)].checked) ) {
-                            filters[field][$(this).attr("data-" + field)].counter++;
+                        var value = $(this).attr("data-" + field);
+                        if ( (typeof value !== typeof undefined) && (
+                                ($(this).hasClass('item-visible') && filters[field].values[value].checked)
+                           || (! $(this).hasClass('item-visible') && ! filters[field].values[value].checked) ) ) {
+                            filters[field].values[value].counter++;
                         }
                     }
                 });
                 // Reset the paginators
-                i.paginator.init();
-                if (visible_reports <= 10) {
-                    // fix indicator if no pages
+                if (i.paginator) {
+                    i.paginator.init();
+                    if (visible_reports <= 10) {
+                        // fix indicator if no pages
+                        $(i.indicator).text(
+                            visible_reports == 0 ? "No reports match your filter" :
+                            visible_reports + " report" + ( visible_reports == 1 ? "" : "s" )
+                        );
+                    }
+                } else {
                     $(i.indicator).text(
-                        visible_reports == 0 ? "No reports match your filter" :
-                        visible_reports + " report" + ( visible_reports == 1 ? "" : "s" )
+                        visible_reports == 0 ? "No items match your filter" :
+                        visible_reports + " item" + ( visible_reports == 1 ? "" : "s" )
                     );
                 }
             });
             for (var field in filters) {
-                for (var value in filters[field]) {
-                    filters[field][value].container.text(filters[field][value].checked ? "(" + filters[field][value].counter + ")" : "");
-                    if (filters[field][value].checked && filters[field][value].counter == 0) {
-                        filters[field][value].input.prop("disabled", true);
-                        filters[field][value].outer.removeClass('report-switch--active');
+                for (var value in filters[field].values) {
+                    filters[field].values[value].container.text(filters[field].values[value].checked ? "(" + filters[field].values[value].counter + ")" : "");
+                    if (filters[field].values[value].checked && filters[field].values[value].counter == 0) {
+                        filters[field].values[value].input.prop("disabled", true);
+                        filters[field].values[value].outer.removeClass('report-switch--active');
                     } else {
-                        filters[field][value].input.prop("disabled", false);
+                        filters[field].values[value].input.prop("disabled", false);
                     }
                     //filters[field][value].container.text("(" + filters[field][value].counter + ")");
                 }
@@ -195,8 +219,29 @@
                     return(cmpName);
                 }
             }).appendTo('.reports-programme-container');
+            // sort institution level QA reports
+            $('.reports-institutional-container > .accordion__item').sort( function(a,b) {
+                var cmpName = a.dataset.report_title.localeCompare(b.dataset.report_title);
+                if (cmpName == 0) {
+                    var aDate = new Date(a.dataset.valid_from);
+                    var bDate = new Date(b.dataset.valid_from);
+                    if (aDate < bDate) {
+                        return(-1);
+                    } else if (aDate > bDate) {
+                        return(1);
+                    } else {
+                        return(0);
+                    }
+                } else {
+                    return(cmpName);
+                }
+            }).appendTo('.reports-institutional-container');
             // initialise report filters
-            $('.js-report-switch').trigger('change');
+            initFacetSearch('.js-report-switch', [
+                { 'container': '.facet-search-container',          'paginator': null,                   'indicator': '.facet-search__indicator'},
+                { 'container': '.reports-institutional-container', 'paginator': paginatorInstitutional, 'indicator': '.pagination__indicator--institutional'},
+                { 'container': '.reports-programme-container',     'paginator': paginatorProgramme,     'indicator': '.pagination__indicator--reports'}
+            ]);
             // collapse search facets on narrow display
             if (window.innerWidth < 1024) {
                 $('.search-facets .js-accordion__description').hide();
@@ -239,7 +284,68 @@
         }
     });
 
+    function initFacetSearch(facet_container, item_containers) {
 
+        var filters = { };
+
+        $(facet_container).find('ul.search-facet__choices').each(function() {
+            filters[$(this).attr('data-report-field')] = {
+                container: $(this),
+                toggle: $(this).parent().find('.search-facet__toggle-all').find('input[type=checkbox]'),
+                values: { }
+            }
+        });
+
+        item_containers.forEach(function(i) {
+            $(i.container).find('.facet-search__item').each(function() {
+                $(this).removeClass('item-hidden').addClass('item-visible');
+                for (var field in filters) {
+                    var value = $(this).attr("data-" + field);
+                    if (typeof value !== typeof undefined) {
+                        if (! filters[field].values.hasOwnProperty(value)) {
+                            filters[field].values[value] = true;
+                        }
+                    }
+                }
+            });
+        });
+
+        for (var field in filters) {
+            var i = 0
+            Object.keys(filters[field].values).sort().forEach(function(value) {
+                var pre = filters[field].container.find('[data-value="'+value+'"]');
+                if (pre.length > 0) {
+                    var input = pre.find('input[type=checkbox]');
+                    filters[field].values[value] = {
+                        checked:    input.prop('checked'),
+                        counter:    0,
+                        container:  pre.find('.report-counter'),
+                        input:      input,
+                        outer:      pre
+                    };
+                } else {
+                    var outer = $('<li/>', { class: 'report-switch', 'data-value': value });
+                    var input = $('<input/>', { type: 'checkbox', name: 'switch-' + field + '-' + i, value: value, checked: true });
+                    var counter = $('<span/>',  { class: 'report-counter' });
+                    input.appendTo(outer);
+                    $('<label/>', { for: 'switch-' + field + '-' + i, text: value + ' '}).append(counter).appendTo(outer);
+                    outer.appendTo(filters[field].container);
+                    filters[field].values[value] = {
+                        checked:    true,
+                        counter:    0,
+                        container:  counter,
+                        input:      input,
+                        outer:      outer
+                    };
+                }
+                i++;
+            });
+            if (Object.keys(filters[field].values).length == 0) {
+                filters[field].container.closest('.search-facet__item').remove();
+            }
+        }
+        $('.js-report-switch').data("filters", filters).data("containers", item_containers).trigger('change');
+    }
 
     // Responsible Social Share Links enhancement by https://jonsuh.com/blog/social-share-links/
 	function windowPopup(url, width, height) {

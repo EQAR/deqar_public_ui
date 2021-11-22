@@ -5,6 +5,11 @@
 		<div class="l-two-column u-container">
 			<div class="l-two-column__sidebar">
 				{% include 'snippets/sidebar.twig' %}
+
+                {{ include('snippets/js-search-facets.twig', { title: "Filter decisions", facets: [
+                    { report_field: 'decision_type',    label: 'Type' },
+                    { report_field: 'year',             label: 'Year' },
+                 ] } ) }}
 			</div>
 
 			<div class="l-two-column__content">
@@ -15,22 +20,44 @@
                 {% endfor %}
 
                 {% set year = 1970 %}
-                <div class="text">
-                    <ul>
+                <div class="table"><table class="facet-search-container">
+                    <thead>
+                        <tr>
+                            <th>Agency</th>
+                            <th>Date</th>
+                            <th>Decision</th>
+                            <th>Annex</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     {% for decision in decisions %}
-                        {% set this_year = decision.decision_date|date('Y') %}
-                        {% if this_year != year %}
-                            {% set year = this_year %}
-                            </ul>
-                            <h2 class="subtitle u-margin-xs">{{ year }}</h2>
-                            <ul class="u-margin-s">
-                        {% endif %}
-                        <li>
-                            {{ decision.agency_acronym }}: <a href="{{ decision.decision_file }}">{{ decision.decision_type }}</a> (decision of {{ decision.decision_date|date('d/m/Y') }}{% if decision.decision_file_extra %}, annex: <a href="{{ decision.decision_file_extra }}">external review report</a>{% endif %})
-                        </li>
+                        {% set year = decision.decision_date|date('Y') %}
+                        <tr class="facet-search__item"
+                            data-decision_type="{{ decision.decision_type }}"
+                            data-agency_acronym="{{ decision.agency_acronym }}"
+                            data-year="{{ year }}">
+                            <td>
+                                {% if agenciesByName[decision.agency_acronym] %}
+                                    <a href="{{ pages.agency|addParameters({ 'id': agenciesByName[decision.agency_acronym].id }) }}">{{ decision.agency_acronym }}</a>
+                                {% else %}
+                                    {{ decision.agency_acronym }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ decision.decision_date|date('d/m/Y') }}
+                            </td>
+                            <td>
+                                <a href="{{ decision.decision_file }}">{{ decision.decision_type }}</a>
+                            </td>
+                            <td>
+                                {% if decision.decision_file_extra %}
+                                    <a href="{{ decision.decision_file_extra }}">external review report</a>
+                                {% endif %}
+                            </td>
+                        </tr>
                     {% endfor %}
-                    </ul>
-                </div>
+                    </tbody>
+                </table></div>
 			</div>
 		</div>
 	</main>

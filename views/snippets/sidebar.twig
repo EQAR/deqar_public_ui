@@ -3,33 +3,33 @@
 {% endif %}
 {% set add_class = "" %}
 {% if post.get_field('is_publication') %} {# special mode: publication/Annual Report style #}
-    {% set parent = post.ID %}
+    {% set parent = post %}
     {% set navigation = post|visibleChildren(include_id) %}
     {% set add_class = " sidebar--publication" %}
 {% elseif post.parent.get_field('is_publication') %} {# special mode: publication/Annual Report style #}
-    {% set parent = post.parent.ID %}
+    {% set parent = post.parent %}
     {% set navigation = post.parent|visibleChildren(include_id) %}
     {% set add_class = " sidebar--publication" %}
 {% elseif post.parent.parent %} {# 3rd level or below #}
-    {% if post|visibleChildren(include_id) %} {# has further children that are not hidden  #}
+    {% if post.parent|visibleSublevels(include_id) > 1 %} {# page or siblings have further children that are not hidden  #}
         {% set navigation = post.parent|visibleChildren(include_id) %}
-        {% set parent = post.parent.ID %}
-    {% elseif post.parent|visibleChildren(include_id) %} {# leaf page, visible itself or with visible sibblings #}
+        {% set parent = post.parent %}
+    {% elseif post.parent|visibleSublevels(include_id) %} {# leaf page, visible itself or with visible sibblings #}
         {% set navigation = post.parent.parent|visibleChildren(include_id) %}
-        {% set parent = post.parent.parent.ID %}
+        {% set parent = post.parent.parent %}
     {% elseif post.parent.parent.parent %} {# leaf page, not visible and no visible sibblings #}
         {% set navigation = post.parent.parent.parent|visibleChildren(include_id) %}
-        {% set parent = post.parent.parent.parent.ID %}
+        {% set parent = post.parent.parent.parent %}
     {% else %}
         {% set navigation = post.parent.parent|visibleChildren(include_id) %}
-        {% set parent = post.parent.parent.ID %}
+        {% set parent = post.parent.parent %}
     {% endif %}
 {% elseif post.parent %} {# 2nd level #}
     {% set navigation = post.parent|visibleChildren(include_id) %}
-    {% set parent = post.parent.ID %}
+    {% set parent = post.parent %}
 {% else %} {# 1st level #}
     {% set navigation = post|visibleChildren(include_id) %}
-    {% set parent = post.ID %}
+    {% set parent = post %}
 {% endif %}
 {% if accordion_sidebar %}
     {% set add_class = add_class ~ " sidebar--accordion js-sidebar--accordion" %}

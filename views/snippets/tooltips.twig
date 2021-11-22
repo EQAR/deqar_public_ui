@@ -1,0 +1,23 @@
+{% for tooltip in usedTooltips() %}
+    <div class="modal js-modal" data-modal="tooltip-{{ tooltip.id }}">
+        <div class="modal__overlay js-close-modal"></div>
+        <div class="modal__body">
+            <button class="button modal__close js-close-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                    <path d="M10,0A10,10,0,1,0,20,10,10,10,0,0,0,10,0Zm5,13.59L13.59,15,10,11.41,6.41,15,5,13.59,8.59,10,5,6.41,6.41,5,10,8.59,13.59,5,15,6.41,11.41,10Z"/>
+                </svg>
+            </button>
+            <div class="text-fields">
+                {% if tooltip.title %}
+                    <h3 class="subtitle subtitle--light text-fields__subtitle">{{ tooltip.title }}</h3>
+                {% endif %}
+                <div class="text text--modal text-fields__text">
+                    {{ tooltip.text }}
+                    {% if tooltip.link %}
+                        <p><a href="{{ tooltip.link }}">Read more...</a></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

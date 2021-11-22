@@ -23,7 +23,7 @@
         Released under CreativeCommons Attribution ShareAlike (http://creativecommons.org/licenses/by-sa/2.5/).
     </desc>
 
-    {% macro draw_country(map, country, selected_country) %}
+    {% macro draw_country(map, country) %}
         {% set country_class = '' %}
         {% if map.type == 'agencies' %}
             {% if country.agency_count > 0 %} active
@@ -52,12 +52,12 @@
                 {% set country_class = ' active' %}
             {% endif %}
         {% elseif map.type == 'highlight' %}
-            {% if country.iso_3166_alpha2|upper == selected_country|upper %}
+            {% if country.iso_3166_alpha2|upper == map.selected|upper %}
                 {% set country_class = ' active' %}
             {% endif %}
         {% endif %}
 
-        <a xlink:href="{{ map.country_page }}?id={{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
+        <a xlink:href="{% if map.country_page %}{{ map.country_page }}?id={% else %}#id-{% endif %}{{ country.id }}" data-country="{{ country.id }}" xlink:title="{{ country.name_english|e('html') }}">
             <path id="{{ country.iso_3166_alpha2 }}" class="europe{{ country_class }}{% if country.is_micro_state %} circle{% endif %}" {% include 'views/countries/country-' ~ country.iso_3166_alpha2 ~ '.svg.twig' with { 'country' : country } %} />
         </a>
     {% endmacro %}
@@ -66,13 +66,13 @@
 
     {% for country in countriesAll %}
         {% if not country.is_micro_state %}
-            {{ this.draw_country(map, country, selected_country) }}
+            {{ this.draw_country(map, country) }}
         {% endif %}
     {% endfor %}
 
     {% for country in countriesAll %}
         {% if country.is_micro_state %}
-            {{ this.draw_country(map, country, selected_country) }}
+            {{ this.draw_country(map, country) }}
         {% endif %}
     {% endfor %}
 

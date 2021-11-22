@@ -22,7 +22,6 @@
 
 		function __construct(){
 
-			add_theme_support('post-formats');
 			add_theme_support('post-thumbnails');
 			add_theme_support('menus');
 
@@ -32,6 +31,12 @@
 
 			add_action('init', [$this, 'acf']);
 			add_action('login_enqueue_scripts', [$this, 'login_stylesheet']);
+
+            if (get_field('tooltips', 'option')) {
+                foreach (get_field('tooltips', 'option') as $tooltip) {
+                    $this->known_tooltips[] = $tooltip['id'];
+                }
+            }
 
 			parent::__construct();
 		}
@@ -130,10 +135,16 @@
             $twig->addFilter(new Twig_SimpleFilter('countHistorical', [$this,'countHistorical'] ));
             $twig->addFilter(new Twig_SimpleFilter('isChildOf', [$this,'isChildOf'] ));
             $twig->addFilter(new Twig_SimpleFilter('visibleChildren', [$this,'visibleChildren'] ));
+            $twig->addFilter(new Twig_SimpleFilter('visibleSublevels', [$this,'visibleSublevels'] ));
             $twig->addFilter(new Twig_SimpleFilter('getSections', [$this,'getSections'] ));
             $twig->addFilter(new Twig_SimpleFilter('addParameters', [$this,'addParameters'] ));
             $twig->addFilter(new Twig_SimpleFilter('relatedTo', [$this,'relatedTo'] ));
             $twig->addFilter(new Twig_SimpleFilter('uniqueId', [$this,'uniqueId'] ));
+            $twig->addFilter(new Twig_SimpleFilter('tooltip', [$this,'tooltip'], ['is_safe' => ['html']] ));
+            $twig->addFilter(new Twig_SimpleFilter('sortByInstitution', [$this,'sortByInstitution'] ));
+            $twig->addFilter(new Twig_SimpleFilter('programmeSort', [$this,'programmeSort'] ));
+            $twig->addFilter(new Twig_SimpleFilter('coalesce', [$this,'coalesce'] ));
+            $twig->addFunction(new Twig_SimpleFunction('usedTooltips', [$this,'usedTooltips'] ));
 			return $twig;
 		}
 
@@ -232,6 +243,22 @@
         }
 
         /**
+         * Return number of sublevels with visible pages, incl. current page even if hidden
+         * @param  TimberPost    $page    Page object
+         * @return array/bool             Result (false if none)
+         */
+        public function visibleSublevels( $page, $include_id = null ) {
+            $levels = 0;
+            foreach ($page->children('page') as $subpage) {
+                if ( ($subpage->get_field('hide_page') != 'true') || ( isset($include_id) && $subpage->id == $include_id) ) {
+                    $sublevels = $this->visibleSublevels( $subpage, $include_id);
+                    $levels = max($levels, $sublevels + 1);
+                }
+            }
+            return($levels);
+        }
+
+        /**
          * Return page section titles and slugs
          * @param  TimberPost    $page    Page object
          * @return array/bool             Result (false if none)
@@ -264,7 +291,7 @@
          * @param  array        $masks      Parameters to mask
          * @return string                   URL with parameters
          */
-        public function addParameters( $base_url, $formdata, $override, $masks = array()) {
+        public function addParameters( $base_url, $formdata, $override = array(), $masks = array()) {
             $url = $base_url . '?';
             if (is_array($formdata)) {
                 foreach ($formdata as $key => $value) {
@@ -339,6 +366,81 @@
             }
         }
 
+        protected $known_tooltips = array();
+        protected $used_tooltips = array();
+
+        /**
+         * Highlight text as tooltip anchor
+         * @param  string       $text           The text to highlight
+         * @param  string       $tag            Tag name/ID of the tooltip
+         * @return string
+         */
+        public function tooltip( $text, $tag = null) {
+            if (! isset($tag)) {
+                $tag = sanitize_title($text);
+            }
+            if (in_array($tag, $this->known_tooltips)) {
+                $this->used_tooltips[$tag] = 1;
+                return(Timber::compile('snippets/tooltip.twig', ['tag' => $tag, 'text' => $text]));
+            } else {
+                return($text);
+            }
+        }
+
+        /**
+         * Return tooltips used on this page
+         * @return array
+         */
+        public function usedTooltips() {
+            $used = [];
+            if (get_field('tooltips', 'option')) {
+                foreach (get_field('tooltips', 'option') as $tooltip) {
+                    if (isset($this->used_tooltips[$tooltip['id']])) {
+                        $used[] = $tooltip;
+                    }
+                }
+            }
+            return($used);
+        }
+
+        /**
+         * Sort array of objects with institution objects
+         * @param  array        $source         Source array
+         * @return array
+         */
+        public function sortByInstitution($source) {
+            usort($source, function($a, $b) {
+                return(strcmp($a->institution->name_primary, $b->institution->name_primary));
+            });
+            return($source);
+        }
+
+        /**
+         * Sort array of programmes
+         * @param  array        $source         Source array
+         * @return string
+         */
+        public function programmeSort($source) {
+            usort($source, function( $a, $b ) {
+                if (strcmp($a->name_primary, $b->name_primary)) {
+                    return(strcmp($a->name_primary, $b->name_primary));
+                } else {
+                    return(strcmp($a->qf_ehea_level, $b->qf_ehea_level));
+                }
+            });
+            return($source);
+        }
+
+        /**
+         * Return value if set, or default otherwise
+         * @param  string       $value          Value
+         * @param  string       $default        Default to return if value unset
+         * @return string
+         */
+        public function coalesce($value, $default) {
+            return($value ? $value : $default);
+        }
+
 		function acf(){
 			if( function_exists('acf_add_options_page') ) {
 
@@ -371,6 +473,12 @@
 				acf_add_options_sub_page([
 					'page_title' 	=> 'Maps',
 					'menu_title' 	=> 'Maps',
+					'parent_slug'	=> 'theme-general-settings',
+				]);
+
+				acf_add_options_sub_page([
+					'page_title' 	=> 'Tooltips',
+					'menu_title' 	=> 'Tooltips',
 					'parent_slug'	=> 'theme-general-settings',
 				]);
 			}
@@ -424,31 +532,6 @@
 	// Disable WordPress admin bar for all users.
 	show_admin_bar(false);
 
-	// Initiate and move Gravity Forms scripts to footer
-	// https://gist.github.com/eriteric/5d6ca5969a662339c4b3
-
-	add_filter( 'gform_init_scripts_footer', '__return_true' );
-	add_filter( 'gform_cdata_open', 'wrap_gform_cdata_open', 1 );
-	add_filter( 'gform_cdata_close', 'wrap_gform_cdata_close', 99 );
-
-	function wrap_gform_cdata_open( $content = '' ) {
-		if ( ( defined('DOING_AJAX') && DOING_AJAX ) || isset( $_POST['gform_ajax'] ) ) {
-			return $content;
-		}
-
-		$content = 'document.addEventListener( "DOMContentLoaded", function() { ';
-		return $content;
-	}
-
-	function wrap_gform_cdata_close( $content = '' ) {
-		if ( ( defined('DOING_AJAX') && DOING_AJAX ) || isset( $_POST['gform_ajax'] ) ) {
-			return $content;
-		}
-
-		$content = ' }, false );';
-		return $content;
-	}
-
 	// Upload EPS files
 
 	function mime_types( $mimes ) {
@@ -458,3 +541,18 @@
 	}
 	
 	add_filter( 'upload_mimes', 'mime_types' );
+
+    // initialise facet fields for frontend filtering
+    function make_facet_field( $source, &$facets ) {
+        foreach($source as $item) {
+            foreach($facets as &$facet) {
+                if ( !empty($facet['report_field']) && property_exists($item, $facet['report_field']) ) {
+                    if ( isset($facet['field'][$item->{$facet['report_field']}]) ) {
+                        $facet['field'][$item->{$facet['report_field']}]++;
+                    } else {
+                        $facet['field'][$item->{$facet['report_field']}] = 1;
+                    }
+                }
+            }
+        }
+    }

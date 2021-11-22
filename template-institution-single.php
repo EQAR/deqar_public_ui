@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Institution | Single
+ * Template Name: QA Results | Single Institution
  *
  * Methods for TimberHelper can be found in the /functions sub-directory
  *
@@ -31,7 +31,7 @@ if ( isset($context['request']->get['id']) ) {
         $institution    = $eqarApi->getInstitution( $id );
     } elseif (preg_match('/^DEQARINST([0-9]+)$/', $id, $matches)) {
         $institution    = $eqarApi->getInstitution( $matches[1] );
-    } elseif (preg_match('/^[A-Z][A-Z][0-9]{4}$/', $id, $matches)) {
+    } elseif (preg_match('/^[A-Z][A-Z][A-Z]?[0-9]{4}$/', $id, $matches)) {
         $institution    = $eqarApi->getInstitutionByEterId( $matches[0] );
     } else {
         Site::do404(400, "Malformed DEQARINST or ETER ID provided.");
@@ -57,22 +57,12 @@ if ( isset($context['request']->get['id']) ) {
                 }
                 // pass through to template those facets that were set
                 if ( isset($context['request']->get[$facet['tag']]) ) {
-                    $facet['select'] = $context['request']->get[$facet['tag']];
+                    $facet['select'] = stripslashes($context['request']->get[$facet['tag']]);
                 }
             }
         }
 
-        foreach(array_merge($institution->reports, $institution->programmes) as $report) {
-            foreach($context['search']['facets'] as &$facet) {
-                if ( !empty($facet['report_field']) ) {
-                    if ( isset($facet['field'][$report->{$facet['report_field']}]) ) {
-                        $facet['field'][$report->{$facet['report_field']}]++;
-                    } else {
-                        $facet['field'][$report->{$facet['report_field']}] = 1;
-                    }
-                }
-            }
-        }
+        make_facet_field(array_merge($institution->reports, $institution->programmes), $context['search']['facets']);
 
         foreach($institution->hierarchical_relationships->includes as $rel) {
             if (isset($rel->valid_to) and $rel->valid_to != null) {

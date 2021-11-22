@@ -69,7 +69,7 @@ if (is_array(get_field('defaults'))) {
 // get actual parameters passed in URL
 foreach ($parameter_list as $p) {
     if ( isset($context['request']->get[$p]) ) {
-        $parameters[$p] = $context['request']->get[$p];
+        $parameters[$p] = stripslashes($context['request']->get[$p]);
     }
 }
 

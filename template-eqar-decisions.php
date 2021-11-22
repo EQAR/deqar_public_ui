@@ -16,6 +16,10 @@ $context = Timber::get_context();
 
 $context['post'] = new TimberPost();
 $context['decisions'] = $eqarApi->getDecisions();
+$context['agenciesByName'] = $eqarApi->getAgenciesByName();
+$context['pages'] = array(
+        'agency' => get_field('agency_page'),
+    );
 
 Timber::render('eqar-decisions.twig', $context);
 
